@@ -51,7 +51,7 @@ public class BonusController : MonoBehaviour
   private bool BonusEnd = false;
   private Coroutine BonusRoutine;
   private float SpinDelay = 0.2f;
-  private List<CoinPosition> allcoinPositions = new List<CoinPosition>();
+  [SerializeField] private List<CoinPosition> allcoinPositions = new List<CoinPosition>();
   private void Start()
   {
     // if (BonusSlotStart_Button)
