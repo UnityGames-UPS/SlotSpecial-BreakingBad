@@ -1,0 +1,820 @@
+fileFormatVersion: 2
+guid: 7a3f908189e7240ff9c4af23707fffa1
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_0
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 4145
+        width: 190
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bf875156056d44d8b4310a968115e79
+      internalID: 1823598472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_1
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 4146
+        width: 186
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e90e08732592e4299bbb82e099031220
+      internalID: 250726848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_2
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 3726
+        width: 190
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b2a3d571acfa4d7d9c39eaa86e71d69
+      internalID: 1991532289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_5
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 3726
+        width: 186
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07eed2eede0834f74a43464103e03492
+      internalID: -1266756535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_6
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 3307
+        width: 190
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8602ee47aad64d56b9fbd983ba5cf9f
+      internalID: -2130758477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_7
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 3307
+        width: 181
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad545a1654874e2d9b657b86ecabdd6
+      internalID: -1548605606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_12
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 2893
+        width: 190
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf33c08681f164685aad07fbf8cd5821
+      internalID: -1471761694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_13
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 2893
+        width: 190
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d25f307667b474a4c821961fa0cf21c1
+      internalID: -640261319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_16
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 2717
+        width: 952
+        height: 257
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e0da5328744491b81a074cba6bf519
+      internalID: 1056219508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_17
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 1836
+        width: 871
+        height: 823
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5edcf3bb81e6b4410ba9bd07e4d929ef
+      internalID: 1924378399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_29
+      rect:
+        serializedVersion: 2
+        x: 2783
+        y: 1807
+        width: 873
+        height: 424
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b16bc5472c0843c0a4b2b265c9d18a5
+      internalID: -9014705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_30
+      rect:
+        serializedVersion: 2
+        x: 3826
+        y: 1812
+        width: 866
+        height: 395
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68c8da1af0bb34456a4338219fde5f48
+      internalID: -870825322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_31
+      rect:
+        serializedVersion: 2
+        x: 4856
+        y: 1812
+        width: 874
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9058b7922fa3d4b5dae4e1dbe83702e6
+      internalID: 1411491184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_32
+      rect:
+        serializedVersion: 2
+        x: 5953
+        y: 1812
+        width: 862
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27c1a014a10dc4972a58af265e7aa905
+      internalID: 1628015471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_54
+      rect:
+        serializedVersion: 2
+        x: 4554
+        y: 567
+        width: 1038
+        height: 1007
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65e9c262090d04086be1478003772867
+      internalID: 1746214640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_55
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 561
+        width: 1038
+        height: 1007
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c082973869364093a80851711ebb3e9
+      internalID: 827448504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_56
+      rect:
+        serializedVersion: 2
+        x: 1750
+        y: 583
+        width: 1038
+        height: 983
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38b55c6281e644ddbacbebd9915274dc
+      internalID: 658775841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_58
+      rect:
+        serializedVersion: 2
+        x: 3192
+        y: 551
+        width: 1038
+        height: 1007
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82d97a56cfda34697b67c1cbc5d218ac
+      internalID: 121017451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_60
+      rect:
+        serializedVersion: 2
+        x: 6039
+        y: 898
+        width: 2085
+        height: 331
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb2efac2ca0b4adfa7bdb7edc60d794
+      internalID: -1213044463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_69
+      rect:
+        serializedVersion: 2
+        x: 6035
+        y: 231
+        width: 2089
+        height: 314
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f54d14daef87488cafcb79151d149cc
+      internalID: -2038585278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_3
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 153
+        width: 589
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4663735c63b949b8a1bc5d6cb5aa2ce
+      internalID: 149758077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_4
+      rect:
+        serializedVersion: 2
+        x: 1979
+        y: 153
+        width: 589
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01cbefe32af4c44a5933da5316841c3f
+      internalID: -1803869289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_8
+      rect:
+        serializedVersion: 2
+        x: 3413
+        y: 153
+        width: 589
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31029572e1e344571b05e37e75ecdece
+      internalID: 1086088142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_9
+      rect:
+        serializedVersion: 2
+        x: 4846
+        y: 153
+        width: 589
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 811f6360688664a7a98d220b38efea3b
+      internalID: -1758118173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_10
+      rect:
+        serializedVersion: 2
+        x: 1768
+        y: 2317
+        width: 672
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d2791650594f41b69f3ee4ca53e7f84
+      internalID: 588051212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_11
+      rect:
+        serializedVersion: 2
+        x: 1930
+        y: 2051
+        width: 350
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 085c6c72608dd427a9b8800c67d78923
+      internalID: -1618902228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breaking Bad UI Assets-02_14
+      rect:
+        serializedVersion: 2
+        x: 1839
+        y: 1801
+        width: 535
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d860b01aa113b4914a8c00bc70572112
+      internalID: -1604966709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Breaking Bad UI Assets-02_0: 1823598472
+      Breaking Bad UI Assets-02_1: 250726848
+      Breaking Bad UI Assets-02_10: 588051212
+      Breaking Bad UI Assets-02_11: -1618902228
+      Breaking Bad UI Assets-02_12: -1471761694
+      Breaking Bad UI Assets-02_13: -640261319
+      Breaking Bad UI Assets-02_14: -1604966709
+      Breaking Bad UI Assets-02_15: -488012321
+      Breaking Bad UI Assets-02_16: 1056219508
+      Breaking Bad UI Assets-02_17: 1924378399
+      Breaking Bad UI Assets-02_18: 1447433235
+      Breaking Bad UI Assets-02_19: -1362734498
+      Breaking Bad UI Assets-02_2: 1991532289
+      Breaking Bad UI Assets-02_20: 1472573048
+      Breaking Bad UI Assets-02_21: -1394683626
+      Breaking Bad UI Assets-02_22: 2019097105
+      Breaking Bad UI Assets-02_23: -1598633814
+      Breaking Bad UI Assets-02_24: -1729859390
+      Breaking Bad UI Assets-02_25: 78970327
+      Breaking Bad UI Assets-02_26: -499244153
+      Breaking Bad UI Assets-02_27: 939983301
+      Breaking Bad UI Assets-02_28: 199351655
+      Breaking Bad UI Assets-02_29: -9014705
+      Breaking Bad UI Assets-02_3: 149758077
+      Breaking Bad UI Assets-02_30: -870825322
+      Breaking Bad UI Assets-02_31: 1411491184
+      Breaking Bad UI Assets-02_32: 1628015471
+      Breaking Bad UI Assets-02_33: 463001755
+      Breaking Bad UI Assets-02_34: -1853385532
+      Breaking Bad UI Assets-02_35: 223002635
+      Breaking Bad UI Assets-02_36: 1919480006
+      Breaking Bad UI Assets-02_37: 1552214547
+      Breaking Bad UI Assets-02_38: 1315703154
+      Breaking Bad UI Assets-02_39: 511287370
+      Breaking Bad UI Assets-02_4: -1803869289
+      Breaking Bad UI Assets-02_40: 915821923
+      Breaking Bad UI Assets-02_41: -96390675
+      Breaking Bad UI Assets-02_42: -1675212839
+      Breaking Bad UI Assets-02_43: 1177621798
+      Breaking Bad UI Assets-02_44: 2128996880
+      Breaking Bad UI Assets-02_45: 1651091627
+      Breaking Bad UI Assets-02_46: -1303705537
+      Breaking Bad UI Assets-02_47: -1739640963
+      Breaking Bad UI Assets-02_48: 1771763567
+      Breaking Bad UI Assets-02_49: -1249683053
+      Breaking Bad UI Assets-02_5: -1266756535
+      Breaking Bad UI Assets-02_50: -1545285098
+      Breaking Bad UI Assets-02_51: -1009074234
+      Breaking Bad UI Assets-02_52: -2054097966
+      Breaking Bad UI Assets-02_53: 729868809
+      Breaking Bad UI Assets-02_54: 1746214640
+      Breaking Bad UI Assets-02_55: 827448504
+      Breaking Bad UI Assets-02_56: 658775841
+      Breaking Bad UI Assets-02_57: 2084679847
+      Breaking Bad UI Assets-02_58: 121017451
+      Breaking Bad UI Assets-02_59: 1392309818
+      Breaking Bad UI Assets-02_6: -2130758477
+      Breaking Bad UI Assets-02_60: -1213044463
+      Breaking Bad UI Assets-02_61: 1208681490
+      Breaking Bad UI Assets-02_62: -27053224
+      Breaking Bad UI Assets-02_63: 1118829447
+      Breaking Bad UI Assets-02_64: 402367174
+      Breaking Bad UI Assets-02_65: -461889284
+      Breaking Bad UI Assets-02_66: 961958212
+      Breaking Bad UI Assets-02_67: 720852623
+      Breaking Bad UI Assets-02_68: -718008581
+      Breaking Bad UI Assets-02_69: -2038585278
+      Breaking Bad UI Assets-02_7: -1548605606
+      Breaking Bad UI Assets-02_70: -1053108106
+      Breaking Bad UI Assets-02_71: -2129497661
+      Breaking Bad UI Assets-02_72: 130880190
+      Breaking Bad UI Assets-02_73: 1078359422
+      Breaking Bad UI Assets-02_74: 1716865390
+      Breaking Bad UI Assets-02_75: 802813146
+      Breaking Bad UI Assets-02_76: 2127472050
+      Breaking Bad UI Assets-02_77: -898189697
+      Breaking Bad UI Assets-02_78: 1605269397
+      Breaking Bad UI Assets-02_79: -1722545701
+      Breaking Bad UI Assets-02_8: 1086088142
+      Breaking Bad UI Assets-02_80: 393376666
+      Breaking Bad UI Assets-02_81: 1442530281
+      Breaking Bad UI Assets-02_82: 1393870375
+      Breaking Bad UI Assets-02_83: 861171119
+      Breaking Bad UI Assets-02_84: -832542719
+      Breaking Bad UI Assets-02_85: -2086001030
+      Breaking Bad UI Assets-02_86: -713898065
+      Breaking Bad UI Assets-02_87: -944803634
+      Breaking Bad UI Assets-02_88: -1539085948
+      Breaking Bad UI Assets-02_89: -2051435356
+      Breaking Bad UI Assets-02_9: -1758118173
+      Breaking Bad UI Assets-02_90: -424636471
+      Breaking Bad UI Assets-02_91: -2064302354
+      Breaking Bad UI Assets-02_92: 1970615704
+      Breaking Bad UI Assets-02_93: 1870787599
+      Breaking Bad UI Assets-02_94: -2028378670
+      Breaking Bad UI Assets-02_95: -573990827
+      Breaking Bad UI Assets-02_96: -238972307
+      Breaking Bad UI Assets-02_97: -1539323087
+      Breaking Bad UI Assets-02_98: -368022805
+      Breaking Bad UI Assets-02_99: -1496573352
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
