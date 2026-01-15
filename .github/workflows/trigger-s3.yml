@@ -10,4 +10,4 @@ jobs:
   call-reusable:
     uses: UnityGames-UPS/unity-build-pipeline/.github/workflows/main.yml@main
     with:
-      s3_folder: SL-BB
+      s3_folder: dev/SL-BB
