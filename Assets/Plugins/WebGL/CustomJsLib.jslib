@@ -31,25 +31,10 @@ mergeInto(LibraryManager.library, {
         window.ReactNativeWebView.postMessage(message);
       }
       else if(window.parent){
-        if(message == "authToken"){
-          window.addEventListener('message', function(event){
-            if(event.data.type === 'authToken'){
-              var combinedData = JSON.stringify({
-                  cookie: event.data.cookie,
-                  socketURL: event.data.socketURL,
-                  nameSpace: event.data && event.data.nameSpace ? event.data.nameSpace : ''
-              }); 
-
-              if (typeof SendMessage === 'function') {
-                SendMessage('SocketManager', 'ReceiveAuthToken', combinedData);
-              }
-              else{
-                console.log('SendMessage is not a func');
-              }
-            }
-          });
+        if(window.parent.dispatchReactUnityEvent){
+          console.log("Inside window parent");
+          window.parent.dispatchReactUnityEvent(message); 
         }
-        window.parent.postMessage(message, "*");
       }
     }
 });
