@@ -824,7 +824,43 @@ public class SlotBehaviour : MonoBehaviour
 
       yield return new WaitForSeconds(.2f);
     }
+    if (SocketManager.resultData.payload.isLinkTriggered)
+    {
+      IsBonus = true;
 
+      // Pause FreeSpins if already running
+      if (IsFreeSpin)
+      {
+        resumeFreeSpinAfterLink = true;
+        savedFreeSpinCount = freeSpinsCount;
+
+        if (FreeSpinRoutine != null)
+        {
+          StopCoroutine(FreeSpinRoutine);
+          FreeSpinRoutine = null;
+        }
+
+        IsFreeSpin = false;
+      }
+
+      yield return ResetUI();
+
+      uiManager.BonusCoroutine =
+          StartCoroutine(uiManager.MidGameImageAnimation(BonusImageAnimation));
+
+      yield return new WaitUntil(() => uiManager.animationFinish);
+
+      staticSymbolController.TurnOnIndices(GenerateFreezedLocations());
+
+      yield return new WaitForSeconds(0.5f);
+
+      _bonusManager.StartBonus(
+          SocketManager.resultData.payload.linkRespinsRemaining
+      );
+
+      IsSpinning = false;
+      yield break;   // ✅ EXIT AFTER LINK STARTS
+    }
     if (SocketManager.resultData.payload.isFreeSpinTriggered)
     {
       if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
@@ -866,51 +902,51 @@ public class SlotBehaviour : MonoBehaviour
       // {
       IsSpinning = false;
       FreeSpin(freeSpinsCount);
-      yield break;
+      // yield break;
       //}
     }
-    bool callbonus = false;
-    if (SocketManager.resultData.payload.isLinkTriggered)
-    {
-      callbonus = true;
-    }
-    if (callbonus)
-    {
-      if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
-      {
-        winningsDisplayed = true;
-        CheckPopups = true;
-        WinningsTextAnimation();
-        CheckWinPopups();
+    // bool callbonus = false;
+    // if (SocketManager.resultData.payload.isLinkTriggered)
+    // {
+    //   callbonus = true;
+    // }
+    // if (callbonus)
+    // {
+    //   if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
+    //   {
+    //     winningsDisplayed = true;
+    //     CheckPopups = true;
+    //     WinningsTextAnimation();
+    //     CheckWinPopups();
 
-        yield return new WaitUntil(() => !CheckPopups);
-        yield return new WaitForSeconds(.5f);
-      }
-      IsBonus = true;
-      yield return ResetUI();
-      if (IsFreeSpin)
-      {
-        resumeFreeSpinAfterLink = true;
-        savedFreeSpinCount = freeSpinsCount;
+    //     yield return new WaitUntil(() => !CheckPopups);
+    //     yield return new WaitForSeconds(.5f);
+    //   }
+    //   IsBonus = true;
+    //   yield return ResetUI();
+    //   if (IsFreeSpin)
+    //   {
+    //     resumeFreeSpinAfterLink = true;
+    //     savedFreeSpinCount = freeSpinsCount;
 
-        StopCoroutine(FreeSpinRoutine);
-        FreeSpinRoutine = null;
-        IsFreeSpin = false; // pause only
-      }
+    //     StopCoroutine(FreeSpinRoutine);
+    //     FreeSpinRoutine = null;
+    //     IsFreeSpin = false; // pause only
+    //   }
 
-      yield return new WaitForSeconds(.5f);
-      // Only Bonus is awarded without Free Spins, directly trigger bonus round
-      uiManager.BonusCoroutine = StartCoroutine(uiManager.MidGameImageAnimation(BonusImageAnimation));
-      yield return new WaitUntil(() => uiManager.animationFinish);
+    //   yield return new WaitForSeconds(.5f);
+    //   // Only Bonus is awarded without Free Spins, directly trigger bonus round
+    //   uiManager.BonusCoroutine = StartCoroutine(uiManager.MidGameImageAnimation(BonusImageAnimation));
+    //   yield return new WaitUntil(() => uiManager.animationFinish);
 
 
 
-      staticSymbolController.TurnOnIndices(GenerateFreezedLocations());
-      yield return new WaitForSeconds(.5f);
-      _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
-      IsSpinning = false;
-      yield break;
-    }
+    //   staticSymbolController.TurnOnIndices(GenerateFreezedLocations());
+    //   yield return new WaitForSeconds(.5f);
+    //   _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
+    //   IsSpinning = false;
+    //   yield break;
+    // }
 
 
     if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)

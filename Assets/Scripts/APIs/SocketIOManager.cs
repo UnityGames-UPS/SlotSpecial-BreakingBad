@@ -144,8 +144,8 @@ public class SocketIOManager : MonoBehaviour
     // Create and setup SocketManager for Testing
     this.manager = new SocketManager(new Uri(TestSocketURI), options);
 #else
-        // Create and setup SocketManager
-        this.manager = new SocketManager(new Uri(SocketURI), options);
+    // Create and setup SocketManager
+    this.manager = new SocketManager(new Uri(SocketURI), options);
 #endif
     if (string.IsNullOrEmpty(nameSpace) | string.IsNullOrWhiteSpace(nameSpace))
     {
@@ -734,6 +734,11 @@ public class CoinPosition
   public int coinValue;
   public int symbolId;
   public string symbolName;
+
+
+  public string prizeType;
+  public int? prizeTypeIndex;
+
 }
 
 

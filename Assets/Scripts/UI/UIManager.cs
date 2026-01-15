@@ -452,20 +452,14 @@ public class UIManager : MonoBehaviour
 
       // double currWin = 0;
       int multiplier = 0;
-      try
-      {
-        // currWin = double.Parse(text.text);
-        multiplier = int.Parse(TrailRendererGO.transform.parent.GetChild(textIndex).GetComponent<TMP_Text>().text.Replace("x", ""));
-        multiplierCount += multiplier;
-        // coin = slotManager.currentLineBet * multiplier * cashCollects;
-      }
-      catch (Exception e)
-      {
-        Debug.Log(e.Message);
-      }
+      // currWin = double.Parse(text.text);
+      multiplier = coinvalue;
+      multiplierCount += multiplier;
+      // coin = slotManager.currentLineBet * multiplier * cashCollects;
+
       int start = int.Parse(text.text.Replace("x", ""));
       // double Total = currWin + coin;
-      DOTween.To(() => start, (val) => start = val, coinvalue, 0.3f).OnUpdate(() =>
+      DOTween.To(() => start, (val) => start = val, multiplierCount, 0.3f).OnUpdate(() =>
       {
         text.text = start.ToString() + "x";
       }).WaitForCompletion();

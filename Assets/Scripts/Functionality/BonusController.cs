@@ -205,18 +205,19 @@ public class BonusController : MonoBehaviour
       // v2 change  // uiManager.multiplierCount = !SocketManager.resultData.bonus.isWalterStash ? 0 : int.Parse(BonusWinnings_Text.text.Replace("x", ""));
       foreach (var coin in allcoinPositions)
       {
-        if (coin.symbolId == 14 || coin.symbolId == 11 || coin.symbolId == 12)
+        if (coin.symbolId == 16)
         {
-          yield return uiManager.TrailRendererAnimation(Slot[coin.position[0]].slotTransforms[coin.position[1]].GetChild(3).GetChild(1).gameObject, 0, coin.coinValue, true);
+          yield return uiManager.ManageDiamondPayout(coin.prizeTypeIndex ?? 0, coin.coinValue.ToString(), Slot[coin.position[0]].slotTransforms[coin.position[1]].gameObject.transform);
         }
       }
       foreach (var coin in allcoinPositions)
       {
-        if (coin.symbolId == 16)
+        if (coin.symbolId == 15 || coin.symbolId == 11 || coin.symbolId == 12)
         {
-          yield return uiManager.ManageDiamondPayout(3, coin.coinValue.ToString(), Slot[coin.position[0]].slotTransforms[coin.position[1]].gameObject.transform);
+          yield return uiManager.TrailRendererAnimation(Slot[coin.position[0]].slotTransforms[coin.position[1]].GetChild(3).GetChild(1).gameObject, 0, coin.coinValue, true);
         }
       }
+
       allcoinPositions.Clear();
       allcoinPositions.TrimExcess();
       // for (int i = 0; i < Slot.Count; i++)
