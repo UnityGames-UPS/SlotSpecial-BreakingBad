@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: ea5b3c8efe65e40a89846731a06cc549
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7860031356924306471
+    second: SL_BB_UI_Btn_Updated-01_0
+  - first:
+      213: 3834447725397953958
+    second: SL_BB_UI_Btn_Updated-01_1
+  - first:
+      213: -2591169674045896913
+    second: SL_BB_UI_Btn_Updated-01_2
+  - first:
+      213: -2586000663134650805
+    second: SL_BB_UI_Btn_Updated-01_3
+  - first:
+      213: -7127886263396725788
+    second: SL_BB_UI_Btn_Updated-01_4
+  - first:
+      213: -955399854435367527
+    second: SL_BB_UI_Btn_Updated-01_5
+  - first:
+      213: 7927323430892707756
+    second: SL_BB_UI_Btn_Updated-01_6
+  - first:
+      213: -9164114434589029244
+    second: SL_BB_UI_Btn_Updated-01_7
+  - first:
+      213: -7984453038371187913
+    second: SL_BB_UI_Btn_Updated-01_8
+  - first:
+      213: 8845416078492605365
+    second: SL_BB_UI_Btn_Updated-01_9
+  - first:
+      213: 8584060316956647983
+    second: SL_BB_UI_Btn_Updated-01_10
+  - first:
+      213: -8744191376237449856
+    second: SL_BB_UI_Btn_Updated-01_11
+  - first:
+      213: 842316110076899445
+    second: SL_BB_UI_Btn_Updated-01_12
+  - first:
+      213: -7215287794117869810
+    second: SL_BB_UI_Btn_Updated-01_13
+  - first:
+      213: -1113408023788251419
+    second: SL_BB_UI_Btn_Updated-01_14
+  - first:
+      213: -4859831851924704126
+    second: SL_BB_UI_Btn_Updated-01_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 775
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 724a7e8ffd0741d60800000000000000
+      internalID: 7860031356924306471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 775
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ad4626f3e1b63530800000000000000
+      internalID: 3834447725397953958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_2
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 775
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f27cab9f8e05a0cd0800000000000000
+      internalID: -2591169674045896913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_3
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 775
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4e3fec191eac1cd0800000000000000
+      internalID: -2586000663134650805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_4
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 518
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eb0ad66539a41d90800000000000000
+      internalID: -7127886263396725788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_5
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 518
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9958be1f4ecbdb2f0800000000000000
+      internalID: -955399854435367527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_6
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 518
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caf9dfdd8a2830e60800000000000000
+      internalID: 7927323430892707756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_7
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 519
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c8a4da97682d080800000000000000
+      internalID: -9164114434589029244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_8
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 262
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 733d81ad346813190800000000000000
+      internalID: -7984453038371187913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_9
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 262
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bb9411fe0b31ca70800000000000000
+      internalID: 8845416078492605365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_10
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 263
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f226ab2c065b02770800000000000000
+      internalID: 8584060316956647983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_11
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 263
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08d2553a54466a680800000000000000
+      internalID: -8744191376237449856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_12
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 7
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 570f8b11a0280bb00800000000000000
+      internalID: 842316110076899445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_13
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 7
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0f746fbaf52edb90800000000000000
+      internalID: -7215287794117869810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_14
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 7
+        width: 231
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e6180c2d416c80f0800000000000000
+      internalID: -1113408023788251419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Btn_Updated-01_15
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 6
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28436eddda86e8cb0800000000000000
+      internalID: -4859831851924704126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SL_BB_UI_Btn_Updated-01_0: 7860031356924306471
+      SL_BB_UI_Btn_Updated-01_1: 3834447725397953958
+      SL_BB_UI_Btn_Updated-01_10: 8584060316956647983
+      SL_BB_UI_Btn_Updated-01_11: -8744191376237449856
+      SL_BB_UI_Btn_Updated-01_12: 842316110076899445
+      SL_BB_UI_Btn_Updated-01_13: -7215287794117869810
+      SL_BB_UI_Btn_Updated-01_14: -1113408023788251419
+      SL_BB_UI_Btn_Updated-01_15: -4859831851924704126
+      SL_BB_UI_Btn_Updated-01_2: -2591169674045896913
+      SL_BB_UI_Btn_Updated-01_3: -2586000663134650805
+      SL_BB_UI_Btn_Updated-01_4: -7127886263396725788
+      SL_BB_UI_Btn_Updated-01_5: -955399854435367527
+      SL_BB_UI_Btn_Updated-01_6: 7927323430892707756
+      SL_BB_UI_Btn_Updated-01_7: -9164114434589029244
+      SL_BB_UI_Btn_Updated-01_8: -7984453038371187913
+      SL_BB_UI_Btn_Updated-01_9: 8845416078492605365
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

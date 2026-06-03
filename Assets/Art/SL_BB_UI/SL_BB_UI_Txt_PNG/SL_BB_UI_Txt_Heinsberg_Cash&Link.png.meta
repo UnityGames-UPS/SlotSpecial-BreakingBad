@@ -1,0 +1,650 @@
+fileFormatVersion: 2
+guid: bc850a9e1835b49e09b8948e787c293f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8479671299989033850
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_0
+  - first:
+      213: 2485864036099439453
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_1
+  - first:
+      213: 1031379577849338503
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_2
+  - first:
+      213: 8201028938404075951
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_3
+  - first:
+      213: -7230269906261751478
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_4
+  - first:
+      213: 9012152321668413131
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_5
+  - first:
+      213: -4302026677732159255
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_6
+  - first:
+      213: 7336627306969053916
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_7
+  - first:
+      213: -8436749023107050257
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_8
+  - first:
+      213: -226465054512446719
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_9
+  - first:
+      213: 654521023712907977
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_10
+  - first:
+      213: -2274972886580391881
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_11
+  - first:
+      213: -499522477923303188
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_12
+  - first:
+      213: -5092541050786003423
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_13
+  - first:
+      213: -7161330508518861130
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_14
+  - first:
+      213: 6640172142138539399
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_15
+  - first:
+      213: -8516855991475151552
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_16
+  - first:
+      213: 6958331068725616848
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_17
+  - first:
+      213: 7865115132162242218
+    second: SL_BB_UI_Txt_Heinsberg_Cash&Link_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_0
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 307
+        width: 123
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68c241041e7225a80800000000000000
+      internalID: -8479671299989033850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 307
+        width: 118
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5b30af8b209f7220800000000000000
+      internalID: 2485864036099439453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_2
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 307
+        width: 46
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78a5d46f242305e00800000000000000
+      internalID: 1031379577849338503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_3
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 302
+        width: 125
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa9164a5e58efc170800000000000000
+      internalID: 8201028938404075951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_4
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 307
+        width: 117
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49421fe3dbe8ab90800000000000000
+      internalID: -7230269906261751478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_5
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 307
+        width: 125
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc6f1c2c9c8911d70800000000000000
+      internalID: 9012152321668413131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_6
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 307
+        width: 126
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e0558b97812c44c0800000000000000
+      internalID: -4302026677732159255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_7
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 307
+        width: 118
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda32512aafe0d560800000000000000
+      internalID: 7336627306969053916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_8
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 307
+        width: 128
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe4949a9675aaea80800000000000000
+      internalID: -8436749023107050257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_9
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 302
+        width: 139
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1030fb79b3f6bdcf0800000000000000
+      internalID: -226465054512446719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_10
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 34
+        width: 125
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c2de6c3763551900800000000000000
+      internalID: 654521023712907977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_11
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 34
+        width: 123
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7301bb5863cad60e0800000000000000
+      internalID: -2274972886580391881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_12
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 34
+        width: 278
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce00f02f3f65119f0800000000000000
+      internalID: -499522477923303188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_13
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 34
+        width: 242
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1264ecf45e8a359b0800000000000000
+      internalID: -5092541050786003423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_14
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 34
+        width: 162
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b6d09848d7dd9c90800000000000000
+      internalID: -7161330508518861130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_15
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 35
+        width: 91
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78dbc93d161a62c50800000000000000
+      internalID: 6640172142138539399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_16
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 35
+        width: 61
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d57f8999c0ec980800000000000000
+      internalID: -8516855991475151552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_17
+      rect:
+        serializedVersion: 2
+        x: 1237
+        y: 35
+        width: 121
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d064fc7d35f09060800000000000000
+      internalID: 6958331068725616848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Txt_Heinsberg_Cash&Link_18
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 35
+        width: 133
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa67412aa80862d60800000000000000
+      internalID: 7865115132162242218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_0: -8479671299989033850
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_1: 2485864036099439453
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_10: 654521023712907977
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_11: -2274972886580391881
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_12: -499522477923303188
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_13: -5092541050786003423
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_14: -7161330508518861130
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_15: 6640172142138539399
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_16: -8516855991475151552
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_17: 6958331068725616848
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_18: 7865115132162242218
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_2: 1031379577849338503
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_3: 8201028938404075951
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_4: -7230269906261751478
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_5: 9012152321668413131
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_6: -4302026677732159255
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_7: 7336627306969053916
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_8: -8436749023107050257
+      SL_BB_UI_Txt_Heinsberg_Cash&Link_9: -226465054512446719
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
