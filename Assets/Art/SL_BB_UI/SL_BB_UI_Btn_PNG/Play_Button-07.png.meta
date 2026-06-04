@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: feb102c9116084a529ed74f3a8d97809
+guid: 88c4006dff7b34015a564f182e858b8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5375523687681698451
-    second: SL_BB_UI_Win_Big_0
+      213: 7743985021745959129
+    second: Play_Button-07_0
   - first:
-      213: -1708242831991627774
-    second: SL_BB_UI_Win_Big_1
+      213: 2925727270569695467
+    second: Play_Button-07_1
+  - first:
+      213: -6276185440904411553
+    second: Play_Button-07_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,13 +145,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SL_BB_UI_Win_Big_0
+      name: Play_Button-07_0
       rect:
         serializedVersion: 2
-        x: 52
-        y: 19
-        width: 805
-        height: 404
+        x: 12
+        y: 519
+        width: 231
+        height: 231
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d65d802dfad4665b0800000000000000
-      internalID: -5375523687681698451
+      spriteID: 9d01d1f0959287b60800000000000000
+      internalID: 7743985021745959129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Win_Big_1
+      name: Play_Button-07_1
       rect:
         serializedVersion: 2
-        x: 899
-        y: 27
-        width: 908
-        height: 388
+        x: 12
+        y: 262
+        width: 231
+        height: 232
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +182,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2002809e13a1b48e0800000000000000
-      internalID: -1708242831991627774
+      spriteID: be8daff83754a9820800000000000000
+      internalID: 2925727270569695467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play_Button-07_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 6
+        width: 231
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f560a6a189286e8a0800000000000000
+      internalID: -6276185440904411553
       vertices: []
       indices: 
       edges: []
@@ -199,8 +224,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SL_BB_UI_Win_Big_0: -5375523687681698451
-      SL_BB_UI_Win_Big_1: -1708242831991627774
+      Play_Button-07_0: 7743985021745959129
+      Play_Button-07_1: 2925727270569695467
+      Play_Button-07_2: -6276185440904411553
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

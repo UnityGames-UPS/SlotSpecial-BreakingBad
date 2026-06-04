@@ -1,25 +1,10 @@
 fileFormatVersion: 2
-guid: f27b5b614ff70459aa16cda2e4d07bda
+guid: 09cfc44ac614e4cfa924bbd8ff68af4d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -196159049615205039
-    second: money3-6_0
-  - first:
-      213: -107135483784756595
-    second: money3-6_1
-  - first:
-      213: -5941618377596453550
-    second: money3-6_2
-  - first:
-      213: -2984802671635995331
-    second: money3-6_3
-  - first:
-      213: -4908673457674087236
-    second: money3-6_4
-  - first:
-      213: -1172693671623113401
-    second: money3-6_5
+      213: -5707885194233074593
+    second: toggle_upper-06_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -154,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: money3-6_0
+      name: toggle_upper-06_0
       rect:
         serializedVersion: 2
-        x: 104
-        y: 737
-        width: 177
-        height: 36
+        x: 0
+        y: 0
+        width: 102
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,118 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 15d1538326a174df0800000000000000
-      internalID: -196159049615205039
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: money3-6_1
-      rect:
-        serializedVersion: 2
-        x: 486
-        y: 738
-        width: 177
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d828b2a58d0638ef0800000000000000
-      internalID: -107135483784756595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: money3-6_2
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 437
-        width: 177
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 25d3e6cc0912b8da0800000000000000
-      internalID: -5941618377596453550
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: money3-6_3
-      rect:
-        serializedVersion: 2
-        x: 486
-        y: 436
-        width: 176
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d35ef78c8c9d396d0800000000000000
-      internalID: -2984802671635995331
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: money3-6_4
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 134
-        width: 176
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb492fc5f73e0ebb0800000000000000
-      internalID: -4908673457674087236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: money3-6_5
-      rect:
-        serializedVersion: 2
-        x: 486
-        y: 134
-        width: 176
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7454e80a151c9bfe0800000000000000
-      internalID: -1172693671623113401
+      spriteID: f5ca60358a489c0b0800000000000000
+      internalID: -5707885194233074593
       vertices: []
       indices: 
       edges: []
@@ -299,12 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      money3-6_0: -196159049615205039
-      money3-6_1: -107135483784756595
-      money3-6_2: -5941618377596453550
-      money3-6_3: -2984802671635995331
-      money3-6_4: -4908673457674087236
-      money3-6_5: -1172693671623113401
+      toggle_upper-06_0: -5707885194233074593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

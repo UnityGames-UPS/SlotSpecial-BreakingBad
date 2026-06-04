@@ -4270,7 +4270,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -4945,8 +4945,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 920710789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7750,8 +7750,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 795386144}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16245,7 +16245,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: 51f9b08a7c2e4cf0b01ca49b561a81c0
+  testToken: 98de68889a2343479b6f2db09c255ee7
 --- !u!1 &500730208
 GameObject:
   m_ObjectHideFlags: 0
@@ -25805,7 +25805,7 @@ RectTransform:
   m_Father: {fileID: 1005841992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.6000004}
   m_SizeDelta: {x: 10, y: 1.1999991}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -43301,7 +43301,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -48903,7 +48903,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -49873,7 +49873,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -52380,7 +52380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1598150117
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64254,7 +64254,7 @@ RectTransform:
   m_Father: {fileID: 1068715146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.6000004}
   m_SizeDelta: {x: 10, y: 1.1999991}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -66612,7 +66612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2010482992
 RectTransform:
   m_ObjectHideFlags: 0
@@ -67997,11 +67997,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 66d353955e5aa4832bab24492a04cd92, type: 3}
   - {fileID: 21300000, guid: a927a4b9e28e5443784a7eaefe5df017, type: 3}
   - {fileID: 0}
-  - {fileID: 21300000, guid: 767cf2551484f43b2b688921c0e55c6c, type: 3}
+  - {fileID: -1911372180, guid: 767cf2551484f43b2b688921c0e55c6c, type: 3}
   - {fileID: 21300000, guid: a6305cc7ed9334e5f93feb4e1a274b38, type: 3}
   - {fileID: 21300000, guid: f4d891519e9a14b73be8b1a38ad60d1d, type: 3}
   - {fileID: 21300000, guid: 6e5eacf13bf314364ae668826acafdf1, type: 3}
-  - {fileID: 21300000, guid: 492ede3deac4f4051a28f327807b7d47, type: 3}
+  - {fileID: -1246155442, guid: 492ede3deac4f4051a28f327807b7d47, type: 3}
   - {fileID: 21300000, guid: 038fc05b661554dfe9d67dcbe23222dc, type: 3}
   - {fileID: 21300000, guid: f77e2565121d04d769d42382418d9dd2, type: 3}
   - {fileID: 21300000, guid: 1570ace01c18c465c9dd117abf1c430b, type: 3}
@@ -69104,7 +69104,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

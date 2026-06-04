@@ -1,31 +1,46 @@
 fileFormatVersion: 2
-guid: da0d9fe5d13014ae2b937db5525d7467
+guid: b57d1abbb1d544406b2b3c788e47fcf4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8953795955125522194
-    second: money2-3_0
+      213: -7234308769428685817
+    second: Text_Hold_for_auto_play-05_0
   - first:
-      213: -7158568673085710757
-    second: money2-3_1
+      213: -4787815831354263436
+    second: Text_Hold_for_auto_play-05_1
   - first:
-      213: -4329421784162762943
-    second: money2-3_2
+      213: 2289763434117046649
+    second: Text_Hold_for_auto_play-05_2
   - first:
-      213: 4293982900842644536
-    second: money2-3_3
+      213: -3562924237880671683
+    second: Text_Hold_for_auto_play-05_3
   - first:
-      213: -9006515890212901270
-    second: money2-3_4
+      213: -7946493845769657448
+    second: Text_Hold_for_auto_play-05_4
   - first:
-      213: -9073808445846605806
-    second: money2-3_5
+      213: 3913022362044852731
+    second: Text_Hold_for_auto_play-05_5
   - first:
-      213: 1194814274709402196
-    second: money2-3_6
+      213: 4259141960286441678
+    second: Text_Hold_for_auto_play-05_6
   - first:
-      213: -2855641793804844315
-    second: money2-3_7
+      213: -2456164979163815869
+    second: Text_Hold_for_auto_play-05_7
+  - first:
+      213: 3556667272339958222
+    second: Text_Hold_for_auto_play-05_8
+  - first:
+      213: -4011421237515508078
+    second: Text_Hold_for_auto_play-05_9
+  - first:
+      213: 9110400036571806683
+    second: Text_Hold_for_auto_play-05_10
+  - first:
+      213: -1517592531143719449
+    second: Text_Hold_for_auto_play-05_11
+  - first:
+      213: 3326071799810934289
+    second: Text_Hold_for_auto_play-05_12
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -67,7 +82,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -160,13 +175,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: money2-3_0
+      name: Text_Hold_for_auto_play-05_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 829
-        width: 154
-        height: 64
+        x: 66
+        y: 57
+        width: 18
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,20 +190,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ee0f96f940abdb380800000000000000
-      internalID: -8953795955125522194
+      spriteID: 70cb5b2d0829a9b90800000000000000
+      internalID: -7234308769428685817
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_1
+      name: Text_Hold_for_auto_play-05_1
       rect:
         serializedVersion: 2
-        x: 429
-        y: 829
-        width: 154
-        height: 62
+        x: 83
+        y: 64
+        width: 22
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +212,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b5e9c7438b7a7ac90800000000000000
-      internalID: -7158568673085710757
+      spriteID: 478332a4ed24e8db0800000000000000
+      internalID: -4787815831354263436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_2
+      name: Text_Hold_for_auto_play-05_2
       rect:
         serializedVersion: 2
-        x: 89
-        y: 586
-        width: 153
-        height: 61
+        x: 104
+        y: 67
+        width: 20
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,20 +234,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 14ff32853ddcae3c0800000000000000
-      internalID: -4329421784162762943
+      spriteID: 971a93e26bfd6cf10800000000000000
+      internalID: 2289763434117046649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_3
+      name: Text_Hold_for_auto_play-05_3
       rect:
         serializedVersion: 2
-        x: 432
-        y: 586
-        width: 154
-        height: 58
+        x: 128
+        y: 67
+        width: 21
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -241,20 +256,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 834c354a2ba479b30800000000000000
-      internalID: 4293982900842644536
+      spriteID: d324e776843fd8ec0800000000000000
+      internalID: -3562924237880671683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_4
+      name: Text_Hold_for_auto_play-05_4
       rect:
         serializedVersion: 2
-        x: 92
-        y: 344
-        width: 153
-        height: 54
+        x: 148
+        y: 65
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,20 +278,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6ee2f3348d620380800000000000000
-      internalID: -9006515890212901270
+      spriteID: 893621913f168b190800000000000000
+      internalID: -7946493845769657448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_5
+      name: Text_Hold_for_auto_play-05_5
       rect:
         serializedVersion: 2
-        x: 435
-        y: 344
-        width: 153
-        height: 49
+        x: 168
+        y: 61
+        width: 20
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -285,20 +300,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 210bf592b4b531280800000000000000
-      internalID: -9073808445846605806
+      spriteID: bf9e7df2b19dd4630800000000000000
+      internalID: 3913022362044852731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_6
+      name: Text_Hold_for_auto_play-05_6
       rect:
         serializedVersion: 2
-        x: 95
-        y: 102
-        width: 151
-        height: 43
+        x: 182
+        y: 52
+        width: 22
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,20 +322,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 452be90a045d49010800000000000000
-      internalID: 1194814274709402196
+      spriteID: ec095d60c038b1b30800000000000000
+      internalID: 4259141960286441678
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: money2-3_7
+      name: Text_Hold_for_auto_play-05_7
       rect:
         serializedVersion: 2
-        x: 438
-        y: 102
-        width: 151
-        height: 38
+        x: 28
+        y: 33
+        width: 36
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -329,8 +344,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e2c08a1be8be58d0800000000000000
-      internalID: -2855641793804844315
+      spriteID: 340af2bf6f2f9edd0800000000000000
+      internalID: -2456164979163815869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_Hold_for_auto_play-05_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 46
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9a4184a02db5130800000000000000
+      internalID: 3556667272339958222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_Hold_for_auto_play-05_9
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 13
+        width: 33
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2962e6d43a19458c0800000000000000
+      internalID: -4011421237515508078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_Hold_for_auto_play-05_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb71957094ae6e70800000000000000
+      internalID: 9110400036571806683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_Hold_for_auto_play-05_11
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 19
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5846b22ad60fae0800000000000000
+      internalID: -1517592531143719449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_Hold_for_auto_play-05_12
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 5
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 116cc2dfda4982e20800000000000000
+      internalID: 3326071799810934289
       vertices: []
       indices: 
       edges: []
@@ -339,7 +464,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -349,14 +474,19 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      money2-3_0: -8953795955125522194
-      money2-3_1: -7158568673085710757
-      money2-3_2: -4329421784162762943
-      money2-3_3: 4293982900842644536
-      money2-3_4: -9006515890212901270
-      money2-3_5: -9073808445846605806
-      money2-3_6: 1194814274709402196
-      money2-3_7: -2855641793804844315
+      Text_Hold_for_auto_play-05_0: -7234308769428685817
+      Text_Hold_for_auto_play-05_1: -4787815831354263436
+      Text_Hold_for_auto_play-05_10: 9110400036571806683
+      Text_Hold_for_auto_play-05_11: -1517592531143719449
+      Text_Hold_for_auto_play-05_12: 3326071799810934289
+      Text_Hold_for_auto_play-05_2: 2289763434117046649
+      Text_Hold_for_auto_play-05_3: -3562924237880671683
+      Text_Hold_for_auto_play-05_4: -7946493845769657448
+      Text_Hold_for_auto_play-05_5: 3913022362044852731
+      Text_Hold_for_auto_play-05_6: 4259141960286441678
+      Text_Hold_for_auto_play-05_7: -2456164979163815869
+      Text_Hold_for_auto_play-05_8: 3556667272339958222
+      Text_Hold_for_auto_play-05_9: -4011421237515508078
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
