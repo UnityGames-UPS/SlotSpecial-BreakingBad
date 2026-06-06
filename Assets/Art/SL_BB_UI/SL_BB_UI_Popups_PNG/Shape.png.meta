@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 5645cb23a21e0493c863b466c87ada08
+guid: adab30e53b68e40189c9dd1a857e7ad2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2423265360541711604
-    second: SL_BB_Frame_Wild_Hat_0
-  - first:
-      213: -6090922407483607010
-    second: SL_BB_Frame_Wild_Hat_1
-  - first:
-      213: -6229876822206360096
-    second: SL_BB_Frame_Wild_Hat_2
-  - first:
-      213: 8943016543807020797
-    second: SL_BB_Frame_Wild_Hat_3
+      213: 3296653161783740144
+    second: Shape_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -148,79 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SL_BB_Frame_Wild_Hat_0
+      name: Shape_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 58
-        width: 196
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c03076c5ef4de5ed0800000000000000
-      internalID: -2423265360541711604
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SL_BB_Frame_Wild_Hat_1
-      rect:
-        serializedVersion: 2
-        x: 57
-        y: 116
-        width: 8
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e18f87b6752b87ba0800000000000000
-      internalID: -6090922407483607010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SL_BB_Frame_Wild_Hat_2
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 106
-        width: 33
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0e553f999080b89a0800000000000000
-      internalID: -6229876822206360096
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SL_BB_Frame_Wild_Hat_3
-      rect:
-        serializedVersion: 2
-        x: 19
+        x: 0
         y: 0
-        width: 26
-        height: 9
+        width: 1047
+        height: 131
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dfe1f0a1a2afb1c70800000000000000
-      internalID: 8943016543807020797
+      spriteID: 0f6c9cf859010cd20800000000000000
+      internalID: 3296653161783740144
       vertices: []
       indices: 
       edges: []
@@ -239,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -249,10 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SL_BB_Frame_Wild_Hat_0: -2423265360541711604
-      SL_BB_Frame_Wild_Hat_1: -6090922407483607010
-      SL_BB_Frame_Wild_Hat_2: -6229876822206360096
-      SL_BB_Frame_Wild_Hat_3: 8943016543807020797
+      Shape_0: 3296653161783740144
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
