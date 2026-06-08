@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: b24762506a0144dd9ac07b1dfe12d719
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4550816752874249367
+    second: SL_BB_Megnet Effect _59_0
+  - first:
+      213: -3319712516509228857
+    second: SL_BB_Megnet Effect _59_1
+  - first:
+      213: 7092677105648160659
+    second: SL_BB_Megnet Effect _59_2
+  - first:
+      213: 1971796075607659387
+    second: SL_BB_Megnet Effect _59_3
+  - first:
+      213: -4413186090283668854
+    second: SL_BB_Megnet Effect _59_4
+  - first:
+      213: -5468110477649242888
+    second: SL_BB_Megnet Effect _59_5
+  - first:
+      213: 7880590119927362723
+    second: SL_BB_Megnet Effect _59_6
+  - first:
+      213: -3691921426180166892
+    second: SL_BB_Megnet Effect _59_7
+  - first:
+      213: -2605392939086154259
+    second: SL_BB_Megnet Effect _59_8
+  - first:
+      213: -1069198514359186292
+    second: SL_BB_Megnet Effect _59_9
+  - first:
+      213: -5505637314776197410
+    second: SL_BB_Megnet Effect _59_10
+  - first:
+      213: -4595055135792231654
+    second: SL_BB_Megnet Effect _59_11
+  - first:
+      213: 2548032833679582031
+    second: SL_BB_Megnet Effect _59_12
+  - first:
+      213: 2725559072280903938
+    second: SL_BB_Megnet Effect _59_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_0
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 565
+        width: 11
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79c57f8b9bfb72f30800000000000000
+      internalID: 4550816752874249367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_1
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 638
+        width: 6
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c0ac090e030ee1d0800000000000000
+      internalID: -3319712516509228857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_2
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 557
+        width: 9
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39f44bcbf304e6260800000000000000
+      internalID: 7092677105648160659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_3
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 463
+        width: 14
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b739a10751a3d5b10800000000000000
+      internalID: 1971796075607659387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_4
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 528
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a62f802a631c2c0800000000000000
+      internalID: -4413186090283668854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_5
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 520
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f4102bed7e5d14b0800000000000000
+      internalID: -5468110477649242888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 455
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a439bef5fa7d5d60800000000000000
+      internalID: 7880590119927362723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_7
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 455
+        width: 14
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ba0e50609a3ccc0800000000000000
+      internalID: -3691921426180166892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_8
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 447
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de575750de8c7dbd0800000000000000
+      internalID: -2605392939086154259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_9
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 388
+        width: 9
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8cce35bd917921f0800000000000000
+      internalID: -1069198514359186292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_10
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 380
+        width: 9
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed611a6480c0893b0800000000000000
+      internalID: -5505637314776197410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_11
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 251
+        width: 17
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1b05cb13b51b30c0800000000000000
+      internalID: -4595055135792231654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_12
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 243
+        width: 17
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f43e087bc5e6c5320800000000000000
+      internalID: 2548032833679582031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Megnet Effect _59_13
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 21
+        width: 180
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20185ad198123d520800000000000000
+      internalID: 2725559072280903938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SL_BB_Megnet Effect _59_0: 4550816752874249367
+      SL_BB_Megnet Effect _59_1: -3319712516509228857
+      SL_BB_Megnet Effect _59_10: -5505637314776197410
+      SL_BB_Megnet Effect _59_11: -4595055135792231654
+      SL_BB_Megnet Effect _59_12: 2548032833679582031
+      SL_BB_Megnet Effect _59_13: 2725559072280903938
+      SL_BB_Megnet Effect _59_2: 7092677105648160659
+      SL_BB_Megnet Effect _59_3: 1971796075607659387
+      SL_BB_Megnet Effect _59_4: -4413186090283668854
+      SL_BB_Megnet Effect _59_5: -5468110477649242888
+      SL_BB_Megnet Effect _59_6: 7880590119927362723
+      SL_BB_Megnet Effect _59_7: -3691921426180166892
+      SL_BB_Megnet Effect _59_8: -2605392939086154259
+      SL_BB_Megnet Effect _59_9: -1069198514359186292
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

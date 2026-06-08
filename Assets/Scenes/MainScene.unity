@@ -16245,7 +16245,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: 98de68889a2343479b6f2db09c255ee7
+  testToken: 3d55ad48100c408da441757fcbfdfc1a
 --- !u!1 &500730208
 GameObject:
   m_ObjectHideFlags: 0
@@ -34123,7 +34123,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -57281,7 +57281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1748382086
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,988 @@
+fileFormatVersion: 2
+guid: c85a5931099b84e3a80feae263408be3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3251641526020051233
+    second: Symbol Link_30fps_00051_0
+  - first:
+      213: -5483104428652001306
+    second: Symbol Link_30fps_00051_1
+  - first:
+      213: 2150995487264947843
+    second: Symbol Link_30fps_00051_2
+  - first:
+      213: -8548760317935120748
+    second: Symbol Link_30fps_00051_3
+  - first:
+      213: -875453572637660219
+    second: Symbol Link_30fps_00051_4
+  - first:
+      213: -8170416857370053128
+    second: Symbol Link_30fps_00051_5
+  - first:
+      213: 9143821183300634645
+    second: Symbol Link_30fps_00051_6
+  - first:
+      213: -4878882176021208095
+    second: Symbol Link_30fps_00051_7
+  - first:
+      213: -6076655869536933033
+    second: Symbol Link_30fps_00051_8
+  - first:
+      213: -1305901822940632979
+    second: Symbol Link_30fps_00051_9
+  - first:
+      213: 666474379525200452
+    second: Symbol Link_30fps_00051_10
+  - first:
+      213: -3011743578956356936
+    second: Symbol Link_30fps_00051_11
+  - first:
+      213: -2462153525653810506
+    second: Symbol Link_30fps_00051_12
+  - first:
+      213: 3495474635543636992
+    second: Symbol Link_30fps_00051_13
+  - first:
+      213: 3096718557941172246
+    second: Symbol Link_30fps_00051_14
+  - first:
+      213: -3948694318719396914
+    second: Symbol Link_30fps_00051_15
+  - first:
+      213: -4330514207981706622
+    second: Symbol Link_30fps_00051_16
+  - first:
+      213: 4649822325453417669
+    second: Symbol Link_30fps_00051_17
+  - first:
+      213: 3713380662901588174
+    second: Symbol Link_30fps_00051_18
+  - first:
+      213: -8219049675584501971
+    second: Symbol Link_30fps_00051_19
+  - first:
+      213: 2466078842430721967
+    second: Symbol Link_30fps_00051_20
+  - first:
+      213: -2612828197115211764
+    second: Symbol Link_30fps_00051_21
+  - first:
+      213: -5891049810767297078
+    second: Symbol Link_30fps_00051_22
+  - first:
+      213: 3978143584099031024
+    second: Symbol Link_30fps_00051_23
+  - first:
+      213: 5920028643840800505
+    second: Symbol Link_30fps_00051_24
+  - first:
+      213: -2388751404303271984
+    second: Symbol Link_30fps_00051_25
+  - first:
+      213: -933612343825037235
+    second: Symbol Link_30fps_00051_26
+  - first:
+      213: -8220455897617431579
+    second: Symbol Link_30fps_00051_27
+  - first:
+      213: -2306395045964416377
+    second: Symbol Link_30fps_00051_28
+  - first:
+      213: -7463601646321201788
+    second: Symbol Link_30fps_00051_29
+  - first:
+      213: 1886794850997993679
+    second: Symbol Link_30fps_00051_30
+  - first:
+      213: 7769142521446920295
+    second: Symbol Link_30fps_00051_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_0
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 751
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fde6aa09249dfd2d0800000000000000
+      internalID: -3251641526020051233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 752
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e783d7a29918e3b0800000000000000
+      internalID: -5483104428652001306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 753
+        width: 14
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38e35ebcffed9dd10800000000000000
+      internalID: 2150995487264947843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_3
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 20
+        width: 530
+        height: 711
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49e858bb8c3bc5980800000000000000
+      internalID: -8548760317935120748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 695
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cbe5913d93c9d3f0800000000000000
+      internalID: -875453572637660219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_5
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 728
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f5389d2829dc9e80800000000000000
+      internalID: -8170416857370053128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_6
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 714
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51883509be065ee70800000000000000
+      internalID: 9143821183300634645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_7
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 714
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e36545a28aba4cb0800000000000000
+      internalID: -4878882176021208095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_8
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 726
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75b65f1aea16baba0800000000000000
+      internalID: -6076655869536933033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_9
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 703
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d68a614063180ede0800000000000000
+      internalID: -1305901822940632979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_10
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 694
+        width: 43
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44a9f73caeacf3900800000000000000
+      internalID: 666474379525200452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_11
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 714
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b22ebdfb232436d0800000000000000
+      internalID: -3011743578956356936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_12
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 714
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b2dde8d96ca4ddd0800000000000000
+      internalID: -2462153525653810506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_13
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 659
+        width: 22
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00c67f449ab628030800000000000000
+      internalID: 3495474635543636992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_14
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 637
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 618817f0f11c9fa20800000000000000
+      internalID: 3096718557941172246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_15
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 667
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec3902e207b6339c0800000000000000
+      internalID: -3948694318719396914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_16
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 613
+        width: 25
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 282e77a954ce6e3c0800000000000000
+      internalID: -4330514207981706622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_17
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 602
+        width: 25
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cce459e4cc778040800000000000000
+      internalID: 4649822325453417669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 490
+        width: 29
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec0cd00e904988330800000000000000
+      internalID: 3713380662901588174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_19
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 238
+        width: 104
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d270f7fcdd110fd80800000000000000
+      internalID: -8219049675584501971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_20
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 341
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf803f24a5493220800000000000000
+      internalID: 2466078842430721967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_21
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 358
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c00d2db199e5dbbd0800000000000000
+      internalID: -2612828197115211764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_22
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 320
+        width: 62
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac54513c869ce3ea0800000000000000
+      internalID: -5891049810767297078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_23
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 312
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f7d8bb3384353730800000000000000
+      internalID: 3978143584099031024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 246
+        width: 6
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6b4489faa282250800000000000000
+      internalID: 5920028643840800505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_25
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 260
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d7b9c1014379ded0800000000000000
+      internalID: -2388751404303271984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_26
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 244
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48836015842b03f0800000000000000
+      internalID: -933612343825037235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_27
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 237
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e38fba3ae21bed80800000000000000
+      internalID: -8220455897617431579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_28
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 199
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78af19dece90effd0800000000000000
+      internalID: -2306395045964416377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_29
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 94
+        width: 133
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d0106b8d5fb6890800000000000000
+      internalID: -7463601646321201788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_30
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 173
+        width: 29
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc085c99bed3f2a10800000000000000
+      internalID: 1886794850997993679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol Link_30fps_00051_31
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 10
+        width: 24
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760f938e5f981db60800000000000000
+      internalID: 7769142521446920295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Symbol Link_30fps_00051_0: -3251641526020051233
+      Symbol Link_30fps_00051_1: -5483104428652001306
+      Symbol Link_30fps_00051_10: 666474379525200452
+      Symbol Link_30fps_00051_11: -3011743578956356936
+      Symbol Link_30fps_00051_12: -2462153525653810506
+      Symbol Link_30fps_00051_13: 3495474635543636992
+      Symbol Link_30fps_00051_14: 3096718557941172246
+      Symbol Link_30fps_00051_15: -3948694318719396914
+      Symbol Link_30fps_00051_16: -4330514207981706622
+      Symbol Link_30fps_00051_17: 4649822325453417669
+      Symbol Link_30fps_00051_18: 3713380662901588174
+      Symbol Link_30fps_00051_19: -8219049675584501971
+      Symbol Link_30fps_00051_2: 2150995487264947843
+      Symbol Link_30fps_00051_20: 2466078842430721967
+      Symbol Link_30fps_00051_21: -2612828197115211764
+      Symbol Link_30fps_00051_22: -5891049810767297078
+      Symbol Link_30fps_00051_23: 3978143584099031024
+      Symbol Link_30fps_00051_24: 5920028643840800505
+      Symbol Link_30fps_00051_25: -2388751404303271984
+      Symbol Link_30fps_00051_26: -933612343825037235
+      Symbol Link_30fps_00051_27: -8220455897617431579
+      Symbol Link_30fps_00051_28: -2306395045964416377
+      Symbol Link_30fps_00051_29: -7463601646321201788
+      Symbol Link_30fps_00051_3: -8548760317935120748
+      Symbol Link_30fps_00051_30: 1886794850997993679
+      Symbol Link_30fps_00051_31: 7769142521446920295
+      Symbol Link_30fps_00051_4: -875453572637660219
+      Symbol Link_30fps_00051_5: -8170416857370053128
+      Symbol Link_30fps_00051_6: 9143821183300634645
+      Symbol Link_30fps_00051_7: -4878882176021208095
+      Symbol Link_30fps_00051_8: -6076655869536933033
+      Symbol Link_30fps_00051_9: -1305901822940632979
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

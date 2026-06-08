@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 340b7c2015fb14a139e2a851e01c1241
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6954508371341141509
+    second: SL_BB_Smoke Effect _46_0
+  - first:
+      213: -8847838588009355492
+    second: SL_BB_Smoke Effect _46_1
+  - first:
+      213: -9222433462059143167
+    second: SL_BB_Smoke Effect _46_2
+  - first:
+      213: -2179127497276920559
+    second: SL_BB_Smoke Effect _46_3
+  - first:
+      213: -1668219420644575447
+    second: SL_BB_Smoke Effect _46_4
+  - first:
+      213: 3998251221837681378
+    second: SL_BB_Smoke Effect _46_5
+  - first:
+      213: -5457307931537695872
+    second: SL_BB_Smoke Effect _46_6
+  - first:
+      213: 1584154459502291948
+    second: SL_BB_Smoke Effect _46_7
+  - first:
+      213: -6803451506228472716
+    second: SL_BB_Smoke Effect _46_8
+  - first:
+      213: -5824995887204592612
+    second: SL_BB_Smoke Effect _46_9
+  - first:
+      213: 4730877993814129744
+    second: SL_BB_Smoke Effect _46_10
+  - first:
+      213: 7865258195665164604
+    second: SL_BB_Smoke Effect _46_11
+  - first:
+      213: -7219362367573604662
+    second: SL_BB_Smoke Effect _46_12
+  - first:
+      213: -4510963013241695456
+    second: SL_BB_Smoke Effect _46_13
+  - first:
+      213: 6732468878503722370
+    second: SL_BB_Smoke Effect _46_14
+  - first:
+      213: 4594436535418270533
+    second: SL_BB_Smoke Effect _46_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 206
+        width: 85
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf91bba9b7f9c7f90800000000000000
+      internalID: -6954508371341141509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_1
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 97
+        width: 109
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1765bb9ea9263580800000000000000
+      internalID: -8847838588009355492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_2
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 218
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 100f949f0a5530080800000000000000
+      internalID: -9222433462059143167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_3
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 189
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11de584361f22c1e0800000000000000
+      internalID: -2179127497276920559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_4
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 199
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9277219864b49d8e0800000000000000
+      internalID: -1668219420644575447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_5
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 58
+        width: 59
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e218687d44ac7730800000000000000
+      internalID: 3998251221837681378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 124
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08b16cea95fb344b0800000000000000
+      internalID: -5457307931537695872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_7
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 96
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb2cf3761c0cf510800000000000000
+      internalID: 1584154459502291948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_8
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 87
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 474d7acb6e84591a0800000000000000
+      internalID: -6803451506228472716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_9
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 86
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c141f0d4a15792fa0800000000000000
+      internalID: -5824995887204592612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_10
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 68
+        width: 31
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05cf009587477a140800000000000000
+      internalID: 4730877993814129744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_11
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 85
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c391a5338a2072d60800000000000000
+      internalID: 7865258195665164604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_12
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 13
+        width: 49
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac6c3ff2d2cafcb90800000000000000
+      internalID: -7219362367573604662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_13
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 72
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0239dc02a07d561c0800000000000000
+      internalID: -4510963013241695456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_14
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 84
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d369c56c88e6d50800000000000000
+      internalID: 6732468878503722370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_Smoke Effect _46_15
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 50
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 543bea4cfa7b2cf30800000000000000
+      internalID: 4594436535418270533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SL_BB_Smoke Effect _46_0: -6954508371341141509
+      SL_BB_Smoke Effect _46_1: -8847838588009355492
+      SL_BB_Smoke Effect _46_10: 4730877993814129744
+      SL_BB_Smoke Effect _46_11: 7865258195665164604
+      SL_BB_Smoke Effect _46_12: -7219362367573604662
+      SL_BB_Smoke Effect _46_13: -4510963013241695456
+      SL_BB_Smoke Effect _46_14: 6732468878503722370
+      SL_BB_Smoke Effect _46_15: 4594436535418270533
+      SL_BB_Smoke Effect _46_2: -9222433462059143167
+      SL_BB_Smoke Effect _46_3: -2179127497276920559
+      SL_BB_Smoke Effect _46_4: -1668219420644575447
+      SL_BB_Smoke Effect _46_5: 3998251221837681378
+      SL_BB_Smoke Effect _46_6: -5457307931537695872
+      SL_BB_Smoke Effect _46_7: 1584154459502291948
+      SL_BB_Smoke Effect _46_8: -6803451506228472716
+      SL_BB_Smoke Effect _46_9: -5824995887204592612
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
