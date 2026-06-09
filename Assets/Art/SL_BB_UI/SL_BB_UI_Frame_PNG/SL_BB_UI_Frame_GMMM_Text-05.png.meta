@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 92123398b825a4c10ae4e61c71a90505
+guid: 01ab544eef14d41c2a230386464a749d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5631221493904263180
-    second: SL_BB_UI_Frame_GMMM_0
+      213: 2501649236536846985
+    second: SL_BB_UI_Frame_GMMM_Text-05_0
   - first:
-      213: 6790920240473396466
-    second: SL_BB_UI_Frame_GMMM_1
+      213: -7158751303922419445
+    second: SL_BB_UI_Frame_GMMM_Text-05_1
   - first:
-      213: -5360180329929578281
-    second: SL_BB_UI_Frame_GMMM_2
+      213: -6979308148490781822
+    second: SL_BB_UI_Frame_GMMM_Text-05_2
   - first:
-      213: -8161394672110817124
-    second: SL_BB_UI_Frame_GMMM_3
+      213: 8383819036354430880
+    second: SL_BB_UI_Frame_GMMM_Text-05_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,13 +148,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_0
+      name: SL_BB_UI_Frame_GMMM_Text-05_0
       rect:
         serializedVersion: 2
-        x: 68
-        y: 795
-        width: 376
-        height: 202
+        x: 28
+        y: 422
+        width: 312
+        height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4f7ba4403e1e9d1b0800000000000000
-      internalID: -5631221493904263180
+      spriteID: 98ae760f9b4a7b220800000000000000
+      internalID: 2501649236536846985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_1
+      name: SL_BB_UI_Frame_GMMM_Text-05_1
       rect:
         serializedVersion: 2
-        x: 68
-        y: 539
-        width: 376
-        height: 202
+        x: 28
+        y: 287
+        width: 312
+        height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +185,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f45d679af13e3e50800000000000000
-      internalID: 6790920240473396466
+      spriteID: b09f6562e9107ac90800000000000000
+      internalID: -7158751303922419445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_2
+      name: SL_BB_UI_Frame_GMMM_Text-05_2
       rect:
         serializedVersion: 2
-        x: 68
-        y: 283
-        width: 376
-        height: 202
+        x: 28
+        y: 152
+        width: 312
+        height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,20 +207,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7d8e28ea360dc95b0800000000000000
-      internalID: -5360180329929578281
+      spriteID: 28bb7378734842f90800000000000000
+      internalID: -6979308148490781822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_3
+      name: SL_BB_UI_Frame_GMMM_Text-05_3
       rect:
         serializedVersion: 2
-        x: 68
-        y: 27
-        width: 376
-        height: 202
+        x: 28
+        y: 15
+        width: 312
+        height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c90b11169c6ecbe80800000000000000
-      internalID: -8161394672110817124
+      spriteID: 0a740138efe495470800000000000000
+      internalID: 8383819036354430880
       vertices: []
       indices: 
       edges: []
@@ -239,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b23780976e98447c7b31d65603597300
+    spriteID: d627926c6b9044d16867c0838557cfdf
     internalID: 0
     vertices: []
     indices: 
@@ -249,10 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SL_BB_UI_Frame_GMMM_0: -5631221493904263180
-      SL_BB_UI_Frame_GMMM_1: 6790920240473396466
-      SL_BB_UI_Frame_GMMM_2: -5360180329929578281
-      SL_BB_UI_Frame_GMMM_3: -8161394672110817124
+      SL_BB_UI_Frame_GMMM_Text-05_0: 2501649236536846985
+      SL_BB_UI_Frame_GMMM_Text-05_1: -7158751303922419445
+      SL_BB_UI_Frame_GMMM_Text-05_2: -6979308148490781822
+      SL_BB_UI_Frame_GMMM_Text-05_3: 8383819036354430880
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

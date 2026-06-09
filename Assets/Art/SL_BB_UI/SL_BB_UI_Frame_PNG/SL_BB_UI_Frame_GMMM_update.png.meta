@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 92123398b825a4c10ae4e61c71a90505
+guid: c344df1d93fbd4cd2b282e8463d03fe2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5631221493904263180
-    second: SL_BB_UI_Frame_GMMM_0
+      213: -8893989459167232251
+    second: SL_BB_UI_Frame_GMMM_update_0
   - first:
-      213: 6790920240473396466
-    second: SL_BB_UI_Frame_GMMM_1
+      213: 2685147169370106947
+    second: SL_BB_UI_Frame_GMMM_update_1
   - first:
-      213: -5360180329929578281
-    second: SL_BB_UI_Frame_GMMM_2
+      213: 766295944141401285
+    second: SL_BB_UI_Frame_GMMM_update_2
   - first:
-      213: -8161394672110817124
-    second: SL_BB_UI_Frame_GMMM_3
+      213: 5706487311113760490
+    second: SL_BB_UI_Frame_GMMM_update_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,7 +148,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_0
+      name: SL_BB_UI_Frame_GMMM_update_0
       rect:
         serializedVersion: 2
         x: 68
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4f7ba4403e1e9d1b0800000000000000
-      internalID: -5631221493904263180
+      spriteID: 50fb44295b3329480800000000000000
+      internalID: -8893989459167232251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_1
+      name: SL_BB_UI_Frame_GMMM_update_1
       rect:
         serializedVersion: 2
         x: 68
@@ -185,14 +185,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f45d679af13e3e50800000000000000
-      internalID: 6790920240473396466
+      spriteID: 34c63ffbf1f834520800000000000000
+      internalID: 2685147169370106947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_2
+      name: SL_BB_UI_Frame_GMMM_update_2
       rect:
         serializedVersion: 2
         x: 68
@@ -207,14 +207,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7d8e28ea360dc95b0800000000000000
-      internalID: -5360180329929578281
+      spriteID: 5ccee57e91e62aa00800000000000000
+      internalID: 766295944141401285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SL_BB_UI_Frame_GMMM_3
+      name: SL_BB_UI_Frame_GMMM_update_3
       rect:
         serializedVersion: 2
         x: 68
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c90b11169c6ecbe80800000000000000
-      internalID: -8161394672110817124
+      spriteID: aeea536a9f3813f40800000000000000
+      internalID: 5706487311113760490
       vertices: []
       indices: 
       edges: []
@@ -239,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b23780976e98447c7b31d65603597300
+    spriteID: d7d2201208aef4808a3356f82bce6a65
     internalID: 0
     vertices: []
     indices: 
@@ -249,10 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SL_BB_UI_Frame_GMMM_0: -5631221493904263180
-      SL_BB_UI_Frame_GMMM_1: 6790920240473396466
-      SL_BB_UI_Frame_GMMM_2: -5360180329929578281
-      SL_BB_UI_Frame_GMMM_3: -8161394672110817124
+      SL_BB_UI_Frame_GMMM_update_0: -8893989459167232251
+      SL_BB_UI_Frame_GMMM_update_1: 2685147169370106947
+      SL_BB_UI_Frame_GMMM_update_2: 766295944141401285
+      SL_BB_UI_Frame_GMMM_update_3: 5706487311113760490
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
