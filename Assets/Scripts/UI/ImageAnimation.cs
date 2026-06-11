@@ -5,132 +5,168 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ImageAnimation : MonoBehaviour
 {
-  public enum ImageState
-  {
-    NONE,
-    PLAYING,
-    PAUSED
-  }
-
-  [HideInInspector] public ImageState currentAnimationState;
-  public static ImageAnimation Instance;
-  public List<Sprite> textureArray;
-  public Image rendererDelegate;
-  public bool useSharedMaterial = true;
-  public bool doLoopAnimation = true;
-  private int indexOfTexture;
-  private float idealFrameRate = 0.0416666679f;
-  private float delayBetweenAnimation;
-  public float AnimationSpeed = 5f;
-  public float delayBetweenLoop;
-  public bool StartOnAwake = false;
-  internal bool isAnim = false;
-
-  private void OnValidate()
-  {
-    rendererDelegate = GetComponent<Image>();
-
-    // Ensure the reference is correctly set
-    if (rendererDelegate == null)
+    public enum ImageState
     {
-      Debug.LogError("No Image component found on this GameObject. Please add one.");
+        NONE,
+        PLAYING,
+        PAUSED
     }
-  }
 
-  private void Awake()
-  {
-    if (Instance == null)
-    {
-      Instance = this;
-    }
-    //StartAnimation(); // for testing animation
-  }
+    // ─── Singleton (legacy compatibility) ───────────────────────────
+    public static ImageAnimation Instance;
 
-  private void OnDisable()
-  {
-    StopAnimation();
-  }
-  private void OnEnable()
-  {
-    if (StartOnAwake)
-    {
-      StartAnimation();
-    }
-  }
+    // ─── Inspector fields ───────────────────────────────────────────
+    public List<Sprite> textureArray = new List<Sprite>();
+    public Image rendererDelegate;
+    public bool useSharedMaterial = true;
+    public bool doLoopAnimation = true;
 
-  private void AnimationProcess()
-  {
-    SetTextureOfIndex();
-    indexOfTexture++;
-    if (indexOfTexture == textureArray.Count)
-    {
-      indexOfTexture = 0;
-      if (doLoopAnimation)
-      {
-        Invoke("AnimationProcess", delayBetweenAnimation + delayBetweenLoop);
-      }
-    }
-    else
-    {
-      Invoke("AnimationProcess", delayBetweenAnimation);
-    }
-  }
+    [Header("Startup")]
+    [SerializeField] private bool StartOnAwake = false;
+    [SerializeField] private bool StartonEnable = false;
 
-  public void StartAnimation()
-  {
-    indexOfTexture = 0;
-    if (currentAnimationState == ImageState.NONE)
-    {
-      RevertToInitialState();
-      delayBetweenAnimation = idealFrameRate * (float)textureArray.Count / AnimationSpeed;
-      currentAnimationState = ImageState.PLAYING;
-      Invoke("AnimationProcess", delayBetweenAnimation);
-    }
-  }
+    [Header("Speed / Timing")]
+    public float AnimationSpeed = 5f;
+    public float delayBetweenLoop = 0f;
 
-  public void PauseAnimation()
-  {
-    if (currentAnimationState == ImageState.PLAYING)
-    {
-      CancelInvoke("AnimationProcess");
-      currentAnimationState = ImageState.PAUSED;
-    }
-  }
+    // ─── State ──────────────────────────────────────────────────────
+    [HideInInspector] public ImageState currentAnimationState;
 
-  public void ResumeAnimation()
-  {
-    if (currentAnimationState == ImageState.PAUSED && !IsInvoking("AnimationProcess"))
-    {
-      Invoke("AnimationProcess", delayBetweenAnimation);
-      currentAnimationState = ImageState.PLAYING;
-    }
-  }
+    /// <summary>True when this slot has win-animation sprites loaded (set by SlotBehaviour).</summary>
+    internal bool isAnim = false;
 
-  public void StopAnimation()
-  {
-    if (currentAnimationState != 0)
-    {
-      rendererDelegate.sprite = textureArray[0];
-      CancelInvoke("AnimationProcess");
-      currentAnimationState = ImageState.NONE;
-    }
-  }
+    /// <summary>Fires every time a full loop completes. Passes the running loop count.</summary>
+    public System.Action<int> onLoopComplete;
 
-  public void RevertToInitialState()
-  {
-    indexOfTexture = 0;
-    SetTextureOfIndex();
-  }
+    // ─── Private runtime ────────────────────────────────────────────
+    private int indexOfTexture;
+    private float delayBetweenAnimation;
+    private int currentLoopCount;
 
-  private void SetTextureOfIndex()
-  {
-    if (useSharedMaterial)
+    private const float IdealFrameRate = 0.0416666679f;
+
+    // ─── Unity lifecycle ────────────────────────────────────────────
+    private void OnValidate()
     {
-      rendererDelegate.sprite = textureArray[indexOfTexture];
+        if (rendererDelegate == null)
+            rendererDelegate = GetComponent<Image>();
     }
-    else
+
+    private void Awake()
     {
-      rendererDelegate.sprite = textureArray[indexOfTexture];
+        if (Instance == null)
+            Instance = this;
+
+        if (rendererDelegate == null)
+            rendererDelegate = GetComponent<Image>();
+
+        if (StartOnAwake)
+            StartAnimation();
     }
-  }
+
+    private void OnEnable()
+    {
+        if (StartonEnable)
+            StartAnimation();
+    }
+
+    private void OnDisable()
+    {
+        StopAnimation();
+    }
+
+    // ─── Core loop ──────────────────────────────────────────────────
+    private void AnimationProcess()
+    {
+        SetTextureOfIndex();
+        indexOfTexture++;
+
+        if (indexOfTexture >= textureArray.Count)
+        {
+            indexOfTexture = 0;
+            currentLoopCount++;
+            onLoopComplete?.Invoke(currentLoopCount);
+
+            if (doLoopAnimation)
+                Invoke(nameof(AnimationProcess), delayBetweenAnimation + delayBetweenLoop);
+        }
+        else
+        {
+            Invoke(nameof(AnimationProcess), delayBetweenAnimation);
+        }
+    }
+
+    // ─── Public API ─────────────────────────────────────────────────
+
+    /// <summary>
+    /// Start (or restart) the animation from frame 0.
+    /// Safe to call even if already playing — cancels and restarts cleanly.
+    /// </summary>
+    public void StartAnimation()
+    {
+        if (textureArray == null || textureArray.Count == 0) return;
+
+        CancelInvoke(nameof(AnimationProcess));
+        indexOfTexture = 0;
+        currentLoopCount = 0;
+
+        if (currentAnimationState == ImageState.NONE)
+        {
+            RevertToInitialState();
+            delayBetweenAnimation = IdealFrameRate * textureArray.Count / AnimationSpeed;
+            currentAnimationState = ImageState.PLAYING;
+            Invoke(nameof(AnimationProcess), delayBetweenAnimation);
+        }
+    }
+
+    /// <summary>Pause mid-sequence. Resume with ResumeAnimation().</summary>
+    public void PauseAnimation()
+    {
+        if (currentAnimationState == ImageState.PLAYING)
+        {
+            CancelInvoke(nameof(AnimationProcess));
+            currentAnimationState = ImageState.PAUSED;
+        }
+    }
+
+    /// <summary>Resume from where it was paused.</summary>
+    public void ResumeAnimation()
+    {
+        if (currentAnimationState == ImageState.PAUSED && !IsInvoking(nameof(AnimationProcess)))
+        {
+            Invoke(nameof(AnimationProcess), delayBetweenAnimation);
+            currentAnimationState = ImageState.PLAYING;
+        }
+    }
+
+    /// <summary>Stop the animation and reset sprite to frame 0.</summary>
+    public void StopAnimation()
+    {
+        if (currentAnimationState != ImageState.NONE)
+        {
+            CancelInvoke(nameof(AnimationProcess));
+            currentAnimationState = ImageState.NONE;
+            currentLoopCount = 0;
+
+            if (textureArray != null && textureArray.Count > 0 && rendererDelegate != null)
+                rendererDelegate.sprite = textureArray[0];
+        }
+    }
+
+    /// <summary>Reset displayed sprite to frame 0 without changing playback state.</summary>
+    public void RevertToInitialState()
+    {
+        indexOfTexture = 0;
+        SetTextureOfIndex();
+    }
+
+    // ─── Private helpers ────────────────────────────────────────────
+    private void SetTextureOfIndex()
+    {
+        if (textureArray == null || textureArray.Count == 0) return;
+        if (indexOfTexture < 0 || indexOfTexture >= textureArray.Count) return;
+        if (rendererDelegate == null) return;
+
+        rendererDelegate.sprite = textureArray[indexOfTexture];
+    }
 }

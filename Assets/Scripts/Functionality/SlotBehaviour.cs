@@ -12,7 +12,6 @@ public class SlotBehaviour : MonoBehaviour
   [Header("Script References")]
   [SerializeField] private SocketIOManager SocketManager;
   [SerializeField] private StaticSymbolController staticSymbolController;
-  [SerializeField] private AudioController audioController;
   [SerializeField] private UIManager uiManager;
   [SerializeField] private BonusController _bonusManager;
 
@@ -26,8 +25,26 @@ public class SlotBehaviour : MonoBehaviour
 
   [Header("Slot References")]
   [SerializeField] private List<SlotImage> images;     //class to store total images
-  [SerializeField] internal List<SlotImage> Tempimages;     //class to store the result matrix
-  [SerializeField] internal List<SlotImage> ResultMatrix;
+  internal List<SlotImage> Tempimages;     //class to store the result matrix
+  internal List<SlotImage> ResultMatrix;
+
+  [Header("Spin Settings")]
+  [SerializeField] private float anticipationUpDistance = 30f;
+  [SerializeField] private float anticipationUpDuration = 0.15f;
+  [SerializeField] private float dropDownDistance       = 15f;
+  [SerializeField] private float dropDownDuration       = 0.12f;
+  [SerializeField] private float settleBounceDuration   = 0.18f;
+  [SerializeField] private float stopOvershootDistance  = 50f;
+  [SerializeField] private float stopOvershootDuration  = 0.15f;
+  [SerializeField] private float stopBounceBackDistance = 15f;
+  [SerializeField] private float stopBounceBackDuration = 0.25f;
+  [SerializeField] private float stopSettleDuration     = 0.35f;
+  [SerializeField] private float quickStopOvershoot     = 20f;
+  [SerializeField] private float quickStopDuration      = 0.20f;
+  [SerializeField] private float spinCycleDuration      = 0.05f;
+  [SerializeField] private float symbolHeight           = 100f;
+
+  private float[] initialYPositions;
 
   [Header("Slots Transform Reference")]
   [SerializeField] private Transform[] Slot_Transform;
@@ -90,7 +107,7 @@ public class SlotBehaviour : MonoBehaviour
   [SerializeField] private Sprite[] MagnetLightening_Sprites;
   [SerializeField] Sprite TurboToggleSprite;
 
-  private List<Tweener> alltweens = new List<Tweener>();
+  private List<Tween> alltweens = new List<Tween>();
   private List<(Transform slotTransform, int originalSiblingIndex)> changedSlots = new();  //hold the reordered result matrix slots to show the fire animation
 
   private bool IsAutoSpin = false;
@@ -98,7 +115,6 @@ public class SlotBehaviour : MonoBehaviour
   internal bool IsBonus = false;
   private bool WinAnimationFin = true;
   private bool IsSpinning = false;
-  private bool CheckSpinAudio = false;
   internal bool CheckPopups = false;
 
   private Coroutine AutoSpinRoutine = null;
@@ -135,7 +151,7 @@ public class SlotBehaviour : MonoBehaviour
     if (Turbo_Button) Turbo_Button.onClick.AddListener(TurboToggle);
 
     if (StopSpin_Button) StopSpin_Button.onClick.RemoveAllListeners();
-    if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() => { audioController.PlayButtonAudio(); StopSpinToggle = true; StopSpin_Button.gameObject.SetActive(false); });
+    if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() => { StopSpinToggle = true; StopSpin_Button.gameObject.SetActive(false); });
 
     if (SlotStart_Button) SlotStart_Button.onClick.RemoveAllListeners();
     if (SlotStart_Button) SlotStart_Button.onClick.AddListener(delegate { StartSlots(); uiManager.CanCloseMenu(); });
@@ -159,10 +175,39 @@ public class SlotBehaviour : MonoBehaviour
     if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(delegate { StopAutoSpin(); uiManager.CanCloseMenu(); });
 
     tweenHeight = (13 * IconSizeFactor) - 280;
+
+    initialYPositions = new float[numberOfSlots];
+    for (int i = 0; i < numberOfSlots; i++)
+    {
+      initialYPositions[i] = Slot_Transform[i].localPosition.y;
+    }
+
+    Tempimages = new List<SlotImage>();
+    for (int col = 0; col < numberOfSlots; col++)
+    {
+      SlotImage colSlotImage = new SlotImage();
+      colSlotImage.slotImages = new List<Image>();
+      for (int row = 0; row < 3; row++)
+      {
+        colSlotImage.slotImages.Add(images[col].slotImages[2 + row]);
+      }
+      Tempimages.Add(colSlotImage);
+    }
+
+    ResultMatrix = new List<SlotImage>();
+    for (int row = 0; row < 3; row++)
+    {
+      SlotImage rowSlotImage = new SlotImage();
+      rowSlotImage.slotImages = new List<Image>();
+      for (int col = 0; col < numberOfSlots; col++)
+      {
+        rowSlotImage.slotImages.Add(images[col].slotImages[2 + row]);
+      }
+      ResultMatrix.Add(rowSlotImage);
+    }
   }
   void TurboToggle()
   {
-    audioController.PlayButtonAudio();
     if (IsTurboOn)
     {
       IsTurboOn = false;
@@ -284,7 +329,6 @@ public class SlotBehaviour : MonoBehaviour
 
   private void ChangeBet(bool IncDec)
   {
-    if (audioController) audioController.PlayButtonAudio();
     if (IncDec)
     {
       BetCounter++;
@@ -418,14 +462,12 @@ public class SlotBehaviour : MonoBehaviour
     changedSlots.Clear();
   }
 
-  private void OnApplicationFocus(bool focus)
-  {
-    audioController.CheckFocusFunction(focus, CheckSpinAudio);
-  }
+
 
   //function to populate animation sprites accordingly
   private void PopulateAnimationSprites(ImageAnimation animScript, int val, int LP = 0, string coin = null)
   {
+    if (animScript == null) return;
     animScript.textureArray.Clear();
     animScript.textureArray.TrimExcess();
     // animScript.doLoopAnimation=true;
@@ -602,7 +644,6 @@ public class SlotBehaviour : MonoBehaviour
   //starts the spin process
   private void StartSlots(bool autoSpin = false)
   {
-    if (audioController) audioController.PlaySpinButtonAudio();
 
     if (IsFreeSpin)
     {
@@ -645,7 +686,6 @@ public class SlotBehaviour : MonoBehaviour
       yield break;
     }
 
-    CheckSpinAudio = true;
     IsSpinning = true;
     ToggleButtonGrp(false);
 
@@ -960,10 +1000,7 @@ public class SlotBehaviour : MonoBehaviour
       yield return new WaitForSeconds(.5f);
     }
 
-    if (SocketManager.resultData.payload.winAmount <= 0)
-    {
-      audioController.PlayWLAudio("lose");
-    }
+
 
     // // Post-bonus and free spins cleanup
     if (!IsFreeSpin)
@@ -1022,35 +1059,81 @@ public class SlotBehaviour : MonoBehaviour
     StopGameAnimation();
   }
 
+  /// <summary>
+  /// Plays the win-landing animation for all special symbols in the result matrix (5x3 grid),
+  /// then stops every animation once each has completed its first full loop.
+  ///
+  /// Production pattern: uses onLoopComplete callback instead of polling
+  /// rendererDelegate.sprite — reliable across all 17 icon types with
+  /// different frame counts and animation speeds.
+  ///
+  /// Special symbol IDs: 11 (Link), 12 (MegaLink), 14 (CashCollect),
+  ///                     15 (GoldCoin), 16 (Diamond), 17 (LosPollos)
+  /// </summary>
   private IEnumerator StartSpecialSymbolAnimations()
   {
-    List<ImageAnimation> imageAnimations = new();
+    System.Func<string, bool> isSpecial = id =>
+        id == "11" || id == "12" || id == "14" ||
+        id == "15" || id == "16" || id == "17";
+
+    List<ImageAnimation> activeAnims = new();
+
+    // Collect all special-symbol slots in the 5-column x 3-row result matrix
     for (int i = 0; i < ResultMatrix.Count; i++)
     {
-      for (int j = 0; j < ResultMatrix[i].slotImages.Count; j++)                   // v2#################
+      for (int j = 0; j < ResultMatrix[i].slotImages.Count; j++)
       {
-        if (SocketManager.resultData.matrix[i][j] == "11" ||
-        SocketManager.resultData.matrix[i][j] == "12" ||
-        SocketManager.resultData.matrix[i][j] == "17" ||
-        SocketManager.resultData.matrix[i][j] == "14" ||
-        SocketManager.resultData.matrix[i][j] == "15" ||
-        SocketManager.resultData.matrix[i][j] == "16")
-        {
-          imageAnimations.Add(ResultMatrix[i].slotImages[j].GetComponent<ImageAnimation>());
-          ResultMatrix[i].slotImages[j].GetComponent<ImageAnimation>().StartAnimation();
-        }
+        if (!isSpecial(SocketManager.resultData.matrix[i][j])) continue;
+
+        ImageAnimation anim = ResultMatrix[i].slotImages[j].GetComponent<ImageAnimation>();
+        if (anim == null || anim.textureArray == null || anim.textureArray.Count == 0) continue;
+
+        // Reset cleanly: stop any previous run, clear stale callback
+        anim.StopAnimation();
+        anim.onLoopComplete = null;
+
+        // One-shot: play through the sprite sheet once then hold on last frame
+        anim.doLoopAnimation = false;
+
+        activeAnims.Add(anim);
+        anim.StartAnimation();
       }
-    }
-    if (imageAnimations.Count > 0)
-    {
-      yield return new WaitUntil(() => imageAnimations[^1].textureArray[^1] == imageAnimations[^1].rendererDelegate.sprite);
-      foreach (ImageAnimation animation in imageAnimations)
-      {
-        animation.StopAnimation();
-      }
-      yield return new WaitForSeconds(.2f);
     }
 
+    if (activeAnims.Count == 0) yield break;
+
+    // Use onLoopComplete callbacks to know when every animation finishes
+    int completedCount = 0;
+    bool allDone = false;
+
+    foreach (ImageAnimation anim in activeAnims)
+    {
+      ImageAnimation captured = anim; // capture for lambda
+      captured.onLoopComplete = (_) =>
+      {
+        completedCount++;
+        if (completedCount >= activeAnims.Count)
+          allDone = true;
+      };
+    }
+
+    // Safety timeout: 5 seconds covers any reasonable animation length
+    float timeout = 5f;
+    float elapsed = 0f;
+    while (!allDone && elapsed < timeout)
+    {
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+
+    // Clean up: clear callbacks and stop all animations
+    foreach (ImageAnimation anim in activeAnims)
+    {
+      anim.onLoopComplete = null;
+      anim.StopAnimation();
+    }
+
+    yield return new WaitForSeconds(0.2f);
   }
 
   private List<List<int>> GenerateFreezedLocations()
@@ -1114,7 +1197,6 @@ public class SlotBehaviour : MonoBehaviour
     jackpotSlotTransform.GetComponent<CanvasGroup>().DOFade(1, 0.8f);
 
     jackpotSlotTransform.localPosition = new Vector2(jackpotSlotTransform.localPosition.x, 151f);
-    audioController.PlaySpinButtonAudio();
     Tween JackpotTween = jackpotSlotTransform.DOLocalMoveY(-151f, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     JackpotTween.Play();
     yield return new WaitForSeconds(2f);
@@ -1137,7 +1219,6 @@ public class SlotBehaviour : MonoBehaviour
 
     JackpotTween.Kill();
     yield return jackpotSlotTransform.DOLocalMoveY(65.86f, .3f).SetEase(Ease.OutQuad).WaitForCompletion();
-    audioController.PlayWLAudio("megaWin");
     yield return new WaitForSeconds(1f);
 
     JackpotWinnings();
@@ -1168,93 +1249,70 @@ public class SlotBehaviour : MonoBehaviour
     // });
   }
 
-  private void PopulateResultMatrix()
+  private void PopulateResultMatrixForColumn(int col)
   {
     int CCcount = 0;
-    for (int j = 0; j < 3; j++) // Update slot images based on the results          //V2###########
+    for (int row = 0; row < 3; row++)
     {
-
-      List<int> resultnum = new List<int>();
-      for (int k = 0; k < 5; k++)
+      int resultNum = int.Parse(SocketManager.resultData.matrix[row][col]);
+      if (Tempimages[col].slotImages[row])
       {
-        int resultNum = int.Parse(SocketManager.resultData.matrix[j][k]);
-        resultnum.Add(resultNum);
-      }
-
-
-      for (int i = 0; i < 5; i++) //Loop through each column
-      {
-        if (ResultMatrix[j].slotImages[i]) //Checking if the required object is not null
+        Image SlotImage = Tempimages[col].slotImages[row];
+        if (resultNum == 9) // BLANK SYMBOL - NEEDS RANDOM SYMBOL
         {
-          Image SlotImage = ResultMatrix[j].slotImages[i];
-          //  Debug.Log("i" + i + ".   " + resultnum[i]);
-          if (resultnum[i] == 9) // BLANK SYMBOL - NEEDS RANDOM SYMBOL
+          int randomSymbolIndex = UnityEngine.Random.Range(0, 9); // 0 to 8 inclusive
+          SlotImage.sprite = SlotSymbols[randomSymbolIndex];
+          PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), randomSymbolIndex);
+          continue;
+        }
+        if (resultNum == 17) // LP coin (LosPollos)
+        {
+          bool found = false;
+          foreach (var coin in SocketManager.resultData.payload.coinPositions)
           {
-            // Generate random symbol (0-8) excluding special symbols
-            int randomSymbolIndex = UnityEngine.Random.Range(0, 9); // 0 to 8 inclusive
-            SlotImage.sprite = SlotSymbols[randomSymbolIndex];
-            PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), randomSymbolIndex);
-            continue; // Skip the rest of the checks for this symbol
-          }
-          if (resultnum[i] == 17) // LP coin (LosPollos)
-          {
-            bool found = false;
-
-            foreach (var coin in SocketManager.resultData.payload.coinPositions)
+            if (coin.symbolId == 17 && coin.position[0] == row && coin.position[1] == col)
             {
-              // Only LosPollos coins
-              if (coin.symbolId == 17 &&
-                  coin.position[0] == j &&
-                  coin.position[1] == i)
-              {
-                SlotImage.sprite = losPollosSprites[coin.coinValue];
-                PopulateAnimationSprites(
-                    SlotImage.gameObject.GetComponent<ImageAnimation>(),
-                    17,
-                    coin.coinValue
-                );
-                found = true;
-                break;
-              }
-            }
-
-            // Fallback (same behavior you had earlier)
-            if (!found)
-            {
-              int[] tempIndex = { 2, 3, 4, 5, 7 };
-              int randomIndex = tempIndex[UnityEngine.Random.Range(0, tempIndex.Length)];
-
-              SlotImage.sprite = losPollosSprites[randomIndex];
-              PopulateAnimationSprites(
-                  SlotImage.gameObject.GetComponent<ImageAnimation>(),
-                  17,
-                  randomIndex
-              );
+              SlotImage.sprite = losPollosSprites[coin.coinValue];
+              PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), 17, coin.coinValue);
+              found = true;
+              break;
             }
           }
-
-
-          else if (resultnum[i] == 15) //gold coin
+          if (!found)
           {
-            foreach (var coins in SocketManager.resultData.payload.coinPositions)
+            int[] tempIndex = { 2, 3, 4, 5, 7 };
+            int randomIndex = tempIndex[UnityEngine.Random.Range(0, tempIndex.Length)];
+            SlotImage.sprite = losPollosSprites[randomIndex];
+            PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), 17, randomIndex);
+          }
+        }
+        else if (resultNum == 15) // gold coin
+        {
+          bool found = false;
+          foreach (var coin in SocketManager.resultData.payload.coinPositions)
+          {
+            if (coin.position[0] == row && coin.position[1] == col)
             {
-              if (coins.position[0] == j && coins.position[1] == i)
-              {
-                SlotImage.sprite = SlotSymbols[resultnum[i]];
-                PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), resultnum[i], 0, coins.coinValue.ToString() + "x");
-                break;
-              }
+              SlotImage.sprite = SlotSymbols[resultNum];
+              PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), resultNum, 0, coin.coinValue.ToString() + "x");
+              found = true;
+              break;
             }
           }
-          else
+          if (!found)
           {
-            if (resultnum[i] == 14)
-            {
-              CCcount++;
-            }
-            SlotImage.sprite = SlotSymbols[resultnum[i]];
-            PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), resultnum[i]);
+            SlotImage.sprite = SlotSymbols[resultNum];
+            PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), resultNum);
           }
+        }
+        else
+        {
+          if (resultNum == 14)
+          {
+            CCcount++;
+          }
+          SlotImage.sprite = SlotSymbols[resultNum];
+          PopulateAnimationSprites(SlotImage.gameObject.GetComponent<ImageAnimation>(), resultNum);
         }
       }
     }
@@ -1265,6 +1323,14 @@ public class SlotBehaviour : MonoBehaviour
       {
         ReorderImages();
       }
+    }
+  }
+
+  private void PopulateResultMatrix()
+  {
+    for (int col = 0; col < numberOfSlots; col++)
+    {
+      PopulateResultMatrixForColumn(col);
     }
   }
 
@@ -1421,18 +1487,12 @@ public class SlotBehaviour : MonoBehaviour
   {
     if (lineWins == null || lineWins.Count == 0)
     {
-      if (audioController) audioController.StopWLAaudio();
-      CheckSpinAudio = false;
       return;
     }
 
     TurnOnBlackBoxes();
 
-    // Play correct audio
-    if (audioController)
-    {
-      audioController.PlayWLAudio(jackpot > 0 ? "megaWin" : "win");
-    }
+
 
     // Jackpot = animate everything
     if (jackpot > 0)
@@ -1472,8 +1532,14 @@ public class SlotBehaviour : MonoBehaviour
     }
 
 
-    CheckSpinAudio = false;
   }
+  /// <summary>
+  /// Cycles through each winning payline, highlighting its symbols one line at a time.
+  /// Production pattern:
+  ///   - Black-boxes all non-highlighted symbols (dim overlay)
+  ///   - Loops indefinitely until StopGameAnimation cancels it
+  ///   - onLoopComplete is cleared on each stop to prevent stale callbacks
+  /// </summary>
   private IEnumerator LineAnimationRoutine(List<LineWin> lineWins)
   {
     WinAnimationFin = false;
@@ -1484,6 +1550,7 @@ public class SlotBehaviour : MonoBehaviour
     {
       foreach (var win in lineWins)
       {
+        // Highlight winning symbols for this line
         foreach (int col in win.positions)
         {
           int row = win.pattern[col];
@@ -1492,10 +1559,13 @@ public class SlotBehaviour : MonoBehaviour
           var anim = img.GetComponent<ImageAnimation>();
           if (anim != null && anim.isAnim)
           {
-            img.transform.GetChild(2)
-                .GetComponent<Image>()
-                .DOFade(0f, 0.2f);
+            var overlay = img.transform.GetChild(2).GetComponent<Image>();
+            if (overlay != null) overlay.DOFade(0f, 0.2f);
 
+            // Win-highlight: single-phase loop mode so it keeps playing
+            anim.doLoopAnimation = true;
+            anim.onLoopComplete = null;
+            anim.StopAnimation();
             anim.StartAnimation();
           }
         }
@@ -1509,16 +1579,21 @@ public class SlotBehaviour : MonoBehaviour
     }
   }
 
-
-
   private void TurnOnBlackBoxes()
   {
     for (int i = 0; i < Tempimages.Count; i++)
     {
       for (int j = 0; j < Tempimages[i].slotImages.Count; j++)
       {
-        Tempimages[i].slotImages[j].transform.GetChild(2).GetComponent<Image>().DOFade(0.85f, 0.2f);
-        Tempimages[i].slotImages[j].GetComponent<ImageAnimation>().StopAnimation();
+        var overlay = Tempimages[i].slotImages[j].transform.GetChild(2).GetComponent<Image>();
+        if (overlay != null) overlay.DOFade(0.85f, 0.2f);
+
+        ImageAnimation anim = Tempimages[i].slotImages[j].GetComponent<ImageAnimation>();
+        if (anim != null)
+        {
+          anim.onLoopComplete = null;  // Clear before stopping
+          anim.StopAnimation();
+        }
       }
     }
   }
@@ -1541,24 +1616,32 @@ public class SlotBehaviour : MonoBehaviour
   }
 
   //Start the icons animation
+  // Start the win-highlight animation on a slot icon.
+  // Win-highlight: continuous loop until StopGameAnimation is called
+  // until StopGameAnimation is called.
   private void StartGameAnimation(GameObject animObjects)
   {
     ImageAnimation temp = animObjects.GetComponent<ImageAnimation>();
-    if (temp.textureArray.Count > 0)
-    {
-      temp.StartAnimation();
-      temp.isAnim = true;
-      animObjects.transform.GetChild(2).gameObject.GetComponent<Image>().DOFade(0f, 0.2f);
-    }
+    if (temp == null || temp.textureArray == null || temp.textureArray.Count == 0) return;
+
+    // Win-highlight: single-phase, continuous loop until manually stopped
+    temp.doLoopAnimation = true;
+    temp.onLoopComplete = null;
+
+    temp.StopAnimation();   // Reset state cleanly before restarting
+    temp.StartAnimation();
+    temp.isAnim = true;
+
+    var overlay = animObjects.transform.GetChild(2).gameObject.GetComponent<Image>();
+    if (overlay != null) overlay.DOFade(0f, 0.2f);
   }
 
-  //Stop the icons animation
+  // Stop all win-highlight animations, cancel the line-animation coroutine,
+  // and clear all onLoopComplete callbacks across the entire 5x3 grid.
   internal void StopGameAnimation()
   {
     if (changedSlots.Count > 0)
-    {
       ResetImages();
-    }
 
     if (LineAnimRoutine != null)
     {
@@ -1571,9 +1654,16 @@ public class SlotBehaviour : MonoBehaviour
     {
       for (int j = 0; j < Tempimages[i].slotImages.Count; j++)
       {
-        Tempimages[i].slotImages[j].transform.GetChild(2).gameObject.GetComponent<Image>().DOFade(0f, 0.2f);
-        Tempimages[i].slotImages[j].GetComponent<ImageAnimation>().StopAnimation();
-        Tempimages[i].slotImages[j].GetComponent<ImageAnimation>().isAnim = false;
+        var overlay = Tempimages[i].slotImages[j].transform.GetChild(2).gameObject.GetComponent<Image>();
+        if (overlay != null) overlay.DOFade(0f, 0.2f);
+
+        ImageAnimation anim = Tempimages[i].slotImages[j].GetComponent<ImageAnimation>();
+        if (anim != null)
+        {
+          anim.onLoopComplete = null;   // Always clear callbacks before stopping
+          anim.StopAnimation();
+          anim.isAnim = false;
+        }
       }
     }
   }
@@ -1581,33 +1671,93 @@ public class SlotBehaviour : MonoBehaviour
   #region TweeningCode
   private void InitializeTweening(Transform slotTransform, bool bonus = false)
   {
-    Tweener tweener = null;
+    int index = System.Array.IndexOf(Slot_Transform, slotTransform);
+    if (index < 0) return;
 
-    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, slotTransform.localPosition.y + 440);
-    tweener = slotTransform.DOLocalMoveY(-1436, .6f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetDelay(0);
+    float middleY = initialYPositions[index];
 
-    tweener.Play();
-    alltweens.Add(tweener);
+    // Start Bounce sequence (overshoot up -> drop down -> settle bounce)
+    Sequence seq = DOTween.Sequence();
+    seq.Append(slotTransform.DOLocalMoveY(middleY + anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutCubic));
+    seq.Append(slotTransform.DOLocalMoveY(middleY - dropDownDistance, dropDownDuration).SetEase(Ease.InCubic));
+    seq.Append(slotTransform.DOLocalMoveY(middleY, settleBounceDuration).SetEase(Ease.OutBounce));
+    seq.OnComplete(() =>
+    {
+      RunContinuousCycle(index, slotTransform, middleY);
+    });
+
+    alltweens.Add(seq);
+  }
+
+  private void RunContinuousCycle(int col, Transform slotTransform, float middleY)
+  {
+    if (!IsSpinning) return;
+
+    slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, middleY, 0f);
+
+    Tween cycle = slotTransform.DOLocalMoveY(middleY - symbolHeight, spinCycleDuration)
+        .SetEase(Ease.Linear)
+        .OnComplete(() =>
+        {
+          if (!IsSpinning) return;
+          CycleBufferSymbols(col);
+          RunContinuousCycle(col, slotTransform, middleY);
+        });
+
+    alltweens[col] = cycle;
+  }
+
+  private void CycleBufferSymbols(int col)
+  {
+    var slotImgs = images[col].slotImages;
+    if (slotImgs == null || slotImgs.Count == 0) return;
+
+    int count = slotImgs.Count;
+    for (int i = count - 1; i > 0; i--)
+    {
+      slotImgs[i].sprite = slotImgs[i - 1].sprite;
+    }
+    int randomSymbolIndex = UnityEngine.Random.Range(0, SlotSymbols.Length - 8);
+    slotImgs[0].sprite = SlotSymbols[randomSymbolIndex];
   }
 
   private IEnumerator StopTweening(int reqpos, Transform slotTransform, int index, bool magnet = false, int CCloc = 0, bool isStop = false)
   {
-    if (!isStop)
+    if (alltweens[index] != null)
     {
-      bool IsRegister = false;
-      yield return alltweens[index].OnStepComplete(delegate { IsRegister = true; });
-      yield return new WaitUntil(() => IsRegister);
+      alltweens[index].Kill();
+      alltweens[index] = null;
     }
 
-    alltweens[index].Pause();
-    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, 1436);
-    int tweenpos = (reqpos * IconSizeFactor) - IconSizeFactor;
+    float middleY = initialYPositions[index];
+    slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, middleY, 0f);
+
+    PopulateResultMatrixForColumn(index);
+
     if (!magnet)
     {
-      alltweens[index] = slotTransform.DOLocalMoveY(tweenpos + 441.255f, 0.6f).SetEase(Ease.OutQuad); //1789
-      if (audioController) audioController.PlayWLAudio("spinStop");
-      // yield return alltweens[index].WaitForCompletion();
-      // alltweens[index].Kill();
+      Sequence seq = DOTween.Sequence();
+      if (IsTurboOn || StopSpinToggle)
+      {
+        seq.Append(slotTransform.DOLocalMoveY(middleY - quickStopOvershoot, quickStopDuration * 0.3f).SetEase(Ease.InCubic));
+        seq.Append(slotTransform.DOLocalMoveY(middleY, quickStopDuration * 0.7f).SetEase(Ease.OutBack, 1.2f));
+      }
+      else
+      {
+        seq.Append(slotTransform.DOLocalMoveY(middleY - stopOvershootDistance, stopOvershootDuration).SetEase(Ease.InCubic));
+        seq.Append(slotTransform.DOLocalMoveY(middleY + stopBounceBackDistance, stopBounceBackDuration).SetEase(Ease.OutCubic));
+        seq.Append(slotTransform.DOLocalMoveY(middleY, stopSettleDuration).SetEase(Ease.OutBounce));
+      }
+      alltweens[index] = seq;
+      seq.Play();
+
+
+
+      float stagger = (IsTurboOn || StopSpinToggle) ? 0.05f : 0.12f;
+      if (index < numberOfSlots - 1)
+      {
+        yield return new WaitForSeconds(stagger);
+      }
     }
     else
     {
@@ -1620,64 +1770,97 @@ public class SlotBehaviour : MonoBehaviour
       {
         anim = RightMagnetImageAnimation;
       }
-      anim.rendererDelegate.sprite = MagnetInSprites[0];
-      anim.gameObject.SetActive(true);
+      if (anim != null)
+      {
+        anim.rendererDelegate.sprite = MagnetInSprites[0];
+        anim.gameObject.SetActive(true);
+      }
 
       if (CCloc == 0)
       {
-        alltweens[index] = slotTransform.DOLocalMoveY(1547.255f, 0.6f).SetEase(Ease.OutQuad);
+        yield return slotTransform.DOLocalMoveY(1547.255f, 0.6f).SetEase(Ease.OutQuad).WaitForCompletion();
       }
       else if (CCloc == 1)
       {
-        alltweens[index] = slotTransform.DOLocalMoveY(1768.255f, 0.6f).SetEase(Ease.OutQuad);
+        yield return slotTransform.DOLocalMoveY(1768.255f, 0.6f).SetEase(Ease.OutQuad).WaitForCompletion();
       }
-      else
-      {
-        Debug.Log("wrong cc loc1");
-      }
-      if (audioController) audioController.PlayWLAudio("spinStop");
-      yield return alltweens[index].WaitForCompletion();
-      alltweens[index].Kill();
 
-      ClearAnimtionArray(anim);
-      foreach (Sprite sprite in MagnetInSprites)
+
+
+      if (anim != null)
       {
-        anim.textureArray.Add(sprite);
+        ClearAnimtionArray(anim);
+        foreach (Sprite sprite in MagnetInSprites)
+        {
+          anim.textureArray.Add(sprite);
+        }
+        anim.doLoopAnimation = false;
+        anim.onLoopComplete = null;
+        anim.AnimationSpeed = 8;
+        anim.StopAnimation();
+
+        bool magnetInDone = false;
+        anim.onLoopComplete = (_) => { magnetInDone = true; };
+        anim.StartAnimation();
+        yield return new WaitUntil(() => magnetInDone);
+        anim.onLoopComplete = null;
+
+        yield return new WaitForSeconds(1f);
+        ClearAnimtionArray(anim);
+        foreach (Sprite sprite in MagnetLightening_Sprites)
+        {
+          anim.textureArray.Add(sprite);
+        }
+        anim.AnimationSpeed = 17;
+        anim.StopAnimation();
+
+
+        anim.StartAnimation();
+        yield return new WaitUntil(() =>
+            anim.textureArray.Count >= 5 &&
+            anim.rendererDelegate != null &&
+            anim.textureArray[^5] == anim.rendererDelegate.sprite);
       }
-      anim.doLoopAnimation = false;
-      anim.AnimationSpeed = 8;
-      anim.StartAnimation();
-      yield return new WaitUntil(() => anim.textureArray[^1] == anim.rendererDelegate.sprite);
-      yield return new WaitForSeconds(1f);
-      ClearAnimtionArray(anim);
-      foreach (Sprite sprite in MagnetLightening_Sprites)
+
+
+
+      int tweenpos = (reqpos * IconSizeFactor) - IconSizeFactor;
+      Tween stopTween = slotTransform.DOLocalMoveY(tweenpos + 441.255f, 0.6f).SetEase(Ease.OutCubic);
+      alltweens[index] = stopTween;
+      yield return stopTween.WaitForCompletion();
+
+      if (anim != null)
       {
-        anim.textureArray.Add(sprite);
+        StartCoroutine(CloseMagnet(anim));
       }
-      anim.AnimationSpeed = 17;
-      anim.StopAnimation();
-      audioController.PlayWLAudio("Electric");
-      anim.StartAnimation();
-      yield return new WaitUntil(() => anim.textureArray[^5] == anim.rendererDelegate.sprite);
-      if (audioController) audioController.PlayWLAudio("spinStop");
-      slotTransform.DOLocalMoveY(tweenpos + 441.255f, 0.6f).SetEase(Ease.OutCubic);
-      StartCoroutine(CloseMagnet(anim));
       yield return new WaitForSeconds(0.5f);
     }
   }
 
   private IEnumerator CloseMagnet(ImageAnimation anim)
   {
-    yield return new WaitUntil(() => anim.textureArray[^1] == anim.rendererDelegate.sprite);
+    // Wait for lightning animation to finish (onLoopComplete)
+    bool lightningDone = false;
+    anim.onLoopComplete = (_) => { lightningDone = true; };
+    yield return new WaitUntil(() => lightningDone);
+    anim.onLoopComplete = null;
+
+    // Play MagnetIn sprites in reverse (closing animation)
     ClearAnimtionArray(anim);
     for (int i = MagnetInSprites.Length - 1; i >= 0; i--)
     {
       anim.textureArray.Add(MagnetInSprites[i]);
     }
+    anim.doLoopAnimation = false;
     anim.AnimationSpeed = 8;
     anim.StopAnimation();
+
+    bool closeDone = false;
+    anim.onLoopComplete = (_) => { closeDone = true; };
     anim.StartAnimation();
-    yield return new WaitUntil(() => anim.textureArray[^1] == anim.rendererDelegate.sprite);
+    yield return new WaitUntil(() => closeDone);
+    anim.onLoopComplete = null;
+
     anim.gameObject.SetActive(false);
     anim.StopAnimation();
     anim.rendererDelegate.sprite = MagnetInSprites[0];
@@ -1695,7 +1878,10 @@ public class SlotBehaviour : MonoBehaviour
     {
       for (int i = 0; i < alltweens.Count; i++)
       {
-        alltweens[i].Kill();
+        if (alltweens[i] != null)
+        {
+          alltweens[i].Kill();
+        }
       }
       alltweens.Clear();
     }
@@ -1709,4 +1895,3 @@ public class SlotImage
 {
   public List<Image> slotImages = new List<Image>(10);
 }
-

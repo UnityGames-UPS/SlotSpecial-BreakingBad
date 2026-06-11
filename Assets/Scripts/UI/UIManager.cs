@@ -9,8 +9,6 @@ using System;
 
 public class UIManager : MonoBehaviour
 {
-  [Header("Script References")]
-  [SerializeField] private AudioController audioController;
   [SerializeField] private SlotBehaviour slotManager;
   [SerializeField] private SocketIOManager socketManager;
 
@@ -95,8 +93,6 @@ public class UIManager : MonoBehaviour
   [SerializeField] internal List<Sprite> diamondPaoutSprite;
   [SerializeField] internal Transform DiamondSlotFinalPosition;
 
-  private bool isMusic = true;
-  private bool isSound = true;
   private bool isExit = false;
   private bool isMenu = false;
   private ImageAnimation ImageAnimation;
@@ -121,17 +117,7 @@ public class UIManager : MonoBehaviour
     if (CloseDisconnect_Button) CloseDisconnect_Button.onClick.RemoveAllListeners();
     if (CloseDisconnect_Button) CloseDisconnect_Button.onClick.AddListener(() => { CallOnExitFunction(); socketManager.closeSocketReactnativeCall(); });
 
-    if (Sound_Slider)
-    {
-      Sound_Slider.onValueChanged.RemoveAllListeners();
-      Sound_Slider.onValueChanged.AddListener((val) => { OnSoundChanged(val); });
-    }
 
-    if (Music_Slider)
-    {
-      Music_Slider.onValueChanged.RemoveAllListeners();
-      Music_Slider.onValueChanged.AddListener((val) => { OnMusicChanged(val); });
-    }
 
     if (Quit_Button) Quit_Button.onClick.RemoveAllListeners();
     if (Quit_Button) Quit_Button.onClick.AddListener(OpenQuitPanel);
@@ -204,7 +190,6 @@ public class UIManager : MonoBehaviour
 
   private void ChangePage(bool IncDec)
   {
-    if (audioController) audioController.PlayButtonAudio();
 
     if (IncDec)
     {
@@ -245,7 +230,6 @@ public class UIManager : MonoBehaviour
 
   private void OpenCloseMenu(bool toggle)
   {
-    if (audioController) audioController.PlayButtonAudio();
     if (toggle)
     {
       isMenu = true;
@@ -283,19 +267,10 @@ public class UIManager : MonoBehaviour
     }
   }
 
-  private void OnSoundChanged(float value)
-  {
-    audioController.OnVolumeChanged(value, "sound");
-  }
 
-  private void OnMusicChanged(float value)
-  {
-    audioController.OnVolumeChanged(value, "music");
-  }
 
   private void OpenSettingsPanel()
   {
-    if (audioController) audioController.PlayButtonAudio();
 
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
     if (Settings_Object) Settings_Object.SetActive(true);
@@ -304,7 +279,6 @@ public class UIManager : MonoBehaviour
 
   private void OpenQuitPanel()
   {
-    if (audioController) audioController.PlayButtonAudio();
 
 
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
@@ -314,7 +288,6 @@ public class UIManager : MonoBehaviour
 
   private void OpenPaytablePanel()
   {
-    if (audioController) audioController.PlayButtonAudio();
 
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
 
@@ -380,8 +353,6 @@ public class UIManager : MonoBehaviour
     if (WinPopup_Object) WinPopup_Object.SetActive(true);
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
 
-    audioController.PlayWLAudio("bigwin");
-
     Winnings_ImageAnimation.StartAnimation();
     WinTextBgImage.DOScale(Vector3.one, .5f).SetEase(Ease.OutCirc);
 
@@ -394,7 +365,6 @@ public class UIManager : MonoBehaviour
 
     yield return new WaitUntil(() => Winnings_ImageAnimation.textureArray[^1] == Winnings_ImageAnimation.rendererDelegate.sprite);
     Winnings_ImageAnimation.StopAnimation();
-    audioController.StopWLAaudio();
     scaleTween = WinTextBgImage.DOScale(Vector3.zero, .5f).SetEase(Ease.InBack).OnComplete(() =>
     {
       slotManager.CheckPopups = false;
@@ -412,7 +382,6 @@ public class UIManager : MonoBehaviour
 
     PopulateSymbolsPayout(symbolsText);
     PopulateTopSymbolsPayout();
-    audioController.PlayWLAudio("StartAudio");
     //add code to loop through top payout ui and change their payout values accordingly
   }
 
@@ -446,7 +415,6 @@ public class UIManager : MonoBehaviour
     }
     yield return trail.transform.DOMove(DOMovePosition, .5f).OnComplete(() =>
     {
-      audioController.PlayWLAudio("CollectCoin");
       trail.gameObject.SetActive(false);
       trail.transform.position = tempPosi;
 
@@ -489,15 +457,12 @@ public class UIManager : MonoBehaviour
 
     TMP_Text text = null;
     bool useF2 = false;
-    bool audio = false;
     if (imageAnimation.name == "FreeSpinsImageAnimation")
     {
       text = FreeSpinsText;
     }
     else if (imageAnimation.name == "BonusWonImageAnimation")
     {
-      audio = true;
-      audioController.PlayWLAudio("bigwin");
       text = BonusGameWinningsText;
       useF2 = true;
     }
@@ -525,7 +490,6 @@ public class UIManager : MonoBehaviour
     yield return new WaitUntil(() => imageAnimation.rendererDelegate.sprite == imageAnimation.textureArray[^1]);
 
     if (text != null) text.DOFade(0, 0.5f);
-    if (audio) audioController.StopWLAaudio();
     imageAnimation.StopAnimation();
     ImageAnimation = null;
     if (imageAnimation.name == "FreeSpinsImageAnimation")
@@ -638,13 +602,11 @@ public class UIManager : MonoBehaviour
   private void CallOnExitFunction()
   {
     isExit = true;
-    audioController.PlayButtonAudio();
     slotManager.CallCloseSocket();
   }
 
   private void OpenPopup(GameObject Popup)
   {
-    if (audioController) audioController.PlayButtonAudio();
 
     if (Popup) Popup.SetActive(true);
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
@@ -652,7 +614,6 @@ public class UIManager : MonoBehaviour
 
   private void ClosePopup(GameObject Popup)
   {
-    if (audioController) audioController.PlayButtonAudio();
     if (Popup) Popup.SetActive(false);
     if (!DisconnectPopup_Object.activeSelf)
     {

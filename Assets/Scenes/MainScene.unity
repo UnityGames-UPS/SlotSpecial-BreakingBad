@@ -3863,7 +3863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -3897,9 +3896,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 133102264}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &133102264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4817,14 +4818,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 184767113}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &184767116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7451,7 +7453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -7485,9 +7486,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 251644019}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &251644019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7622,14 +7625,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 253371603}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &253371606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8571,14 +8575,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 283576121}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &284533486
 GameObject:
   m_ObjectHideFlags: 0
@@ -8971,7 +8976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: a4261040dc4a14e02bd08ae7fbe39c2d, type: 3}
   - {fileID: 21300000, guid: c1978f5ec093c4421ab8c4a3715e2738, type: 3}
@@ -9007,9 +9011,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 293408888}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 16
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &293408888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9249,7 +9255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -9283,9 +9288,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 306305976}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &306305976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10872,7 +10879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -10906,9 +10912,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 358730801}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &358730801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11215,7 +11223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -11249,9 +11256,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 363433457}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &363433457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12136,7 +12145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -12170,9 +12178,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 385592477}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &385592477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13886,7 +13896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -13920,9 +13929,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 431181185}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &431181185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14853,7 +14864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -14887,9 +14897,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 465346935}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &465346935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17214,7 +17226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -17248,9 +17259,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 517452422}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &517452422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18518,14 +18531,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 578707438}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &578707441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19208,14 +19222,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 602850006}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 15
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &602850009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20944,7 +20959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -20978,9 +20992,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 661537530}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &661537530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22438,7 +22454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -22472,9 +22487,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 698534690}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &698534690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22564,7 +22581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: a4261040dc4a14e02bd08ae7fbe39c2d, type: 3}
   - {fileID: 21300000, guid: c1978f5ec093c4421ab8c4a3715e2738, type: 3}
@@ -22600,9 +22616,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 704012396}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 15
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &704012396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22776,14 +22794,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 707322042}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &707322045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24047,7 +24066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: ab7db4c9db6074c3a8eefbc4193a7254, type: 3}
   - {fileID: 21300000, guid: 4ca3328df21af411e93888fefa91fda9, type: 3}
@@ -24072,9 +24090,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 741066313}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &742639322
 GameObject:
   m_ObjectHideFlags: 0
@@ -24316,14 +24336,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 744774635}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &745971603
 GameObject:
   m_ObjectHideFlags: 0
@@ -26746,14 +26767,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 829490094}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &831446492
 GameObject:
   m_ObjectHideFlags: 0
@@ -26804,7 +26826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -26838,9 +26859,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 831446495}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &831446495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27199,14 +27222,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 844038232}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 20
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &844038232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28151,7 +28175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 0dee1ca905c974acbb452eac4a959fd8, type: 3}
   - {fileID: 21300000, guid: 7e3c07d2d6d8b458ca69940d97fa5ee5, type: 3}
@@ -28183,9 +28206,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 871353071}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 15
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &871353071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30200,14 +30225,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 945777699}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &945777702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30271,7 +30297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -30305,9 +30330,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 948835065}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &948835065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30622,7 +30649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -30656,9 +30682,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 953330126}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &953330126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34689,14 +34717,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1071623918}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1071623921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35714,7 +35743,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101532586}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -36420,14 +36449,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1130313019}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1130313022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36530,14 +36560,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1133547460}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1133853158
 GameObject:
   m_ObjectHideFlags: 0
@@ -37174,7 +37205,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150469085}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -37228,7 +37259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -37262,9 +37292,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1150497665}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1150497665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37888,14 +37920,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1159701782}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1159701785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40429,7 +40462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -40463,9 +40495,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1241319335}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1241319335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41112,14 +41146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1250093389}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1250093392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42090,7 +42125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -42124,9 +42158,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1283391157}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1283391157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42836,14 +42872,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1303457545}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1303457548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43756,7 +43793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -43790,9 +43826,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1326713325}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1326713325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44393,14 +44431,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1335324420}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1336763862
 GameObject:
   m_ObjectHideFlags: 0
@@ -44451,7 +44490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -44485,9 +44523,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1336763865}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1336763865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45996,14 +46036,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1379133105}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1379548142
 GameObject:
   m_ObjectHideFlags: 0
@@ -46129,7 +46170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -46163,9 +46203,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1380941172}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1380941172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46254,7 +46296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -46288,9 +46329,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1382457725}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1382457725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46606,14 +46649,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1400182494}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1405686812
 GameObject:
   m_ObjectHideFlags: 0
@@ -47462,7 +47506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -47496,9 +47539,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1415226698}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1415226698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52287,7 +52332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -52321,9 +52365,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1597559562}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1597559562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52451,14 +52497,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1598150118}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1598882576
 GameObject:
   m_ObjectHideFlags: 0
@@ -52596,14 +52643,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1602687252}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 20
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1602687252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53391,7 +53439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -53425,9 +53472,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1627199031}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1627199031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53944,14 +53993,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1638913622}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1649757970
 GameObject:
   m_ObjectHideFlags: 0
@@ -54328,14 +54378,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1669915038}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1675058631
 GameObject:
   m_ObjectHideFlags: 0
@@ -55865,7 +55916,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -55899,9 +55949,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1714472869}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1714472869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56570,14 +56622,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1725963079}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1725963082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57313,14 +57366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1748382088}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1748382088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57983,7 +58037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -58017,9 +58070,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1763853155}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1763853155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58183,7 +58238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -58217,9 +58271,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1770148512}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1770148512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59753,14 +59809,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1810453764}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1810453767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61005,14 +61062,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1841124563}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &1843705198
 GameObject:
   m_ObjectHideFlags: 0
@@ -63022,7 +63080,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -63056,9 +63113,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1901942319}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1901942319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63515,7 +63574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: f293401537001415f9885d006697615d, type: 3}
   - {fileID: 21300000, guid: e8aaabd46f5374a269738038b161ac6f, type: 3}
@@ -63538,9 +63596,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1916373406}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 9
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1916373406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65473,14 +65533,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 1969975235}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1969975238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65681,7 +65742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -65715,9 +65775,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1971500014}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &1971500014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66683,14 +66745,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 2010482993}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &2014599522
 GameObject:
   m_ObjectHideFlags: 0
@@ -67027,14 +67090,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 2023159362}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &2023159365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68130,46 +68194,20 @@ MonoBehaviour:
     - {fileID: 578707438}
     - {fileID: 2045252605}
     - {fileID: 770597376}
-  Tempimages:
-  - slotImages:
-    - {fileID: 602850006}
-    - {fileID: 1810453764}
-    - {fileID: 184767113}
-  - slotImages:
-    - {fileID: 2023159362}
-    - {fileID: 1250093389}
-    - {fileID: 1303457545}
-  - slotImages:
-    - {fileID: 707322042}
-    - {fileID: 1071623918}
-    - {fileID: 1969975235}
-  - slotImages:
-    - {fileID: 1159701782}
-    - {fileID: 1130313019}
-    - {fileID: 253371603}
-  - slotImages:
-    - {fileID: 1725963079}
-    - {fileID: 945777699}
-    - {fileID: 578707438}
-  ResultMatrix:
-  - slotImages:
-    - {fileID: 602850006}
-    - {fileID: 2023159362}
-    - {fileID: 707322042}
-    - {fileID: 1159701782}
-    - {fileID: 1725963079}
-  - slotImages:
-    - {fileID: 1810453764}
-    - {fileID: 1250093389}
-    - {fileID: 1071623918}
-    - {fileID: 1130313019}
-    - {fileID: 945777699}
-  - slotImages:
-    - {fileID: 184767113}
-    - {fileID: 1303457545}
-    - {fileID: 1969975235}
-    - {fileID: 253371603}
-    - {fileID: 578707438}
+  anticipationUpDistance: 30
+  anticipationUpDuration: 0.15
+  dropDownDistance: 15
+  dropDownDuration: 0.12
+  settleBounceDuration: 0.18
+  stopOvershootDistance: 50
+  stopOvershootDuration: 0.15
+  stopBounceBackDistance: 15
+  stopBounceBackDuration: 0.25
+  stopSettleDuration: 0.35
+  quickStopOvershoot: 20
+  quickStopDuration: 0.2
+  spinCycleDuration: 0.05
+  symbolHeight: 100
   Slot_Transform:
   - {fileID: 1566577724}
   - {fileID: 707351674}
@@ -69301,14 +69339,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 2058662578}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &2059765887
 GameObject:
   m_ObjectHideFlags: 0
@@ -69398,14 +69437,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 2059765889}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &2061392928
 GameObject:
   m_ObjectHideFlags: 0
@@ -70759,14 +70799,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray: []
   rendererDelegate: {fileID: 2089453265}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 5
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!1 &2092333395
 GameObject:
   m_ObjectHideFlags: 0
@@ -71658,7 +71699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ae1bf2ec654621a0c3eaff2a909fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAnimationState: 0
   textureArray:
   - {fileID: 21300000, guid: 3b3d127f58c784164b00658127c7c3ad, type: 3}
   - {fileID: 21300000, guid: 9d39713b9084b476da0bd3039523809c, type: 3}
@@ -71692,9 +71732,11 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2114304929}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  StartOnAwake: 0
+  StartonEnable: 0
   AnimationSpeed: 13
   delayBetweenLoop: 0
-  StartOnAwake: 0
+  currentAnimationState: 0
 --- !u!114 &2114304929
 MonoBehaviour:
   m_ObjectHideFlags: 0

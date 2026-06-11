@@ -12,7 +12,6 @@ public class BonusController : MonoBehaviour
   [Header("Scripts References")]
   [SerializeField] private SlotBehaviour slotManager;
   [SerializeField] private SocketIOManager SocketManager;
-  [SerializeField] private AudioController audioController;
   [SerializeField] private UIManager uiManager;
   [SerializeField] private StaticSymbolController staticSymbol;
   [SerializeField] private ImageAnimation BonusWinningsImageAnimation;
@@ -80,7 +79,6 @@ public class BonusController : MonoBehaviour
     WinningsUI_Panel.DOFade(1, 0.3f);
 
     NormalSlot_CG.DOFade(0, 0.5f);
-    audioController.SwitchBGSound(true);
     BonusSlot_CG.DOFade(1, .5f).OnComplete(() =>
     {
       StartCoroutine(staticSymbol.ChangeLinksToGoldCoin(BonusSlotStart_Button));
@@ -100,8 +98,6 @@ public class BonusController : MonoBehaviour
 
   private void StartBonusSlot()
   {
-    if (audioController) audioController.PlaySpinButtonAudio();
-
     if (BonusSlotStart_Button) BonusSlotStart_Button.interactable = false;
 
     if (!int.TryParse(BonusSpinCounter_Text.text, out int spinCount))
@@ -314,7 +310,6 @@ public class BonusController : MonoBehaviour
 
     // DOTween.To(() => BonusSlot_CG.alpha, (val) => BonusSlot_CG.alpha = val, 0, .5f);
     BonusSlot_CG.DOFade(0, 0.5f);
-    audioController.SwitchBGSound(false);
     NormalSlot_CG.DOFade(1, 0.5f).OnComplete(() =>
  {
 
@@ -405,8 +400,6 @@ public class BonusController : MonoBehaviour
     // Calculate the position and stop tweening at the required position
     int tweenpos = (reqpos * IconSizeFactor) - IconSizeFactor;
     Tweener stopTween = slotTransform.DOLocalMoveY(tweenpos - 290.5f, 0.1f);
-
-    if (audioController) audioController.PlayWLAudio("spinStop");
 
     yield return stopTween.WaitForCompletion();
 
