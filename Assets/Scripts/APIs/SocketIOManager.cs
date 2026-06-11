@@ -11,16 +11,17 @@ using System.Runtime.Serialization;
 public class SocketIOManager : MonoBehaviour
 {
   [SerializeField]
-  private SlotBehaviour slotManager;
+  private SlotManager slotManager;
+  
   [SerializeField]
   private UIManager uiManager;
   [SerializeField] internal JSFunctCalls JSManager;
   private Socket gameSocket;
   protected string nameSpace = "playground";
-  internal Root initialData = null;
-  internal UiData initUIData = null;
-  [SerializeField] internal Root resultData = null;
-  [SerializeField] internal Player playerdata = null;
+  internal InitData initialData = null;
+  internal ServerUIData initUIData = null;
+  [SerializeField] internal ServerSpinResponse resultData = null;
+  [SerializeField] internal ServerPlayer playerdata = null;
   [SerializeField] internal List<string> bonusdata = null;
   internal List<List<int>> LineData = null;
   internal bool isResultdone = false;
@@ -370,18 +371,20 @@ public class SocketIOManager : MonoBehaviour
   private void ParseResponse(string jsonObject)
   {
     Debug.Log(jsonObject);
-    Root myData = JsonConvert.DeserializeObject<Root>(jsonObject);
-
-    string id = myData.id;
+    var jobj = Newtonsoft.Json.Linq.JObject.Parse(jsonObject);
+    string id = jobj["id"]?.ToString();
 
     switch (id)
     {
       case "initData":
         {
+          InitData myData = JsonConvert.DeserializeObject<InitData>(jsonObject);
           initialData = myData;
           initUIData = myData.uiData;
           playerdata = myData.player;
           LineData = myData.gameData.lines;
+
+          slotManager.Initialize(myData);
 
           if (!SetInit)
           {
@@ -396,11 +399,14 @@ public class SocketIOManager : MonoBehaviour
         }
       case "ResultData":
         {
-          // Debug.Log(jsonObject);
+          ServerSpinResponse myData = JsonConvert.DeserializeObject<ServerSpinResponse>(jsonObject);
           resultData = myData;
-          playerdata = myData.player;
-          // myData.message.GameData.FinalsymbolsToEmit = TransformAndRemoveRecurring(myData.message.GameData.symbolsToEmit);
-          // resultData = myData.message.GameData;
+          if (myData.player != null)
+          {
+            if (playerdata == null) playerdata = new ServerPlayer();
+            playerdata.balance = myData.player.balance ?? playerdata.balance;
+          }
+          slotManager.UpdateFromSpinResult(myData);
           isResultdone = true;
           break;
         }
@@ -532,390 +538,4 @@ public class SocketIOManager : MonoBehaviour
 
     return transformedList;
   }
-}
-
-[Serializable]
-public class BetData
-{
-  public double currentBet;
-  public double currentLines;
-  public double spins;
-}
-
-[Serializable]
-public class AuthData
-{
-  public string GameID;
-}
-
-[Serializable]
-public class MessageData
-{
-  public string type;
-
-  public SentDeta payload;
-
-}
-[Serializable]
-public class SentDeta
-{
-  public int betIndex;
-  public string Event;
-  public double lastWinning;
-  public int index;
-}
-[Serializable]
-public class ExitData
-{
-  public string id;
-}
-
-[Serializable]
-public class InitData
-{
-  public AuthData Data;
-  public string id;
-}
-
-[Serializable]
-public class AbtLogo
-{
-  public string logoSprite;
-  public string link;
-}
-
-// [Serializable]
-// public class GameData
-// {
-//   public List<List<string>> Reel ;
-//   public List<List<int>> Lines ;
-//   public List<double> Bets ;
-//   public bool canSwitchLines ;
-//   public List<int> LinesCount ;
-//   public List<int> autoSpin ;
-//   public List<List<string>> ResultReel ;
-//   public List<int> linesToEmit ;
-//   public List<List<string>> symbolsToEmit ;
-//   public double WinAmout ;
-//   public FreeSpins freeSpins ;
-//   public WinData winData ;
-//   public List<string> FinalsymbolsToEmit ;
-//   public List<string> FinalResultReel ;
-//   public Jackpot jackpot ;
-//   public List<double> Jackpot ;
-//   public Bonus bonus ;
-//   public bool isBonus ;
-//   public double BonusStopIndex ;
-//   public bool isCoinCollect ;
-// }
-// public class Jackpot
-// {
-//   public bool isTriggered ;
-//   public double payout ;
-// }
-
-// [Serializable]
-// public class Bonus
-// {
-//   public bool isBonus ;
-//   public List<List<int>> BonusResult ; // Result of bonus symbols
-//   public double payout ;
-//   public int spinCount ;
-//   public bool freeSpinAdded ;
-//   public bool isWalterStash ;
-//   public double walterStashPayout ;
-//   public bool isGrandPrize ;
-//   public double grandPrizePayout ;
-//   public List<List<int>> freezeIndices ;
-//   public List<CoinValues> coins ;
-// }
-
-[System.Serializable]
-public class WinData
-{
-  public List<CoinValues> coinValues;
-  public List<LosPollos> losPollos;
-}
-
-[System.Serializable]
-public class LosPollos
-{
-  public List<int> index;
-  public int value;
-}
-
-[System.Serializable]
-public class CoinValues
-{
-  public List<int> index;
-  public double value;
-}
-
-[Serializable]
-public class SpecialSymbols
-{
-  public int count;
-  public bool isNewAdded;
-}
-
-[Serializable]
-public class FreeSpins
-{
-  public int count;
-  public bool isNewAdded;
-}
-
-[Serializable]
-public class Message
-{
-  public GameData GameData;
-  public UIData UIData;
-  public PlayerData PlayerData;
-  public List<string> BonusData;
-}
-
-// [Serializable]
-// public class Root
-// {
-//   public string id ;
-//   public Message message ;
-// }
-
-[Serializable]
-public class UIData
-{
-  public Paylines paylines;
-  public List<string> spclSymbolTxt;
-  public AbtLogo AbtLogo;
-  public string ToULink;
-  public string PopLink;
-}
-
-// [Serializable]
-// public class Paylines
-// {
-//   public List<Symbol> symbols ;
-// }
-
-
-
-[Serializable]
-public class PlayerData
-{
-  public double Balance;
-  public double haveWon;
-  public double currentWining;
-}
-[Serializable]
-public class AuthTokenData
-{
-  public string cookie;
-  public string socketURL;
-  public string nameSpace = "";
-}
-
-
-// new V2
-
-
-
-
-public class CollectedCoin
-{
-  public List<int> position;
-  public int coinValue;
-  public int symbolId;
-  public string symbolName;
-}
-
-
-[Serializable]
-public class CashCollectResult
-{
-  public bool triggered;
-  public List<object> collectedCoins;
-  public double totalValue;
-  public List<int> positions;
-}
-
-[Serializable]
-public class CoinPosition
-{
-  public List<int> position;
-  public int coinValue;
-  public int symbolId;
-  public string symbolName;
-
-
-  public string prizeType;
-  public int? prizeTypeIndex;
-
-}
-
-
-[Serializable]
-public class FinalCoin
-{
-  public List<int> position;
-  public int coinValue;
-  public int symbolId;
-  public string symbolName;
-}
-[Serializable]
-public class InitialCoin
-{
-  public List<int> position;
-  public int coinValue;
-  public int symbolId;
-  public string symbolName;
-}
-[Serializable]
-public class LineWin
-{
-  public int lineIndex;
-  public List<int> positions;
-  public List<int> pattern;
-  public string symbolId;
-  public string symbolName;
-  public double payout;
-  public int matchCount;
-}
-[Serializable]
-public class LinkFeatureResult
-{
-  public bool triggered;
-  public string linkType;
-  public List<InitialCoin> initialCoins;
-  public int respins;
-  public List<FinalCoin> finalCoins;
-  public double totalValue;
-  public List<int> cashCollectPositions;
-}
-[Serializable]
-public class Payload
-{
-  public double winAmount;
-  public List<LineWin> lineWins;
-  public List<CoinPosition> coinPositions;
-  public CashCollectResult cashCollectResult;
-  public LinkFeatureResult linkFeatureResult;
-  public int activeLines;
-  public int freeSpinsRemaining;
-  public bool isFreeSpinActive;
-  public bool linkFeatureActive;
-  public int linkRespinsRemaining;
-  public List<object> lockedCashCollects;
-
-  public bool isFreeSpinTriggered;
-  public FreeSpinResult freeSpinResult;
-
-
-  public bool isLinkTriggered;
-  public bool isPrizeCoinTriggered;
-
-}
-
-[Serializable]
-public class FreeSpinResult
-{
-  public bool triggered;
-  public int freeSpinCount;
-  public List<TriggerCoin> triggerCoins;
-  public List<int> lpValues;
-  public int freeSpinsRemaining;
-}
-
-[Serializable]
-public class TriggerCoin
-{
-  public List<int> position;
-  public int coinValue;
-  public int symbolId;
-  public string symbolName;
-}
-
-[Serializable]
-public class Player
-{
-  public double balance;
-}
-[Serializable]
-public class Root
-{
-  public bool success;
-  public List<List<string>> matrix;
-  public string id;
-  public Payload payload;
-  public Features features;
-  public Player player;
-
-
-  //init
-
-  public GameData gameData;
-
-  public UiData uiData;
-
-}
-
-
-
-
-
-[Serializable]
-public class Bonus
-{
-  public string type;
-  public bool isEnabled;
-  public int noOfItem;
-  public List<int> payOut;
-  public List<double> payOutProb;
-}
-[Serializable]
-public class Features
-{
-  public Bonus bonus;
-  public FreeSpin freeSpin;
-  public Jackpot jackpot;
-}
-[Serializable]
-public class FreeSpin
-{
-  public bool isEnabled;
-  public List<int> LPValue;
-  public List<double> LPValueProbs;
-}
-[Serializable]
-public class GameData
-{
-  public List<List<int>> lines;
-  public List<double> bets;
-  public int totalLines;
-}
-[Serializable]
-public class Jackpot
-{
-  public List<int> payout;
-  public List<double> payoutProbs;
-}
-[Serializable]
-public class Paylines
-{
-  public List<Symbol> symbols;
-}
-
-
-
-[Serializable]
-public class Symbol
-{
-  public int id;
-  public string name;
-  public List<int> multiplier;
-  public string description;
-}
-[Serializable]
-public class UiData
-{
-  public Paylines paylines;
 }

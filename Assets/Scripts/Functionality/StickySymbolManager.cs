@@ -6,24 +6,19 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Manages the overlay "static" slot images used during the Link/Bonus feature.
-/// Upgraded to use the new ImageAnimation API:
-///   - Proper CancelInvoke before re-assigning textureArray
-///   - Uses onLoopComplete callback instead of polling rendererDelegate.sprite
-///   - isAnim flag aligned with SlotBehaviour conventions
+/// Manages the overlay "sticky" slot images used during the Link/Bonus feature.
+/// Subscribes to GameModel for data access, separating concerns.
 /// </summary>
-public class StaticSymbolController : MonoBehaviour
+public class StickySymbolManager : MonoBehaviour
 {
     [Header("Script References")]
+    
     [SerializeField] private SocketIOManager socketManager;
-    [SerializeField] private SlotBehaviour slotManager;
-    [SerializeField] private BonusController bonusController;
+    [SerializeField] private SlotManager slotManager;
+    [SerializeField] private BonusManager bonusManager;
 
     [Header("Slots Reference")]
     [SerializeField] public List<SlotImage> Slot;
-
-    [Header("Sprites References")]
-    [SerializeField] private Sprite[] images;
 
     [Header("Animation Sprites References")]
     [SerializeField] private Sprite[] LinkToGoldCoin_Animation;
@@ -32,9 +27,39 @@ public class StaticSymbolController : MonoBehaviour
     [SerializeField] internal List<Column> freezedLocations = new();
     [SerializeField] internal List<List<int>> Locations = new();
 
-    // ─────────────────────────────────────────────────────────────
-    //  Freeze matrix helpers
-    // ─────────────────────────────────────────────────────────────
+    private List<List<SlotSymbolView>> symbolViews = new();
+
+    private void Awake()
+    {
+        InitializeSymbolViews();
+    }
+
+    private void Start()
+    {
+        Reset();
+    }
+
+    private void InitializeSymbolViews()
+    {
+        symbolViews.Clear();
+        for (int i = 0; i < Slot.Count; i++)
+        {
+            List<SlotSymbolView> rowViews = new();
+            for (int j = 0; j < Slot[i].slotImages.Count; j++)
+            {
+                Image image = Slot[i].slotImages[j];
+                SlotSymbolView view = image.GetComponent<SlotSymbolView>();
+                if (view == null)
+                {
+                    view = image.gameObject.AddComponent<SlotSymbolView>();
+                }
+                view.SetupFromHierarchy();
+                rowViews.Add(view);
+            }
+            symbolViews.Add(rowViews);
+        }
+    }
+
     internal List<List<int>> GenerateFreezeMatrix(List<List<int>> loc, bool dontReturn = false)
     {
         for (int i = 0; i < loc.Count; i++)
@@ -77,9 +102,6 @@ public class StaticSymbolController : MonoBehaviour
         return dontReturn ? null : freezeMatrix;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  TurnOnIndices — show frozen slots with correct animations
-    // ─────────────────────────────────────────────────────────────
     internal void TurnOnIndices(List<List<int>> loc)
     {
         List<List<int>> freezeMatrix = GenerateFreezeMatrix(loc);
@@ -88,23 +110,32 @@ public class StaticSymbolController : MonoBehaviour
         {
             for (int j = 0; j < Slot[i].slotImages.Count; j++)
             {
+                SlotSymbolView view = symbolViews[i][j];
                 if (freezeMatrix[i][j] == 1)
                 {
                     string matrixVal = socketManager.resultData.matrix[i][j];
+                    int symbolId = int.Parse(matrixVal);
 
-                    if (matrixVal == "11") // Link → coin transition
+                    if (view != null) view.ClearValues();
+
+                    if (matrixVal == "11") // Link -> coin transition
                     {
                         SetupAnimationOnSlot(i, j, LinkToGoldCoin_Animation);
                         AssignCoinText(i, j, fromImage: false);
                     }
-                    else if (matrixVal == "12") // MegaLink → coin transition
+                    else if (matrixVal == "12") // MegaLink -> coin transition
                     {
                         SetupAnimationOnSlot(i, j, MegaLinkToGoldCoin_Animation);
                         AssignCoinText(i, j, fromImage: true);
                     }
 
-                    Slot[i].slotImages[j].sprite = slotManager.ResultMatrix[i].slotImages[j].sprite;
+                    Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(i, j).sprite;
                     Slot[i].slotImages[j].gameObject.SetActive(true);
+
+                    if (view != null)
+                    {
+                        slotManager.ConfigureSymbolView(view, symbolId);
+                    }
                 }
                 else
                 {
@@ -114,9 +145,6 @@ public class StaticSymbolController : MonoBehaviour
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  ChangeLinksToGoldCoin  (upgraded: uses onLoopComplete instead of sprite polling)
-    // ─────────────────────────────────────────────────────────────
     internal IEnumerator ChangeLinksToGoldCoin(Button button)
     {
         for (int i = 0; i < Slot.Count; i++)
@@ -126,16 +154,8 @@ public class StaticSymbolController : MonoBehaviour
                 ImageAnimation anim = Slot[i].slotImages[j].GetComponent<ImageAnimation>();
                 if (anim == null || !anim.isAnim) continue;
 
-                bool midpointReached = false;
-                bool animComplete = false;
-
                 anim.AnimationSpeed = 17;
-
-                // Use onLoopComplete callback to detect when we hit frame 7 (midpoint)
-                // and when the full animation ends (last frame)
-                anim.onLoopComplete = null; // clear any stale callback
-
-                // Manually track frame 7 via WaitUntil (kept from original design intent)
+                anim.onLoopComplete = null;
                 anim.StartAnimation();
 
                 yield return new WaitUntil(() =>
@@ -151,17 +171,18 @@ public class StaticSymbolController : MonoBehaviour
                     anim.rendererDelegate.sprite == anim.textureArray[^1]);
 
                 anim.StopAnimation();
-                anim.rendererDelegate.sprite = images[15];
+                var slotView = slotManager.GetSymbolView(i, j);
+                if (slotView != null)
+                {
+                    anim.rendererDelegate.sprite = slotView.mainImage.sprite;
+                }
             }
         }
 
         yield return new WaitForSeconds(1f);
-        StartCoroutine(bonusController.StartBonusLoop());
+        StartCoroutine(bonusManager.StartBonusLoop());
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  Reset
-    // ─────────────────────────────────────────────────────────────
     internal void Reset()
     {
         freezedLocations.Clear();
@@ -171,19 +192,15 @@ public class StaticSymbolController : MonoBehaviour
 
         for (int i = 0; i < Slot.Count; i++)
         {
-            foreach (var slotImage in Slot[i].slotImages)
+            for (int j = 0; j < Slot[i].slotImages.Count; j++)
             {
-                slotImage.gameObject.SetActive(false);
-                slotImage.sprite = null;
+                SlotSymbolView view = symbolViews[i][j];
+                view.ClearValues();
 
-                var label = slotImage.transform.GetChild(0).GetComponent<TMP_Text>();
-                if (label != null)
-                {
-                    label.text = "";
-                    slotImage.transform.GetChild(0).gameObject.SetActive(false);
-                }
+                Slot[i].slotImages[j].sprite = null;
+                Slot[i].slotImages[j].gameObject.SetActive(false);
 
-                var anim = slotImage.GetComponent<ImageAnimation>();
+                var anim = Slot[i].slotImages[j].GetComponent<ImageAnimation>();
                 if (anim != null)
                 {
                     anim.StopAnimation();
@@ -194,15 +211,11 @@ public class StaticSymbolController : MonoBehaviour
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  Private helpers
-    // ─────────────────────────────────────────────────────────────
     private void SetupAnimationOnSlot(int col, int row, Sprite[] sprites)
     {
         ImageAnimation anim = Slot[col].slotImages[row].GetComponent<ImageAnimation>();
         if (anim == null) return;
 
-        // Stop any running animation cleanly before reassigning sprites
         anim.StopAnimation();
         anim.onLoopComplete = null;
 
@@ -226,16 +239,11 @@ public class StaticSymbolController : MonoBehaviour
 
                 var label = target.GetChild(0).GetComponent<TMP_Text>();
                 if (label != null)
+                {
                     label.text = coin.coinValue.ToString() + "x";
-
+                }
                 break;
             }
         }
     }
-}
-
-[Serializable]
-public class Column
-{
-    public List<int> index = new();
 }
