@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 {
   [SerializeField] private SlotManager slotManager;
   [SerializeField] private SocketIOManager socketManager;
+  [SerializeField] private BonusManager bonusManager;
 
   [Header("Spin & Autoplay Rework UI")]
   [SerializeField] private GameObject autoplaySelectionPanel;
@@ -21,35 +22,26 @@ public class UIManager : MonoBehaviour
   [Header("Jackpot UI")]
   [SerializeField] private List<TMP_Text> JackpotText;
 
-  [Header("Win Info")]
-  [SerializeField] private Transform BaseWinningsPosition;
-  [SerializeField] private TMP_Text BaseWinnings_Text;
-  [SerializeField] private TMP_Text CoinWinning_Text;
-  [SerializeField] private Sprite TurboToggleSprite;
-
-
-
-  [Header("UI Text Objects")]
-  [SerializeField] private TMP_Text[] TopPayoutTextUI;
-
   [Header("RaycastBlocker")]
   [SerializeField] internal GameObject RaycastBlocker;
 
-  [Header("Image Animations (Magnet)")]
-  [SerializeField] private ImageAnimation LeftMagnetImageAnimation;
-  [SerializeField] private ImageAnimation RightMagnetImageAnimation;
-  [SerializeField] private ImageAnimation FreeGamesImageAnimation;
+  [Header("Feature Panels")]
+  [SerializeField] private GameObject featureWinPanel;
+  [SerializeField] private GameObject spinCounterPanel;
+  [SerializeField] private TMP_Text featureWinText;
+  [SerializeField] private TMP_Text spinCounterText;
 
-  [Header("Normal Slot Canvas Groups")]
-  [SerializeField] private CanvasGroup FreeSpinsUI_Panel;
-  [SerializeField] private CanvasGroup WinningsUI_Panel;
-  [SerializeField] private CanvasGroup TopPayoutUI_CG;
-  [SerializeField] private CanvasGroup CanvasGroup;
-  [SerializeField] private CanvasGroup LinesUI;
-  [SerializeField] private CanvasGroup TotalBetUI;
-  [SerializeField] private CanvasGroup LineBetUI;
-  [SerializeField] private RectTransform FreeSpinCountUIPositon;
-  [SerializeField] private Transform AnimationParent;
+  [Header("Feature Popup UI")]
+  [SerializeField] private GameObject featurePopup;
+  [SerializeField] private Button featureStartButton;
+  [SerializeField] private GameObject featureTitleObject;
+  [SerializeField] private GameObject featureWinObject;
+  [SerializeField] private TMP_Text featureWinAmountText;
+
+  [Header("Feature Controls")]
+  [SerializeField] private Button featureSpinButton;
+
+  private int totalBonusSpins = 3;
 
   internal Coroutine BonusCoroutine;
   internal bool animationFinish = false;
@@ -62,14 +54,12 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button autoSpinStopButton;
   [SerializeField] private Button totalBetPlusButton;
   [SerializeField] private Button totalBetMinusButton;
-  [SerializeField] private Button lineBetPlusButton;
-  [SerializeField] private Button lineBetMinusButton;
+
   [SerializeField] private Button turboButton;
   [SerializeField] private Button stopSpinButton;
 
   [SerializeField] private TMP_Text balanceText;
   [SerializeField] private TMP_Text totalBetText;
-  [SerializeField] private TMP_Text lineBetText;
   [SerializeField] private TMP_Text totalWinText;
   [SerializeField] private TMP_Text fsNumText;
   
@@ -79,13 +69,13 @@ public class UIManager : MonoBehaviour
 
   private void Start()
   {
-    if (LeftMagnetImageAnimation != null) LeftMagnetImageAnimation.gameObject.SetActive(false);
-    if (RightMagnetImageAnimation != null) RightMagnetImageAnimation.gameObject.SetActive(false);
-    if (FreeGamesImageAnimation != null) FreeGamesImageAnimation.gameObject.SetActive(false);
+    if (featureWinPanel != null) featureWinPanel.SetActive(false);
+    if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
+    if (featurePopup != null) featurePopup.SetActive(false);
+    if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
 
     // Bind to Model Events
     slotManager.OnBalanceChanged += UpdateBalanceText;
-    slotManager.OnLineBetChanged += UpdateLineBetText;
     slotManager.OnTotalBetChanged += UpdateTotalBetText;
     slotManager.OnFreeSpinsChanged += UpdateFreeSpinsText;
 
@@ -117,34 +107,19 @@ public class UIManager : MonoBehaviour
     if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
 
     InitializeHUD();
+
+    if (featureSpinButton != null)
+    {
+        featureSpinButton.onClick.RemoveAllListeners();
+        featureSpinButton.onClick.AddListener(() => {
+            if (featureSpinButton.IsInteractable() && slotManager.IsBonus && !bonusManager.IsSpinning)
+            {
+                bonusManager.StartBonusSlot();
+            }
+        });
+    }
   }
 
-  public void RegisterSlotElements(
-      SlotManager manager,
-      Button startBtn, Button autoBtn, Button autoStopBtn,
-      Button betPlusBtn, Button betMinusBtn, Button lBetPlusBtn, Button lBetMinusBtn,
-      Button trbBtn, Button stopBtn,
-      TMP_Text balTxt, TMP_Text totBetTxt, TMP_Text lBetTxt, TMP_Text totWinTxt, TMP_Text fsTxt)
-  {
-      slotManager = manager;
-      slotStartButton = startBtn;
-      autoSpinButton = autoBtn;
-      autoSpinStopButton = autoStopBtn;
-      totalBetPlusButton = betPlusBtn;
-      totalBetMinusButton = betMinusBtn;
-      lineBetPlusButton = lBetPlusBtn;
-      lineBetMinusButton = lBetMinusBtn;
-      turboButton = trbBtn;
-      stopSpinButton = stopBtn;
-
-      balanceText = balTxt;
-      totalBetText = totBetTxt;
-      lineBetText = lBetTxt;
-      totalWinText = totWinTxt;
-      fsNumText = fsTxt;
-
-      InitializeHUD();
-  }
 
   private void InitializeHUD()
   {
@@ -158,7 +133,7 @@ public class UIManager : MonoBehaviour
           }
           holdHandler.onClick.RemoveAllListeners();
           holdHandler.onClick.AddListener(() => {
-              if (slotManager && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus) {
+              if (slotStartButton.IsInteractable() && slotManager && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus) {
                   // Allow starting a new spin even if animations are playing
                   // ForceCleanupPreviousSpin inside StartSlots handles cleanup
                   slotManager.StartSlots();
@@ -167,7 +142,7 @@ public class UIManager : MonoBehaviour
           });
           holdHandler.onLongPress.RemoveAllListeners();
           holdHandler.onLongPress.AddListener(() => {
-              if (slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsBonus) {
+              if (slotStartButton.IsInteractable() && slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsBonus) {
                   OpenAutoplayPanel();
                   CanCloseMenu();
               }
@@ -176,8 +151,10 @@ public class UIManager : MonoBehaviour
       if (autoSpinButton) {
           autoSpinButton.onClick.RemoveAllListeners();
           autoSpinButton.onClick.AddListener(() => {
-              OpenAutoplayPanel();
-              CanCloseMenu();
+              if (autoSpinButton.IsInteractable()) {
+                  OpenAutoplayPanel();
+                  CanCloseMenu();
+              }
           });
       }
       if (autoSpinStopButton) {
@@ -192,14 +169,7 @@ public class UIManager : MonoBehaviour
           totalBetMinusButton.onClick.RemoveAllListeners();
           totalBetMinusButton.onClick.AddListener(() => { if (slotManager) slotManager.ChangeBet(false); CanCloseMenu(); });
       }
-      if (lineBetPlusButton) {
-          lineBetPlusButton.onClick.RemoveAllListeners();
-          lineBetPlusButton.gameObject.SetActive(false);
-      }
-      if (lineBetMinusButton) {
-          lineBetMinusButton.onClick.RemoveAllListeners();
-          lineBetMinusButton.gameObject.SetActive(false);
-      }
+
       if (turboButton) {
           turboButton.onClick.RemoveAllListeners();
           turboButton.onClick.AddListener(() => { TurboToggle(); CanCloseMenu(); });
@@ -207,22 +177,32 @@ public class UIManager : MonoBehaviour
       if (stopSpinButton) {
           stopSpinButton.onClick.RemoveAllListeners();
           stopSpinButton.onClick.AddListener(() => { 
-              if (slotManager) slotManager.StopSpinToggle = true; 
+              if (slotManager)
+              {
+                  if (slotManager.IsBonus)
+                  {
+                      if (bonusManager != null)
+                      {
+                          bonusManager.StopSpinToggle = true;
+                          // Immediately change stop button to disabled feature spin button during feature
+                          UpdateFeatureButtonsState(false, slotManager.LinkRespinsRemaining);
+                          if (featureSpinButton != null) featureSpinButton.interactable = false;
+                      }
+                  }
+                  else
+                  {
+                      slotManager.StopSpinToggle = true;
+                      // Immediately change stop button to disabled spin button for normal game
+                      ShowSpinButtonCooldown(true);
+                  }
+              }
           });
       }
 
       UpdateButtonsState();
   }
 
-  public void RegisterBonusElements(TMP_Text counterTxt)
-  {
-  }
 
-  public Transform GetAnimationParent() => AnimationParent;
-  public RectTransform GetFreeSpinCountUIPositon() => FreeSpinCountUIPositon;
-  public ImageAnimation GetLeftMagnetImageAnimation() => LeftMagnetImageAnimation;
-  public ImageAnimation GetRightMagnetImageAnimation() => RightMagnetImageAnimation;
-  public ImageAnimation GetFreeGamesImageAnimation() => FreeGamesImageAnimation;
 
   public void SetNormalSpinButtonActive(bool active)
   {
@@ -231,6 +211,122 @@ public class UIManager : MonoBehaviour
 
   public void SetBonusSpinCounter(int count)
   {
+      if (spinCounterText != null)
+      {
+          spinCounterText.text = count.ToString() + "/" + totalBonusSpins.ToString();
+      }
+      if (autoplayCounterText != null)
+      {
+          autoplayCounterText.text = count.ToString();
+      }
+  }
+
+  public void OpenBonusUI(int totalSpins, double initialWin)
+  {
+      totalBonusSpins = totalSpins;
+      if (featureWinPanel != null) featureWinPanel.SetActive(false);
+      if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
+      
+      // Hide standard UI elements during bonus game
+      if (slotStartButton != null) slotStartButton.gameObject.SetActive(false);
+      if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(false);
+      if (autoSpinStopButton != null) autoSpinStopButton.gameObject.SetActive(false);
+      if (turboButton != null) turboButton.gameObject.SetActive(false);
+      if (autoplayCounterObject != null) autoplayCounterObject.SetActive(true);
+
+      if (featureWinText != null) featureWinText.text = initialWin.ToString("f3");
+      SetBonusSpinCounter(totalSpins);
+      UpdateFeatureButtonsState(false, totalSpins);
+  }
+
+  public void CloseBonusUI()
+  {
+      if (featureWinPanel != null) featureWinPanel.SetActive(false);
+      if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
+      if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+      if (stopSpinButton != null && slotManager.IsBonus) stopSpinButton.gameObject.SetActive(false);
+
+      // Restore standard UI elements when exiting bonus game
+      if (slotStartButton != null) slotStartButton.gameObject.SetActive(true);
+      if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(true);
+      if (turboButton != null) turboButton.gameObject.SetActive(true);
+      
+      // Also update buttons state to match current normal/autoplay state
+      UpdateButtonsState();
+  }
+
+  public void SetFeatureWinText(double value)
+  {
+      if (featureWinText != null)
+      {
+          featureWinText.text = value.ToString("f3");
+      }
+  }
+
+  public void OpenFeaturePopup(Action onStartClicked)
+  {
+      if (featurePopup == null || featureStartButton == null)
+      {
+          onStartClicked?.Invoke();
+          return;
+      }
+
+      featurePopup.SetActive(true);
+      if (featureTitleObject != null)
+      {
+          featureTitleObject.SetActive(true);
+      }
+      if (featureWinObject != null)
+      {
+          featureWinObject.SetActive(false);
+      }
+      featureStartButton.onClick.RemoveAllListeners();
+      featureStartButton.onClick.AddListener(() => {
+          featurePopup.SetActive(false);
+          onStartClicked?.Invoke();
+      });
+  }
+
+  public void OpenFeatureWinPopup(double winAmount, Action onCloseClicked)
+  {
+      if (featurePopup == null || featureStartButton == null)
+      {
+          onCloseClicked?.Invoke();
+          return;
+      }
+
+      featurePopup.SetActive(true);
+      if (featureTitleObject != null)
+      {
+          featureTitleObject.SetActive(false);
+      }
+      if (featureWinObject != null)
+      {
+          featureWinObject.SetActive(true);
+      }
+      if (featureWinAmountText != null)
+      {
+          featureWinAmountText.text = winAmount.ToString("f3");
+      }
+      featureStartButton.onClick.RemoveAllListeners();
+      featureStartButton.onClick.AddListener(() => {
+          featurePopup.SetActive(false);
+          onCloseClicked?.Invoke();
+      });
+  }
+
+  public void UpdateFeatureButtonsState(bool isSpinning, int remaining)
+  {
+      if (featureSpinButton != null)
+      {
+          featureSpinButton.gameObject.SetActive(!isSpinning);
+          featureSpinButton.interactable = !isSpinning && (remaining > 0);
+      }
+      if (stopSpinButton != null)
+      {
+          stopSpinButton.gameObject.SetActive(isSpinning);
+          stopSpinButton.interactable = isSpinning;
+      }
   }
 
   public void AddFreeSpinsText(int count)
@@ -244,11 +340,6 @@ public class UIManager : MonoBehaviour
   public void SetTotalWinText(string text)
   {
       if (totalWinText) totalWinText.text = text;
-  }
-
-  public void SetCoinWinningText(string text)
-  {
-      if (CoinWinning_Text) CoinWinning_Text.text = text;
   }
 
   public void ShowStopButton(bool show)
@@ -270,40 +361,8 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-          if (slotStartButton)
-          {
-              slotStartButton.interactable = true;
-          }
+          UpdateButtonsState();
       }
-  }
-
-  public void FadeWinningsPanel(float endVal, float duration, Action onComplete = null)
-  {
-      WinningsUI_Panel.DOFade(endVal, duration).OnComplete(() => onComplete?.Invoke());
-  }
-
-  public void FadeLinesUI(float endVal, float duration)
-  {
-      LinesUI.DOFade(endVal, duration).OnComplete(() => {
-          LinesUI.interactable = endVal > 0;
-          LinesUI.blocksRaycasts = endVal > 0;
-      });
-  }
-
-  public void FadeTotalBetUI(float endVal, float duration)
-  {
-      TotalBetUI.DOFade(endVal, duration).OnComplete(() => {
-          TotalBetUI.interactable = endVal > 0;
-          TotalBetUI.blocksRaycasts = endVal > 0;
-      });
-  }
-
-  public void FadeLineBetUI(float endVal, float duration)
-  {
-      LineBetUI.DOFade(endVal, duration).OnComplete(() => {
-          LineBetUI.interactable = endVal > 0;
-          LineBetUI.blocksRaycasts = endVal > 0;
-      });
   }
 
   private void UpdateBalanceText(double val)
@@ -311,10 +370,6 @@ public class UIManager : MonoBehaviour
       if (balanceText) balanceText.text = val.ToString("f3");
   }
 
-  private void UpdateLineBetText(double val)
-  {
-      if (lineBetText) lineBetText.text = val.ToString();
-  }
 
   private void UpdateTotalBetText(double val)
   {
@@ -332,19 +387,19 @@ public class UIManager : MonoBehaviour
       if (slotStartButton) slotStartButton.interactable = !active;
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
       if (autoSpinButton) autoSpinButton.interactable = true;
-      if (lineBetPlusButton) lineBetPlusButton.interactable = false;
-      if (lineBetMinusButton) lineBetMinusButton.interactable = false;
       if (totalBetPlusButton) totalBetPlusButton.interactable = false;
       if (totalBetMinusButton) totalBetMinusButton.interactable = false;
   }
 
   public void SetButtonsInteractable(bool toggle)
   {
+      if (toggle && slotManager != null && (slotManager.IsBonus || slotManager.IsFeatureTransitioning || slotManager.IsFreeSpin))
+      {
+          toggle = false;
+      }
       if (slotStartButton && !slotManager.IsAutoSpin) slotStartButton.interactable = toggle;
       if (autoSpinButton && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin) autoSpinButton.gameObject.SetActive(toggle);
       if (autoSpinButton && !slotManager.IsAutoSpin) autoSpinButton.interactable = toggle;
-      if (lineBetPlusButton && !slotManager.IsAutoSpin) lineBetPlusButton.interactable = toggle;
-      if (lineBetMinusButton && !slotManager.IsAutoSpin) lineBetMinusButton.interactable = toggle;
       if (totalBetPlusButton && !slotManager.IsAutoSpin) totalBetPlusButton.interactable = toggle;
       if (totalBetMinusButton && !slotManager.IsAutoSpin) totalBetMinusButton.interactable = toggle;
   }
@@ -361,7 +416,6 @@ public class UIManager : MonoBehaviour
     {
       slotManager.IsTurboOn = false;
       turboButton.GetComponent<ImageAnimation>().StopAnimation();
-      turboButton.image.sprite = TurboToggleSprite;
     }
     else
     {
@@ -400,48 +454,12 @@ public class UIManager : MonoBehaviour
 
   internal IEnumerator TrailRendererAnimation(GameObject TrailRendererGO, int textIndex, int coinvalue, bool IsBonus = false)
   {
-    TrailRenderer trail = TrailRendererGO.GetComponent<TrailRenderer>();
-    TrailRendererGO.transform.parent.GetChild(textIndex).GetComponent<TMP_Text>().text = coinvalue.ToString() + "x";
-    TrailRendererGO.gameObject.SetActive(true);
-    Vector3 tempPosi = trail.transform.position;
-
-    Vector3 DOMovePosition = BaseWinningsPosition.position;
-    TMP_Text text = BaseWinnings_Text;
-
-    yield return trail.transform.DOMove(DOMovePosition, .5f).OnComplete(() =>
-    {
-      trail.gameObject.SetActive(false);
-      trail.transform.position = tempPosi;
-
-      int multiplier = coinvalue;
-      multiplierCount += multiplier;
-
-      int start = int.Parse(text.text.Replace("x", ""));
-      DOTween.To(() => start, (val) => start = val, multiplierCount, 0.3f).OnUpdate(() =>
-      {
-        text.text = start.ToString() + "x";
-      }).WaitForCompletion();
-    });
-    yield return new WaitForSeconds(1f);
+    yield break;
   }
 
   internal IEnumerator MidGameImageAnimation(ImageAnimation imageAnimation, double num = 0)
   {
-    if (imageAnimation == null)
-    {
-      animationFinish = true;
-      yield break;
-    }
-    animationFinish = false;
-    if (imageAnimation.transform.parent != null) imageAnimation.transform.parent.gameObject.SetActive(true);
-    imageAnimation.gameObject.SetActive(true);
-    imageAnimation.StartAnimation();
-
-    yield return new WaitUntil(() => imageAnimation.rendererDelegate != null && imageAnimation.rendererDelegate.sprite == imageAnimation.textureArray[^1]);
-
-    imageAnimation.StopAnimation();
-    if (imageAnimation.transform.parent != null) imageAnimation.transform.parent.gameObject.SetActive(false);
-    animationFinish = true;
+    yield break;
   }
 
 
@@ -487,22 +505,12 @@ public class UIManager : MonoBehaviour
   internal void OpenFreeSpinsUI()
   {
     if (fsNumText) fsNumText.text = slotManager.FreeSpinsCount.ToString();
-    FreeSpinsUI_Panel.DOFade(1, 0.3f);
-    
-    if (LinesUI.alpha != 0) FadeLinesUI(0f, 0.3f);
-    if (TotalBetUI.alpha != 0) FadeTotalBetUI(0f, 0.3f);
-    if (LineBetUI.alpha != 0) FadeLineBetUI(0f, 0.3f);
   }
 
   internal void CloseFreeSpinsUI()
   {
     slotManager.IsFreeSpin = false;
-    FreeSpinsUI_Panel.DOFade(0, 0.3f);
     if (fsNumText) fsNumText.text = "0";
-
-    FadeLinesUI(1f, 0.3f);
-    FadeTotalBetUI(1f, 0.3f);
-    FadeLineBetUI(1f, 0.3f);
   }
 
   internal void WinningsTextAnimation()
@@ -546,16 +554,7 @@ public class UIManager : MonoBehaviour
   
   public void SwitchTopUI(bool trigger)
   {
-    if (trigger)
-    {
-      TopPayoutUI_CG.DOFade(0, 0.5f);
-      WinningsUI_Panel.DOFade(1, 0.5f);
-    }
-    else
-    {
-      TopPayoutUI_CG.DOFade(1, 0.5f);
-      WinningsUI_Panel.DOFade(0, 0.5f);
-    }
+    // No-op for now
   }
 
   // --- Autoplay & Spin Button Rework Methods ---
@@ -637,6 +636,7 @@ public class UIManager : MonoBehaviour
       if (slotStartButton) slotStartButton.gameObject.SetActive(false);
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
+      if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
     }
     else if (slotManager.IsFreeSpin)
     {
@@ -646,24 +646,31 @@ public class UIManager : MonoBehaviour
       }
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
     }
     else if (slotManager.IsSpinning)
     {
       if (slotStartButton) slotStartButton.gameObject.SetActive(false);
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(true);
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
     }
     else
     {
       if (slotStartButton) {
         slotStartButton.gameObject.SetActive(true);
-        slotStartButton.interactable = true;
+        // Disable the normal spin button if the feature is active or transition/trigger is happening
+        slotStartButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
       }
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+
+      // Also ensure all other buttons are non-interactable during feature transitions/triggers
+      if (slotManager.IsBonus || slotManager.IsFeatureTransitioning)
+      {
+          SetButtonsInteractable(false);
+      }
     }
   }
 }

@@ -83,10 +83,10 @@ public class StickySymbolManager : MonoBehaviour
             {
                 int row = indexPair[0];
                 int column = indexPair[1];
-                if (row >= 0 && row < freezeMatrix.Count &&
-                    column >= 0 && column < freezeMatrix[row].Count)
+                if (column >= 0 && column < freezeMatrix.Count &&
+                    row >= 0 && row < freezeMatrix[column].Count)
                 {
-                    freezeMatrix[row][column] = 1;
+                    freezeMatrix[column][row] = 1;
                 }
             }
         }
@@ -113,7 +113,7 @@ public class StickySymbolManager : MonoBehaviour
                 SlotSymbolView view = symbolViews[i][j];
                 if (freezeMatrix[i][j] == 1)
                 {
-                    string matrixVal = socketManager.resultData.matrix[i][j];
+                    string matrixVal = socketManager.resultData.matrix[j][i];
                     int symbolId = int.Parse(matrixVal);
 
                     if (view != null) view.ClearValues();
@@ -129,7 +129,7 @@ public class StickySymbolManager : MonoBehaviour
                         AssignCoinText(i, j);
                     }
 
-                    Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(i, j).sprite;
+                    Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(j, i).sprite;
                     Slot[i].slotImages[j].gameObject.SetActive(true);
 
                     if (view != null)
@@ -171,7 +171,7 @@ public class StickySymbolManager : MonoBehaviour
                     anim.rendererDelegate.sprite == anim.textureArray[^1]);
 
                 anim.StopAnimation();
-                var slotView = slotManager.GetSymbolView(i, j);
+                var slotView = slotManager.GetSymbolView(j, i);
                 if (slotView != null)
                 {
                     anim.rendererDelegate.sprite = slotView.mainImage.sprite;
@@ -180,7 +180,7 @@ public class StickySymbolManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        StartCoroutine(bonusManager.StartBonusLoop());
+        bonusManager.OnInitialTransitionComplete();
     }
 
     internal void Reset()
@@ -231,7 +231,7 @@ public class StickySymbolManager : MonoBehaviour
     {
         foreach (var coin in socketManager.resultData.payload.coinPositions)
         {
-            if (coin.position[0] == col && coin.position[1] == row)
+            if (coin.position[0] == row && coin.position[1] == col)
             {
                 // Use the SlotSymbolView's gold coin text directly
                 SlotSymbolView view = symbolViews[col][row];

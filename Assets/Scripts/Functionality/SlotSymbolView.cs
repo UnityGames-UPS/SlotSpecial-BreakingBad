@@ -163,7 +163,7 @@ public class SlotSymbolView : MonoBehaviour
 
         // Sprite Asset Mapping: Index 0-9 -> Digits 0-9, Index 10 -> decimal point "."
         // Rule: Show decimals only when provided by the data
-        string valStr = (value % 1 == 0) ? value.ToString("F0") : value.ToString("G");
+        string valStr = value.ToString("F2");
         string formattedText = "";
         foreach (char c in valStr)
         {

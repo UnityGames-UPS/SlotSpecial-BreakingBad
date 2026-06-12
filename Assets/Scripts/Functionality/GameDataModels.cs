@@ -853,7 +853,7 @@ public class CashCollectResult
     public bool triggered;
     public List<CollectedCoin> collectedCoins;
     public double totalValue;
-    public List<int> positions;
+    public Newtonsoft.Json.Linq.JToken positions;
 }
 
 [Serializable]
@@ -874,7 +874,7 @@ public class LinkFeatureResult
     public int respins;
     public List<FinalCoin> finalCoins;
     public double totalValue;
-    public List<int> cashCollectPositions;
+    public Newtonsoft.Json.Linq.JToken cashCollectPositions;
 }
 
 [Serializable]

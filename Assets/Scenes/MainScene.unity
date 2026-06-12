@@ -11932,11 +11932,7 @@ MonoBehaviour:
   Settings_BttnTransform: {fileID: 1770888687}
   FreeSpinsText: {fileID: 1015475151}
   BonusGameWinningsText: {fileID: 1315372115}
-  TopPayoutTextUI:
-  - {fileID: 1828104853}
-  - {fileID: 1547560990}
-  - {fileID: 1687635693}
-  - {fileID: 1914329161}
+  TopPayoutTextUI: []
   RaycastBlocker: {fileID: 1855286925}
   DiamondPayoutObject: {fileID: 541661169988502595, guid: cc36f5829f7c041be9eaf641f637389a, type: 3}
   DiamondPayoutParent: {fileID: 500730208}

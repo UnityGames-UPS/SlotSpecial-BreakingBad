@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HoldButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
@@ -11,9 +12,25 @@ public class HoldButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
     private bool isPointerDown = false;
     private bool longPressTriggered = false;
     private float pointerDownTime = 0f;
+    private Selectable selectable;
+
+    private void Awake()
+    {
+        selectable = GetComponent<Selectable>();
+    }
+
+    private bool IsInteractable()
+    {
+        return selectable == null || selectable.IsInteractable();
+    }
 
     private void Update()
     {
+        if (!IsInteractable())
+        {
+            isPointerDown = false;
+            return;
+        }
         if (isPointerDown && !longPressTriggered)
         {
             if (Time.time - pointerDownTime >= holdTimeThreshold)
@@ -26,6 +43,7 @@ public class HoldButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!IsInteractable()) return;
         if (eventData.button != PointerEventData.InputButton.Left) return;
         isPointerDown = true;
         longPressTriggered = false;
@@ -34,6 +52,7 @@ public class HoldButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!IsInteractable()) return;
         if (eventData.button != PointerEventData.InputButton.Left) return;
         if (isPointerDown)
         {
