@@ -18,76 +18,16 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject autoplayCounterObject;
   [SerializeField] private TMP_Text autoplayCounterText;
 
-  [Header("Popus UI")]
-  [SerializeField] private GameObject MainPopup_Object;
-  
   [Header("Jackpot UI")]
   [SerializeField] private List<TMP_Text> JackpotText;
 
-  [Header("Win Popup")]
-  [SerializeField] private GameObject WinPopup_Object;
-  [SerializeField] private ImageAnimation Winnings_ImageAnimation;
-  [SerializeField] private RectTransform WinTextBgImage;
-  [SerializeField] private TMP_Text Win_Text;
-  [SerializeField] private Sprite[] BigWin_Sprites, MegaWin_Sprites, BonusWinnings_Sprites;
-  [SerializeField] private Transform BonusWinningsPosition;
-  [SerializeField] private TMP_Text BonusWinnings_Text;
+  [Header("Win Info")]
   [SerializeField] private Transform BaseWinningsPosition;
   [SerializeField] private TMP_Text BaseWinnings_Text;
-  [SerializeField] private Button SkipWinAnimation;
   [SerializeField] private TMP_Text CoinWinning_Text;
   [SerializeField] private Sprite TurboToggleSprite;
 
-  [Header("Reconection Popup")]
-  [SerializeField] private GameObject ReconectingPopup_Object;
 
-  [Header("Disconnection Popup")]
-  [SerializeField] private Button CloseDisconnect_Button;
-  [SerializeField] private GameObject DisconnectPopup_Object;
-
-  [Header("AnotherDevice Popup")]
-  [SerializeField] private GameObject ADPopup_Object;
-
-  [Header("LowBalance Popup")]
-  [SerializeField] private GameObject LBPopup_Object;
-  [SerializeField] private Button LBExit_Button;
-
-  [Header("Audio Objects")]
-  [SerializeField] private GameObject Settings_Object;
-  [SerializeField] private Button SettingsQuit_Button;
-  [SerializeField] private Slider Sound_Slider;
-  [SerializeField] private Slider Music_Slider;
-
-  [Header("Paytable Objects")]
-  [SerializeField] private GameObject PaytableMenuObject;
-  [SerializeField] private Button Paytable_Button;
-  [SerializeField] private Button PaytableClose_Button;
-  [SerializeField] private Button PaytableLeft_Button;
-  [SerializeField] private Button PaytableRight_Button;
-  [SerializeField] private List<GameObject> GameRulesPages = new();
-  private int PageIndex;
-
-  [Header("Paytable Slot Text")]
-  [SerializeField] private List<TMP_Text> SymbolsText = new();
-  [SerializeField] private List<TMP_Text> SpecialSymbolsText = new();
-  [SerializeField] private Button RaycastLayerButton;
-
-  [Header("Game Quit Objects")]
-  [SerializeField] private GameObject QuitMenuObject;
-  [SerializeField] private Button Quit_Button;
-  [SerializeField] private Button QuitYes_Button;
-  [SerializeField] private Button QuitNo_Button;
-
-  [Header("Menu Objects")]
-  [SerializeField] private Button Menu_Button;
-  [SerializeField] private Button Info_Button;
-  [SerializeField] private Button Settings_Button;
-  [SerializeField] private RectTransform Info_BttnTransform;
-  [SerializeField] private RectTransform Settings_BttnTransform;
-
-  [Header("MidGame UI Text Objects")]
-  [SerializeField] private TMP_Text FreeSpinsText;
-  [SerializeField] private TMP_Text BonusGameWinningsText;
 
   [Header("UI Text Objects")]
   [SerializeField] private TMP_Text[] TopPayoutTextUI;
@@ -98,28 +38,20 @@ public class UIManager : MonoBehaviour
   [Header("Image Animations (Magnet)")]
   [SerializeField] private ImageAnimation LeftMagnetImageAnimation;
   [SerializeField] private ImageAnimation RightMagnetImageAnimation;
-  [SerializeField] private ImageAnimation BonusImageAnimation;
   [SerializeField] private ImageAnimation FreeGamesImageAnimation;
 
   [Header("Normal Slot Canvas Groups")]
   [SerializeField] private CanvasGroup FreeSpinsUI_Panel;
   [SerializeField] private CanvasGroup WinningsUI_Panel;
   [SerializeField] private CanvasGroup TopPayoutUI_CG;
+  [SerializeField] private CanvasGroup CanvasGroup;
   [SerializeField] private CanvasGroup LinesUI;
   [SerializeField] private CanvasGroup TotalBetUI;
   [SerializeField] private CanvasGroup LineBetUI;
   [SerializeField] private RectTransform FreeSpinCountUIPositon;
   [SerializeField] private Transform AnimationParent;
 
-  private bool isExit = false;
-  private bool isMenu = false;
-  private ImageAnimation ImageAnimation;
-  private Coroutine PopupAnimCoroutine;
   internal Coroutine BonusCoroutine;
-  private Tween TextTween;
-  private Tween TextTween2;
-  private Tween scaleTween;
-  internal Coroutine BonusWinningsCoroutine;
   internal bool animationFinish = false;
   internal int multiplierCount = 0;
 
@@ -141,11 +73,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text totalWinText;
   [SerializeField] private TMP_Text fsNumText;
   
-  // Registered Bonus Buttons & Texts (from BonusManager)
-  [Header("Bonus HUD Objects")]
-  [SerializeField] private Button bonusStartButton;
-  [SerializeField] private TMP_Text bonusSpinCounterText;
-  [SerializeField] private TMP_Text bonusWinningsText;
+
 
   private Tween BalanceTween;
 
@@ -153,62 +81,14 @@ public class UIManager : MonoBehaviour
   {
     if (LeftMagnetImageAnimation != null) LeftMagnetImageAnimation.gameObject.SetActive(false);
     if (RightMagnetImageAnimation != null) RightMagnetImageAnimation.gameObject.SetActive(false);
-    if (BonusImageAnimation != null) BonusImageAnimation.gameObject.SetActive(false);
     if (FreeGamesImageAnimation != null) FreeGamesImageAnimation.gameObject.SetActive(false);
-    if (Winnings_ImageAnimation != null) Winnings_ImageAnimation.gameObject.SetActive(false);
-
-    if (SkipWinAnimation) SkipWinAnimation.onClick.RemoveAllListeners();
-    if (SkipWinAnimation) SkipWinAnimation.onClick.AddListener(() => SkipWinAnim());
-
-    if (RaycastLayerButton) RaycastLayerButton.onClick.RemoveAllListeners();
-    if (RaycastLayerButton) RaycastLayerButton.onClick.AddListener(() => CanCloseMenu());
-
-    if (LBExit_Button) LBExit_Button.onClick.RemoveAllListeners();
-    if (LBExit_Button) LBExit_Button.onClick.AddListener(delegate { ClosePopup(LBPopup_Object); });
-
-    if (CloseDisconnect_Button) CloseDisconnect_Button.onClick.RemoveAllListeners();
-    if (CloseDisconnect_Button) CloseDisconnect_Button.onClick.AddListener(() => { CallOnExitFunction(); socketManager.closeSocketReactnativeCall(); });
-
-    if (Quit_Button) Quit_Button.onClick.RemoveAllListeners();
-    if (Quit_Button) Quit_Button.onClick.AddListener(OpenQuitPanel);
-
-    if (QuitNo_Button) QuitNo_Button.onClick.RemoveAllListeners();
-    if (QuitNo_Button) QuitNo_Button.onClick.AddListener(delegate { ClosePopup(QuitMenuObject); });
-
-    if (QuitYes_Button) QuitYes_Button.onClick.RemoveAllListeners();
-    if (QuitYes_Button) QuitYes_Button.onClick.AddListener(CallOnExitFunction);
-
-    if (Paytable_Button) Paytable_Button.onClick.RemoveAllListeners();
-    if (Paytable_Button) Paytable_Button.onClick.AddListener(OpenPaytablePanel);
-
-    if (PaytableClose_Button) PaytableClose_Button.onClick.RemoveAllListeners();
-    if (PaytableClose_Button) PaytableClose_Button.onClick.AddListener(delegate { ClosePopup(PaytableMenuObject); });
-
-    if (Menu_Button) Menu_Button.onClick.RemoveAllListeners();
-    if (Menu_Button) Menu_Button.onClick.AddListener(delegate
-    {
-      if (!isMenu) OpenCloseMenu(true);
-      else OpenCloseMenu(false);
-    });
-
-    if (Settings_Button) Settings_Button.onClick.RemoveAllListeners();
-    if (Settings_Button) Settings_Button.onClick.AddListener(OpenSettingsPanel);
-
-    if (SettingsQuit_Button) SettingsQuit_Button.onClick.RemoveAllListeners();
-    if (SettingsQuit_Button) SettingsQuit_Button.onClick.AddListener(delegate { ClosePopup(Settings_Object); });
-
-    if (PaytableLeft_Button) PaytableLeft_Button.onClick.RemoveAllListeners();
-    if (PaytableLeft_Button) PaytableLeft_Button.onClick.AddListener(() => ChangePage(false));
-
-    if (PaytableRight_Button) PaytableRight_Button.onClick.RemoveAllListeners();
-    if (PaytableRight_Button) PaytableRight_Button.onClick.AddListener(() => ChangePage(true));
 
     // Bind to Model Events
     slotManager.OnBalanceChanged += UpdateBalanceText;
     slotManager.OnLineBetChanged += UpdateLineBetText;
     slotManager.OnTotalBetChanged += UpdateTotalBetText;
     slotManager.OnFreeSpinsChanged += UpdateFreeSpinsText;
-    slotManager.OnLinkRespinsChanged += SetBonusSpinCounter;
+
 
     slotManager.OnSpinStateChanged += HandleSpinStateChanged;
     slotManager.OnAutoSpinStateChanged += HandleAutoplayStateChanged;
@@ -312,11 +192,11 @@ public class UIManager : MonoBehaviour
       }
       if (lineBetPlusButton) {
           lineBetPlusButton.onClick.RemoveAllListeners();
-          lineBetPlusButton.onClick.AddListener(() => { if (slotManager) slotManager.ChangeBet(true); CanCloseMenu(); });
+          lineBetPlusButton.gameObject.SetActive(false);
       }
       if (lineBetMinusButton) {
           lineBetMinusButton.onClick.RemoveAllListeners();
-          lineBetMinusButton.onClick.AddListener(() => { if (slotManager) slotManager.ChangeBet(false); CanCloseMenu(); });
+          lineBetMinusButton.gameObject.SetActive(false);
       }
       if (turboButton) {
           turboButton.onClick.RemoveAllListeners();
@@ -332,19 +212,14 @@ public class UIManager : MonoBehaviour
       UpdateButtonsState();
   }
 
-  public void RegisterBonusElements(Button startBtn, TMP_Text counterTxt, TMP_Text winningsTxt)
+  public void RegisterBonusElements(TMP_Text counterTxt)
   {
-      bonusStartButton = startBtn;
-      bonusSpinCounterText = counterTxt;
-      bonusWinningsText = winningsTxt;
   }
 
-  public Button GetBonusStartButton() => bonusStartButton;
   public Transform GetAnimationParent() => AnimationParent;
   public RectTransform GetFreeSpinCountUIPositon() => FreeSpinCountUIPositon;
   public ImageAnimation GetLeftMagnetImageAnimation() => LeftMagnetImageAnimation;
   public ImageAnimation GetRightMagnetImageAnimation() => RightMagnetImageAnimation;
-  public ImageAnimation GetBonusImageAnimation() => BonusImageAnimation;
   public ImageAnimation GetFreeGamesImageAnimation() => FreeGamesImageAnimation;
 
   public void SetNormalSpinButtonActive(bool active)
@@ -352,24 +227,8 @@ public class UIManager : MonoBehaviour
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
   }
 
-  public void SetBonusButtonActive(bool active)
-  {
-      if (bonusStartButton) bonusStartButton.gameObject.SetActive(active);
-  }
-
-  public void SetBonusButtonInteractable(bool interactable)
-  {
-      if (bonusStartButton) bonusStartButton.interactable = interactable;
-  }
-
   public void SetBonusSpinCounter(int count)
   {
-      if (bonusSpinCounterText) bonusSpinCounterText.text = count.ToString();
-  }
-
-  public void SetBonusWinningsText(string val)
-  {
-      if (bonusWinningsText) bonusWinningsText.text = val;
   }
 
   public void AddFreeSpinsText(int count)
@@ -488,220 +347,32 @@ public class UIManager : MonoBehaviour
     }
   }
 
-  void SkipWinAnim()
-  {
-    slotManager.CheckPopups = false;
-    if (MainPopup_Object.activeInHierarchy) MainPopup_Object.SetActive(false);
-    if (WinPopup_Object.activeInHierarchy) WinPopup_Object.SetActive(false);
-    if (ImageAnimation?.currentAnimationState == ImageAnimation.ImageState.PLAYING) ImageAnimation?.StopAnimation();
-    if (PopupAnimCoroutine != null)
-      StopCoroutine(PopupAnimCoroutine);
-    if (BonusCoroutine != null)
-      StopCoroutine(BonusCoroutine);
-    TextTween?.Kill();
-    TextTween2.Kill();
-    scaleTween?.Kill();
-    if (BonusWinningsCoroutine != null)
-    {
-      StopCoroutine(BonusWinningsCoroutine);
-    }
-    animationFinish = true;
-  }
+
 
   internal void CanCloseMenu()
   {
-    if (isMenu)
-    {
-      OpenCloseMenu(false);
-    }
-  }
-
-  private void ChangePage(bool IncDec)
-  {
-    if (IncDec)
-    {
-      if (PageIndex < GameRulesPages.Count - 1)
-      {
-        PageIndex++;
-      }
-      if (PageIndex == GameRulesPages.Count - 1)
-      {
-        if (PaytableRight_Button) PaytableRight_Button.interactable = false;
-      }
-      if (PageIndex > 0)
-      {
-        if (PaytableLeft_Button) PaytableLeft_Button.interactable = true;
-      }
-    }
-    else
-    {
-      if (PageIndex > 0)
-      {
-        PageIndex--;
-      }
-      if (PageIndex == 0)
-      {
-        if (PaytableLeft_Button) PaytableLeft_Button.interactable = false;
-      }
-      if (PageIndex < GameRulesPages.Count - 1)
-      {
-        if (PaytableRight_Button) PaytableRight_Button.interactable = true;
-      }
-    }
-    foreach (GameObject g in GameRulesPages)
-    {
-      g.SetActive(false);
-    }
-    if (GameRulesPages[PageIndex]) GameRulesPages[PageIndex].SetActive(true);
-  }
-
-  private void OpenCloseMenu(bool toggle)
-  {
-    if (toggle)
-    {
-      isMenu = true;
-      if (Info_Button) Info_Button.gameObject.SetActive(true);
-      if (Settings_Button) Settings_Button.gameObject.SetActive(true);
-
-      DOTween.To(() => Info_BttnTransform.anchoredPosition, (val) => Info_BttnTransform.anchoredPosition = val, new Vector2(Info_BttnTransform.anchoredPosition.x + 150, Info_BttnTransform.anchoredPosition.y), 0.1f).OnUpdate(() =>
-      {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(Info_BttnTransform);
-      });
-
-      DOTween.To(() => Settings_BttnTransform.anchoredPosition, (val) => Settings_BttnTransform.anchoredPosition = val, new Vector2(Settings_BttnTransform.anchoredPosition.x + 300, Settings_BttnTransform.anchoredPosition.y), 0.1f).OnUpdate(() =>
-      {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(Settings_BttnTransform);
-      });
-    }
-    else
-    {
-      isMenu = false;
-      DOTween.To(() => Info_BttnTransform.anchoredPosition, (val) => Info_BttnTransform.anchoredPosition = val, new Vector2(Info_BttnTransform.anchoredPosition.x - 150, Info_BttnTransform.anchoredPosition.y), 0.1f).OnUpdate(() =>
-      {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(Info_BttnTransform);
-      });
-
-      DOTween.To(() => Settings_BttnTransform.anchoredPosition, (val) => Settings_BttnTransform.anchoredPosition = val, new Vector2(Settings_BttnTransform.anchoredPosition.x - 300, Settings_BttnTransform.anchoredPosition.y), 0.1f).OnUpdate(() =>
-      {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(Settings_BttnTransform);
-      });
-
-      DOVirtual.DelayedCall(0.1f, () =>
-      {
-        if (Info_Button) Info_Button.gameObject.SetActive(false);
-        if (Settings_Button) Settings_Button.gameObject.SetActive(false);
-      });
-    }
-  }
-
-  private void OpenSettingsPanel()
-  {
-    if (MainPopup_Object) MainPopup_Object.SetActive(true);
-    if (Settings_Object) Settings_Object.SetActive(true);
-    CanCloseMenu();
-  }
-
-  private void OpenQuitPanel()
-  {
-    if (MainPopup_Object) MainPopup_Object.SetActive(true);
-    if (QuitMenuObject) QuitMenuObject.SetActive(true);
-    CanCloseMenu();
-  }
-
-  private void OpenPaytablePanel()
-  {
-    if (MainPopup_Object) MainPopup_Object.SetActive(true);
-    PageIndex = 0;
-    foreach (GameObject g in GameRulesPages)
-    {
-      g.SetActive(false);
-    }
-    GameRulesPages[0].SetActive(true);
-    if (PaytableLeft_Button) PaytableLeft_Button.interactable = false;
-    if (PaytableRight_Button) PaytableRight_Button.interactable = true;
-    if (PaytableMenuObject) PaytableMenuObject.SetActive(true);
-    CanCloseMenu();
   }
 
   internal void LowBalPopup()
   {
-    CanCloseMenu();
-    OpenPopup(LBPopup_Object);
-  }
-
-  internal void DisconnectionPopup(bool isReconnection)
-  {
-    if (!isExit)
-    {
-      CanCloseMenu();
-      OpenPopup(DisconnectPopup_Object);
-    }
+    // No-op to remove low balance popup
   }
 
   internal void PopulateWin(int value)
   {
-    Winnings_ImageAnimation.textureArray.Clear();
-    Winnings_ImageAnimation.textureArray.TrimExcess();
-    switch (value)
-    {
-      case 1:
-        foreach (Sprite s in BigWin_Sprites)
-        {
-          Winnings_ImageAnimation.textureArray.Add(s);
-          Winnings_ImageAnimation.AnimationSpeed = 25;
-        }
-        break;
-      case 2:
-        foreach (Sprite s in MegaWin_Sprites)
-        {
-          Winnings_ImageAnimation.textureArray.Add(s);
-          Winnings_ImageAnimation.AnimationSpeed = 40;
-        }
-        break;
-    }
-    PopupAnimCoroutine = StartCoroutine(StartPopupAnim());
+    // No-op to remove win popups/animations from UI
   }
 
-  private IEnumerator StartPopupAnim()
-  {
-    if (WinPopup_Object) WinPopup_Object.SetActive(true);
-    if (MainPopup_Object) MainPopup_Object.SetActive(true);
 
-    Winnings_ImageAnimation.StartAnimation();
-    WinTextBgImage.DOScale(Vector3.one, .5f).SetEase(Ease.OutCirc);
-
-    double start = 0;
-    TextTween = DOTween.To(() => start, (val) => start = val, socketManager.resultData.payload.winAmount, 0.8f).OnUpdate(() =>
-    {
-      Win_Text.text = start.ToString("F3");
-    });
-
-    yield return new WaitUntil(() => Winnings_ImageAnimation.textureArray[^1] == Winnings_ImageAnimation.rendererDelegate.sprite);
-    Winnings_ImageAnimation.StopAnimation();
-    scaleTween = WinTextBgImage.DOScale(Vector3.zero, .5f).SetEase(Ease.InBack).OnComplete(() =>
-    {
-      slotManager.CheckPopups = false;
-      ClosePopup(WinPopup_Object);
-    });
-  }
 
   internal void ADfunction()
   {
-    OpenPopup(ADPopup_Object);
+    // No-op to remove another device popup
   }
 
   internal void InitialiseUIData(PaylineData symbolsText)
   {
-    PopulateSymbolsPayout(symbolsText);
-    PopulateTopSymbolsPayout();
-  }
-
-  internal void PopulateTopSymbolsPayout()
-  {
-    for (int i = 0; i < TopPayoutTextUI.Length; i++)
-    {
-      // Assign payouts if needed
-    }
+    // No-op
   }
 
   internal IEnumerator TrailRendererAnimation(GameObject TrailRendererGO, int textIndex, int coinvalue, bool IsBonus = false)
@@ -711,18 +382,9 @@ public class UIManager : MonoBehaviour
     TrailRendererGO.gameObject.SetActive(true);
     Vector3 tempPosi = trail.transform.position;
 
-    Vector3 DOMovePosition = new();
-    TMP_Text text = null;
-    if (IsBonus)
-    {
-      DOMovePosition = BonusWinningsPosition.position;
-      text = BonusWinnings_Text;
-    }
-    else
-    {
-      DOMovePosition = BaseWinningsPosition.position;
-      text = BaseWinnings_Text;
-    }
+    Vector3 DOMovePosition = BaseWinningsPosition.position;
+    TMP_Text text = BaseWinnings_Text;
+
     yield return trail.transform.DOMove(DOMovePosition, .5f).OnComplete(() =>
     {
       trail.gameObject.SetActive(false);
@@ -742,154 +404,61 @@ public class UIManager : MonoBehaviour
 
   internal IEnumerator MidGameImageAnimation(ImageAnimation imageAnimation, double num = 0)
   {
+    if (imageAnimation == null)
+    {
+      animationFinish = true;
+      yield break;
+    }
     animationFinish = false;
-    if (imageAnimation.name == "FreeSpinsImageAnimation")
-    {
-      imageAnimation.transform.parent.gameObject.SetActive(true);
-    }
-    else if (imageAnimation.name == "BonusWonImageAnimation")
-    {
-      MainPopup_Object.SetActive(true);
-      WinPopup_Object.SetActive(true);
-    }
-    else
-    {
-      imageAnimation.transform.parent.gameObject.SetActive(true);
-    }
+    if (imageAnimation.transform.parent != null) imageAnimation.transform.parent.gameObject.SetActive(true);
     imageAnimation.gameObject.SetActive(true);
     imageAnimation.StartAnimation();
-    ImageAnimation = imageAnimation;
 
-    TMP_Text text = null;
-    bool useF2 = false;
-    if (imageAnimation.name == "FreeSpinsImageAnimation")
-    {
-      text = FreeSpinsText;
-    }
-    else if (imageAnimation.name == "BonusWonImageAnimation")
-    {
-      text = BonusGameWinningsText;
-      useF2 = true;
-    }
+    yield return new WaitUntil(() => imageAnimation.rendererDelegate != null && imageAnimation.rendererDelegate.sprite == imageAnimation.textureArray[^1]);
 
-    if (text != null)
-    {
-      text.text = "0";
-      text.DOFade(1, 0.5f);
-
-      double start = 0;
-      TextTween2 = DOTween.To(() => start, (val) => start = val, num, 0.8f).OnUpdate(() =>
-      {
-        if (useF2) text.text = start.ToString("F3");
-        else text.text = ((int)start).ToString();
-      });
-      yield return TextTween2;
-    }
-
-    yield return new WaitUntil(() => imageAnimation.rendererDelegate.sprite == imageAnimation.textureArray[^1]);
-
-    if (text != null) text.DOFade(0, 0.5f);
     imageAnimation.StopAnimation();
-    ImageAnimation = null;
-    if (imageAnimation.name == "FreeSpinsImageAnimation")
-    {
-      imageAnimation.transform.parent.gameObject.SetActive(false);
-    }
-    else if (imageAnimation.name == "BonusWonImageAnimation")
-    {
-      MainPopup_Object.SetActive(false);
-      WinPopup_Object.SetActive(false);
-    }
-    else
-    {
-      imageAnimation.transform.parent.gameObject.SetActive(false);
-    }
+    if (imageAnimation.transform.parent != null) imageAnimation.transform.parent.gameObject.SetActive(false);
     animationFinish = true;
   }
 
 
 
-  private void PopulateSymbolsPayout(PaylineData paylines)
-  {
-    double multiplyer = socketManager.initialData.gameData.bets[slotManager.BetCounter];
-    for (int i = 0; i < SymbolsText.Count; i++)
-    {
-      string text = null;
-      if (paylines.symbols[i].multiplier[0] != 0)
-      {
-        text += "5x - " + paylines.symbols[i].multiplier[0] * multiplyer;
-      }
-      if (paylines.symbols[i].multiplier[1] != 0)
-      {
-        text += "\n4x - " + paylines.symbols[i].multiplier[1] * multiplyer;
-      }
-      if (paylines.symbols[i].multiplier[2] != 0)
-      {
-        text += "\n3x - " + paylines.symbols[i].multiplier[2] * multiplyer;
-      }
-      if (SymbolsText[i]) SymbolsText[i].text = text;
-    }
 
-    int j = 0;
-    for (int i = 10; i <= 16; i++)
-    {
-      SpecialSymbolsText[j].text = paylines.symbols[i].description.ToString();
-      j++;
-    }
-  }
 
   private void CallOnExitFunction()
   {
-    isExit = true;
     slotManager.CallCloseSocket();
   }
 
-  private void OpenPopup(GameObject Popup)
-  {
-    if (Popup) Popup.SetActive(true);
-    if (MainPopup_Object) MainPopup_Object.SetActive(true);
-  }
 
-  private void ClosePopup(GameObject Popup)
-  {
-    if (Popup) Popup.SetActive(false);
-    if (!DisconnectPopup_Object.activeSelf)
-    {
-      if (MainPopup_Object) MainPopup_Object.SetActive(false);
-    }
-  }
 
   internal void SetJackpotText(Jackpot jackpot)
   {
+    if (jackpot == null || jackpot.payout == null || JackpotText == null) return;
+
     for (int i = 0; i < jackpot.payout.Count; i++)
     {
-      JackpotText[i].text = jackpot.payout[i].ToString();
+      if (i >= JackpotText.Count) break;
+      if (JackpotText[i] != null)
+      {
+        JackpotText[i].text = jackpot.payout[i].ToString();
+      }
     }
   }
 
   internal void DisconnectionPopup()
   {
-    if (!isExit)
-    {
-      OpenPopup(DisconnectPopup_Object);
-    }
+    // No-op to remove disconnection popup
   }
 
   internal void CheckAndClosePopups()
   {
-    if (ReconectingPopup_Object.activeInHierarchy)
-    {
-      ClosePopup(ReconectingPopup_Object);
-    }
-    if (DisconnectPopup_Object.activeInHierarchy)
-    {
-      ClosePopup(DisconnectPopup_Object);
-    }
+    // No-op
   }
 
   internal void ReconnectionPopup()
   {
-    OpenPopup(ReconectingPopup_Object);
+    // No-op to remove reconnection popup
   }
 
   internal void OpenFreeSpinsUI()

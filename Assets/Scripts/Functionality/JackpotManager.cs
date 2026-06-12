@@ -18,8 +18,8 @@ public class JackpotManager : MonoBehaviour
 
     [Header("Mini Slot Spinning Config")]
     [SerializeField] private GameObject slotParent;               // The scrolling mini-slot container
-    [SerializeField] private float slotHeight = 671f;             // The scrolling height of the mini-slot
-    [SerializeField] private float symbolOffset = -75f;           // Vertical spacing between mini-slot items
+    [SerializeField] private Image[] jackpotImages;               // The 4 images inside the jackpot parent
+    [SerializeField] private Sprite[] jackpotSprites;             // The sprites for Grand, Major, Minor, Mini
     [SerializeField] private TMP_Text resultText;                 // Text component inside the jackpot main overlay
     [SerializeField] private GameObject winBlur;                  // Win blur overlay inside the jackpot main overlay
 
@@ -32,6 +32,10 @@ public class JackpotManager : MonoBehaviour
         if (winBlur != null)
         {
             winBlur.SetActive(false);
+        }
+        if ((jackpotImages == null || jackpotImages.Length == 0) && slotParent != null)
+        {
+            jackpotImages = slotParent.GetComponentsInChildren<Image>(true);
         }
     }
 
@@ -56,7 +60,16 @@ public class JackpotManager : MonoBehaviour
 
         // Ensure visuals are enabled
         if (baseLayer != null) baseLayer.SetActive(true);
-        if (secondaryLayer != null) secondaryLayer.SetActive(true);
+        
+        // Initial setup for secondaryLayer: starts transparent/hidden, fades in later
+        CanvasGroup secondaryCG = null;
+        if (secondaryLayer != null)
+        {
+            secondaryCG = secondaryLayer.GetComponent<CanvasGroup>();
+            if (secondaryCG == null) secondaryCG = secondaryLayer.AddComponent<CanvasGroup>();
+            secondaryCG.alpha = 0f;
+            secondaryLayer.SetActive(true);
+        }
 
         // Fade out triggering symbol's main image and fade in the jackpot overlay
         if (triggeringSymbolView.mainImage != null)
@@ -72,48 +85,64 @@ public class JackpotManager : MonoBehaviour
         moveScaleSeq.Join(jackpotSlotMainRT.DOScale(new Vector3(3.03f, 3.03f, 3.03f), 0.5f).SetEase(Ease.OutBack));
 
         yield return moveScaleSeq.WaitForCompletion();
-        yield return new WaitForSeconds(0.5f);
+
+        // Diamond 2nd layer fade transition
+        if (secondaryCG != null)
+        {
+            yield return secondaryCG.DOFade(1f, 0.5f).WaitForCompletion();
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
 
         // 4. Spin the mini slot!
-        if (slotParent != null)
+        Sprite[] spritesToUse = (jackpotSprites != null && jackpotSprites.Length > 0)
+            ? jackpotSprites
+            : FindFirstObjectByType<SlotManager>()?.JackpotSlotSymbols;
+
+        if (jackpotImages != null && jackpotImages.Length > 0 && spritesToUse != null && spritesToUse.Length > 0)
         {
-            Vector3 startPos = slotParent.transform.localPosition;
-            
-            // Force start at top
-            slotParent.transform.localPosition = startPos;
+            float spinDuration = 2.0f;
+            float interval = 0.06f;
+            int steps = Mathf.RoundToInt(spinDuration / interval);
 
-            float scrollDuration = 0.35f; // speed (lower = faster)
-
-            Tweener simpleTween = DOTween.To(
-                () => slotParent.transform.localPosition.y,
-                y => slotParent.transform.localPosition = new Vector3(startPos.x, y, startPos.z),
-                startPos.y - slotHeight, // move DOWN
-                scrollDuration
-            )
-            .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Restart)
-            .OnStepComplete(() =>
+            for (int step = 0; step < steps; step++)
             {
-                // INSTANT jump back to top
-                slotParent.transform.localPosition = startPos;
-            });
+                for (int i = 0; i < jackpotImages.Length; i++)
+                {
+                    int randIdx = UnityEngine.Random.Range(0, spritesToUse.Length);
+                    jackpotImages[i].sprite = spritesToUse[randIdx];
+                    jackpotImages[i].gameObject.SetActive(true);
+                }
+                yield return new WaitForSeconds(interval);
+            }
 
-            // Spin for 3 seconds
-            yield return new WaitForSeconds(3.0f);
+            // Settle on final result: 1st image shows the winning prize sprite
+            if (jackpotImages.Length > 1)
+            {
+                jackpotImages[1].sprite = prizeSprite;
+            }
 
-            // Clean stop
-            bool stepDone = false;
-            simpleTween.OnStepComplete(() => stepDone = true);
-            yield return new WaitUntil(() => stepDone);
+            // Other images (0, 2, 3) show buffer/other sprites
+            for (int i = 0; i < jackpotImages.Length; i++)
+            {
+                if (i == 1) continue;
 
-            simpleTween.Kill();
-
-            // Final settle position
-            float finalY = startPos.y + (symbolOffset * prizeTypeIndex);
-            yield return slotParent.transform
-                .DOLocalMoveY(finalY, 0.25f)
-                .SetEase(Ease.OutQuad)
-                .WaitForCompletion();
+                Sprite bufferSprite = null;
+                if (spritesToUse.Length > 1)
+                {
+                    do
+                    {
+                        bufferSprite = spritesToUse[UnityEngine.Random.Range(0, spritesToUse.Length)];
+                    } while (bufferSprite == prizeSprite);
+                }
+                else if (spritesToUse.Length > 0)
+                {
+                    bufferSprite = spritesToUse[0];
+                }
+                jackpotImages[i].sprite = bufferSprite;
+            }
         }
 
         if (winBlur != null) winBlur.SetActive(true);
@@ -128,8 +157,16 @@ public class JackpotManager : MonoBehaviour
 
         yield return returnSeq.WaitForCompletion();
 
-        // 5. Show jackpot result in the reel symbol
-        triggeringSymbolView.ShowJackpotResult(prizeTypeIndex, symbolOffset, prizeValue);
+        // 5. Copy the final sprites and display result on the main slot icon jackpot object
+        if (jackpotImages != null)
+        {
+            Sprite[] finalSprites = new Sprite[jackpotImages.Length];
+            for (int i = 0; i < jackpotImages.Length; i++)
+            {
+                finalSprites[i] = jackpotImages[i].sprite;
+            }
+            triggeringSymbolView.ShowJackpotResult(finalSprites, prizeValue);
+        }
 
         // 6. Both get fade transition (fade out the overlay)
         yield return jackpotSlotMainCG.DOFade(0f, 0.3f).WaitForCompletion();

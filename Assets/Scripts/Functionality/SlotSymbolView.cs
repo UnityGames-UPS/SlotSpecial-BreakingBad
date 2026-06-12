@@ -109,7 +109,7 @@ public class SlotSymbolView : MonoBehaviour
         }
     }
 
-    public void ShowJackpotResult(int prizeTypeIndex, float offset, string resultValue)
+    public void ShowJackpotResult(Sprite[] finalSprites, string resultValue)
     {
         if (jackpotObject != null)
         {
@@ -117,8 +117,15 @@ public class SlotSymbolView : MonoBehaviour
         }
         if (jackpotStripParent != null)
         {
-            Vector3 pos = jackpotStripParent.localPosition;
-            jackpotStripParent.localPosition = new Vector3(pos.x, offset * prizeTypeIndex, pos.z);
+            Image[] slotSymbolJackpotImages = jackpotStripParent.GetComponentsInChildren<Image>(true);
+            if (slotSymbolJackpotImages != null && finalSprites != null)
+            {
+                for (int i = 0; i < Mathf.Min(slotSymbolJackpotImages.Length, finalSprites.Length); i++)
+                {
+                    slotSymbolJackpotImages[i].sprite = finalSprites[i];
+                    slotSymbolJackpotImages[i].gameObject.SetActive(true);
+                }
+            }
         }
         if (jackpotResultText != null)
         {

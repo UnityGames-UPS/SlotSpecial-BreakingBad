@@ -145,7 +145,7 @@ public class StickySymbolManager : MonoBehaviour
         }
     }
 
-    internal IEnumerator ChangeLinksToGoldCoin(Button button)
+    internal IEnumerator ChangeLinksToGoldCoin()
     {
         for (int i = 0; i < Slot.Count; i++)
         {

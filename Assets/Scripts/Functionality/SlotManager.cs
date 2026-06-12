@@ -524,20 +524,25 @@ public class SlotManager : MonoBehaviour
 
   private void SetUpAccordingToCC(Transform slotTransform)
   {
+    if (slotTransform == null) return;
     Debug.Log("Here");
     slotTransform.SetSiblingIndex(17);
 
-    slotTransform.GetComponent<Mask>().enabled = false;
-    for (int i = 0; i < 2; i++)
+    int childCount = slotTransform.childCount;
+    for (int i = 0; i < Mathf.Min(childCount, 2); i++)
     {
-      var animation = slotTransform.GetChild(i).GetComponent<ImageAnimation>();
+      var child = slotTransform.GetChild(i);
+      var animation = child.GetComponent<ImageAnimation>();
       if (animation != null)
       {
         animation.AnimationSpeed = 15;  // Change animation speed
-        Image image = slotTransform.GetChild(i).GetComponent<Image>();
-        image.DOFade(0, 0);
-        image.gameObject.SetActive(true);  // Activate the animation object
-        image.DOFade(1, 0.5f);
+        Image image = child.GetComponent<Image>();
+        if (image != null)
+        {
+          image.DOFade(0, 0);
+          image.gameObject.SetActive(true);  // Activate the animation object
+          image.DOFade(1, 0.5f);
+        }
         animation.StartAnimation();     // Start animation
       }
     }
@@ -548,21 +553,41 @@ public class SlotManager : MonoBehaviour
   {
     foreach (var (slotTransform, originalSiblingIndex) in changedSlots)
     {
+      if (slotTransform == null) continue;
       // Reset the sibling index to the original value
       slotTransform.SetSiblingIndex(originalSiblingIndex);
-
-      slotTransform.GetComponent<Mask>().enabled = true;
+      
       // Stop the animation and reset the state
-      for (int i = 0; i < 2; i++)
+      int childCount = slotTransform.childCount;
+      for (int i = 0; i < Mathf.Min(childCount, 2); i++)
       {
-        var animation = slotTransform.GetChild(i).GetComponent<ImageAnimation>();
+        var child = slotTransform.GetChild(i);
+        var animation = child.GetComponent<ImageAnimation>();
         if (animation != null)
         {
           animation.StopAnimation();  // Assuming you have a StopAnimation method
-          animation.rendererDelegate.DOFade(1, 0.5f).OnComplete(() =>
+          if (animation.rendererDelegate != null)
           {
-            animation.gameObject.SetActive(false);
-          });
+            animation.rendererDelegate.DOFade(1, 0.5f).OnComplete(() =>
+            {
+              animation.gameObject.SetActive(false);
+            });
+          }
+          else
+          {
+            Image image = child.GetComponent<Image>();
+            if (image != null)
+            {
+              image.DOFade(1, 0.5f).OnComplete(() =>
+              {
+                child.gameObject.SetActive(false);
+              });
+            }
+            else
+            {
+              child.gameObject.SetActive(false);
+            }
+          }
         }
       }
     }
@@ -876,8 +901,7 @@ public class SlotManager : MonoBehaviour
 
       yield return ResetUI();
 
-      uiManager.BonusCoroutine = StartCoroutine(uiManager.MidGameImageAnimation(uiManager.GetBonusImageAnimation()));
-      yield return new WaitUntil(() => uiManager.animationFinish);
+
 
       stickySymbolManager.TurnOnIndices(GenerateFreezedLocations());
       yield return new WaitForSeconds(0.5f);
@@ -1028,7 +1052,7 @@ public class SlotManager : MonoBehaviour
       if (sym != null && sym.name != null)
       {
           string lowerName = sym.name.ToLower();
-          return lowerName.Contains("link") || lowerName.Contains("collect") || lowerName.Contains("diamond");
+          return lowerName.Contains("link") || lowerName.Contains("collect") || lowerName.Contains("diamond") || lowerName.Contains("prize");
       }
       return symbolId == 11 || symbolId == 12 || symbolId == 14 || symbolId == 16;
   }
@@ -1053,7 +1077,7 @@ public class SlotManager : MonoBehaviour
           {
               if (SpecialLayerSymbols.Length > 2) return SpecialLayerSymbols[2];
           }
-          else if (lowerName.Contains("diamond"))
+          else if (lowerName.Contains("diamond") || lowerName.Contains("prize"))
           {
               if (SpecialLayerSymbols.Length > 3) return SpecialLayerSymbols[3];
           }
@@ -1193,18 +1217,7 @@ public class SlotManager : MonoBehaviour
 
   internal void CheckWinPopups()
   {
-    if (SocketManager.resultData.payload.winAmount >= TotalBet * 5 && SocketManager.resultData.payload.winAmount < TotalBet * 10)
-    {
-      uiManager.PopulateWin(1);
-    }
-    else if (SocketManager.resultData.payload.winAmount >= TotalBet * 10)
-    {
-      uiManager.PopulateWin(2);
-    }
-    else
-    {
-      CheckPopups = false;
-    }
+    CheckPopups = false;
   }
 
   private IEnumerator FreeSpinsSymbolAnimation()

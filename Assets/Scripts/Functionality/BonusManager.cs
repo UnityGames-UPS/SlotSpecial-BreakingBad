@@ -14,7 +14,7 @@ public class BonusManager : MonoBehaviour
   [SerializeField] private SocketIOManager SocketManager;
   [SerializeField] private UIManager uiManager;
   [SerializeField] private StickySymbolManager staticSymbol;
-  [SerializeField] private ImageAnimation BonusWinningsImageAnimation;
+
 
   [Header("Sprites References")]
   [SerializeField] private Sprite[] index9Sprites;
@@ -62,10 +62,7 @@ public class BonusManager : MonoBehaviour
       BonusSlot_CG.interactable = false;
       BonusSlot_CG.gameObject.SetActive(false);
     }
-    if (BonusWinningsImageAnimation != null)
-    {
-      BonusWinningsImageAnimation.gameObject.SetActive(false);
-    }
+
   }
 
   internal void StartBonus(int count)
@@ -80,8 +77,6 @@ public class BonusManager : MonoBehaviour
     uiManager.FadeTotalBetUI(0f, 0.3f);
     uiManager.FadeLineBetUI(0f, 0.3f);
 
-    uiManager.SetBonusButtonActive(true);
-    uiManager.SetBonusButtonInteractable(false);
     uiManager.SetBonusSpinCounter(count);
     
     WinningsUI_Panel.DOFade(1, 0.3f);
@@ -93,7 +88,7 @@ public class BonusManager : MonoBehaviour
     }
     BonusSlot_CG.DOFade(1, .5f).OnComplete(() =>
     {
-      StartCoroutine(staticSymbol.ChangeLinksToGoldCoin(uiManager.GetBonusStartButton()));
+      StartCoroutine(staticSymbol.ChangeLinksToGoldCoin());
     });
   }
 
@@ -110,7 +105,7 @@ public class BonusManager : MonoBehaviour
 
   private void StartBonusSlot()
   {
-    uiManager.SetBonusButtonInteractable(false);
+
 
     int spinCount = slotManager.LinkRespinsRemaining;
     spinCount -= 1;
@@ -217,7 +212,7 @@ public class BonusManager : MonoBehaviour
       IsSpinning = false;
       yield return new WaitForSeconds(2f);
       StartCoroutine(EndBonus());
-      uiManager.SetBonusWinningsText("0");
+  
       yield break;
     }
 
@@ -225,7 +220,7 @@ public class BonusManager : MonoBehaviour
     slotManager.SetLinkRespinsRemaining(remaining);
     uiManager.SetBonusSpinCounter(remaining);
 
-    uiManager.SetBonusButtonInteractable(false);
+
     IsSpinning = false;
   }
 
@@ -282,15 +277,13 @@ public class BonusManager : MonoBehaviour
   private IEnumerator EndBonus()
   {
     slotManager.IsBonus = false;
-    uiManager.SetBonusButtonActive(false);
 
     if (SocketManager.resultData.payload.winAmount > 0)
     {
-      uiManager.BonusWinningsCoroutine = StartCoroutine(uiManager.MidGameImageAnimation(BonusWinningsImageAnimation, SocketManager.resultData.payload.winAmount));
-      yield return new WaitUntil(() => uiManager.animationFinish);
       uiManager.WinningsTextAnimation();
     }
     WinningsUI_Panel.DOFade(0, 0.3f);
+    yield return null;
 
     BonusSlot_CG.DOFade(0, 0.5f);
     NormalSlot_CG.DOFade(1, 0.5f).OnComplete(() =>
