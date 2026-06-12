@@ -149,22 +149,20 @@ public class SlotManager : MonoBehaviour
   internal List<SlotImage> ResultMatrix;
 
   [Header("Spin Settings")]
-  [SerializeField] private float anticipationUpDistance = 30f;
-  [SerializeField] private float anticipationUpDuration = 0.15f;
-  [SerializeField] private float dropDownDistance       = 15f;
-  [SerializeField] private float dropDownDuration       = 0.12f;
-  [SerializeField] private float settleBounceDuration   = 0.18f;
-  [SerializeField] private float stopOvershootDistance  = 50f;
-  [SerializeField] private float stopOvershootDuration  = 0.15f;
-  [SerializeField] private float stopBounceBackDistance = 15f;
-  [SerializeField] private float stopBounceBackDuration = 0.25f;
-  [SerializeField] private float stopSettleDuration     = 0.35f;
+  [SerializeField] private float anticipationUpDistance = 20f;
+  [SerializeField] private float anticipationUpDuration = 0.12f;
+  [SerializeField] private float stopOvershootDistance  = 30f;
+  [SerializeField] private float stopOvershootDuration  = 0.10f;
+  [SerializeField] private float stopSettleDuration     = 0.12f;
   [SerializeField] private float quickStopOvershoot     = 20f;
   [SerializeField] private float quickStopDuration      = 0.20f;
-  [SerializeField] private float spinCycleDuration      = 0.05f;
   [SerializeField] private float symbolHeight           = 100f;
+  [SerializeField] private float reelStopStagger        = 0.08f;
+  [SerializeField] private float minimumSpinDuration    = 5.0f;
+  [SerializeField] private float spinSpeed              = 3000f; // pixels per second during continuous spin
 
   private float[] initialYPositions;
+  private float spinStartTime;
 
   [Header("Slots Transform Reference")]
   [SerializeField] private Transform[] Slot_Transform;
@@ -199,10 +197,12 @@ public class SlotManager : MonoBehaviour
 
   private Coroutine tweenroutine;
   private Coroutine LineAnimRoutine = null;
+  private bool isSettling = false; // cooldown flag after stop button
 
   int tweenHeight = 0;  //calculate the height at which tweening is done
   private int numberOfSlots = 5;          //number of columns
   [SerializeField] private int IconSizeFactor = 100;       //set this parameter according to the size of the icon and spacing
+  [SerializeField] private float stopCooldownDuration = 0.4f; // cooldown after stop before next spin
 
   private float SpinDelay = 0.2f;
 
@@ -500,24 +500,23 @@ public class SlotManager : MonoBehaviour
   }
   #endregion
 
-  private void ReorderImages()
+  private void ReorderImages(int targetCol)
   {
-    for (int i = 0; i < Tempimages.Count; i++)
+    // Only check the specific column that was just populated
+    // (other columns may still be spinning with random symbols)
+    for (int j = 0; j < 3; j++)
     {
-      for (int j = 0; j < 3; j++)
+      if (Tempimages[targetCol].slotImages[j].sprite == SlotSymbols[14]) //if the symbol is cash collect
       {
-        if (Tempimages[i].slotImages[j].sprite == SlotSymbols[14]) //if the symbol is cash collect
-        {
-          // Store the original sibling index before changing it
-          Transform slotTransform = Tempimages[i].slotImages[j].transform;
-          int originalSiblingIndex = slotTransform.GetSiblingIndex();
+        // Store the original sibling index before changing it
+        Transform slotTransform = Tempimages[targetCol].slotImages[j].transform;
+        int originalSiblingIndex = slotTransform.GetSiblingIndex();
 
-          // Add the slot transform and its original sibling index to the list
-          changedSlots.Add((slotTransform, originalSiblingIndex));
+        // Add the slot transform and its original sibling index to the list
+        changedSlots.Add((slotTransform, originalSiblingIndex));
 
-          // Now apply the changes
-          SetUpAccordingToCC(slotTransform);
-        }
+        // Now apply the changes
+        SetUpAccordingToCC(slotTransform);
       }
     }
   }
@@ -695,6 +694,9 @@ public class SlotManager : MonoBehaviour
   //starts the spin process
   public void StartSlots(bool autoSpin = false)
   {
+    // Forcefully clean up any previous spin state to prevent glitches
+    ForceCleanupPreviousSpin();
+
     if (IsFreeSpin)
     {
       SetFreeSpinsCount(FreeSpinsCount - 1);
@@ -706,6 +708,44 @@ public class SlotManager : MonoBehaviour
     StopGameAnimation(); 
 
     tweenroutine = StartCoroutine(TweenRoutine());
+  }
+
+  // Forcefully cleans up all state from a previous spin so a fresh spin can start cleanly
+  private void ForceCleanupPreviousSpin()
+  {
+    // Stop the previous spin coroutine if still running
+    if (tweenroutine != null)
+    {
+      StopCoroutine(tweenroutine);
+      tweenroutine = null;
+    }
+
+    // Kill all running tweens
+    KillAllTweens();
+
+    // Reset all slot transforms to their initial Y positions to prevent positional drift
+    ResetSlotPositions();
+
+    // Reset spin flags
+    StopSpinToggle = false;
+    isSettling = false;
+    TriggerSpinState(false);
+  }
+
+  // Resets all slot column transforms to their initial resting positions
+  private void ResetSlotPositions()
+  {
+    if (initialYPositions == null || Slot_Transform == null) return;
+    for (int i = 0; i < numberOfSlots; i++)
+    {
+      if (Slot_Transform[i] != null && i < initialYPositions.Length)
+      {
+        Slot_Transform[i].localPosition = new Vector3(
+          Slot_Transform[i].localPosition.x,
+          initialYPositions[i],
+          0f);
+      }
+    }
   }
 
   //manage the Routine for spinning of the slots
@@ -722,6 +762,7 @@ public class SlotManager : MonoBehaviour
     }
 
     TriggerSpinState(true);
+    spinStartTime = Time.time;
 
     if (!IsFreeSpin)
     {
@@ -733,7 +774,8 @@ public class SlotManager : MonoBehaviour
       uiManager.ShowStopButton(true);
     }
     
-    for (int i = 0; i < numberOfSlots; i++) // Initialize tweening for slot animations
+    // All reels start together simultaneously
+    for (int i = 0; i < numberOfSlots; i++)
     {
       InitializeTweening(Slot_Transform[i]);
     }
@@ -742,7 +784,9 @@ public class SlotManager : MonoBehaviour
     yield return new WaitUntil(() => SocketManager.isResultdone);
     UpdateFromSpinResult(SocketManager.resultData);
 
-    PopulateResultMatrix();
+    // NOTE: Do NOT populate the result matrix here — the display rows would flash the
+    // final result while reels are still spinning. Each column's result is populated
+    // inside StopTweening → PopulateResultMatrixForColumn, right before that reel lands.
 
     bool magnetAnim = false;
     int slotIndex = 0;
@@ -758,14 +802,15 @@ public class SlotManager : MonoBehaviour
       {
         magnetAnim = false;
 
-        // Only check reel 0 and 4
+        // Only check reel 0 and 4 — read from result data instead of sprites
         int[] reelsToCheck = { 0, 4 };
 
         foreach (int reel in reelsToCheck)
         {
           for (int row = 0; row <= 1; row++)
           {
-            if (Tempimages[reel].slotImages[row].sprite == SlotSymbols[14])
+            // Check result matrix directly (matrix is [row][col])
+            if (SocketManager.resultData.matrix[row][reel] == "14")
             {
               magnetAnim = true;
               slotIndex = reel;
@@ -780,6 +825,7 @@ public class SlotManager : MonoBehaviour
       }
     }
 
+    // Enforce minimum spin duration for classic casino feel
     if (IsTurboOn)
     {
       yield return new WaitForSeconds(0.3f);
@@ -787,12 +833,16 @@ public class SlotManager : MonoBehaviour
     }
     else
     {
-      for (int i = 0; i < 8; i++)
+      // Wait until minimum spin duration has elapsed (or stop is pressed)
+      float elapsed = Time.time - spinStartTime;
+      float remaining = minimumSpinDuration - elapsed;
+      if (remaining > 0f)
       {
-        yield return new WaitForSeconds(0.1f);
-        if (StopSpinToggle)
+        float waited = 0f;
+        while (waited < remaining && !StopSpinToggle)
         {
-          break;
+          yield return new WaitForSeconds(0.1f);
+          waited += 0.1f;
         }
       }
     }
@@ -819,16 +869,31 @@ public class SlotManager : MonoBehaviour
     {
       SpinDelay = 0.2f;
     }
+    bool wasStopPressed = StopSpinToggle;
     StopSpinToggle = false;
     
     // Wait for the last reel stop sequence to finish, then clean up
-    float stopWait = (IsTurboOn || StopSpinToggle)
+    float stopWait = (IsTurboOn || wasStopPressed)
         ? (quickStopDuration + numberOfSlots * 0.05f + 0.05f)
-        : (stopOvershootDuration + stopBounceBackDuration + stopSettleDuration + numberOfSlots * 0.12f + 0.1f);
+        : (stopOvershootDuration + stopSettleDuration + numberOfSlots * reelStopStagger + 0.1f);
     yield return new WaitForSeconds(stopWait);
     KillAllTweens();
+    ResetSlotPositions();
     TriggerSpinState(false);
-    yield return new WaitForSeconds(0.2f);
+
+    // Cooldown after stop button: show spin button but non-interactable so slots settle
+    if (wasStopPressed && !IsAutoSpin && !IsFreeSpin)
+    {
+      isSettling = true;
+      uiManager.ShowSpinButtonCooldown(true);
+      yield return new WaitForSeconds(stopCooldownDuration);
+      isSettling = false;
+      uiManager.ShowSpinButtonCooldown(false);
+    }
+    else
+    {
+      yield return new WaitForSeconds(0.2f);
+    }
     
     // Play winning symbol animations through the AnimationManager
     System.Func<string, bool> isSpecial = id =>
@@ -1202,7 +1267,7 @@ public class SlotManager : MonoBehaviour
     {
       if (CCcount != 0)
       {
-        ReorderImages();
+        ReorderImages(col);
       }
     }
   }
@@ -1320,6 +1385,7 @@ public class SlotManager : MonoBehaviour
   private int[] reelCycleCount = new int[5];
   private const int MinCyclesBeforeStop = 3;
 
+  // Classic casino start: brief upward wind-up then immediately into fast continuous spin
   private void InitializeTweening(Transform slotTransform)
   {
     int col = System.Array.IndexOf(Slot_Transform, slotTransform);
@@ -1331,23 +1397,27 @@ public class SlotManager : MonoBehaviour
     while (alltweens.Count <= col) alltweens.Add(null);
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
+    // Simple wind-up: small upward bounce then drop straight into continuous spin
     Sequence startSeq = DOTween.Sequence();
-    startSeq.Append(slotTransform.DOLocalMoveY(restY + anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutCubic));
-    startSeq.Append(slotTransform.DOLocalMoveY(restY - dropDownDistance,       dropDownDuration      ).SetEase(Ease.InCubic));
-    startSeq.Append(slotTransform.DOLocalMoveY(restY,                          settleBounceDuration  ).SetEase(Ease.OutBounce));
+    startSeq.Append(slotTransform.DOLocalMoveY(restY + anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutQuad));
+    startSeq.Append(slotTransform.DOLocalMoveY(restY, anticipationUpDuration * 0.5f).SetEase(Ease.InQuad));
     startSeq.OnComplete(() => { if (IsSpinning) RunContinuousCycle(col, slotTransform, restY); });
     alltweens[col] = startSeq;
     startSeq.Play();
   }
 
+  // Smooth, fast continuous scrolling — moves multiple symbol heights per tick for blur effect
   private void RunContinuousCycle(int col, Transform slotTransform, float restY)
   {
     if (!IsSpinning) return;
 
     slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
 
+    // Calculate duration from speed: time = distance / speed
+    float cycleDuration = symbolHeight / spinSpeed;
+
     Tween cycle = slotTransform
-        .DOLocalMoveY(restY - symbolHeight, spinCycleDuration)
+        .DOLocalMoveY(restY - symbolHeight, cycleDuration)
         .SetEase(Ease.Linear)
         .OnComplete(() =>
         {
@@ -1365,14 +1435,82 @@ public class SlotManager : MonoBehaviour
     var imgs = images[col].slotImages;
     if (imgs == null || imgs.Count == 0) return;
 
+    // Shift sprites AND view states down together so special layers stay in sync
     for (int i = imgs.Count - 1; i > 0; i--)
+    {
       imgs[i].sprite = imgs[i - 1].sprite;
 
+      // Sync the SlotSymbolView layers from the source image to the destination
+      SlotSymbolView srcView = imgs[i - 1].GetComponent<SlotSymbolView>();
+      SlotSymbolView dstView = imgs[i].GetComponent<SlotSymbolView>();
+      if (srcView != null && dstView != null)
+      {
+        CopyViewState(srcView, dstView);
+      }
+    }
+
+    // Set a new random (non-special) symbol on the top buffer slot
     int r;
     do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
     imgs[0].sprite = SlotSymbols[r];
+
+    // Clear and configure the view for the new top symbol
+    SlotSymbolView topView = imgs[0].GetComponent<SlotSymbolView>();
+    if (topView != null)
+    {
+      topView.ClearValues();
+      ConfigureSymbolView(topView, r);
+    }
   }
 
+  // Copies the visual state (special layer, hat, value texts) from one view to another
+  private void CopyViewState(SlotSymbolView src, SlotSymbolView dst)
+  {
+    // Special symbol layer
+    if (dst.specialSymbolLayer != null && src.specialSymbolLayer != null)
+    {
+      dst.specialSymbolLayer.gameObject.SetActive(src.specialSymbolLayer.gameObject.activeSelf);
+      dst.specialSymbolLayer.sprite = src.specialSymbolLayer.sprite;
+    }
+    else if (dst.specialSymbolLayer != null)
+    {
+      dst.specialSymbolLayer.gameObject.SetActive(false);
+    }
+
+    // Hat / wild object
+    if (dst.hatObject != null && src.hatObject != null)
+    {
+      dst.hatObject.SetActive(src.hatObject.activeSelf);
+    }
+    else if (dst.hatObject != null)
+    {
+      dst.hatObject.SetActive(false);
+    }
+
+    // Gold coin value text
+    if (dst.goldCoinValueText != null && src.goldCoinValueText != null)
+    {
+      dst.goldCoinValueText.gameObject.SetActive(src.goldCoinValueText.gameObject.activeSelf);
+      dst.goldCoinValueText.text = src.goldCoinValueText.text;
+    }
+    else if (dst.goldCoinValueText != null)
+    {
+      dst.goldCoinValueText.gameObject.SetActive(false);
+    }
+
+    // Los Polos value text
+    if (dst.losPolosValueText != null && src.losPolosValueText != null)
+    {
+      dst.losPolosValueText.gameObject.SetActive(src.losPolosValueText.gameObject.activeSelf);
+      dst.losPolosValueText.text = src.losPolosValueText.text;
+    }
+    else if (dst.losPolosValueText != null)
+    {
+      dst.losPolosValueText.gameObject.SetActive(false);
+    }
+  }
+
+  // Classic casino stop: all reels stop together with slight stagger and satisfying bounce
   private IEnumerator StopTweening(int reqpos, Transform slotTransform, int index,
                                    bool magnet = false, int CCloc = 0, bool isStop = false)
   {
@@ -1396,14 +1534,15 @@ public class SlotManager : MonoBehaviour
 
       if (IsTurboOn || isStop)
       {
+        // Quick stop: small overshoot then snap back
         stopSeq.Append(slotTransform.DOLocalMoveY(restY - quickStopOvershoot, quickStopDuration * 0.3f).SetEase(Ease.InCubic));
         stopSeq.Append(slotTransform.DOLocalMoveY(restY,                      quickStopDuration * 0.7f).SetEase(Ease.OutBack, 1.2f));
       }
       else
       {
-        stopSeq.Append(slotTransform.DOLocalMoveY(restY - stopOvershootDistance, stopOvershootDuration ).SetEase(Ease.InCubic));
-        stopSeq.Append(slotTransform.DOLocalMoveY(restY + stopBounceBackDistance, stopBounceBackDuration).SetEase(Ease.OutCubic));
-        stopSeq.Append(slotTransform.DOLocalMoveY(restY,                          stopSettleDuration    ).SetEase(Ease.OutBounce));
+        // Classic casino stop: overshoot down then smooth settle back to rest
+        stopSeq.Append(slotTransform.DOLocalMoveY(restY - stopOvershootDistance, stopOvershootDuration).SetEase(Ease.InQuad));
+        stopSeq.Append(slotTransform.DOLocalMoveY(restY,                         stopSettleDuration   ).SetEase(Ease.OutBack, 1.5f));
       }
 
       alltweens[index] = stopSeq;
@@ -1411,7 +1550,8 @@ public class SlotManager : MonoBehaviour
 
       if (index < numberOfSlots - 1)
       {
-        float gap = (IsTurboOn || isStop) ? 0.05f : 0.12f;
+        // Stagger between reels stopping
+        float gap = (IsTurboOn || isStop) ? 0.05f : reelStopStagger;
         yield return new WaitForSeconds(gap);
       }
       else
@@ -1484,6 +1624,14 @@ public class SlotManager : MonoBehaviour
       int r;
       do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
       imgs[i].sprite = SlotSymbols[r];
+
+      // Keep views in sync for buffer rows too
+      SlotSymbolView view = imgs[i].GetComponent<SlotSymbolView>();
+      if (view != null)
+      {
+        view.ClearValues();
+        ConfigureSymbolView(view, r);
+      }
     }
   }
 

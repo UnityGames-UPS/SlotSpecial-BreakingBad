@@ -158,14 +158,16 @@ public class UIManager : MonoBehaviour
           }
           holdHandler.onClick.RemoveAllListeners();
           holdHandler.onClick.AddListener(() => {
-              if (slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin) {
+              if (slotManager && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus) {
+                  // Allow starting a new spin even if animations are playing
+                  // ForceCleanupPreviousSpin inside StartSlots handles cleanup
                   slotManager.StartSlots();
                   CanCloseMenu();
               }
           });
           holdHandler.onLongPress.RemoveAllListeners();
           holdHandler.onLongPress.AddListener(() => {
-              if (slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin) {
+              if (slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsBonus) {
                   OpenAutoplayPanel();
                   CanCloseMenu();
               }
@@ -252,6 +254,27 @@ public class UIManager : MonoBehaviour
   public void ShowStopButton(bool show)
   {
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(show);
+  }
+
+  // Shows spin button in non-interactable state during cooldown after stop press
+  public void ShowSpinButtonCooldown(bool cooldown)
+  {
+      if (cooldown)
+      {
+          if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
+          if (slotStartButton)
+          {
+              slotStartButton.gameObject.SetActive(true);
+              slotStartButton.interactable = false;
+          }
+      }
+      else
+      {
+          if (slotStartButton)
+          {
+              slotStartButton.interactable = true;
+          }
+      }
   }
 
   public void FadeWinningsPanel(float endVal, float duration, Action onComplete = null)

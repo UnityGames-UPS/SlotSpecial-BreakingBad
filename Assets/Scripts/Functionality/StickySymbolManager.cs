@@ -121,12 +121,12 @@ public class StickySymbolManager : MonoBehaviour
                     if (matrixVal == "11") // Link -> coin transition
                     {
                         SetupAnimationOnSlot(i, j, LinkToGoldCoin_Animation);
-                        AssignCoinText(i, j, fromImage: false);
+                        AssignCoinText(i, j);
                     }
                     else if (matrixVal == "12") // MegaLink -> coin transition
                     {
                         SetupAnimationOnSlot(i, j, MegaLinkToGoldCoin_Animation);
-                        AssignCoinText(i, j, fromImage: true);
+                        AssignCoinText(i, j);
                     }
 
                     Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(i, j).sprite;
@@ -227,20 +227,17 @@ public class StickySymbolManager : MonoBehaviour
             anim.textureArray.Add(s);
     }
 
-    private void AssignCoinText(int col, int row, bool fromImage)
+    private void AssignCoinText(int col, int row)
     {
         foreach (var coin in socketManager.resultData.payload.coinPositions)
         {
             if (coin.position[0] == col && coin.position[1] == row)
             {
-                Transform target = fromImage
-                    ? Slot[col].slotImages[row].GetComponent<ImageAnimation>().transform
-                    : Slot[col].slotImages[row].transform;
-
-                var label = target.GetChild(0).GetComponent<TMP_Text>();
-                if (label != null)
+                // Use the SlotSymbolView's gold coin text directly
+                SlotSymbolView view = symbolViews[col][row];
+                if (view != null)
                 {
-                    label.text = coin.coinValue.ToString() + "x";
+                    view.SetGoldCoinValue(coin.coinValue);
                 }
                 break;
             }

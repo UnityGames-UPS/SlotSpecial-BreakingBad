@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using DG.Tweening;
 
@@ -135,27 +134,19 @@ public class BonusManager : MonoBehaviour
     yield return new WaitUntil(() => SocketManager.isResultdone);
     slotManager.UpdateFromSpinResult(SocketManager.resultData);
 
-    // Create a list of all slot indices for randomization
-    List<(int row, int col)> indices = new List<(int, int)>();
+    PopulateSymbols();
+
+    // Stop non-frozen slots in row-major order (left-to-right, top-to-bottom)
+    // for a clean, casino-style sequential stop
     for (int row = 0; row < Slot.Count; row++)
     {
       for (int col = 0; col < Slot[row].slotTransforms.Count; col++)
       {
-        indices.Add((row, col));
-      }
-    }
-
-    // Shuffle the list to get random indices
-    System.Random random = new System.Random();
-    indices = indices.OrderBy(x => random.Next()).ToList();
-    PopulateSymbols();
-
-    foreach (var (row, col) in indices)
-    {
-      if (staticSymbol.freezedLocations[row].index[col] == 0) // Stop only non-frozen slots
-      {
-        int flattenedIndex = row * Slot[row].slotTransforms.Count + col;
-        yield return StopSingleSlotTweening(3, Slot[row].slotTransforms[col], flattenedIndex);
+        if (staticSymbol.freezedLocations[row].index[col] == 0) // Stop only non-frozen slots
+        {
+          int flattenedIndex = row * Slot[row].slotTransforms.Count + col;
+          yield return StopSingleSlotTweening(3, Slot[row].slotTransforms[col], flattenedIndex);
+        }
       }
     }
 
@@ -340,15 +331,31 @@ public class BonusManager : MonoBehaviour
     }
   }
 
+  // Bonus slot start: anticipation bounce before entering the spin loop
   private void InitializeSingleSlotTweening(Transform slotTransform, bool bonus = false)
   {
-    Tweener tweener = null;
-    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, 307f);
-    tweener = slotTransform.DOLocalMoveY(-670, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetDelay(0);
-    tweener.Play();
-    singleSlotTweens.Add(new KeyValuePair<Transform, Tweener>(slotTransform, tweener));
+    float startY = 307f;
+    float endY = -670f;
+    float anticipationUp = 15f;
+    float anticipationDuration = 0.10f;
+
+    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, startY);
+
+    // Use a Sequence for wind-up bounce then continuous loop
+    Sequence seq = DOTween.Sequence();
+    seq.Append(slotTransform.DOLocalMoveY(startY + anticipationUp, anticipationDuration).SetEase(Ease.OutQuad));
+    seq.Append(slotTransform.DOLocalMoveY(startY, anticipationDuration * 0.5f).SetEase(Ease.InQuad));
+    seq.OnComplete(() =>
+    {
+      // After bounce, start continuous loop spin
+      Tweener tweener = slotTransform.DOLocalMoveY(endY, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetDelay(0);
+      tweener.Play();
+      singleSlotTweens.Add(new KeyValuePair<Transform, Tweener>(slotTransform, tweener));
+    });
+    seq.Play();
   }
 
+  // Bonus slot stop: overshoot + settle bounce for satisfying landing
   private IEnumerator StopSingleSlotTweening(int reqpos, Transform slotTransform, int index, bool bonus = false)
   {
     var tweenPair = singleSlotTweens.Find(pair => pair.Key == slotTransform);
@@ -364,12 +371,23 @@ public class BonusManager : MonoBehaviour
 
     tweenPair.Value.Pause();
 
-    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, 307f);
+    float finalY = 307f;
+    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, finalY);
     int tweenpos = (reqpos * IconSizeFactor) - IconSizeFactor;
-    Tweener stopTween = slotTransform.DOLocalMoveY(tweenpos - 290.5f, 0.1f);
+    float targetY = tweenpos - 290.5f;
+    float overshootDistance = 15f;
 
-    yield return stopTween.WaitForCompletion();
+    // Phase 1: Snap to slightly past target (overshoot)
+    Sequence stopSeq = DOTween.Sequence();
+    stopSeq.Append(slotTransform.DOLocalMoveY(targetY - overshootDistance, 0.08f).SetEase(Ease.InQuad));
+    // Phase 2: Bounce settle back to exact target
+    stopSeq.Append(slotTransform.DOLocalMoveY(targetY, 0.15f).SetEase(Ease.OutBack, 1.5f));
+
+    yield return stopSeq.WaitForCompletion();
     tweenPair.Value.Kill();
+
+    // Small stagger before next slot stops
+    yield return new WaitForSeconds(0.06f);
   }
 
   private void KillAllTweens()
