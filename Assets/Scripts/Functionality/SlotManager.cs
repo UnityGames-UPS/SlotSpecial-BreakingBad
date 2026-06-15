@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class SlotManager : MonoBehaviour
 {
@@ -211,6 +212,7 @@ public class SlotManager : MonoBehaviour
       InitializeSymbolViews();
   }
 
+
   private void InitializeSymbolViews()
   {
       symbolViews.Clear();
@@ -313,6 +315,8 @@ public class SlotManager : MonoBehaviour
 
     animationManager.Initialize(this);
   }
+
+  public float SwipeThresholdValue => swipeThreshold;
 
   internal void FreeSpin(int spins)
   {
@@ -704,8 +708,9 @@ public class SlotManager : MonoBehaviour
 
   #region SlotSpin
   //starts the spin process
-  public void StartSlots(bool autoSpin = false)
+  public void StartSlots(bool autoSpin = false, bool reverse = false)
   {
+    isSpinReverse = reverse;
     IsFeatureTransitioning = false;
     // Forcefully clean up any previous spin state to prevent glitches
     ForceCleanupPreviousSpin();
@@ -1345,6 +1350,9 @@ public class SlotManager : MonoBehaviour
   private const int MinCyclesBeforeStop = 3;
   private int[] stopStatus = { -1, -1, -1, -1, -1 };
   private bool wasStopPressedGlobal = false;
+  private bool isSpinReverse = false;
+
+  [SerializeField] private float swipeThreshold = 50f;
 
   // Classic casino start: brief upward wind-up then immediately into fast continuous spin
   private void InitializeTweening(Transform slotTransform)
@@ -1359,10 +1367,20 @@ public class SlotManager : MonoBehaviour
     while (alltweens.Count <= col) alltweens.Add(null);
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
-    // Simple wind-up: small upward bounce then drop straight into continuous spin
+    // Simple wind-up: small upward/downward bounce then drop straight into continuous spin
     Sequence startSeq = DOTween.Sequence();
-    startSeq.Append(slotTransform.DOLocalMoveY(restY + anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutQuad));
-    startSeq.Append(slotTransform.DOLocalMoveY(restY, anticipationUpDuration * 0.5f).SetEase(Ease.InQuad));
+    if (isSpinReverse)
+    {
+      // Reverse wind-up: small downward bounce then drop straight into upward continuous spin
+      startSeq.Append(slotTransform.DOLocalMoveY(restY - anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutQuad));
+      startSeq.Append(slotTransform.DOLocalMoveY(restY, anticipationUpDuration * 0.5f).SetEase(Ease.InQuad));
+    }
+    else
+    {
+      // Normal wind-up: small upward bounce then drop straight into downward continuous spin
+      startSeq.Append(slotTransform.DOLocalMoveY(restY + anticipationUpDistance, anticipationUpDuration).SetEase(Ease.OutQuad));
+      startSeq.Append(slotTransform.DOLocalMoveY(restY, anticipationUpDuration * 0.5f).SetEase(Ease.InQuad));
+    }
     startSeq.OnComplete(() => { if (IsSpinning) RunContinuousCycle(col, slotTransform, restY); });
     alltweens[col] = startSeq;
     startSeq.Play();
@@ -1378,8 +1396,10 @@ public class SlotManager : MonoBehaviour
     // Calculate duration from speed: time = distance / speed
     float cycleDuration = symbolHeight / spinSpeed;
 
+    float targetY = isSpinReverse ? (restY + symbolHeight) : (restY - symbolHeight);
+
     Tween cycle = slotTransform
-        .DOLocalMoveY(restY - symbolHeight, cycleDuration)
+        .DOLocalMoveY(targetY, cycleDuration)
         .SetEase(Ease.Linear)
         .OnComplete(() =>
         {
@@ -1405,66 +1425,135 @@ public class SlotManager : MonoBehaviour
     var imgs = images[col].slotImages;
     if (imgs == null || imgs.Count == 0) return;
 
-    // Shift sprites AND view states down together so special layers stay in sync
-    for (int i = imgs.Count - 1; i > 0; i--)
+    if (isSpinReverse)
     {
-      imgs[i].sprite = imgs[i - 1].sprite;
+      // Shift sprites AND view states UP together so special layers stay in sync
+      for (int i = 0; i < imgs.Count - 1; i++)
+      {
+        imgs[i].sprite = imgs[i + 1].sprite;
 
-      // Sync the SlotSymbolView layers from the source image to the destination
-      SlotSymbolView srcView = imgs[i - 1].GetComponent<SlotSymbolView>();
-      SlotSymbolView dstView = imgs[i].GetComponent<SlotSymbolView>();
-      if (srcView != null && dstView != null)
-      {
-        CopyViewState(srcView, dstView);
+        // Sync the SlotSymbolView layers from the source image to the destination
+        SlotSymbolView srcView = imgs[i + 1].GetComponent<SlotSymbolView>();
+        SlotSymbolView dstView = imgs[i].GetComponent<SlotSymbolView>();
+        if (srcView != null && dstView != null)
+        {
+          CopyViewState(srcView, dstView);
+        }
       }
-    }
 
-    int symbolToFeed = -1;
-    int targetRowIndex = -1;
-    if (stopStatus[col] >= 0)
-    {
-      if (stopStatus[col] == 0)
+      int symbolToFeed = -1;
+      int targetRowIndex = -1;
+      if (stopStatus[col] >= 0)
       {
-        symbolToFeed = GetResultSymbolId(col, 2);
-        targetRowIndex = 2;
+        if (stopStatus[col] == 0)
+        {
+          symbolToFeed = GetResultSymbolId(col, 0);
+          targetRowIndex = 0;
+        }
+        else if (stopStatus[col] == 1)
+        {
+          symbolToFeed = GetResultSymbolId(col, 1);
+          targetRowIndex = 1;
+        }
+        else if (stopStatus[col] == 2)
+        {
+          symbolToFeed = GetResultSymbolId(col, 2);
+          targetRowIndex = 2;
+        }
+        stopStatus[col]++;
       }
-      else if (stopStatus[col] == 1)
-      {
-        symbolToFeed = GetResultSymbolId(col, 1);
-        targetRowIndex = 1;
-      }
-      else if (stopStatus[col] == 2)
-      {
-        symbolToFeed = GetResultSymbolId(col, 0);
-        targetRowIndex = 0;
-      }
-      stopStatus[col]++;
-    }
 
-    if (symbolToFeed != -1)
-    {
-      imgs[0].sprite = SlotSymbols[symbolToFeed];
-      SlotSymbolView topView = imgs[0].GetComponent<SlotSymbolView>();
-      if (topView != null)
+      int lastIdx = imgs.Count - 1;
+      if (symbolToFeed != -1)
       {
-        topView.ClearValues();
-        ConfigureSymbolView(topView, symbolToFeed);
+        imgs[lastIdx].sprite = SlotSymbols[symbolToFeed];
+        SlotSymbolView bottomView = imgs[lastIdx].GetComponent<SlotSymbolView>();
+        if (bottomView != null)
+        {
+          bottomView.ClearValues();
+          ConfigureSymbolView(bottomView, symbolToFeed);
+        }
+        ConfigureSpecialValues(col, targetRowIndex, symbolToFeed, imgs[lastIdx]);
       }
-      ConfigureSpecialValues(col, targetRowIndex, symbolToFeed, imgs[0]);
+      else
+      {
+        // Set a new random (non-special) symbol on the bottom buffer slot
+        int r;
+        do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
+        imgs[lastIdx].sprite = SlotSymbols[r];
+
+        // Clear and configure the view for the new bottom symbol
+        SlotSymbolView bottomView = imgs[lastIdx].GetComponent<SlotSymbolView>();
+        if (bottomView != null)
+        {
+          bottomView.ClearValues();
+          ConfigureSymbolView(bottomView, r);
+        }
+      }
     }
     else
     {
-      // Set a new random (non-special) symbol on the top buffer slot
-      int r;
-      do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
-      imgs[0].sprite = SlotSymbols[r];
-
-      // Clear and configure the view for the new top symbol
-      SlotSymbolView topView = imgs[0].GetComponent<SlotSymbolView>();
-      if (topView != null)
+      // Shift sprites AND view states down together so special layers stay in sync
+      for (int i = imgs.Count - 1; i > 0; i--)
       {
-        topView.ClearValues();
-        ConfigureSymbolView(topView, r);
+        imgs[i].sprite = imgs[i - 1].sprite;
+
+        // Sync the SlotSymbolView layers from the source image to the destination
+        SlotSymbolView srcView = imgs[i - 1].GetComponent<SlotSymbolView>();
+        SlotSymbolView dstView = imgs[i].GetComponent<SlotSymbolView>();
+        if (srcView != null && dstView != null)
+        {
+          CopyViewState(srcView, dstView);
+        }
+      }
+
+      int symbolToFeed = -1;
+      int targetRowIndex = -1;
+      if (stopStatus[col] >= 0)
+      {
+        if (stopStatus[col] == 0)
+        {
+          symbolToFeed = GetResultSymbolId(col, 2);
+          targetRowIndex = 2;
+        }
+        else if (stopStatus[col] == 1)
+        {
+          symbolToFeed = GetResultSymbolId(col, 1);
+          targetRowIndex = 1;
+        }
+        else if (stopStatus[col] == 2)
+        {
+          symbolToFeed = GetResultSymbolId(col, 0);
+          targetRowIndex = 0;
+        }
+        stopStatus[col]++;
+      }
+
+      if (symbolToFeed != -1)
+      {
+        imgs[0].sprite = SlotSymbols[symbolToFeed];
+        SlotSymbolView topView = imgs[0].GetComponent<SlotSymbolView>();
+        if (topView != null)
+        {
+          topView.ClearValues();
+          ConfigureSymbolView(topView, symbolToFeed);
+        }
+        ConfigureSpecialValues(col, targetRowIndex, symbolToFeed, imgs[0]);
+      }
+      else
+      {
+        // Set a new random (non-special) symbol on the top buffer slot
+        int r;
+        do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
+        imgs[0].sprite = SlotSymbols[r];
+
+        // Clear and configure the view for the new top symbol
+        SlotSymbolView topView = imgs[0].GetComponent<SlotSymbolView>();
+        if (topView != null)
+        {
+          topView.ClearValues();
+          ConfigureSymbolView(topView, r);
+        }
       }
     }
   }
@@ -1544,13 +1633,15 @@ public class SlotManager : MonoBehaviour
     if (IsTurboOn || wasStopPressedGlobal)
     {
       // Quick stop: small overshoot then snap back
-      stopSeq.Append(slotTransform.DOLocalMoveY(restY - quickStopOvershoot, quickStopDuration * 0.3f).SetEase(Ease.OutQuad));
+      float targetOvershoot = isSpinReverse ? (restY + quickStopOvershoot) : (restY - quickStopOvershoot);
+      stopSeq.Append(slotTransform.DOLocalMoveY(targetOvershoot, quickStopDuration * 0.3f).SetEase(Ease.OutQuad));
       stopSeq.Append(slotTransform.DOLocalMoveY(restY,                      quickStopDuration * 0.7f).SetEase(Ease.InOutQuad));
     }
     else
     {
-      // Classic casino stop: overshoot down then smooth settle back to rest
-      stopSeq.Append(slotTransform.DOLocalMoveY(restY - stopOvershootDistance, stopOvershootDuration).SetEase(Ease.OutQuad));
+      // Classic casino stop: overshoot then smooth settle back to rest
+      float targetOvershoot = isSpinReverse ? (restY + stopOvershootDistance) : (restY - stopOvershootDistance);
+      stopSeq.Append(slotTransform.DOLocalMoveY(targetOvershoot, stopOvershootDuration).SetEase(Ease.OutQuad));
       stopSeq.Append(slotTransform.DOLocalMoveY(restY,                         stopSettleDuration   ).SetEase(Ease.InOutQuad));
     }
 
