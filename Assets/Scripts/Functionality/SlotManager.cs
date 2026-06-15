@@ -931,9 +931,62 @@ public class SlotManager : MonoBehaviour
       StopGameAnimation();
       yield return new WaitForSeconds(.2f);
     }
+    bool hasPrizeCoin = false;
+    if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.coinPositions != null)
+    {
+      foreach (var coin in SocketManager.resultData.payload.coinPositions)
+      {
+        if (coin.symbolId == 16)
+        {
+          hasPrizeCoin = true;
+          break;
+        }
+      }
+    }
+
+    if (isCCTriggered || (SocketManager.resultData.payload.isLinkTriggered && hasPrizeCoin))
+    {
+      uiManager.multiplierCount = 0;
+      foreach (var item in SocketManager.resultData.payload.coinPositions)
+      {
+        if (item.symbolId == 16)
+        {
+          Image slotImage = ResultMatrix[item.position[0]].slotImages[item.position[1]];
+          SlotSymbolView view = slotImage.GetComponent<SlotSymbolView>();
+          if (view != null && jackpotManager != null)
+          {
+            Sprite prizeSprite = null;
+            if (JackpotSlotSymbols != null && JackpotSlotSymbols.Length > (item.prizeTypeIndex ?? 0))
+            {
+              prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
+            }
+            yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, item.coinValue.ToString("F2"), prizeSprite);
+          }
+        }
+      }
+      yield return new WaitForSeconds(1.2f);
+      yield return new WaitForSeconds(.2f);
+
+      if (!SocketManager.resultData.payload.isFreeSpinTriggered && !SocketManager.resultData.payload.isLinkTriggered)
+      {
+        IsFeatureTransitioning = false;
+        uiManager.UpdateButtonsState();
+      }
+    }
 
     if (SocketManager.resultData.payload.isLinkTriggered)
     {
+      if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
+      {
+        winningsDisplayed = true;
+        CheckPopups = true;
+        uiManager.WinningsTextAnimation();
+        CheckWinPopups();
+
+        yield return new WaitUntil(() => !CheckPopups);
+        yield return new WaitForSeconds(.5f);
+      }
+
       IsBonus = true;
       IsFeatureTransitioning = false;
       uiManager.UpdateButtonsState();
@@ -950,36 +1003,6 @@ public class SlotManager : MonoBehaviour
       _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
       TriggerSpinState(false);
       yield break;   // EXIT AFTER LINK STARTS
-    }
-
-    if (isCCTriggered)
-    {
-      uiManager.multiplierCount = 0;
-      foreach (var item in SocketManager.resultData.payload.coinPositions)
-      {
-        if (item.symbolId == 16)
-        {
-          Image slotImage = ResultMatrix[item.position[0]].slotImages[item.position[1]];
-          SlotSymbolView view = slotImage.GetComponent<SlotSymbolView>();
-          if (view != null && jackpotManager != null)
-          {
-            Sprite prizeSprite = null;
-            if (JackpotSlotSymbols != null && JackpotSlotSymbols.Length > (item.prizeTypeIndex ?? 0))
-            {
-              prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
-            }
-            yield return jackpotManager.PlayJackpotSequence(view, item.prizeTypeIndex ?? 0, item.coinValue.ToString("F2"), prizeSprite);
-          }
-        }
-      }
-      yield return new WaitForSeconds(1.2f);
-      yield return new WaitForSeconds(.2f);
-
-      if (!SocketManager.resultData.payload.isFreeSpinTriggered)
-      {
-        IsFeatureTransitioning = false;
-        uiManager.UpdateButtonsState();
-      }
     }
     
     if (SocketManager.resultData.payload.isFreeSpinTriggered)

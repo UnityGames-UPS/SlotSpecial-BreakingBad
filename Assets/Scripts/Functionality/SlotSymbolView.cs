@@ -105,6 +105,7 @@ public class SlotSymbolView : MonoBehaviour
         if (mainImage != null)
         {
             mainImage.gameObject.SetActive(true);
+            mainImage.enabled = true;
             mainImage.color = new Color(mainImage.color.r, mainImage.color.g, mainImage.color.b, 1f);
         }
     }
@@ -114,6 +115,10 @@ public class SlotSymbolView : MonoBehaviour
         if (jackpotObject != null)
         {
             jackpotObject.SetActive(true);
+        }
+        if (specialSymbolLayer != null)
+        {
+            specialSymbolLayer.gameObject.SetActive(false);
         }
         if (jackpotStripParent != null)
         {
@@ -134,7 +139,7 @@ public class SlotSymbolView : MonoBehaviour
         }
         if (mainImage != null)
         {
-            mainImage.gameObject.SetActive(false);
+            mainImage.enabled = false;
         }
     }
 

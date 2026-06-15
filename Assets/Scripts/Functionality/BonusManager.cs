@@ -285,7 +285,7 @@ public class BonusManager : MonoBehaviour
               {
                   prizeSprite = slotManager.JackpotSlotSymbols[coin.prizeTypeIndex ?? 0];
               }
-              yield return slotManager.jackpotManager.PlayJackpotSequence(symbolView, coin.prizeTypeIndex ?? 0, coin.coinValue.ToString("F2"), prizeSprite);
+              yield return slotManager.jackpotManager.PlayJackpotSequence(symbolView, coin.prizeType, coin.prizeTypeIndex ?? 0, coin.coinValue.ToString("F2"), prizeSprite);
           }
         }
       }

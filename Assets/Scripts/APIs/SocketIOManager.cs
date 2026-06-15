@@ -369,7 +369,7 @@ public class SocketIOManager : MonoBehaviour
   // }
 
   private void ParseResponse(string jsonObject)
-  {
+  { 
     Debug.Log(jsonObject);
     var jobj = Newtonsoft.Json.Linq.JObject.Parse(jsonObject);
     string id = jobj["id"]?.ToString();
