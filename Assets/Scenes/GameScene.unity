@@ -17112,13 +17112,10 @@ MonoBehaviour:
   autoSpinStopButton: {fileID: 684108587}
   totalBetPlusButton: {fileID: 1333581581}
   totalBetMinusButton: {fileID: 234200730}
-  lineBetPlusButton: {fileID: 0}
-  lineBetMinusButton: {fileID: 0}
   turboButton: {fileID: 509995697}
   stopSpinButton: {fileID: 1297612259}
   balanceText: {fileID: 1205646254}
   totalBetText: {fileID: 570405518}
-  lineBetText: {fileID: 0}
   totalWinText: {fileID: 1909875648}
   fsNumText: {fileID: 0}
 --- !u!4 &1198241102
@@ -26020,7 +26017,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: 178301da857343049ab652ca00904bcc
+  testToken: f0e7c97d771b4ce29cf9f26213765bdd
 --- !u!4 &1787183091
 Transform:
   m_ObjectHideFlags: 0
@@ -27057,13 +27054,13 @@ MonoBehaviour:
   anticipationUpDistance: 30
   anticipationUpDuration: 0.15
   stopOvershootDistance: 50
-  stopOvershootDuration: 0.15
+  stopOvershootDuration: 0.25
   stopSettleDuration: 0.35
   quickStopOvershoot: 20
   quickStopDuration: 0.2
   symbolHeight: 252
   reelStopStagger: 0.08
-  minimumSpinDuration: 3
+  minimumSpinDuration: 2
   spinSpeed: 3000
   Slot_Transform:
   - {fileID: 167679253}
@@ -27091,9 +27088,6 @@ MonoBehaviour:
   LP5_Sprites: []
   LP7_Sprites: []
   GoldCoin_Sprites: []
-  MagnetInSprites: []
-  MagnetLightening_Sprites: []
-  TurboToggleSprite: {fileID: 0}
   IconSizeFactor: 252
   stopCooldownDuration: 0.4
 --- !u!224 &1840228117
