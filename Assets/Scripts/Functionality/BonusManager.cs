@@ -351,7 +351,7 @@ public class BonusManager : MonoBehaviour
             if (coins.position[0] == j && coins.position[1] == i)
             {
               img.sprite = coinFrame;
-              if (view != null) view.SetGoldCoinValue(coins.coinValue);
+              if (view != null) view.SetGoldCoinValue(coins.coinValue * slotManager.TotalBet);
               break;
             }
           }
@@ -621,7 +621,7 @@ public class BonusManager : MonoBehaviour
           {
             view.specialSymbolLayer.gameObject.SetActive(false);
           }
-          view.SetGoldCoinValue(coin.coinValue);
+          view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
           slotManager.ConfigureSymbolView(view, 15);
         }
       }

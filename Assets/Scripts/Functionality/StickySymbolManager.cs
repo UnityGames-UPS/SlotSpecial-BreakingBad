@@ -237,7 +237,7 @@ public class StickySymbolManager : MonoBehaviour
                 SlotSymbolView view = symbolViews[col][row];
                 if (view != null)
                 {
-                    view.SetGoldCoinValue(coin.coinValue);
+                    view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
                 }
                 break;
             }

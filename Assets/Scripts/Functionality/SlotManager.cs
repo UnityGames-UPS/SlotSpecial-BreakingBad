@@ -334,29 +334,7 @@ public class SlotManager : MonoBehaviour
       LineAnimRoutine = null;
     }
 
-    StartCoroutine(FreeSpinCoroutine(spins));
-  }
-
-  private IEnumerator FreeSpinCoroutine(int spinchances)
-  {
-    int i = 0;
-    while (i < spinchances)
-    {
-      StartSlots();
-      yield return tweenroutine;
-      yield return new WaitForSeconds(SpinDelay);
-      i++;
-    }
-    if (WasAutoSpinOn)
-    {
-      yield return new WaitForSeconds(0.2f);
-      AutoSpin();
-    }
-    else
-    {
-      uiManager.SetButtonsInteractable(true);
-    }
-    IsFreeSpin = false;
+    StartSlots();
   }
 
   #region Autospin
@@ -748,6 +726,18 @@ public class SlotManager : MonoBehaviour
     StopSpinToggle = false;
     isSettling = false;
     TriggerSpinState(false);
+
+    // Reset trigger flags on ResultData so they don't persist into the next spin
+    if (ResultData != null && ResultData.payload != null)
+    {
+        ResultData.payload.isFreeSpinTriggered = false;
+        ResultData.payload.isLinkTriggered = false;
+        ResultData.payload.isPrizeCoinTriggered = false;
+        if (ResultData.payload.freeSpinResult != null)
+        {
+            ResultData.payload.freeSpinResult.triggered = false;
+        }
+    }
   }
 
   // Resets all slot column transforms to their initial resting positions
@@ -982,8 +972,7 @@ public class SlotManager : MonoBehaviour
       {
         winningsDisplayed = true;
         CheckPopups = true;
-        uiManager.WinningsTextAnimation();
-        CheckWinPopups();
+        uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
 
         yield return new WaitUntil(() => !CheckPopups);
         yield return new WaitForSeconds(.5f);
@@ -1013,26 +1002,21 @@ public class SlotManager : MonoBehaviour
       {
         winningsDisplayed = true;
         CheckPopups = true;
-        uiManager.WinningsTextAnimation();
-        CheckWinPopups();
+        uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
 
         yield return new WaitUntil(() => !CheckPopups);
         yield return new WaitForSeconds(.5f);
       }
-      yield return ResetUI();
+      if (!IsFreeSpin)
+      {
+        yield return ResetUI();
+      }
 
-      uiManager.OpenFreeSpinsUI();
+      yield return uiManager.PlayFreeSpinTriggerSequence(SocketManager.resultData.payload.freeSpinResult, IsFreeSpin);
+
       IsFreeSpin = true;
       IsFeatureTransitioning = false;
       uiManager.UpdateButtonsState();
-
-      int extraFreeSpin = 0;
-      yield return new WaitForSeconds(.5f);
-      if (SocketManager.resultData.payload.freeSpinsRemaining > FreeSpinsCount)
-      {
-        yield return FreeSpinsSymbolAnimation();
-        extraFreeSpin = SocketManager.resultData.payload.freeSpinsRemaining - FreeSpinsCount;
-      }
 
       SetFreeSpinsCount(SocketManager.resultData.payload.freeSpinsRemaining);
       yield return new WaitForSeconds(1f);
@@ -1040,30 +1024,55 @@ public class SlotManager : MonoBehaviour
       // Mid-game image animations removed for now
       TriggerSpinState(false);
       FreeSpin(FreeSpinsCount);
+      yield break;
     }
 
     if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
     {
       winningsDisplayed = true;
       CheckPopups = true;
-      uiManager.WinningsTextAnimation();
-      CheckWinPopups();
+      uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
 
       yield return new WaitUntil(() => !CheckPopups);
       yield return new WaitForSeconds(.5f);
     }
 
     // Post-bonus and free spins cleanup
-    if (!IsFreeSpin)
+    TriggerSpinState(false);
+
+    if (IsFreeSpin)
+    {
+      if (FreeSpinsCount > 0 && SocketManager.resultData.payload.freeSpinsRemaining > 0)
+      {
+        yield return new WaitForSeconds(0.5f);
+        StartSlots();
+      }
+      else
+      {
+        bool winPopupClosed = false;
+        uiManager.OpenFeatureWinPopup(uiManager.AccumulatedFreeSpinWin, () => {
+            winPopupClosed = true;
+        });
+
+        yield return new WaitUntil(() => winPopupClosed);
+
+        IsFreeSpin = false;
+        uiManager.CloseFreeSpinsUI();
+        if (WasAutoSpinOn)
+        {
+          WasAutoSpinOn = false;
+          AutoSpin();
+        }
+        else
+        {
+          uiManager.SetButtonsInteractable(true);
+        }
+      }
+    }
+    else
     {
       uiManager.SetButtonsInteractable(true);
     }
-
-    if (FreeSpinsCount <= 0 && SocketManager.resultData.payload.freeSpinsRemaining <= 0)
-    {
-      uiManager.CloseFreeSpinsUI();
-    }
-    TriggerSpinState(false);
   }
   #endregion
   
@@ -1262,7 +1271,7 @@ public class SlotManager : MonoBehaviour
             if (coin.position[0] == row && coin.position[1] == col)
             {
               SlotImage.sprite = SlotSymbols[resultNum];
-              if (view != null) view.SetGoldCoinValue(coin.coinValue);
+              if (view != null) view.SetGoldCoinValue(coin.coinValue * TotalBet);
               found = true;
               break;
             }
@@ -1637,7 +1646,7 @@ public class SlotManager : MonoBehaviour
         {
           if (coin.position[0] == row && coin.position[1] == col)
           {
-            view.SetGoldCoinValue(coin.coinValue);
+            view.SetGoldCoinValue(coin.coinValue * TotalBet);
             break;
           }
         }

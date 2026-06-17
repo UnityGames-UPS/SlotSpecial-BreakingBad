@@ -45,6 +45,19 @@ public class UIManager : MonoBehaviour
   [Header("Feature Controls")]
   [SerializeField] private Button featureSpinButton;
 
+  [Header("Free Spin Transition UI")]
+  [SerializeField] private CanvasGroup normalBgCanvasGroup;
+  [SerializeField] private CanvasGroup freeSpinBgCanvasGroup;
+  [SerializeField] private TMP_Text losPolosTextPrefab;
+  [SerializeField] private Transform spinCountSnapParent;
+  [SerializeField] private RectTransform flyingTextParent;
+  [SerializeField] private GameObject freeSpinPopupTitleObject;
+  [SerializeField] private TMP_Text freeSpinPopupSpinsText;
+
+  internal int totalFreeSpins = 0;
+  private double accumulatedFreeSpinWin = 0f;
+  internal double AccumulatedFreeSpinWin => accumulatedFreeSpinWin;
+
   private int totalBonusSpins = 3;
 
   internal Coroutine BonusCoroutine;
@@ -81,6 +94,9 @@ public class UIManager : MonoBehaviour
     if (featurePopup != null) featurePopup.SetActive(false);
     if (walterStashPopup != null) walterStashPopup.SetActive(false);
     if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+
+    if (normalBgCanvasGroup != null) normalBgCanvasGroup.alpha = 1f;
+    if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.alpha = 0f;
 
     // Bind to Model Events
     slotManager.OnBalanceChanged += UpdateBalanceText;
@@ -243,7 +259,7 @@ public class UIManager : MonoBehaviour
       if (turboButton != null) turboButton.gameObject.SetActive(false);
       if (autoplayCounterObject != null) autoplayCounterObject.SetActive(true);
 
-      if (featureWinText != null) featureWinText.text = initialWin.ToString("f3");
+      if (featureWinText != null) featureWinText.text = FormatSpriteText(initialWin.ToString("F2"));
       SetBonusSpinCounter(totalSpins);
       UpdateFeatureButtonsState(false, totalSpins);
   }
@@ -267,9 +283,7 @@ public class UIManager : MonoBehaviour
   public void SetFeatureWinText(double value)
   {
       if (featureWinText != null)
-      {
-          featureWinText.text = value.ToString("f3");
-      }
+          featureWinText.text = FormatSpriteText(value.ToString("F2"));
   }
 
   public void OpenFeaturePopup(Action onStartClicked)
@@ -289,9 +303,16 @@ public class UIManager : MonoBehaviour
       if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
 
       featurePopup.SetActive(true);
-      if (featureTitleObject != null)
+      if (slotManager != null && (slotManager.IsFreeSpin || (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.isFreeSpinTriggered)))
       {
-          featureTitleObject.SetActive(true);
+          if (featureTitleObject != null) featureTitleObject.SetActive(false);
+          if (freeSpinPopupTitleObject != null) freeSpinPopupTitleObject.SetActive(true);
+          if (freeSpinPopupSpinsText != null) freeSpinPopupSpinsText.text = totalFreeSpins.ToString();
+      }
+      else
+      {
+          if (featureTitleObject != null) featureTitleObject.SetActive(true);
+          if (freeSpinPopupTitleObject != null) freeSpinPopupTitleObject.SetActive(false);
       }
       if (featureWinObject != null)
       {
@@ -328,6 +349,10 @@ public class UIManager : MonoBehaviour
       {
           featureTitleObject.SetActive(false);
       }
+      if (freeSpinPopupTitleObject != null)
+      {
+          freeSpinPopupTitleObject.SetActive(false);
+      }
       if (featureWinObject != null)
       {
           featureWinObject.SetActive(true);
@@ -342,7 +367,7 @@ public class UIManager : MonoBehaviour
       }
       if (featureWinAmountText != null)
       {
-          featureWinAmountText.text = winAmount.ToString("f3");
+          featureWinAmountText.text = winAmount.ToString("F2");
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
@@ -379,7 +404,7 @@ public class UIManager : MonoBehaviour
       walterStashPopup.SetActive(true);
       if (walterStashAmountText != null)
       {
-          walterStashAmountText.text = amount.ToString("f3");
+          walterStashAmountText.text = amount.ToString("F2");
       }
 
       StartCoroutine(CloseWalterStashAfterDelay(2f, onComplete));
@@ -460,6 +485,24 @@ public class UIManager : MonoBehaviour
   private void UpdateFreeSpinsText(int val)
   {
       if (fsNumText) fsNumText.text = val.ToString();
+
+      if (spinCounterText != null)
+      {
+          // If a free spin retrigger is triggered, do NOT update the text right now
+          if (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.isFreeSpinTriggered)
+          {
+              return;
+          }
+
+          // Otherwise, update totalFreeSpins from the response if available
+          if (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.totalFreeSpins > 0)
+          {
+              totalFreeSpins = slotManager.ResultData.payload.totalFreeSpins;
+          }
+
+          int spinsUsed = totalFreeSpins - val;
+          spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+      }
   }
 
   public void SetFreeSpinsActive(bool active)
@@ -632,9 +675,25 @@ public class UIManager : MonoBehaviour
   {
     slotManager.IsFreeSpin = false;
     if (fsNumText) fsNumText.text = "0";
+    totalFreeSpins = 0;
+
+    if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(1f, 1f);
+    if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.DOFade(0f, 1f);
+
+    if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
+    if (featureWinPanel != null) featureWinPanel.SetActive(false);
+    if (spinCounterText != null) spinCounterText.gameObject.SetActive(true);
+    if (featureWinText != null) featureWinText.gameObject.SetActive(true);
+
+    // Restore standard UI elements when exiting free spins
+    if (slotStartButton != null) slotStartButton.gameObject.SetActive(true);
+    if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(true);
+    if (turboButton != null) turboButton.gameObject.SetActive(true);
+
+    UpdateButtonsState();
   }
 
-  internal void WinningsTextAnimation()
+  internal void WinningsTextAnimation(Action onComplete = null)
   {
     double winAmt = slotManager.WinAmount;
     if (!double.TryParse(balanceText.text, out double currentBal))
@@ -649,15 +708,39 @@ public class UIManager : MonoBehaviour
     {
       Debug.Log("Error total win: " + totalWinText.text);
     }
+
+    int completedTweens = 0;
+    int targetTweensCount = slotManager.IsFreeSpin ? 3 : 2;
+
+    Action checkComplete = () =>
+    {
+        completedTweens++;
+        if (completedTweens >= targetTweensCount)
+        {
+            onComplete?.Invoke();
+        }
+    };
+
     DOTween.To(() => currentWin, (val) => currentWin = val, winAmt, 0.8f).OnUpdate(() =>
     {
       if (totalWinText) totalWinText.text = currentWin.ToString("f3");
-    });
+    }).OnComplete(() => checkComplete());
+
+    if (slotManager.IsFreeSpin)
+    {
+      accumulatedFreeSpinWin += winAmt;
+      double tempWin = accumulatedFreeSpinWin - winAmt;
+      DOTween.To(() => tempWin, (val) => tempWin = val, accumulatedFreeSpinWin, 0.8f).OnUpdate(() =>
+      {
+        if (featureWinText) featureWinText.text = FormatSpriteText(tempWin.ToString("F2"));
+      }).OnComplete(() => checkComplete());
+    }
+
     BalanceTween?.Kill();
-    DOTween.To(() => currentBal, (val) => currentBal = val, Balance, 0.8f).OnUpdate(() =>
+    BalanceTween = DOTween.To(() => currentBal, (val) => currentBal = val, Balance, 0.8f).OnUpdate(() =>
     {
       if (balanceText) balanceText.text = currentBal.ToString("f3");
-    });
+    }).OnComplete(() => checkComplete());
   }
 
   internal void DeductBalanceUI()
@@ -764,46 +847,289 @@ public class UIManager : MonoBehaviour
         return;
     }
 
-    if (slotManager.IsAutoSpin)
+    if (slotManager.IsSpinning)
     {
-      if (slotStartButton) slotStartButton.gameObject.SetActive(false);
-      if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
-      if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
-    }
-    else if (slotManager.IsFreeSpin)
-    {
-      if (slotStartButton) {
-        slotStartButton.gameObject.SetActive(true);
-        slotStartButton.interactable = false;
+      if (slotManager.IsAutoSpin)
+      {
+        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
       }
-      if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
-      if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
-    }
-    else if (slotManager.IsSpinning)
-    {
-      if (slotStartButton) slotStartButton.gameObject.SetActive(false);
-      if (stopSpinButton) stopSpinButton.gameObject.SetActive(true);
-      if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+      else
+      {
+        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        if (stopSpinButton)
+        {
+          stopSpinButton.gameObject.SetActive(true);
+          stopSpinButton.interactable = true;
+        }
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+      }
     }
     else
     {
-      if (slotStartButton) {
-        slotStartButton.gameObject.SetActive(true);
-        // Disable the normal spin button if the feature is active or transition/trigger is happening
-        slotStartButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
-      }
-      if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
-      if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-      if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
-
-      // Also ensure all other buttons are non-interactable during feature transitions/triggers
-      if (slotManager.IsBonus || slotManager.IsFeatureTransitioning)
+      if (slotManager.IsAutoSpin)
       {
-          SetButtonsInteractable(false);
+        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
+      }
+      else if (slotManager.IsFreeSpin)
+      {
+        if (slotStartButton) {
+          slotStartButton.gameObject.SetActive(true);
+          slotStartButton.interactable = false;
+        }
+        if (stopSpinButton)
+        {
+          stopSpinButton.gameObject.SetActive(true);
+          stopSpinButton.interactable = false;
+          if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        }
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+      }
+      else
+      {
+        if (slotStartButton) {
+          slotStartButton.gameObject.SetActive(true);
+          // Disable the normal spin button if the feature is active or transition/trigger is happening
+          slotStartButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
+        }
+        if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+
+        // Also ensure all other buttons are non-interactable during feature transitions/triggers
+        if (slotManager.IsBonus || slotManager.IsFeatureTransitioning)
+        {
+            SetButtonsInteractable(false);
+        }
       }
     }
+  }
+
+  private string FormatSpriteText(string input)
+  {
+      string result = "";
+      foreach (char c in input)
+      {
+          if (char.IsDigit(c))
+          {
+              result += $"<sprite={c - '0'}>";
+          }
+          else if (c == '.')
+          {
+              result += "<sprite=10>";
+          }
+          else if (c == ',')
+          {
+              result += "<sprite=11>";
+          }
+          else
+          {
+              result += c;
+          }
+      }
+      return result;
+  }
+
+  public IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false)
+  {
+      if (!isRetrigger)
+      {
+          accumulatedFreeSpinWin = 0f;
+
+          if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(0f, 1f);
+          if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.DOFade(1f, 1f);
+
+          if (spinCounterPanel != null) spinCounterPanel.SetActive(true);
+          if (featureWinPanel != null) featureWinPanel.SetActive(true);
+
+          if (spinCounterText != null) spinCounterText.gameObject.SetActive(false);
+          if (featureWinText != null) featureWinText.gameObject.SetActive(false);
+      }
+
+      yield return new WaitForSeconds(0.5f);
+
+      int totalSpins = 0;
+      List<Vector3> coinWorldPositions = new List<Vector3>();
+      List<string> coinTexts = new List<string>();
+
+      if (fsResult != null && fsResult.triggerCoins != null && fsResult.triggerCoins.Count > 0)
+      {
+          foreach (var coin in fsResult.triggerCoins)
+          {
+              int row = coin.position[0];
+              int col = coin.position[1];
+              totalSpins += coin.coinValue;
+
+              if (slotManager != null && slotManager.ResultMatrix != null && row < slotManager.ResultMatrix.Count)
+              {
+                  var rowImages = slotManager.ResultMatrix[row].slotImages;
+                  if (col < rowImages.Count)
+                  {
+                      var view = rowImages[col].GetComponent<SlotSymbolView>();
+                      if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                      {
+                          coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                          coinTexts.Add(view.losPolosValueText.text);
+                      }
+                  }
+              }
+          }
+      }
+      else
+      {
+          if (slotManager != null && slotManager.ResultMatrix != null)
+          {
+              for (int r = 0; r < slotManager.ResultMatrix.Count; r++)
+              {
+                  var rowImages = slotManager.ResultMatrix[r].slotImages;
+                  for (int c = 0; c < rowImages.Count; c++)
+                  {
+                      if (socketManager != null && socketManager.resultData != null && socketManager.resultData.matrix != null)
+                      {
+                          if (r < socketManager.resultData.matrix.Count && c < socketManager.resultData.matrix[r].Count)
+                          {
+                              if (socketManager.resultData.matrix[r][c] == "17")
+                              {
+                                  var view = rowImages[c].GetComponent<SlotSymbolView>();
+                                  if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                                  {
+                                      coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                                      coinTexts.Add(view.losPolosValueText.text);
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          totalSpins = fsResult != null ? fsResult.freeSpinCount : slotManager.FreeSpinsCount;
+      }
+
+      if (fsResult != null && fsResult.totalFreeSpins > 0)
+      {
+          totalFreeSpins = fsResult.totalFreeSpins;
+      }
+      else if (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.totalFreeSpins > 0)
+      {
+          totalFreeSpins = slotManager.ResultData.payload.totalFreeSpins;
+      }
+      else
+      {
+          if (isRetrigger)
+          {
+              totalFreeSpins += totalSpins;
+          }
+          else
+          {
+              totalFreeSpins = totalSpins;
+          }
+      }
+
+      Transform spawnParent = flyingTextParent != null ? flyingTextParent : this.transform;
+      List<TMP_Text> tempTexts = new List<TMP_Text>();
+      for (int i = 0; i < coinWorldPositions.Count; i++)
+      {
+          TMP_Text tempText = Instantiate(losPolosTextPrefab, spawnParent);
+          tempText.transform.position = coinWorldPositions[i];
+          tempText.text = coinTexts[i];
+          tempText.gameObject.SetActive(true);
+          tempTexts.Add(tempText);
+      }
+
+      yield return new WaitForSeconds(0.2f);
+
+      Vector3 centerWorldPos = spawnParent.position;
+      float moveDuration = 0.8f;
+      foreach (var txt in tempTexts)
+      {
+          txt.transform.DOMove(centerWorldPos, moveDuration).SetEase(Ease.OutQuad);
+      }
+
+      yield return new WaitForSeconds(moveDuration);
+
+      TMP_Text sumTextPrefab = null;
+      if (tempTexts.Count > 0)
+      {
+          sumTextPrefab = tempTexts[0];
+          string sumSpriteText = "<sprite=10>";
+          string totalSpinsStr = totalSpins.ToString();
+          foreach (char c in totalSpinsStr)
+          {
+              if (char.IsDigit(c))
+              {
+                  sumSpriteText += $"<sprite={c - '0'}>";
+              }
+          }
+          sumTextPrefab.text = sumSpriteText;
+
+          for (int i = 1; i < tempTexts.Count; i++)
+          {
+              if (tempTexts[i] != null) Destroy(tempTexts[i].gameObject);
+          }
+          tempTexts.Clear();
+      }
+
+      if (sumTextPrefab != null)
+      {
+          sumTextPrefab.transform.DOScale(1.5f, 0.4f).SetEase(Ease.OutBack);
+          yield return new WaitForSeconds(0.4f);
+          sumTextPrefab.transform.DOScale(1.0f, 0.3f).SetEase(Ease.InQuad);
+          yield return new WaitForSeconds(0.3f);
+
+          yield return new WaitForSeconds(0.5f);
+
+          Vector3 targetPos = spinCounterPanel != null ? spinCounterPanel.transform.position : centerWorldPos;
+          if (spinCountSnapParent != null)
+          {
+              targetPos = spinCountSnapParent.position;
+          }
+
+          sumTextPrefab.transform.DOMove(targetPos, moveDuration).SetEase(Ease.InOutQuad);
+          yield return new WaitForSeconds(moveDuration);
+
+          if (spinCounterText != null)
+          {
+              int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
+              int spinsUsed = totalFreeSpins - remaining;
+              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+              spinCounterText.gameObject.SetActive(true);
+          }
+          Destroy(sumTextPrefab.gameObject);
+      }
+      else
+      {
+          if (spinCounterText != null)
+          {
+              int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
+              int spinsUsed = totalFreeSpins - remaining;
+              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+              spinCounterText.gameObject.SetActive(true);
+          }
+      }
+
+      if (!isRetrigger)
+      {
+          yield return new WaitForSeconds(0.5f);
+
+          bool popupClicked = false;
+          OpenFeaturePopup(() => {
+              popupClicked = true;
+          });
+
+          yield return new WaitUntil(() => popupClicked);
+
+          if (featureWinText != null)
+          {
+              featureWinText.text = FormatSpriteText("0.00");
+              featureWinText.gameObject.SetActive(true);
+          }
+      }
   }
 }

@@ -281,7 +281,7 @@ public class AnimationManager : MonoBehaviour
                 if (coinPos != null)
                 {
                     lpVal = coinPos.coinValue;
-                    if (symbolId == 15) coinTxt = coinPos.coinValue.ToString() + "x";
+                    if (symbolId == 15) coinTxt = (coinPos.coinValue * slotManager.TotalBet).ToString() + "x";
                     else if (symbolId == 17) lpVal = coinPos.coinValue;
                 }
 

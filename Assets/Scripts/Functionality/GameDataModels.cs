@@ -141,6 +141,7 @@ public class ServerPayload
     public LinkFeatureResult linkFeatureResult;
     public int activeLines;
     public int freeSpinsRemaining;
+    public int totalFreeSpins;
     public bool isFreeSpinActive;
     public bool linkFeatureActive;
     public int linkRespinsRemaining;
@@ -917,6 +918,7 @@ public class FreeSpinResult
     public List<TriggerCoin> triggerCoins;
     public List<int> lpValues;
     public int freeSpinsRemaining;
+    public int totalFreeSpins;
 }
 
 [Serializable]
