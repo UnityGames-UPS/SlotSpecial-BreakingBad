@@ -38,6 +38,10 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject featureWinObject;
   [SerializeField] private TMP_Text featureWinAmountText;
 
+  [Header("Walter Stash Grand Prize Popup UI")]
+  [SerializeField] private GameObject walterStashPopup;
+  [SerializeField] private TMP_Text walterStashAmountText;
+
   [Header("Feature Controls")]
   [SerializeField] private Button featureSpinButton;
 
@@ -75,6 +79,7 @@ public class UIManager : MonoBehaviour
     if (featureWinPanel != null) featureWinPanel.SetActive(false);
     if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
     if (featurePopup != null) featurePopup.SetActive(false);
+    if (walterStashPopup != null) walterStashPopup.SetActive(false);
     if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
 
     // Bind to Model Events
@@ -292,6 +297,14 @@ public class UIManager : MonoBehaviour
       {
           featureWinObject.SetActive(false);
       }
+      if (walterStashPopup != null)
+      {
+          walterStashPopup.SetActive(false);
+      }
+      if (featureStartButton != null)
+      {
+          featureStartButton.gameObject.SetActive(true);
+      }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
           featurePopup.SetActive(false);
@@ -319,6 +332,14 @@ public class UIManager : MonoBehaviour
       {
           featureWinObject.SetActive(true);
       }
+      if (walterStashPopup != null)
+      {
+          walterStashPopup.SetActive(false);
+      }
+      if (featureStartButton != null)
+      {
+          featureStartButton.gameObject.SetActive(true);
+      }
       if (featureWinAmountText != null)
       {
           featureWinAmountText.text = winAmount.ToString("f3");
@@ -328,6 +349,50 @@ public class UIManager : MonoBehaviour
           featurePopup.SetActive(false);
           onCloseClicked?.Invoke();
       });
+  }
+
+  public void OpenWalterStashPopup(double amount, Action onComplete)
+  {
+      if (featurePopup == null || walterStashPopup == null)
+      {
+          onComplete?.Invoke();
+          return;
+      }
+
+      if (autoplayCounterObject != null) autoplayCounterObject.SetActive(false);
+      if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+
+      featurePopup.SetActive(true);
+      if (featureTitleObject != null)
+      {
+          featureTitleObject.SetActive(false);
+      }
+      if (featureWinObject != null)
+      {
+          featureWinObject.SetActive(false);
+      }
+      if (featureStartButton != null)
+      {
+          featureStartButton.gameObject.SetActive(false);
+      }
+
+      walterStashPopup.SetActive(true);
+      if (walterStashAmountText != null)
+      {
+          walterStashAmountText.text = amount.ToString("f3");
+      }
+
+      StartCoroutine(CloseWalterStashAfterDelay(2f, onComplete));
+  }
+
+  private IEnumerator CloseWalterStashAfterDelay(float delay, Action onComplete)
+  {
+      yield return new WaitForSeconds(delay);
+      if (walterStashPopup != null)
+      {
+          walterStashPopup.SetActive(false);
+      }
+      onComplete?.Invoke();
   }
 
   public void UpdateFeatureButtonsState(bool isSpinning, int remaining)
@@ -687,8 +752,8 @@ public class UIManager : MonoBehaviour
   {
     if (slotManager == null) return;
 
-    // Early exit if the feature popup is active to ensure count UI and standard buttons remain inactive
-    if (featurePopup != null && featurePopup.activeSelf)
+    // Early exit if the feature popup or walter stash popup is active to ensure count UI and standard buttons remain inactive
+    if ((featurePopup != null && featurePopup.activeSelf) || (walterStashPopup != null && walterStashPopup.activeSelf))
     {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (turboButton) turboButton.gameObject.SetActive(false);

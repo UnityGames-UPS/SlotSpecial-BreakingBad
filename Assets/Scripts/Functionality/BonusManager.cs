@@ -394,6 +394,21 @@ public class BonusManager : MonoBehaviour
     slotManager.IsBonus = false;
 
     double winAmt = SocketManager.resultData.payload.winAmount;
+
+    // Show Walter Stash Grand Prize Popup first if triggered
+    if (SocketManager.resultData != null && 
+        SocketManager.resultData.payload != null && 
+        SocketManager.resultData.payload.linkFeatureResult != null && 
+        SocketManager.resultData.payload.linkFeatureResult.isWalterStashGrandPrize)
+    {
+      double grandPrizeAmt = SocketManager.resultData.payload.linkFeatureResult.grandPrizeAmount;
+      bool stashPopupClosed = false;
+      uiManager.OpenWalterStashPopup(grandPrizeAmt, () => {
+          stashPopupClosed = true;
+      });
+      yield return new WaitUntil(() => stashPopupClosed);
+    }
+
     bool popupClosed = false;
     uiManager.OpenFeatureWinPopup(winAmt, () => {
         popupClosed = true;

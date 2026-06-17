@@ -875,6 +875,8 @@ public class LinkFeatureResult
     public List<FinalCoin> finalCoins;
     public double totalValue;
     public Newtonsoft.Json.Linq.JToken cashCollectPositions;
+    public bool isWalterStashGrandPrize;
+    public double grandPrizeAmount;
 }
 
 [Serializable]
