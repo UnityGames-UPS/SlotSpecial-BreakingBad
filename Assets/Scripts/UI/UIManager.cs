@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
   internal Coroutine BonusCoroutine;
   internal bool animationFinish = false;
   internal int multiplierCount = 0;
+  private Jackpot currentJackpotData;
 
   // Registered Slot Buttons & Texts (from SlotManager)
   [Header("HUD Objects")]
@@ -56,6 +57,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button totalBetMinusButton;
 
   [SerializeField] private Button turboButton;
+  [SerializeField] private GameObject turboOnObject;
   [SerializeField] private Button stopSpinButton;
 
   [SerializeField] private TMP_Text balanceText;
@@ -69,6 +71,7 @@ public class UIManager : MonoBehaviour
 
   private void Start()
   {
+    if (totalWinText != null) totalWinText.text = "0.000";
     if (featureWinPanel != null) featureWinPanel.SetActive(false);
     if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
     if (featurePopup != null) featurePopup.SetActive(false);
@@ -173,6 +176,7 @@ public class UIManager : MonoBehaviour
       if (turboButton) {
           turboButton.onClick.RemoveAllListeners();
           turboButton.onClick.AddListener(() => { TurboToggle(); CanCloseMenu(); });
+          SetTurboActiveState(slotManager != null ? slotManager.IsTurboOn : false);
       }
       if (stopSpinButton) {
           stopSpinButton.onClick.RemoveAllListeners();
@@ -271,6 +275,14 @@ public class UIManager : MonoBehaviour
           return;
       }
 
+      // Hide standard buttons and count UI when feature popup gets active
+      if (slotStartButton != null) slotStartButton.gameObject.SetActive(false);
+      if (turboButton != null) turboButton.gameObject.SetActive(false);
+      if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(false);
+      if (autoSpinStopButton != null) autoSpinStopButton.gameObject.SetActive(false);
+      if (autoplayCounterObject != null) autoplayCounterObject.SetActive(false);
+      if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+
       featurePopup.SetActive(true);
       if (featureTitleObject != null)
       {
@@ -294,6 +306,9 @@ public class UIManager : MonoBehaviour
           onCloseClicked?.Invoke();
           return;
       }
+
+      if (autoplayCounterObject != null) autoplayCounterObject.SetActive(false);
+      if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
 
       featurePopup.SetActive(true);
       if (featureTitleObject != null)
@@ -374,6 +389,7 @@ public class UIManager : MonoBehaviour
   private void UpdateTotalBetText(double val)
   {
       if (totalBetText) totalBetText.text = val.ToString();
+      UpdateJackpotDisplay();
   }
 
   private void UpdateFreeSpinsText(int val)
@@ -410,17 +426,47 @@ public class UIManager : MonoBehaviour
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
   }
 
+  private void SetTurboActiveState(bool active)
+  {
+      if (turboOnObject != null)
+      {
+          turboOnObject.SetActive(active);
+      }
+      else if (turboButton != null)
+      {
+          Transform foundChild = null;
+          for (int i = 0; i < turboButton.transform.childCount; i++)
+          {
+              Transform child = turboButton.transform.GetChild(i);
+              string lowerName = child.name.ToLower();
+              if (lowerName.Contains("on") || lowerName.Contains("active") || lowerName.Contains("turbo"))
+              {
+                  foundChild = child;
+                  break;
+              }
+          }
+          if (foundChild == null && turboButton.transform.childCount > 0)
+          {
+              foundChild = turboButton.transform.GetChild(0);
+          }
+          if (foundChild != null)
+          {
+              foundChild.gameObject.SetActive(active);
+          }
+      }
+  }
+
   private void TurboToggle()
   {
     if (slotManager.IsTurboOn)
     {
       slotManager.IsTurboOn = false;
-      turboButton.GetComponent<ImageAnimation>().StopAnimation();
+      SetTurboActiveState(false);
     }
     else
     {
       slotManager.IsTurboOn = true;
-      turboButton.GetComponent<ImageAnimation>().StartAnimation();
+      SetTurboActiveState(true);
     }
   }
 
@@ -475,14 +521,24 @@ public class UIManager : MonoBehaviour
 
   internal void SetJackpotText(Jackpot jackpot)
   {
-    if (jackpot == null || jackpot.payout == null || JackpotText == null) return;
+    currentJackpotData = jackpot;
+    UpdateJackpotDisplay();
+  }
 
-    for (int i = 0; i < jackpot.payout.Count; i++)
+  internal void UpdateJackpotDisplay()
+  {
+    if (currentJackpotData == null || currentJackpotData.payout == null || JackpotText == null) return;
+
+    double totalBet = slotManager != null ? slotManager.TotalBet : 0;
+
+    for (int i = 0; i < currentJackpotData.payout.Count; i++)
     {
       if (i >= JackpotText.Count) break;
       if (JackpotText[i] != null)
       {
-        JackpotText[i].text = jackpot.payout[i].ToString();
+        double multiplier = currentJackpotData.payout[i];
+        double jackpotValue = multiplier * totalBet;
+        JackpotText[i].text = jackpotValue.ToString("F2");
       }
     }
   }
@@ -630,6 +686,18 @@ public class UIManager : MonoBehaviour
   public void UpdateButtonsState()
   {
     if (slotManager == null) return;
+
+    // Early exit if the feature popup is active to ensure count UI and standard buttons remain inactive
+    if (featurePopup != null && featurePopup.activeSelf)
+    {
+        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        if (turboButton) turboButton.gameObject.SetActive(false);
+        if (autoSpinButton) autoSpinButton.gameObject.SetActive(false);
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+        if (featureSpinButton) featureSpinButton.gameObject.SetActive(false);
+        return;
+    }
 
     if (slotManager.IsAutoSpin)
     {

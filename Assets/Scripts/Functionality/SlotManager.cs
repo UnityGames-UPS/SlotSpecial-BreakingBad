@@ -823,7 +823,7 @@ public class SlotManager : MonoBehaviour
     // Enforce minimum spin duration for classic casino feel
     if (IsTurboOn)
     {
-      yield return new WaitForSeconds(0.3f);
+      yield return new WaitForSeconds(0.2f);
       StopSpinToggle = true;
     }
     else
@@ -866,9 +866,10 @@ public class SlotManager : MonoBehaviour
 
     // Start stopping each reel in parallel
     wasStopPressedGlobal = wasStopPressed;
+    float stagger = IsTurboOn ? 0.03f : ((wasStopPressed) ? 0.05f : reelStopStagger);
     for (int i = 0; i < numberOfSlots; i++)
     {
-      float delay = i * ((IsTurboOn || wasStopPressed) ? 0.05f : reelStopStagger);
+      float delay = i * stagger;
       StartCoroutine(TriggerReelStopAfterDelay(i, delay));
     }
 
@@ -882,8 +883,8 @@ public class SlotManager : MonoBehaviour
     }
     
     // Wait for the stop sequences to complete (staggered delay + 5 scrolling cycles + bounce duration)
-    float stagger = (IsTurboOn || wasStopPressed) ? 0.05f : reelStopStagger;
-    float cycleDuration = symbolHeight / spinSpeed;
+    float speed = IsTurboOn ? 3500f : spinSpeed;
+    float cycleDuration = symbolHeight / speed;
     float longestStopTime = (IsTurboOn || wasStopPressed)
         ? ((numberOfSlots - 1) * stagger + 5f * cycleDuration + quickStopDuration)
         : ((numberOfSlots - 1) * stagger + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
@@ -960,7 +961,8 @@ public class SlotManager : MonoBehaviour
             {
               prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
             }
-            yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, item.coinValue.ToString("F2"), prizeSprite);
+            double jackpotAmount = item.coinValue * TotalBet;
+            yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, jackpotAmount.ToString("F2"), prizeSprite);
           }
         }
       }
@@ -1390,6 +1392,12 @@ public class SlotManager : MonoBehaviour
     while (alltweens.Count <= col) alltweens.Add(null);
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
+    if (IsTurboOn)
+    {
+      RunContinuousCycle(col, slotTransform, restY);
+      return;
+    }
+
     // Simple wind-up: small upward/downward bounce then drop straight into continuous spin
     Sequence startSeq = DOTween.Sequence();
     if (isSpinReverse)
@@ -1417,7 +1425,8 @@ public class SlotManager : MonoBehaviour
     slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
 
     // Calculate duration from speed: time = distance / speed
-    float cycleDuration = symbolHeight / spinSpeed;
+    float speed = IsTurboOn ? 3500f : spinSpeed;
+    float cycleDuration = symbolHeight / speed;
 
     float targetY = isSpinReverse ? (restY + symbolHeight) : (restY - symbolHeight);
 
@@ -1716,6 +1725,75 @@ public class SlotManager : MonoBehaviour
     else if (dst.losPolosValueText != null)
     {
       dst.losPolosValueText.gameObject.SetActive(false);
+    }
+
+    // Jackpot object
+    if (dst.jackpotObject != null && src.jackpotObject != null)
+    {
+      dst.jackpotObject.SetActive(src.jackpotObject.activeSelf);
+    }
+    else if (dst.jackpotObject != null)
+    {
+      dst.jackpotObject.SetActive(false);
+    }
+
+    // Jackpot result text
+    if (dst.jackpotResultText != null && src.jackpotResultText != null)
+    {
+      dst.jackpotResultText.gameObject.SetActive(src.jackpotResultText.gameObject.activeSelf);
+      dst.jackpotResultText.text = src.jackpotResultText.text;
+    }
+    else if (dst.jackpotResultText != null)
+    {
+      dst.jackpotResultText.gameObject.SetActive(false);
+    }
+
+    // Jackpot strip parent children
+    if (dst.jackpotStripParent != null && src.jackpotStripParent != null)
+    {
+      dst.jackpotStripParent.gameObject.SetActive(src.jackpotStripParent.gameObject.activeSelf);
+      int childCount = Mathf.Min(dst.jackpotStripParent.childCount, src.jackpotStripParent.childCount);
+      for (int i = 0; i < childCount; i++)
+      {
+        Transform dstItem = dst.jackpotStripParent.GetChild(i);
+        Transform srcItem = src.jackpotStripParent.GetChild(i);
+        if (dstItem != null && srcItem != null)
+        {
+          dstItem.gameObject.SetActive(srcItem.gameObject.activeSelf);
+          
+          Image dstBgImg = dstItem.GetComponent<Image>();
+          Image srcBgImg = srcItem.GetComponent<Image>();
+          if (dstBgImg != null && srcBgImg != null)
+          {
+            dstBgImg.sprite = srcBgImg.sprite;
+          }
+
+          if (dstItem.childCount > 0 && srcItem.childCount > 0)
+          {
+            Image dstTextImg = dstItem.GetChild(0).GetComponent<Image>();
+            Image srcTextImg = srcItem.GetChild(0).GetComponent<Image>();
+            if (dstTextImg != null && srcTextImg != null)
+            {
+              dstTextImg.sprite = srcTextImg.sprite;
+              dstTextImg.gameObject.SetActive(srcTextImg.gameObject.activeSelf);
+            }
+          }
+        }
+      }
+    }
+    else if (dst.jackpotStripParent != null)
+    {
+      dst.jackpotStripParent.gameObject.SetActive(false);
+    }
+
+    // Canvas group alpha
+    if (dst.canvasGroup != null && src.canvasGroup != null)
+    {
+      dst.canvasGroup.alpha = src.canvasGroup.alpha;
+    }
+    else if (dst.canvasGroup != null)
+    {
+      dst.canvasGroup.alpha = 1f;
     }
   }
 

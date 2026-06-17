@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8996398787378262365}
   - component: {fileID: 1688729031343563815}
   - component: {fileID: 383464602007287515}
+  - component: {fileID: 3649564462989536474}
   m_Layer: 5
   m_Name: SlotIcon (2)
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4475685062092556266, guid: d48f69299e977437fa80f2515172fbee, type: 3}
+  m_Sprite: {fileID: 3662014866950229404, guid: 9e336f5187ca74764b0e46e6cfdd95c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -171,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotSymbolView
   mainImage: {fileID: 1688729031343563815}
+  canvasGroup: {fileID: 3649564462989536474}
   backTint: {fileID: 46515609473362275}
   specialSymbolLayer: {fileID: 3537708455080353489}
   hatObject: {fileID: 4071328920787424668}
@@ -179,6 +181,18 @@ MonoBehaviour:
   jackpotObject: {fileID: 8889652035589901348}
   jackpotStripParent: {fileID: 1084805222762838139}
   jackpotResultText: {fileID: 6986959673696894355}
+--- !u!225 &3649564462989536474
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424440719340797616}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &994125555036395560
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5748949570803348654
 RectTransform:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class SlotSymbolView : MonoBehaviour
 {
     [Header("Symbol Layers")]
     [SerializeField] public Image mainImage;
+    [SerializeField] public CanvasGroup canvasGroup;
     [SerializeField] public Image backTint;
     [SerializeField] public Image specialSymbolLayer;
     [SerializeField] public GameObject hatObject;
@@ -20,6 +21,7 @@ public class SlotSymbolView : MonoBehaviour
     {
         // Try to set references dynamically if not assigned in the inspector
         if (mainImage == null) mainImage = GetComponent<Image>();
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
 
         // We map based on standard child index mapping to remain compatible with the scene structure
         if (transform.childCount > 0 && specialSymbolLayer == null)
@@ -107,6 +109,10 @@ public class SlotSymbolView : MonoBehaviour
             mainImage.gameObject.SetActive(true);
             mainImage.enabled = true;
             mainImage.color = new Color(mainImage.color.r, mainImage.color.g, mainImage.color.b, 1f);
+        }
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
         }
     }
 

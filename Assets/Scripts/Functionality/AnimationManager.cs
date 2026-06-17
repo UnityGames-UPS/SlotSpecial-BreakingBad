@@ -103,7 +103,17 @@ public class AnimationManager : MonoBehaviour
                 if (symbolView == null) continue;
 
                 // 1. Fade out the corresponding main display symbol
-                symbolView.mainImage.DOFade(0f, 0.2f);
+                symbolView.DOKill();
+                if (symbolView.canvasGroup != null)
+                {
+                    symbolView.canvasGroup.DOKill();
+                    symbolView.canvasGroup.DOFade(0f, 0.2f);
+                }
+                else if (symbolView.mainImage != null)
+                {
+                    symbolView.mainImage.DOKill();
+                    symbolView.mainImage.DOFade(0f, 0.2f);
+                }
                 
                 // Hide its back tint since this cell is winning/highlighted
                 symbolView.SetBackTintActive(false);
@@ -111,7 +121,27 @@ public class AnimationManager : MonoBehaviour
                 // 2. Enable matching animation object in the Animation Slot
                 ImageAnimation animCell = animationGrid[row][col];
                 animCell.transform.position = symbolView.transform.position;
-                animCell.gameObject.SetActive(true);
+                
+                animCell.DOKill();
+                CanvasGroup animCG = animCell.GetComponent<CanvasGroup>();
+                if (animCG != null)
+                {
+                    animCG.DOKill();
+                    animCG.alpha = 0f;
+                    animCell.gameObject.SetActive(true);
+                    animCG.DOFade(1f, 0.2f);
+                }
+                else if (animCell.rendererDelegate != null)
+                {
+                    animCell.rendererDelegate.DOKill();
+                    animCell.rendererDelegate.color = new Color(animCell.rendererDelegate.color.r, animCell.rendererDelegate.color.g, animCell.rendererDelegate.color.b, 0f);
+                    animCell.gameObject.SetActive(true);
+                    animCell.rendererDelegate.DOFade(1f, 0.2f);
+                }
+                else
+                {
+                    animCell.gameObject.SetActive(true);
+                }
 
                 // Get the symbol ID
                 int symbolId = int.Parse(win.symbolId);
@@ -142,6 +172,20 @@ public class AnimationManager : MonoBehaviour
             for (int col = 0; col < animationGrid[row].Count; col++)
             {
                 ImageAnimation anim = animationGrid[row][col];
+                
+                anim.DOKill();
+                CanvasGroup animCG = anim.GetComponent<CanvasGroup>();
+                if (animCG != null)
+                {
+                    animCG.DOKill();
+                    animCG.alpha = 0f;
+                }
+                else if (anim.rendererDelegate != null)
+                {
+                    anim.rendererDelegate.DOKill();
+                    anim.rendererDelegate.color = new Color(anim.rendererDelegate.color.r, anim.rendererDelegate.color.g, anim.rendererDelegate.color.b, 0f);
+                }
+
                 if (anim.gameObject.activeSelf)
                 {
                     anim.onLoopComplete = null;
@@ -153,7 +197,17 @@ public class AnimationManager : MonoBehaviour
                 SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
                 if (symbolView != null)
                 {
-                    symbolView.mainImage.DOFade(1f, 0.2f);
+                    symbolView.DOKill();
+                    if (symbolView.canvasGroup != null)
+                    {
+                        symbolView.canvasGroup.DOKill();
+                        symbolView.canvasGroup.alpha = 1f;
+                    }
+                    else if (symbolView.mainImage != null)
+                    {
+                        symbolView.mainImage.DOKill();
+                        symbolView.mainImage.color = new Color(symbolView.mainImage.color.r, symbolView.mainImage.color.g, symbolView.mainImage.color.b, 1f);
+                    }
                     symbolView.SetBackTintActive(false);
                 }
             }
@@ -178,14 +232,44 @@ public class AnimationManager : MonoBehaviour
                 if (symbolView == null) continue;
 
                 // 1. Fade out the corresponding main display symbol
-                symbolView.mainImage.DOFade(0f, 0.1f);
+                symbolView.DOKill();
+                if (symbolView.canvasGroup != null)
+                {
+                    symbolView.canvasGroup.DOKill();
+                    symbolView.canvasGroup.DOFade(0f, 0.1f);
+                }
+                else if (symbolView.mainImage != null)
+                {
+                    symbolView.mainImage.DOKill();
+                    symbolView.mainImage.DOFade(0f, 0.1f);
+                }
                 symbolView.SetBackTintActive(false);
                 fadedViews.Add(symbolView);
 
                 // 2. Enable matching animation object on the Animation Slot
                 ImageAnimation animCell = animationGrid[row][col];
                 animCell.transform.position = symbolView.transform.position;
-                animCell.gameObject.SetActive(true);
+                
+                animCell.DOKill();
+                CanvasGroup animCG = animCell.GetComponent<CanvasGroup>();
+                if (animCG != null)
+                {
+                    animCG.DOKill();
+                    animCG.alpha = 0f;
+                    animCell.gameObject.SetActive(true);
+                    animCG.DOFade(1f, 0.1f);
+                }
+                else if (animCell.rendererDelegate != null)
+                {
+                    animCell.rendererDelegate.DOKill();
+                    animCell.rendererDelegate.color = new Color(animCell.rendererDelegate.color.r, animCell.rendererDelegate.color.g, animCell.rendererDelegate.color.b, 0f);
+                    animCell.gameObject.SetActive(true);
+                    animCell.rendererDelegate.DOFade(1f, 0.1f);
+                }
+                else
+                {
+                    animCell.gameObject.SetActive(true);
+                }
 
                 // Configure and run
                 int symbolId = int.Parse(symbolStr);
@@ -241,17 +325,41 @@ public class AnimationManager : MonoBehaviour
         }
 
         // Clean up: stop animations, restore faded views, disable tint
+        Sequence cleanupSeq = DOTween.Sequence();
+
         foreach (var anim in activeAnims)
         {
             anim.onLoopComplete = null;
             anim.StopAnimation();
-            anim.gameObject.SetActive(false);
+            
+            CanvasGroup animCG = anim.GetComponent<CanvasGroup>();
+            if (animCG != null)
+            {
+                cleanupSeq.Join(animCG.DOFade(0f, 0.1f).OnComplete(() => anim.gameObject.SetActive(false)));
+            }
+            else if (anim.rendererDelegate != null)
+            {
+                cleanupSeq.Join(anim.rendererDelegate.DOFade(0f, 0.1f).OnComplete(() => anim.gameObject.SetActive(false)));
+            }
+            else
+            {
+                anim.gameObject.SetActive(false);
+            }
         }
 
         foreach (var view in fadedViews)
         {
-            view.mainImage.DOFade(1f, 0.1f);
+            if (view.canvasGroup != null)
+            {
+                cleanupSeq.Join(view.canvasGroup.DOFade(1f, 0.1f));
+            }
+            else if (view.mainImage != null)
+            {
+                cleanupSeq.Join(view.mainImage.DOFade(1f, 0.1f));
+            }
         }
+
+        yield return cleanupSeq.WaitForCompletion();
 
         slotManager.EnableAllBackTints(false);
     }

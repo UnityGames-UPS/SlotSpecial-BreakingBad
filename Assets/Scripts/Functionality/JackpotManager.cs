@@ -132,6 +132,11 @@ public class JackpotManager : MonoBehaviour
             cellView.mainImage.color = new Color(cellView.mainImage.color.r, cellView.mainImage.color.g, cellView.mainImage.color.b, 1f);
         }
 
+        if (cellView.canvasGroup != null)
+        {
+            cellView.canvasGroup.alpha = 1f;
+        }
+
         Transform cellStripParent = cellView.jackpotStripParent;
         if (cellStripParent != null && jackpotImages != null)
         {
@@ -203,8 +208,12 @@ public class JackpotManager : MonoBehaviour
             slotParent.SetActive(false);
         }
 
-        // Fade out triggering symbol's main image and fade in the jackpot overlay
-        if (triggeringSymbolView.mainImage != null)
+        // Fade out triggering symbol's whole object (via CanvasGroup) or main image and fade in the jackpot overlay
+        if (triggeringSymbolView.canvasGroup != null)
+        {
+            triggeringSymbolView.canvasGroup.DOFade(0f, 0.3f);
+        }
+        else if (triggeringSymbolView.mainImage != null)
         {
             triggeringSymbolView.mainImage.DOFade(0f, 0.3f);
         }
@@ -244,7 +253,11 @@ public class JackpotManager : MonoBehaviour
             k = currentPermutation.IndexOf(resolvedPrizeIndex);
             if (k < 0) k = 0;
 
-            startIdx = UnityEngine.Random.Range(0, currentPermutation.Count);
+            do
+            {
+                startIdx = UnityEngine.Random.Range(0, currentPermutation.Count);
+            } while ((startIdx + 2) % currentPermutation.Count == k);
+
             currentCycleIndex = startIdx;
 
             // Initialize all items cyclicly
@@ -339,8 +352,15 @@ public class JackpotManager : MonoBehaviour
         // 5. Copy the final sprites and display result on the main slot icon jackpot object
         CopyJackpotLayoutToCell(triggeringSymbolView, prizeValue);
 
-        // 6. Both get fade transition (fade out the overlay)
-        yield return jackpotSlotMainCG.DOFade(0f, 0.3f).WaitForCompletion();
+        // 6. Both get fade transition (fade out the overlay and fade in the cell view)
+        Sequence fadeSeq = DOTween.Sequence();
+        fadeSeq.Append(jackpotSlotMainCG.DOFade(0f, 0.3f));
+        if (triggeringSymbolView.canvasGroup != null)
+        {
+            triggeringSymbolView.canvasGroup.alpha = 0f;
+            fadeSeq.Join(triggeringSymbolView.canvasGroup.DOFade(1f, 0.3f));
+        }
+        yield return fadeSeq.WaitForCompletion();
         jackpotSlotMain.SetActive(false);
 
         if (winBlur != null) winBlur.SetActive(false);

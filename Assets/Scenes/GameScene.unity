@@ -5359,6 +5359,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5385,11 +5389,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8632,6 +8636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8658,11 +8666,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9230,6 +9238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9256,11 +9268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11084,6 +11096,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11110,11 +11126,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12489,6 +12505,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12515,11 +12535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12815,11 +12835,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13975,6 +13995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -14001,11 +14025,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16210,6 +16234,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -16236,11 +16264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19535,6 +19563,7 @@ MonoBehaviour:
   totalBetPlusButton: {fileID: 1333581581}
   totalBetMinusButton: {fileID: 234200730}
   turboButton: {fileID: 509995697}
+  turboOnObject: {fileID: 1170262159}
   stopSpinButton: {fileID: 1297612259}
   balanceText: {fileID: 1205646254}
   totalBetText: {fileID: 570405518}
@@ -20528,6 +20557,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20554,11 +20587,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21729,6 +21762,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -21755,11 +21792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22559,6 +22596,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -22585,11 +22626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25339,6 +25380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -25365,11 +25410,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27773,6 +27818,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -27799,11 +27848,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29797,7 +29846,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: f36e010ca7cb4bca9ff59a52816aa7b1
+  testToken: 6b9d9dd2d28e40b5bc4e4dd9497651fc
 --- !u!4 &1787183091
 Transform:
   m_ObjectHideFlags: 0
@@ -29905,6 +29954,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -29931,11 +29984,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30945,7 +30998,42 @@ MonoBehaviour:
   Purple_Sprites: []
   Yellow_Sprites: []
   Diamond_Sprites: []
-  CC_Sprites: []
+  CC_Sprites:
+  - {fileID: 21300000, guid: cd2c36324b1304b92b5c65c18c040388, type: 3}
+  - {fileID: 21300000, guid: 208f4a3d0971a40548987db67e86d7c0, type: 3}
+  - {fileID: 21300000, guid: 231a2ccf7c79d46eb89f3e01b4d0f946, type: 3}
+  - {fileID: 21300000, guid: a6b35175eb706443ea2bbee49741725f, type: 3}
+  - {fileID: 21300000, guid: f69b5f00f5861429aa83d5f3686f7243, type: 3}
+  - {fileID: 21300000, guid: d9b334529a4c34f958ea731e936f6c45, type: 3}
+  - {fileID: 21300000, guid: 9d2cd3492265343638348b015ffba793, type: 3}
+  - {fileID: 21300000, guid: f13e4212f7b0d429680586aeadb978af, type: 3}
+  - {fileID: 21300000, guid: 8087424c3d499440eaaf02bd089dcfbd, type: 3}
+  - {fileID: 21300000, guid: 3d6f5654dc3aa4441bba8a0ae1b5eb76, type: 3}
+  - {fileID: 21300000, guid: 3a1a455e2e9b14dd997be2c685c36038, type: 3}
+  - {fileID: 21300000, guid: b6092b9c548ad4706b870a6d03d95216, type: 3}
+  - {fileID: 21300000, guid: 3f5998310f84346129649f00658fe95d, type: 3}
+  - {fileID: 21300000, guid: a61c47cf838644a1fae6d5d941228d0e, type: 3}
+  - {fileID: 21300000, guid: 16e1040eef19142d289da3ef9171e313, type: 3}
+  - {fileID: 21300000, guid: 7da0641bb800e43b8ad7d0e774b2c279, type: 3}
+  - {fileID: 21300000, guid: f054d463c37914539864d1c67d19ab03, type: 3}
+  - {fileID: 21300000, guid: eedfb39bfb23b49f58b61cf219e1ec7c, type: 3}
+  - {fileID: 21300000, guid: e7b81ba408ceb4d558f8ab7793b1b78a, type: 3}
+  - {fileID: 21300000, guid: a5f38ebb13eae4e3aaf950fb1d203ea3, type: 3}
+  - {fileID: 21300000, guid: f8c455c30424a4d69b55425afbad1178, type: 3}
+  - {fileID: 21300000, guid: ae13a4a92ef8e48adb0d8ec766f6b434, type: 3}
+  - {fileID: 21300000, guid: cee07c440dedf4ad9b96d637ea2729b3, type: 3}
+  - {fileID: 21300000, guid: ff6e9e5ae813c4870ab8577670dd1a5f, type: 3}
+  - {fileID: 21300000, guid: 576dcc29e93df4c24815b00890502049, type: 3}
+  - {fileID: 21300000, guid: 3d4a83db5f86b41e7ac062fc52cecb77, type: 3}
+  - {fileID: 21300000, guid: 01afd11f11cea432fa988a0b3afb9d8f, type: 3}
+  - {fileID: 21300000, guid: 40c46ee09820a452d8bafc9af362737e, type: 3}
+  - {fileID: 21300000, guid: eb92f5fe6e7a44c30bbf0402207cb2ee, type: 3}
+  - {fileID: 21300000, guid: 18fe93ba87f1a4059a661137bbf1cb20, type: 3}
+  - {fileID: 21300000, guid: 8d1234eacffe2423390437036fc492ac, type: 3}
+  - {fileID: 21300000, guid: 3b2aa6ae6fb5f499e9fff4214479fae7, type: 3}
+  - {fileID: 21300000, guid: 4cbac175309004ee7ad6013d7a14cc6d, type: 3}
+  - {fileID: 21300000, guid: 4b69fa7e636cb4365b05a2332a2c1a7a, type: 3}
+  - {fileID: 21300000, guid: 299073ce6bb84412099ca67df3ea9809, type: 3}
   LP2_Sprites: []
   LP3_Sprites: []
   LP4_Sprites: []
@@ -35749,6 +35837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim
       objectReference: {fileID: 0}
+    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -35775,11 +35867,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 252
+      value: 302
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_LocalPosition.x
