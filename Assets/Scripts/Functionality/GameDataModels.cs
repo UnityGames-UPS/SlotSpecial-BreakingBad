@@ -150,6 +150,7 @@ public class ServerPayload
     public FreeSpinResult freeSpinResult;
     public bool isLinkTriggered;
     public bool isPrizeCoinTriggered;
+    public bool linkFeatureComplete; // Server indicates link feature just completed
 }
 
 [Serializable]
@@ -188,6 +189,16 @@ public class WildDetail
 public class ServerFeaturesResult
 {
     public ServerFreeSpinResult freeSpins;
+    public ServerJackpotResult jackpot;  // Jackpot result (triggered during Cash+Link or normal spin)
+    public double featureWin;            // Total feature win amount
+}
+
+[Serializable]
+public class ServerJackpotResult
+{
+    public bool triggered;
+    public double amount;
+    public string type; // e.g., "WALTER_STASH_GRAND_PRIZE"
 }
 
 [Serializable]
@@ -979,3 +990,149 @@ public class Column
 }
 
 #endregion
+
+#region Feature Queue
+
+/// <summary>
+/// Defines the feature types that can be triggered during a spin.
+/// Execution order when multiple trigger simultaneously:
+///   PrizeCoinJackpot → CashCollectAndLink → FreeSpin/FreeSpinRetrigger
+/// </summary>
+public enum FeatureType
+{
+    None,
+    PrizeCoinJackpot,     // Mini jackpot slot (PrizeCoin with CashCollect)
+    CashCollectAndLink,   // Heisenberg Cash Collect & Link feature
+    FreeSpin,             // Free spins trigger (from normal spin)
+    FreeSpinRetrigger     // Free spins re-trigger (during active free spins)
+}
+
+/// <summary>
+/// A simple ordered queue that determines and manages the execution sequence
+/// of triggered features after each spin result. Features can nest (e.g., Free Spin
+/// triggers Cash+Link which triggers Jackpot), and this queue ensures they play
+/// in the correct priority order.
+/// </summary>
+public class FeatureQueue
+{
+    private Queue<FeatureType> _queue = new Queue<FeatureType>();
+
+    /// <summary>True if there are still features waiting to be processed.</summary>
+    public bool HasPending => _queue.Count > 0;
+
+    /// <summary>The feature currently being processed.</summary>
+    public FeatureType Current { get; private set; } = FeatureType.None;
+
+    /// <summary>Number of pending features in the queue.</summary>
+    public int Count => _queue.Count;
+
+    public void Enqueue(FeatureType type)
+    {
+        _queue.Enqueue(type);
+        Debug.Log($"[FeatureQueue] Enqueued: {type} (queue size: {_queue.Count})");
+    }
+
+    public FeatureType Dequeue()
+    {
+        Current = _queue.Dequeue();
+        Debug.Log($"[FeatureQueue] Dequeued: {Current} (remaining: {_queue.Count})");
+        return Current;
+    }
+
+    public FeatureType Peek()
+    {
+        return _queue.Count > 0 ? _queue.Peek() : FeatureType.None;
+    }
+
+    public void Clear()
+    {
+        _queue.Clear();
+        Current = FeatureType.None;
+    }
+
+    /// <summary>
+    /// Builds the feature queue from a spin response payload.
+    /// Determines which features triggered and enqueues them in priority order:
+    ///   1. PrizeCoinJackpot   (plays inline — jackpot mini-slot animation)
+    ///   2. CashCollectAndLink (transitions to BonusManager)
+    ///   3. FreeSpin / FreeSpinRetrigger (starts or adds to free spins)
+    /// </summary>
+    /// <param name="payload">The server spin response payload.</param>
+    /// <param name="isFreeSpinCurrentlyActive">Whether free spins are already running.</param>
+    public void BuildFromResponse(ServerPayload payload, bool isFreeSpinCurrentlyActive)
+    {
+        Clear();
+
+        if (payload == null)
+        {
+            Debug.LogWarning("[FeatureQueue] BuildFromResponse called with null payload");
+            return;
+        }
+
+        bool hasPrizeCoin = HasPrizeCoinInCoins(payload);
+        bool hasCC = payload.cashCollectResult != null && payload.cashCollectResult.triggered;
+        bool hasLink = payload.isLinkTriggered;
+        bool hasFreeSpin = payload.isFreeSpinTriggered;
+
+        // 1. PrizeCoin Jackpot: plays first if PrizeCoin exists AND (CashCollect or Link triggered)
+        //    This is the mini jackpot slot animation that plays inline before other features
+        if (hasPrizeCoin && (hasCC || hasLink))
+        {
+            Enqueue(FeatureType.PrizeCoinJackpot);
+        }
+
+        // 2. Cash Collect & Link: plays second — transitions to BonusManager
+        if (hasLink)
+        {
+            Enqueue(FeatureType.CashCollectAndLink);
+        }
+
+        // 3. Free Spin: plays last
+        if (hasFreeSpin)
+        {
+            if (isFreeSpinCurrentlyActive)
+            {
+                Enqueue(FeatureType.FreeSpinRetrigger);
+            }
+            else
+            {
+                Enqueue(FeatureType.FreeSpin);
+            }
+        }
+
+        Debug.Log($"[FeatureQueue] Built queue with {_queue.Count} feature(s) | " +
+                  $"PrizeCoin={hasPrizeCoin} CC={hasCC} Link={hasLink} FreeSpin={hasFreeSpin} " +
+                  $"FreeSpinActive={isFreeSpinCurrentlyActive}");
+    }
+
+    /// <summary>
+    /// Checks if any coin in the payload is a PrizeCoin (symbolId 16).
+    /// </summary>
+    private bool HasPrizeCoinInCoins(ServerPayload payload)
+    {
+        if (payload.coinPositions == null) return false;
+
+        foreach (var coin in payload.coinPositions)
+        {
+            if (coin.symbolId == 16)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public override string ToString()
+    {
+        if (_queue.Count == 0) return "[FeatureQueue] Empty";
+        var items = new List<string>();
+        foreach (var f in _queue)
+        {
+            items.Add(f.ToString());
+        }
+        return $"[FeatureQueue] Current={Current} | Pending: {string.Join(" → ", items)}";
+    }
+}
+
+#endregion
+

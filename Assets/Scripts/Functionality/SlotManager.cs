@@ -18,13 +18,18 @@ public class SlotManager : MonoBehaviour
   public bool IsBonus { get; set; }
   public bool IsTurboOn { get; set; }
   public bool WasAutoSpinOn { get; set; }
+  public bool WasFreeSpinPaused { get; set; }  // Separate from WasAutoSpinOn — tracks free spin pause state
   public bool StopSpinToggle { get; set; }
   public bool CheckPopups { get; set; }
   public int AutoplayCount { get; private set; }
   public bool AutoplayUntilFeature { get; private set; }
 
+  // Feature queue for ordered execution of triggered features
+  internal FeatureQueue featureQueue = new FeatureQueue();
+
   public InitData InitialData { get; private set; }
   public ServerSpinResponse ResultData { get; private set; }
+  public ServerSpinResponse OriginalFeatureTriggerResult { get; private set; }
   public ServerPlayer PlayerData { get; private set; }
 
   // --- Dynamic Derived Properties ---
@@ -791,6 +796,7 @@ public class SlotManager : MonoBehaviour
     SocketManager.AccumulateResult(BetCounter);
     yield return new WaitUntil(() => SocketManager.isResultdone);
     UpdateFromSpinResult(SocketManager.resultData);
+    OriginalFeatureTriggerResult = SocketManager.resultData;
     bool isCCTriggered = false;
     if (SocketManager.resultData != null && SocketManager.resultData.payload != null)
     {
@@ -922,122 +928,180 @@ public class SlotManager : MonoBehaviour
       StopGameAnimation();
       yield return new WaitForSeconds(.2f);
     }
-    bool hasPrizeCoin = false;
-    if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.coinPositions != null)
+    // --- FEATURE QUEUE: Build and process features in priority order ---
+    featureQueue.BuildFromResponse(SocketManager.resultData.payload, IsFreeSpin);
+
+    // Process the feature queue sequentially
+    yield return ProcessFeatureQueue(winningsDisplayed);
+  }
+  #endregion
+  
+  /// <summary>
+  /// Called by BonusManager.EndBonus() when the Cash+Link feature finishes.
+  /// Checks if there are remaining features in the queue (e.g., FreeSpin after Link)
+  /// or if free spins were paused and need to resume.
+  /// </summary>
+  public void OnLinkFeatureCompleted()
+  {
+    // Check if there are remaining queued features (e.g., FreeSpin was queued after Link in Case 1)
+    if (featureQueue.HasPending)
     {
-      foreach (var coin in SocketManager.resultData.payload.coinPositions)
-      {
-        if (coin.symbolId == 16)
-        {
-          hasPrizeCoin = true;
-          break;
-        }
-      }
+      Debug.Log("[FeatureQueue] OnLinkFeatureCompleted: Processing remaining features");
+      StartCoroutine(ProcessRemainingFeaturesAfterLink());
+      return;
     }
 
-    if (isCCTriggered || (SocketManager.resultData.payload.isLinkTriggered && hasPrizeCoin))
+    // Resume paused free spins (Case 2: Link triggered during Free Spins)
+    if (WasFreeSpinPaused && FreeSpinsCount > 0)
     {
-      uiManager.multiplierCount = 0;
-      foreach (var item in SocketManager.resultData.payload.coinPositions)
-      {
-        if (item.symbolId == 16)
-        {
-          Image slotImage = ResultMatrix[item.position[0]].slotImages[item.position[1]];
-          SlotSymbolView view = slotImage.GetComponent<SlotSymbolView>();
-          if (view != null && jackpotManager != null)
-          {
-            Sprite prizeSprite = null;
-            if (JackpotSlotSymbols != null && JackpotSlotSymbols.Length > (item.prizeTypeIndex ?? 0))
-            {
-              prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
-            }
-            double jackpotAmount = item.coinValue * TotalBet;
-            yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, jackpotAmount.ToString("F2"), prizeSprite);
-          }
-        }
-      }
-      yield return new WaitForSeconds(1.2f);
-      yield return new WaitForSeconds(.2f);
-
-      if (!SocketManager.resultData.payload.isFreeSpinTriggered && !SocketManager.resultData.payload.isLinkTriggered)
-      {
-        IsFeatureTransitioning = false;
-        uiManager.UpdateButtonsState();
-      }
-    }
-
-    if (SocketManager.resultData.payload.isLinkTriggered)
-    {
-      if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
-      {
-        winningsDisplayed = true;
-        CheckPopups = true;
-        uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
-
-        yield return new WaitUntil(() => !CheckPopups);
-        yield return new WaitForSeconds(.5f);
-      }
-
-      IsBonus = true;
-      IsFeatureTransitioning = false;
-      uiManager.UpdateButtonsState();
-
-      // Pause FreeSpins if already running
-      if (IsFreeSpin)
-      {
-        WasAutoSpinOn = true;
-        IsFreeSpin = false;
-      }
-
-      yield return ResetUI();
-
-      _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
-      TriggerSpinState(false);
-      yield break;   // EXIT AFTER LINK STARTS
-    }
-    
-    if (SocketManager.resultData.payload.isFreeSpinTriggered)
-    {
-      if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
-      {
-        winningsDisplayed = true;
-        CheckPopups = true;
-        uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
-
-        yield return new WaitUntil(() => !CheckPopups);
-        yield return new WaitForSeconds(.5f);
-      }
-      if (!IsFreeSpin)
-      {
-        yield return ResetUI();
-      }
-
-      yield return uiManager.PlayFreeSpinTriggerSequence(SocketManager.resultData.payload.freeSpinResult, IsFreeSpin);
-
+      Debug.Log("[FeatureQueue] OnLinkFeatureCompleted: Resuming paused Free Spins");
+      WasFreeSpinPaused = false;
       IsFreeSpin = true;
-      IsFeatureTransitioning = false;
-      uiManager.UpdateButtonsState();
 
-      SetFreeSpinsCount(SocketManager.resultData.payload.freeSpinsRemaining);
-      yield return new WaitForSeconds(1f);
+      uiManager.OpenFreeSpinsUI();
+      FreeSpin(FreeSpinsCount);
+      return;
+    }
 
-      // Mid-game image animations removed for now
-      TriggerSpinState(false);
+    // Restore auto spin if it was on before the feature
+    if (WasAutoSpinOn)
+    {
+      WasAutoSpinOn = false;
+      AutoSpin();
+      return;
+    }
+
+    uiManager.SetButtonsInteractable(true);
+  }
+
+  /// <summary>
+  /// Processes remaining features in the queue after the Link/Bonus feature completes.
+  /// This handles Case 1 where FreeSpin is queued after CashCollectAndLink.
+  /// </summary>
+  private IEnumerator ProcessRemainingFeaturesAfterLink()
+  {
+    while (featureQueue.HasPending)
+    {
+      FeatureType feature = featureQueue.Dequeue();
+
+      switch (feature)
+      {
+        case FeatureType.FreeSpin:
+          yield return HandleFreeSpinTrigger(false);
+          yield break; // FreeSpin starts its own loop
+
+        case FeatureType.FreeSpinRetrigger:
+          yield return HandleFreeSpinRetrigger();
+          // After retrigger, continue free spin loop
+          if (IsFreeSpin && FreeSpinsCount > 0)
+          {
+            FreeSpin(FreeSpinsCount);
+            yield break;
+          }
+          break;
+
+        default:
+          Debug.LogWarning($"[FeatureQueue] Unexpected feature after Link: {feature}");
+          break;
+      }
+    }
+
+    // No more queued features — check if we need to resume free spins
+    if (WasFreeSpinPaused && FreeSpinsCount > 0)
+    {
+      WasFreeSpinPaused = false;
+      IsFreeSpin = true;
+      uiManager.OpenFreeSpinsUI();
       FreeSpin(FreeSpinsCount);
       yield break;
     }
 
+    if (WasAutoSpinOn)
+    {
+      WasAutoSpinOn = false;
+      AutoSpin();
+      yield break;
+    }
+
+    uiManager.SetButtonsInteractable(true);
+  }
+
+  /// <summary>
+  /// Main feature queue processor. Called after reels stop and animations play.
+  /// Processes features in order: PrizeCoinJackpot → CashCollectAndLink → FreeSpin.
+  /// </summary>
+  private IEnumerator ProcessFeatureQueue(bool winningsAlreadyDisplayed)
+  {
+    bool winningsDisplayed = winningsAlreadyDisplayed;
+
+    while (featureQueue.HasPending)
+    {
+      FeatureType feature = featureQueue.Dequeue();
+      Debug.Log($"[FeatureQueue] Processing: {feature}");
+
+      switch (feature)
+      {
+        case FeatureType.PrizeCoinJackpot:
+          yield return HandlePrizeCoinJackpot();
+          break;
+
+        case FeatureType.CashCollectAndLink:
+          // Show winnings before transitioning to bonus
+          if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
+          {
+            winningsDisplayed = true;
+            CheckPopups = true;
+            uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
+            yield return new WaitUntil(() => !CheckPopups);
+            yield return new WaitForSeconds(.5f);
+          }
+          yield return HandleCashCollectAndLink();
+          yield break; // EXIT — BonusManager takes over, OnLinkFeatureCompleted will continue queue
+
+        case FeatureType.FreeSpin:
+          // Show winnings before starting free spins
+          if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
+          {
+            winningsDisplayed = true;
+            CheckPopups = true;
+            uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
+            yield return new WaitUntil(() => !CheckPopups);
+            yield return new WaitForSeconds(.5f);
+          }
+          yield return HandleFreeSpinTrigger(false);
+          yield break; // EXIT — FreeSpin loop takes over
+
+        case FeatureType.FreeSpinRetrigger:
+          // Show winnings before retrigger sequence
+          if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
+          {
+            winningsDisplayed = true;
+            CheckPopups = true;
+            uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
+            yield return new WaitUntil(() => !CheckPopups);
+            yield return new WaitForSeconds(.5f);
+          }
+          yield return HandleFreeSpinRetrigger();
+          // After retrigger, continue the free spin loop
+          TriggerSpinState(false);
+          FreeSpin(FreeSpinsCount);
+          yield break;
+      }
+    }
+
+    // --- No features triggered (or only PrizeCoinJackpot which completed inline) ---
+
+    // Show winnings if not yet displayed
     if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
     {
       winningsDisplayed = true;
       CheckPopups = true;
       uiManager.WinningsTextAnimation(() => { CheckPopups = false; });
-
       yield return new WaitUntil(() => !CheckPopups);
       yield return new WaitForSeconds(.5f);
     }
 
-    // Post-bonus and free spins cleanup
+    // Post-spin cleanup
     TriggerSpinState(false);
 
     if (IsFreeSpin)
@@ -1049,11 +1113,20 @@ public class SlotManager : MonoBehaviour
       }
       else
       {
+        // Free spins ended
         bool winPopupClosed = false;
-        uiManager.OpenFeatureWinPopup(uiManager.AccumulatedFreeSpinWin, () => {
+        double totalFeatureWin = 0;
+        if (ResultData != null && ResultData.features != null)
+        {
+          totalFeatureWin = ResultData.features.featureWin;
+        }
+        else
+        {
+          totalFeatureWin = uiManager.AccumulatedFreeSpinWin;
+        }
+        uiManager.OpenFeatureWinPopup(totalFeatureWin, () => {
             winPopupClosed = true;
         });
-
         yield return new WaitUntil(() => winPopupClosed);
 
         IsFreeSpin = false;
@@ -1074,21 +1147,132 @@ public class SlotManager : MonoBehaviour
       uiManager.SetButtonsInteractable(true);
     }
   }
-  #endregion
-  
-  public void OnLinkFeatureCompleted()
-  {
-    if (WasAutoSpinOn && FreeSpinsCount > 0)
-    {
-      WasAutoSpinOn = false;
-      IsFreeSpin = true;
 
-      uiManager.OpenFreeSpinsUI();
-      FreeSpin(FreeSpinsCount);
-      return;
+  /// <summary>
+  /// Handles PrizeCoin Jackpot feature: plays the mini jackpot slot animation
+  /// for each PrizeCoin on the grid. Plays inline (doesn't transition to another screen).
+  /// </summary>
+  private IEnumerator HandlePrizeCoinJackpot()
+  {
+    Debug.Log("[FeatureQueue] HandlePrizeCoinJackpot: Playing jackpot animations");
+    uiManager.multiplierCount = 0;
+
+    foreach (var item in SocketManager.resultData.payload.coinPositions)
+    {
+      if (item.symbolId == 16)
+      {
+        Image slotImage = ResultMatrix[item.position[0]].slotImages[item.position[1]];
+        SlotSymbolView view = slotImage.GetComponent<SlotSymbolView>();
+        if (view != null && jackpotManager != null)
+        {
+          Sprite prizeSprite = null;
+          if (JackpotSlotSymbols != null && JackpotSlotSymbols.Length > (item.prizeTypeIndex ?? 0))
+          {
+            prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
+          }
+          double jackpotAmount = item.coinValue * TotalBet;
+          yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, jackpotAmount.ToString("F2"), prizeSprite);
+        }
+      }
     }
 
-    uiManager.SetButtonsInteractable(true);
+    yield return new WaitForSeconds(1.2f);
+    yield return new WaitForSeconds(.2f);
+
+    // Only clear transitioning if no more features are queued
+    if (!featureQueue.HasPending)
+    {
+      IsFeatureTransitioning = false;
+      uiManager.UpdateButtonsState();
+    }
+  }
+
+  /// <summary>
+  /// Handles Cash Collect & Link feature: pauses free spins if active,
+  /// transitions to BonusManager. BonusManager.EndBonus() will call
+  /// OnLinkFeatureCompleted() when done.
+  /// </summary>
+  private IEnumerator HandleCashCollectAndLink()
+  {
+    Debug.Log("[FeatureQueue] HandleCashCollectAndLink: Starting bonus");
+
+    IsBonus = true;
+    IsFeatureTransitioning = false;
+    uiManager.UpdateButtonsState();
+
+    // Pause FreeSpins if currently running (Case 2)
+    if (IsFreeSpin)
+    {
+      Debug.Log("[FeatureQueue] Pausing Free Spins for Cash+Link");
+      WasFreeSpinPaused = true;
+      IsFreeSpin = false;
+    }
+
+    yield return ResetUI();
+
+    _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
+    TriggerSpinState(false);
+    // yield break is handled by the caller
+  }
+
+  /// <summary>
+  /// Handles Free Spin trigger: plays the trigger animation sequence and starts
+  /// the free spin loop.
+  /// </summary>
+  private IEnumerator HandleFreeSpinTrigger(bool isRetrigger)
+  {
+    Debug.Log($"[FeatureQueue] HandleFreeSpinTrigger: isRetrigger={isRetrigger}");
+
+    if (!isRetrigger && !IsFreeSpin)
+    {
+      yield return ResetUI();
+    }
+
+    var fsResult = (OriginalFeatureTriggerResult != null && OriginalFeatureTriggerResult.payload != null)
+        ? OriginalFeatureTriggerResult.payload.freeSpinResult
+        : SocketManager.resultData.payload.freeSpinResult;
+
+    yield return uiManager.PlayFreeSpinTriggerSequence(
+        fsResult, isRetrigger || IsFreeSpin);
+
+    IsFreeSpin = true;
+    IsFeatureTransitioning = false;
+    uiManager.UpdateButtonsState();
+
+    int remainingSpins = (OriginalFeatureTriggerResult != null && OriginalFeatureTriggerResult.payload != null)
+        ? OriginalFeatureTriggerResult.payload.freeSpinsRemaining
+        : SocketManager.resultData.payload.freeSpinsRemaining;
+    SetFreeSpinsCount(remainingSpins);
+    yield return new WaitForSeconds(1f);
+
+    TriggerSpinState(false);
+    FreeSpin(FreeSpinsCount);
+  }
+
+  /// <summary>
+  /// Handles Free Spin retrigger: plays the retrigger animation and adds spins.
+  /// Does NOT start the free spin loop — the caller is responsible for that.
+  /// </summary>
+  private IEnumerator HandleFreeSpinRetrigger()
+  {
+    Debug.Log("[FeatureQueue] HandleFreeSpinRetrigger: Adding spins");
+
+    var fsResult = (OriginalFeatureTriggerResult != null && OriginalFeatureTriggerResult.payload != null)
+        ? OriginalFeatureTriggerResult.payload.freeSpinResult
+        : SocketManager.resultData.payload.freeSpinResult;
+
+    yield return uiManager.PlayFreeSpinTriggerSequence(
+        fsResult, true);
+
+    IsFreeSpin = true;
+    IsFeatureTransitioning = false;
+    uiManager.UpdateButtonsState();
+
+    int remainingSpins = (OriginalFeatureTriggerResult != null && OriginalFeatureTriggerResult.payload != null)
+        ? OriginalFeatureTriggerResult.payload.freeSpinsRemaining
+        : SocketManager.resultData.payload.freeSpinsRemaining;
+    SetFreeSpinsCount(remainingSpins);
+    yield return new WaitForSeconds(0.5f);
   }
 
   private IEnumerator ResetUI()

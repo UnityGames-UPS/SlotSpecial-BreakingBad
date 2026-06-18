@@ -303,7 +303,10 @@ public class UIManager : MonoBehaviour
       if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
 
       featurePopup.SetActive(true);
-      if (slotManager != null && (slotManager.IsFreeSpin || (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.isFreeSpinTriggered)))
+      bool isFSTriggered = (slotManager.OriginalFeatureTriggerResult != null &&
+                            slotManager.OriginalFeatureTriggerResult.payload != null &&
+                            slotManager.OriginalFeatureTriggerResult.payload.isFreeSpinTriggered);
+      if (slotManager != null && !slotManager.IsBonus && (slotManager.IsFreeSpin || isFSTriggered))
       {
           if (featureTitleObject != null) featureTitleObject.SetActive(false);
           if (freeSpinPopupTitleObject != null) freeSpinPopupTitleObject.SetActive(true);
@@ -391,6 +394,10 @@ public class UIManager : MonoBehaviour
       if (featureTitleObject != null)
       {
           featureTitleObject.SetActive(false);
+      }
+      if (freeSpinPopupTitleObject != null)
+      {
+          freeSpinPopupTitleObject.SetActive(false);
       }
       if (featureWinObject != null)
       {
@@ -728,9 +735,20 @@ public class UIManager : MonoBehaviour
 
     if (slotManager.IsFreeSpin)
     {
-      accumulatedFreeSpinWin += winAmt;
-      double tempWin = accumulatedFreeSpinWin - winAmt;
-      DOTween.To(() => tempWin, (val) => tempWin = val, accumulatedFreeSpinWin, 0.8f).OnUpdate(() =>
+      double targetFeatureWin = 0;
+      if (socketManager != null && socketManager.resultData != null && socketManager.resultData.features != null)
+      {
+          targetFeatureWin = socketManager.resultData.features.featureWin;
+      }
+      else
+      {
+          accumulatedFreeSpinWin += winAmt;
+          targetFeatureWin = accumulatedFreeSpinWin;
+      }
+      accumulatedFreeSpinWin = targetFeatureWin;
+      double tempWin = targetFeatureWin - winAmt;
+      if (tempWin < 0) tempWin = 0;
+      DOTween.To(() => tempWin, (val) => tempWin = val, targetFeatureWin, 0.8f).OnUpdate(() =>
       {
         if (featureWinText) featureWinText.text = FormatSpriteText(tempWin.ToString("F2"));
       }).OnComplete(() => checkComplete());
@@ -991,11 +1009,15 @@ public class UIManager : MonoBehaviour
                   var rowImages = slotManager.ResultMatrix[r].slotImages;
                   for (int c = 0; c < rowImages.Count; c++)
                   {
-                      if (socketManager != null && socketManager.resultData != null && socketManager.resultData.matrix != null)
-                      {
-                          if (r < socketManager.resultData.matrix.Count && c < socketManager.resultData.matrix[r].Count)
-                          {
-                              if (socketManager.resultData.matrix[r][c] == "17")
+                       var triggerResult = (slotManager != null && slotManager.OriginalFeatureTriggerResult != null)
+                           ? slotManager.OriginalFeatureTriggerResult
+                           : (socketManager != null ? socketManager.resultData : null);
+
+                       if (triggerResult != null && triggerResult.matrix != null)
+                       {
+                           if (r < triggerResult.matrix.Count && c < triggerResult.matrix[r].Count)
+                           {
+                               if (triggerResult.matrix[r][c] == "17")
                               {
                                   var view = rowImages[c].GetComponent<SlotSymbolView>();
                                   if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)

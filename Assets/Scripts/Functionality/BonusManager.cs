@@ -435,36 +435,17 @@ public class BonusManager : MonoBehaviour
       {
         BonusSlot_CG.gameObject.SetActive(false);
       }
-      slotManager.OnLinkFeatureCompleted();
-
-      if (slotManager.LinkRespinsRemaining <= 0)
-      {
-        uiManager.CloseFreeSpinsUI();
-        if (slotManager.WasAutoSpinOn)
-        {
-          DOVirtual.DelayedCall(0.2f, () =>
-          {
-            uiManager.SetNormalSpinButtonActive(true);
-            slotManager.AutoSpin();
-          });
-        }
-        else
-        {
-          uiManager.SetNormalSpinButtonActive(true);
-          uiManager.SetButtonsInteractable(true);
-        }
-      }
-      else
-      {
-        DOVirtual.DelayedCall(0.5f, () =>
-        {
-          uiManager.OpenFreeSpinsUI();
-          slotManager.FreeSpin(slotManager.LinkRespinsRemaining);
-        });
-      }
 
       staticSymbol.Reset();
       ResetMatrix();
+
+      // OnLinkFeatureCompleted now handles ALL return paths:
+      // - Processing remaining features in the queue (e.g., FreeSpin after Link)
+      // - Resuming paused free spins
+      // - Restoring auto spin
+      // - Re-enabling buttons
+      uiManager.SetNormalSpinButtonActive(true);
+      slotManager.OnLinkFeatureCompleted();
     });
   }
 

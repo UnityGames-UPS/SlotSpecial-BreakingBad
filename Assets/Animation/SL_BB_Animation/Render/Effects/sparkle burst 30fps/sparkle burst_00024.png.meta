@@ -1,0 +1,4056 @@
+fileFormatVersion: 2
+guid: 7c94ea5387b6a4fc799121340cbaaa20
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2012185505427801498
+    second: sparkle burst_00024_0
+  - first:
+      213: -5600158544463348886
+    second: sparkle burst_00024_1
+  - first:
+      213: -2059174479844771644
+    second: sparkle burst_00024_2
+  - first:
+      213: 9164206507224475291
+    second: sparkle burst_00024_3
+  - first:
+      213: -660740124615232481
+    second: sparkle burst_00024_4
+  - first:
+      213: -2691809314071120961
+    second: sparkle burst_00024_5
+  - first:
+      213: -949619184071072922
+    second: sparkle burst_00024_6
+  - first:
+      213: 8187120496659508655
+    second: sparkle burst_00024_7
+  - first:
+      213: -2860739716691905899
+    second: sparkle burst_00024_8
+  - first:
+      213: -7947405240187210820
+    second: sparkle burst_00024_9
+  - first:
+      213: -8442645842600960837
+    second: sparkle burst_00024_10
+  - first:
+      213: 5143907602026846797
+    second: sparkle burst_00024_11
+  - first:
+      213: -106028892524283411
+    second: sparkle burst_00024_12
+  - first:
+      213: -4670639647637972160
+    second: sparkle burst_00024_13
+  - first:
+      213: 4041743522119463548
+    second: sparkle burst_00024_14
+  - first:
+      213: 2948460902145321597
+    second: sparkle burst_00024_15
+  - first:
+      213: -8191975239376600054
+    second: sparkle burst_00024_16
+  - first:
+      213: -5252241456226333638
+    second: sparkle burst_00024_17
+  - first:
+      213: 6685405020521362739
+    second: sparkle burst_00024_18
+  - first:
+      213: -5059640438478344994
+    second: sparkle burst_00024_19
+  - first:
+      213: 75875270981377890
+    second: sparkle burst_00024_20
+  - first:
+      213: -3469099896578324119
+    second: sparkle burst_00024_21
+  - first:
+      213: 1996910075059325516
+    second: sparkle burst_00024_22
+  - first:
+      213: 8771873876505390741
+    second: sparkle burst_00024_23
+  - first:
+      213: -2502747315238600326
+    second: sparkle burst_00024_24
+  - first:
+      213: 4692716573783033038
+    second: sparkle burst_00024_25
+  - first:
+      213: -8455310108697354994
+    second: sparkle burst_00024_26
+  - first:
+      213: 2152526811310313289
+    second: sparkle burst_00024_27
+  - first:
+      213: -500591650732910355
+    second: sparkle burst_00024_28
+  - first:
+      213: -4328169666816173392
+    second: sparkle burst_00024_29
+  - first:
+      213: -2168870965733902463
+    second: sparkle burst_00024_30
+  - first:
+      213: 3138483484481450917
+    second: sparkle burst_00024_31
+  - first:
+      213: 216365454939492015
+    second: sparkle burst_00024_32
+  - first:
+      213: -8504031795862419699
+    second: sparkle burst_00024_33
+  - first:
+      213: -2213077485083037111
+    second: sparkle burst_00024_34
+  - first:
+      213: 2370504363976359625
+    second: sparkle burst_00024_35
+  - first:
+      213: 6771739714594271005
+    second: sparkle burst_00024_36
+  - first:
+      213: -3006310510706516846
+    second: sparkle burst_00024_37
+  - first:
+      213: 2475155127459671020
+    second: sparkle burst_00024_38
+  - first:
+      213: 4240732428600528658
+    second: sparkle burst_00024_39
+  - first:
+      213: 8832671585190092800
+    second: sparkle burst_00024_40
+  - first:
+      213: -3678433577553263972
+    second: sparkle burst_00024_41
+  - first:
+      213: -3989558661416601269
+    second: sparkle burst_00024_42
+  - first:
+      213: 8729585036121896619
+    second: sparkle burst_00024_43
+  - first:
+      213: -445488129722998055
+    second: sparkle burst_00024_44
+  - first:
+      213: 8074742873901009471
+    second: sparkle burst_00024_45
+  - first:
+      213: 3322081740684177587
+    second: sparkle burst_00024_46
+  - first:
+      213: -6261521819559045742
+    second: sparkle burst_00024_47
+  - first:
+      213: -3635974746783835396
+    second: sparkle burst_00024_48
+  - first:
+      213: -4322316587347098267
+    second: sparkle burst_00024_49
+  - first:
+      213: 913837001069440752
+    second: sparkle burst_00024_50
+  - first:
+      213: 4995177581023624114
+    second: sparkle burst_00024_51
+  - first:
+      213: -8138260905174926579
+    second: sparkle burst_00024_52
+  - first:
+      213: 4608389422238391804
+    second: sparkle burst_00024_53
+  - first:
+      213: 3449593299191982840
+    second: sparkle burst_00024_54
+  - first:
+      213: -3649061252066796710
+    second: sparkle burst_00024_55
+  - first:
+      213: 6226055576386317788
+    second: sparkle burst_00024_56
+  - first:
+      213: -8066268291147145139
+    second: sparkle burst_00024_57
+  - first:
+      213: -723655119379101852
+    second: sparkle burst_00024_58
+  - first:
+      213: -1772993780888049538
+    second: sparkle burst_00024_59
+  - first:
+      213: -5108998938758493683
+    second: sparkle burst_00024_60
+  - first:
+      213: -6089088653785292380
+    second: sparkle burst_00024_61
+  - first:
+      213: 166304886535350517
+    second: sparkle burst_00024_62
+  - first:
+      213: 3888524158961714815
+    second: sparkle burst_00024_63
+  - first:
+      213: 2937874381840658181
+    second: sparkle burst_00024_64
+  - first:
+      213: 7946538206900647328
+    second: sparkle burst_00024_65
+  - first:
+      213: 2584954568250055345
+    second: sparkle burst_00024_66
+  - first:
+      213: -6587762412418383891
+    second: sparkle burst_00024_67
+  - first:
+      213: -6312828452268608769
+    second: sparkle burst_00024_68
+  - first:
+      213: -8893516303481373290
+    second: sparkle burst_00024_69
+  - first:
+      213: -2815388217397904376
+    second: sparkle burst_00024_70
+  - first:
+      213: -6167662164790021906
+    second: sparkle burst_00024_71
+  - first:
+      213: 6280389322910475697
+    second: sparkle burst_00024_72
+  - first:
+      213: 3508253470132922649
+    second: sparkle burst_00024_73
+  - first:
+      213: 4007130149967125201
+    second: sparkle burst_00024_74
+  - first:
+      213: 5136178962840281494
+    second: sparkle burst_00024_75
+  - first:
+      213: 3988480911534731405
+    second: sparkle burst_00024_76
+  - first:
+      213: -6701475686953323800
+    second: sparkle burst_00024_77
+  - first:
+      213: -5197168389612192347
+    second: sparkle burst_00024_78
+  - first:
+      213: 2206837241407012241
+    second: sparkle burst_00024_79
+  - first:
+      213: -683109537028268121
+    second: sparkle burst_00024_80
+  - first:
+      213: -6107372368652591766
+    second: sparkle burst_00024_81
+  - first:
+      213: 7501546487822194684
+    second: sparkle burst_00024_82
+  - first:
+      213: -2784660881544723493
+    second: sparkle burst_00024_83
+  - first:
+      213: -6811077191367494332
+    second: sparkle burst_00024_84
+  - first:
+      213: -1998700375038605402
+    second: sparkle burst_00024_85
+  - first:
+      213: -1626002478376234351
+    second: sparkle burst_00024_86
+  - first:
+      213: 2446730736283481964
+    second: sparkle burst_00024_87
+  - first:
+      213: 8249190340831379843
+    second: sparkle burst_00024_88
+  - first:
+      213: -2812442399043524174
+    second: sparkle burst_00024_89
+  - first:
+      213: -5808857703142142957
+    second: sparkle burst_00024_90
+  - first:
+      213: -449243045584743085
+    second: sparkle burst_00024_91
+  - first:
+      213: -8196060603454935884
+    second: sparkle burst_00024_92
+  - first:
+      213: -3238852144591458525
+    second: sparkle burst_00024_93
+  - first:
+      213: -6521526349956908220
+    second: sparkle burst_00024_94
+  - first:
+      213: 8454618478240567497
+    second: sparkle burst_00024_95
+  - first:
+      213: 611695239516276743
+    second: sparkle burst_00024_96
+  - first:
+      213: -6496775549280686862
+    second: sparkle burst_00024_97
+  - first:
+      213: 2266735521032027514
+    second: sparkle burst_00024_98
+  - first:
+      213: -6834719804055779606
+    second: sparkle burst_00024_99
+  - first:
+      213: -2893866264902970712
+    second: sparkle burst_00024_100
+  - first:
+      213: 7864819755298469094
+    second: sparkle burst_00024_101
+  - first:
+      213: 9150549825340812992
+    second: sparkle burst_00024_102
+  - first:
+      213: -4755161981208962771
+    second: sparkle burst_00024_103
+  - first:
+      213: -4474416534588534247
+    second: sparkle burst_00024_104
+  - first:
+      213: -3542712632491672966
+    second: sparkle burst_00024_105
+  - first:
+      213: 4034753159794031578
+    second: sparkle burst_00024_106
+  - first:
+      213: -5771143759475547104
+    second: sparkle burst_00024_107
+  - first:
+      213: -2651262142688326235
+    second: sparkle burst_00024_108
+  - first:
+      213: -4742949809858847901
+    second: sparkle burst_00024_109
+  - first:
+      213: -3223238125123762192
+    second: sparkle burst_00024_110
+  - first:
+      213: 5711740382020522262
+    second: sparkle burst_00024_111
+  - first:
+      213: -7768671906946412394
+    second: sparkle burst_00024_112
+  - first:
+      213: -3952330810950355382
+    second: sparkle burst_00024_113
+  - first:
+      213: 6195509981739891307
+    second: sparkle burst_00024_114
+  - first:
+      213: -4270643629275993486
+    second: sparkle burst_00024_115
+  - first:
+      213: 6332273040132696112
+    second: sparkle burst_00024_116
+  - first:
+      213: -3172170200607768118
+    second: sparkle burst_00024_117
+  - first:
+      213: 7870409002701399748
+    second: sparkle burst_00024_118
+  - first:
+      213: -2257785610891916578
+    second: sparkle burst_00024_119
+  - first:
+      213: 8499129453680556687
+    second: sparkle burst_00024_120
+  - first:
+      213: -5699702067143628274
+    second: sparkle burst_00024_121
+  - first:
+      213: -3127285135943265850
+    second: sparkle burst_00024_122
+  - first:
+      213: -939264692027270644
+    second: sparkle burst_00024_123
+  - first:
+      213: -1233277554885508619
+    second: sparkle burst_00024_124
+  - first:
+      213: 4198944948249107433
+    second: sparkle burst_00024_125
+  - first:
+      213: -6554912519148453906
+    second: sparkle burst_00024_126
+  - first:
+      213: 3669335823945195482
+    second: sparkle burst_00024_127
+  - first:
+      213: 1400268122509403770
+    second: sparkle burst_00024_128
+  - first:
+      213: 607428293376875965
+    second: sparkle burst_00024_129
+  - first:
+      213: -2994508923849977987
+    second: sparkle burst_00024_130
+  - first:
+      213: 4595551786580727742
+    second: sparkle burst_00024_131
+  - first:
+      213: 6319269617778087795
+    second: sparkle burst_00024_132
+  - first:
+      213: -4551540276749600838
+    second: sparkle burst_00024_133
+  - first:
+      213: -8875927800922790499
+    second: sparkle burst_00024_134
+  - first:
+      213: -3957605657201162247
+    second: sparkle burst_00024_135
+  - first:
+      213: 8509957392199957479
+    second: sparkle burst_00024_136
+  - first:
+      213: -4754320393885479923
+    second: sparkle burst_00024_137
+  - first:
+      213: -1359551900147583871
+    second: sparkle burst_00024_138
+  - first:
+      213: 7549352523365731035
+    second: sparkle burst_00024_139
+  - first:
+      213: -2344765087969509222
+    second: sparkle burst_00024_140
+  - first:
+      213: 4427790955680534347
+    second: sparkle burst_00024_141
+  - first:
+      213: 7124960855661857747
+    second: sparkle burst_00024_142
+  - first:
+      213: 5378571951141250249
+    second: sparkle burst_00024_143
+  - first:
+      213: 3250854951934896436
+    second: sparkle burst_00024_144
+  - first:
+      213: -6793442959038103222
+    second: sparkle burst_00024_145
+  - first:
+      213: 1960128383724945056
+    second: sparkle burst_00024_146
+  - first:
+      213: -532664122318842690
+    second: sparkle burst_00024_147
+  - first:
+      213: -196646294347550753
+    second: sparkle burst_00024_148
+  - first:
+      213: -2789672109423213170
+    second: sparkle burst_00024_149
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sparkle burst_00024_0
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 311
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66a39ce91f74314e0800000000000000
+      internalID: -2012185505427801498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 300
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6bb467897d3842b0800000000000000
+      internalID: -5600158544463348886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_2
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 311
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c87d4678b75c63e0800000000000000
+      internalID: -2059174479844771644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_3
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 308
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b962077a34dcd2f70800000000000000
+      internalID: 9164206507224475291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_4
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 316
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f14367f7b5494d6f0800000000000000
+      internalID: -660740124615232481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_5
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 305
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3f3bfc0b5c4aad0800000000000000
+      internalID: -2691809314071120961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_6
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 311
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6632c85226642d2f0800000000000000
+      internalID: -949619184071072922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_7
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 314
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fada5b8e6be7e9170800000000000000
+      internalID: 8187120496659508655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_8
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 300
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5923abf626c9c48d0800000000000000
+      internalID: -2860739716691905899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_9
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 303
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb3309c8a0525b190800000000000000
+      internalID: -7947405240187210820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_10
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 294
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc57535652b5da80800000000000000
+      internalID: -8442645842600960837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_11
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 297
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4add30e5b4d26740800000000000000
+      internalID: 5143907602026846797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_12
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 289
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de97925b84f478ef0800000000000000
+      internalID: -106028892524283411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_13
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 297
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04bdea09cfd8e2fb0800000000000000
+      internalID: -4670639647637972160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_14
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 300
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c72ba2db158271830800000000000000
+      internalID: 4041743522119463548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_15
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 300
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7aef72a1990be820800000000000000
+      internalID: 2948460902145321597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_16
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 292
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0489283ce1405e80800000000000000
+      internalID: -8191975239376600054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_17
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 283
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3c8c0f193a4c17b0800000000000000
+      internalID: -5252241456226333638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_18
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 283
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 335f9c3027457cc50800000000000000
+      internalID: 6685405020521362739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_19
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 292
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edceb4d04db88c9b0800000000000000
+      internalID: -5059640438478344994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_20
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 281
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26fd41e28209d0100800000000000000
+      internalID: 75875270981377890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_21
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 292
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 969ca1e26084bdfc0800000000000000
+      internalID: -3469099896578324119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_22
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 286
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4a4f48122376bb10800000000000000
+      internalID: 1996910075059325516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_23
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 294
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59ee1a7b0d4fbb970800000000000000
+      internalID: 8771873876505390741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_24
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 278
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7104a0b394744dd0800000000000000
+      internalID: -2502747315238600326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_25
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 270
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec40deb5cd0ef1140800000000000000
+      internalID: 4692716573783033038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_26
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 275
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0d13591144b8aa80800000000000000
+      internalID: -8455310108697354994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_27
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 286
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94fc7a5fabf4fdd10800000000000000
+      internalID: 2152526811310313289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_28
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 283
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de8d980cb8a8d09f0800000000000000
+      internalID: -500591650732910355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_29
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 272
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba1dc1ae904fe3c0800000000000000
+      internalID: -4328169666816173392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_30
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 283
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 187b5cb095f96e1e0800000000000000
+      internalID: -2168870965733902463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_31
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 283
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a372f9c9122e8b20800000000000000
+      internalID: 3138483484481450917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_32
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 281
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fae85532c3fa00300800000000000000
+      internalID: 216365454939492015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_33
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 281
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d074ef0532c9bf980800000000000000
+      internalID: -8504031795862419699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_34
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 281
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 942f531b0c19941e0800000000000000
+      internalID: -2213077485083037111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_35
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 283
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cef259d829b5e020800000000000000
+      internalID: 2370504363976359625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_36
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 281
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1febc7646d0afd50800000000000000
+      internalID: 6771739714594271005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_37
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 264
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c90d4c4807746d0800000000000000
+      internalID: -3006310510706516846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_38
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 267
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb68387974895220800000000000000
+      internalID: 2475155127459671020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_39
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 256
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21fc63aecab1ada30800000000000000
+      internalID: 4240732428600528658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_40
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 262
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00021fc5204f39a70800000000000000
+      internalID: 8832671585190092800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_41
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 264
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c928110862493fcc0800000000000000
+      internalID: -3678433577553263972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_42
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 262
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b493ea7f88d32a8c0800000000000000
+      internalID: -3989558661416601269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_43
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 267
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba67c9ac657b52970800000000000000
+      internalID: 8729585036121896619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_44
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 262
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d2253408ee41d9f0800000000000000
+      internalID: -445488129722998055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_45
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 270
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3a8c7bacdf3f0070800000000000000
+      internalID: 8074742873901009471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_46
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 262
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0ba44fdb76a1e20800000000000000
+      internalID: 3322081740684177587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_47
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 264
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29553df741b9a19a0800000000000000
+      internalID: -6261521819559045742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_48
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 262
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfa98a56b3c6a8dc0800000000000000
+      internalID: -3635974746783835396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_49
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 253
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 565c564e6fb0404c0800000000000000
+      internalID: -4322316587347098267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_50
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 251
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fe2a5729e99eac00800000000000000
+      internalID: 913837001069440752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_51
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 242
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bb78ea5b8f625540800000000000000
+      internalID: 4995177581023624114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_52
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 256
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b799933d61f0f80800000000000000
+      internalID: -8138260905174926579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_53
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 251
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfddf2363c944ff30800000000000000
+      internalID: 4608389422238391804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_54
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 253
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fae7e134da6fdf20800000000000000
+      internalID: 3449593299191982840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_55
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 256
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5b9ae2ff1eeb5dc0800000000000000
+      internalID: -3649061252066796710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_56
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 259
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdda8564f84676650800000000000000
+      internalID: 6226055576386317788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_57
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 248
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d406d23e9bbde0090800000000000000
+      internalID: -8066268291147145139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_58
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 242
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4670485c08f05f5f0800000000000000
+      internalID: -723655119379101852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_59
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 245
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e78e03dcc8f0567e0800000000000000
+      internalID: -1772993780888049538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_60
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 248
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0ac379a8803919b0800000000000000
+      internalID: -5108998938758493683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_61
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 237
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a1244971263f7ba0800000000000000
+      internalID: -6089088653785292380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_62
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 240
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f8e956c965de4200800000000000000
+      internalID: 166304886535350517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_63
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 245
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f76007bce10d6f530800000000000000
+      internalID: 3888524158961714815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_64
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 251
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f255c4f2d65c820800000000000000
+      internalID: 2937874381840658181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_65
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 237
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a5f1688566c74e60800000000000000
+      internalID: 7946538206900647328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_66
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 242
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ba5111fb7a9fd320800000000000000
+      internalID: 2584954568250055345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_67
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 237
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: defb1274df09394a0800000000000000
+      internalID: -6587762412418383891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_68
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 231
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2fc8e28f35468a0800000000000000
+      internalID: -6312828452268608769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_69
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 234
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69df8d6ba02e39480800000000000000
+      internalID: -8893516303481373290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_70
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 237
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80c7d25355bbde8d0800000000000000
+      internalID: -2815388217397904376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_71
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 242
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee0f21550ff086aa0800000000000000
+      internalID: -6167662164790021906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_72
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 231
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b52c3370dc682750800000000000000
+      internalID: 6280389322910475697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_73
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 229
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 919ed4d81f1dfa030800000000000000
+      internalID: 3508253470132922649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_74
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 220
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da5c8504af2c9730800000000000000
+      internalID: 4007130149967125201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_75
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 226
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 691ede6dd8f574740800000000000000
+      internalID: 5136178962840281494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_76
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 231
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d803475d14ee95730800000000000000
+      internalID: 3988480911534731405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_77
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 226
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e2fa306e539ff2a0800000000000000
+      internalID: -6701475686953323800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_78
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 223
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5adb64ba2e2ffd7b0800000000000000
+      internalID: -5197168389612192347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_79
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 212
+        width: 12
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19dfa2b57c240ae10800000000000000
+      internalID: 2206837241407012241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_80
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 220
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7af9fbece7b1586f0800000000000000
+      internalID: -683109537028268121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_81
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 218
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d1d6f50314e3ba0800000000000000
+      internalID: -6107372368652591766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_82
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 207
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf798b829c8da1860800000000000000
+      internalID: 7501546487822194684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_83
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 215
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3c9979ea5ea59d0800000000000000
+      internalID: -2784660881544723493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_84
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 218
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44576ce81613a71a0800000000000000
+      internalID: -6811077191367494332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_85
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 223
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a7426539903344e0800000000000000
+      internalID: -1998700375038605402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_86
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 215
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 192da706c574f69e0800000000000000
+      internalID: -1626002478376234351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_87
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 196
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c67f43d24a884f120800000000000000
+      internalID: 2446730736283481964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_88
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 201
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38186dda8e20b7270800000000000000
+      internalID: 8249190340831379843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_89
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 204
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b963cdf98238f8d0800000000000000
+      internalID: -2812442399043524174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_90
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 201
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31ccb6512bac26fa0800000000000000
+      internalID: -5808857703142142957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_91
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 196
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3555b1a84d7f3c9f0800000000000000
+      internalID: -449243045584743085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_92
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 198
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bcae754e4eb14e80800000000000000
+      internalID: -8196060603454935884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_93
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 193
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f2d9972294d03d0800000000000000
+      internalID: -3238852144591458525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_94
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 193
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44bf7755652ee75a0800000000000000
+      internalID: -6521526349956908220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_95
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 198
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c09bf226b6d45570800000000000000
+      internalID: 8454618478240567497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_96
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 193
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7084a26549d2d7800800000000000000
+      internalID: 611695239516276743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_97
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 187
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fc6eaf2f01d6d5a0800000000000000
+      internalID: -6496775549280686862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_98
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 190
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7dbfda52ff057f10800000000000000
+      internalID: 2266735521032027514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_99
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 201
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae68de3dc823621a0800000000000000
+      internalID: -6834719804055779606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_100
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 185
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a2d8f4e6fbe6d7d0800000000000000
+      internalID: -2893866264902970712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_101
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 187
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e43a09d5e3752d60800000000000000
+      internalID: 7864819755298469094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_102
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 185
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cea3fe95984dfe70800000000000000
+      internalID: 9150549825340812992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_103
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 176
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29d89c3f55420eb0800000000000000
+      internalID: -4755161981208962771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_104
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 182
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91257b64edda7e1c0800000000000000
+      internalID: -4474416534588534247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_105
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 193
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a7b0f71a1c5dec0800000000000000
+      internalID: -3542712632491672966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_106
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 182
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb78ed2f925ef730800000000000000
+      internalID: 4034753159794031578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_107
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 179
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0246fbcd357c8efa0800000000000000
+      internalID: -5771143759475547104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_108
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 176
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ad0f92d023d43bd0800000000000000
+      internalID: -2651262142688326235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_109
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 182
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36b5bd3f648ad2eb0800000000000000
+      internalID: -4742949809858847901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_110
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 176
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f7808da002c443d0800000000000000
+      internalID: -3223238125123762192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_111
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 176
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61156978d9d244f40800000000000000
+      internalID: 5711740382020522262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_112
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 182
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69017e19f02203490800000000000000
+      internalID: -7768671906946412394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_113
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 176
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a46f87a51108629c0800000000000000
+      internalID: -3952330810950355382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_114
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 174
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6a3effc08fdaf550800000000000000
+      internalID: 6195509981739891307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_115
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 163
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a28bafe30abb4c0800000000000000
+      internalID: -4270643629275993486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_116
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 165
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03864e9b7c0c0e750800000000000000
+      internalID: 6332273040132696112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_117
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 168
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac1c1b962003af3d0800000000000000
+      internalID: -3172170200607768118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_118
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 163
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6ad0be94f493d60800000000000000
+      internalID: 7870409002701399748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_119
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 154
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda8ccbf2fbbaa0e0800000000000000
+      internalID: -2257785610891916578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_120
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 160
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a70b23539f2f570800000000000000
+      internalID: 8499129453680556687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_121
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 163
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0a28521b2796e0b0800000000000000
+      internalID: -5699702067143628274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_122
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 154
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c11eb8ecb6a994d0800000000000000
+      internalID: -3127285135943265850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_123
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 154
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ad5a13dbf07f2f0800000000000000
+      internalID: -939264692027270644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_124
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 152
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f14697199482eee0800000000000000
+      internalID: -1233277554885508619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_125
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 149
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eb1fc7fe26a54a30800000000000000
+      internalID: 4198944948249107433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_126
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 149
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef35621bc54805a0800000000000000
+      internalID: -6554912519148453906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_127
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 146
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf5edbad791ce230800000000000000
+      internalID: 3669335823945195482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_128
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 143
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76e9704070ce6310800000000000000
+      internalID: 1400268122509403770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_129
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 154
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbd104580d40e6800800000000000000
+      internalID: 607428293376875965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_130
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 143
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f4f25dffd5176d0800000000000000
+      internalID: -2994508923849977987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_131
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 135
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb75e0a600ea6cf30800000000000000
+      internalID: 4595551786580727742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_132
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 132
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 377d4978c3e82b750800000000000000
+      internalID: 6319269617778087795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_133
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 143
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab7f47fbb3ea5d0c0800000000000000
+      internalID: -4551540276749600838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_134
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 135
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d95abf511be52d480800000000000000
+      internalID: -8875927800922790499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_135
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 130
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f7c2718f92c319c0800000000000000
+      internalID: -3957605657201162247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_136
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 127
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ebb9c71921791670800000000000000
+      internalID: 8509957392199957479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_137
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 113
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0c8f0e8ac2450eb0800000000000000
+      internalID: -4754320393885479923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_138
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 127
+        width: 31
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 184fef100c6e12de0800000000000000
+      internalID: -1359551900147583871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_139
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 121
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdac96f2f10b4c860800000000000000
+      internalID: 7549352523365731035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_140
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 121
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9007d95398b57fd0800000000000000
+      internalID: -2344765087969509222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_141
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 130
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4f860d2a6ca27d30800000000000000
+      internalID: 4427790955680534347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_142
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 110
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dbc9480622f0e260800000000000000
+      internalID: 7124960855661857747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_143
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 130
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c467a251b684aa40800000000000000
+      internalID: 5378571951141250249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_144
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 116
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4392662ea5b5d1d20800000000000000
+      internalID: 3250854951934896436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_145
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 119
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a41c7a83f97d8b1a0800000000000000
+      internalID: -6793442959038103222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_146
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 110
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aef51a3166c33b10800000000000000
+      internalID: 1960128383724945056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_147
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 102
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb4179c8dc89b98f0800000000000000
+      internalID: -532664122318842690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_148
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 77
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdf6407bc3f554df0800000000000000
+      internalID: -196646294347550753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sparkle burst_00024_149
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 61
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e85c30e2ff71949d0800000000000000
+      internalID: -2789672109423213170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      sparkle burst_00024_0: -2012185505427801498
+      sparkle burst_00024_1: -5600158544463348886
+      sparkle burst_00024_10: -8442645842600960837
+      sparkle burst_00024_100: -2893866264902970712
+      sparkle burst_00024_101: 7864819755298469094
+      sparkle burst_00024_102: 9150549825340812992
+      sparkle burst_00024_103: -4755161981208962771
+      sparkle burst_00024_104: -4474416534588534247
+      sparkle burst_00024_105: -3542712632491672966
+      sparkle burst_00024_106: 4034753159794031578
+      sparkle burst_00024_107: -5771143759475547104
+      sparkle burst_00024_108: -2651262142688326235
+      sparkle burst_00024_109: -4742949809858847901
+      sparkle burst_00024_11: 5143907602026846797
+      sparkle burst_00024_110: -3223238125123762192
+      sparkle burst_00024_111: 5711740382020522262
+      sparkle burst_00024_112: -7768671906946412394
+      sparkle burst_00024_113: -3952330810950355382
+      sparkle burst_00024_114: 6195509981739891307
+      sparkle burst_00024_115: -4270643629275993486
+      sparkle burst_00024_116: 6332273040132696112
+      sparkle burst_00024_117: -3172170200607768118
+      sparkle burst_00024_118: 7870409002701399748
+      sparkle burst_00024_119: -2257785610891916578
+      sparkle burst_00024_12: -106028892524283411
+      sparkle burst_00024_120: 8499129453680556687
+      sparkle burst_00024_121: -5699702067143628274
+      sparkle burst_00024_122: -3127285135943265850
+      sparkle burst_00024_123: -939264692027270644
+      sparkle burst_00024_124: -1233277554885508619
+      sparkle burst_00024_125: 4198944948249107433
+      sparkle burst_00024_126: -6554912519148453906
+      sparkle burst_00024_127: 3669335823945195482
+      sparkle burst_00024_128: 1400268122509403770
+      sparkle burst_00024_129: 607428293376875965
+      sparkle burst_00024_13: -4670639647637972160
+      sparkle burst_00024_130: -2994508923849977987
+      sparkle burst_00024_131: 4595551786580727742
+      sparkle burst_00024_132: 6319269617778087795
+      sparkle burst_00024_133: -4551540276749600838
+      sparkle burst_00024_134: -8875927800922790499
+      sparkle burst_00024_135: -3957605657201162247
+      sparkle burst_00024_136: 8509957392199957479
+      sparkle burst_00024_137: -4754320393885479923
+      sparkle burst_00024_138: -1359551900147583871
+      sparkle burst_00024_139: 7549352523365731035
+      sparkle burst_00024_14: 4041743522119463548
+      sparkle burst_00024_140: -2344765087969509222
+      sparkle burst_00024_141: 4427790955680534347
+      sparkle burst_00024_142: 7124960855661857747
+      sparkle burst_00024_143: 5378571951141250249
+      sparkle burst_00024_144: 3250854951934896436
+      sparkle burst_00024_145: -6793442959038103222
+      sparkle burst_00024_146: 1960128383724945056
+      sparkle burst_00024_147: -532664122318842690
+      sparkle burst_00024_148: -196646294347550753
+      sparkle burst_00024_149: -2789672109423213170
+      sparkle burst_00024_15: 2948460902145321597
+      sparkle burst_00024_16: -8191975239376600054
+      sparkle burst_00024_17: -5252241456226333638
+      sparkle burst_00024_18: 6685405020521362739
+      sparkle burst_00024_19: -5059640438478344994
+      sparkle burst_00024_2: -2059174479844771644
+      sparkle burst_00024_20: 75875270981377890
+      sparkle burst_00024_21: -3469099896578324119
+      sparkle burst_00024_22: 1996910075059325516
+      sparkle burst_00024_23: 8771873876505390741
+      sparkle burst_00024_24: -2502747315238600326
+      sparkle burst_00024_25: 4692716573783033038
+      sparkle burst_00024_26: -8455310108697354994
+      sparkle burst_00024_27: 2152526811310313289
+      sparkle burst_00024_28: -500591650732910355
+      sparkle burst_00024_29: -4328169666816173392
+      sparkle burst_00024_3: 9164206507224475291
+      sparkle burst_00024_30: -2168870965733902463
+      sparkle burst_00024_31: 3138483484481450917
+      sparkle burst_00024_32: 216365454939492015
+      sparkle burst_00024_33: -8504031795862419699
+      sparkle burst_00024_34: -2213077485083037111
+      sparkle burst_00024_35: 2370504363976359625
+      sparkle burst_00024_36: 6771739714594271005
+      sparkle burst_00024_37: -3006310510706516846
+      sparkle burst_00024_38: 2475155127459671020
+      sparkle burst_00024_39: 4240732428600528658
+      sparkle burst_00024_4: -660740124615232481
+      sparkle burst_00024_40: 8832671585190092800
+      sparkle burst_00024_41: -3678433577553263972
+      sparkle burst_00024_42: -3989558661416601269
+      sparkle burst_00024_43: 8729585036121896619
+      sparkle burst_00024_44: -445488129722998055
+      sparkle burst_00024_45: 8074742873901009471
+      sparkle burst_00024_46: 3322081740684177587
+      sparkle burst_00024_47: -6261521819559045742
+      sparkle burst_00024_48: -3635974746783835396
+      sparkle burst_00024_49: -4322316587347098267
+      sparkle burst_00024_5: -2691809314071120961
+      sparkle burst_00024_50: 913837001069440752
+      sparkle burst_00024_51: 4995177581023624114
+      sparkle burst_00024_52: -8138260905174926579
+      sparkle burst_00024_53: 4608389422238391804
+      sparkle burst_00024_54: 3449593299191982840
+      sparkle burst_00024_55: -3649061252066796710
+      sparkle burst_00024_56: 6226055576386317788
+      sparkle burst_00024_57: -8066268291147145139
+      sparkle burst_00024_58: -723655119379101852
+      sparkle burst_00024_59: -1772993780888049538
+      sparkle burst_00024_6: -949619184071072922
+      sparkle burst_00024_60: -5108998938758493683
+      sparkle burst_00024_61: -6089088653785292380
+      sparkle burst_00024_62: 166304886535350517
+      sparkle burst_00024_63: 3888524158961714815
+      sparkle burst_00024_64: 2937874381840658181
+      sparkle burst_00024_65: 7946538206900647328
+      sparkle burst_00024_66: 2584954568250055345
+      sparkle burst_00024_67: -6587762412418383891
+      sparkle burst_00024_68: -6312828452268608769
+      sparkle burst_00024_69: -8893516303481373290
+      sparkle burst_00024_7: 8187120496659508655
+      sparkle burst_00024_70: -2815388217397904376
+      sparkle burst_00024_71: -6167662164790021906
+      sparkle burst_00024_72: 6280389322910475697
+      sparkle burst_00024_73: 3508253470132922649
+      sparkle burst_00024_74: 4007130149967125201
+      sparkle burst_00024_75: 5136178962840281494
+      sparkle burst_00024_76: 3988480911534731405
+      sparkle burst_00024_77: -6701475686953323800
+      sparkle burst_00024_78: -5197168389612192347
+      sparkle burst_00024_79: 2206837241407012241
+      sparkle burst_00024_8: -2860739716691905899
+      sparkle burst_00024_80: -683109537028268121
+      sparkle burst_00024_81: -6107372368652591766
+      sparkle burst_00024_82: 7501546487822194684
+      sparkle burst_00024_83: -2784660881544723493
+      sparkle burst_00024_84: -6811077191367494332
+      sparkle burst_00024_85: -1998700375038605402
+      sparkle burst_00024_86: -1626002478376234351
+      sparkle burst_00024_87: 2446730736283481964
+      sparkle burst_00024_88: 8249190340831379843
+      sparkle burst_00024_89: -2812442399043524174
+      sparkle burst_00024_9: -7947405240187210820
+      sparkle burst_00024_90: -5808857703142142957
+      sparkle burst_00024_91: -449243045584743085
+      sparkle burst_00024_92: -8196060603454935884
+      sparkle burst_00024_93: -3238852144591458525
+      sparkle burst_00024_94: -6521526349956908220
+      sparkle burst_00024_95: 8454618478240567497
+      sparkle burst_00024_96: 611695239516276743
+      sparkle burst_00024_97: -6496775549280686862
+      sparkle burst_00024_98: 2266735521032027514
+      sparkle burst_00024_99: -6834719804055779606
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

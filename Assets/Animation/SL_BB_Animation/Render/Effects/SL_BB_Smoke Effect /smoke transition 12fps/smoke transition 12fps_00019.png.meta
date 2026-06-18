@@ -1,0 +1,2158 @@
+fileFormatVersion: 2
+guid: bd29a80e38af54b9999b2700e4365894
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2444453334961115565
+    second: smoke transition 12fps_00019_0
+  - first:
+      213: 5234360933117265587
+    second: smoke transition 12fps_00019_1
+  - first:
+      213: 3257599188869073285
+    second: smoke transition 12fps_00019_2
+  - first:
+      213: 2719805042140512564
+    second: smoke transition 12fps_00019_3
+  - first:
+      213: 1177648472777207791
+    second: smoke transition 12fps_00019_4
+  - first:
+      213: 8627784713675942120
+    second: smoke transition 12fps_00019_5
+  - first:
+      213: -838378024473528303
+    second: smoke transition 12fps_00019_6
+  - first:
+      213: 3017358692285953026
+    second: smoke transition 12fps_00019_7
+  - first:
+      213: 2303614554895097337
+    second: smoke transition 12fps_00019_8
+  - first:
+      213: 3418307902189248816
+    second: smoke transition 12fps_00019_9
+  - first:
+      213: -6327498444456669818
+    second: smoke transition 12fps_00019_10
+  - first:
+      213: 2724657560940256363
+    second: smoke transition 12fps_00019_11
+  - first:
+      213: -4563839172218535394
+    second: smoke transition 12fps_00019_12
+  - first:
+      213: -5161918409195302823
+    second: smoke transition 12fps_00019_13
+  - first:
+      213: 2358824151518276897
+    second: smoke transition 12fps_00019_14
+  - first:
+      213: 7382626081856621414
+    second: smoke transition 12fps_00019_15
+  - first:
+      213: 5973616961056383257
+    second: smoke transition 12fps_00019_16
+  - first:
+      213: -2464281280022359817
+    second: smoke transition 12fps_00019_17
+  - first:
+      213: -1830124985113960377
+    second: smoke transition 12fps_00019_18
+  - first:
+      213: 1024426987315391232
+    second: smoke transition 12fps_00019_19
+  - first:
+      213: 7714813955905810143
+    second: smoke transition 12fps_00019_20
+  - first:
+      213: -8588453283732206925
+    second: smoke transition 12fps_00019_21
+  - first:
+      213: -216032137746342685
+    second: smoke transition 12fps_00019_22
+  - first:
+      213: 6323343772875567172
+    second: smoke transition 12fps_00019_23
+  - first:
+      213: 9213644884614975292
+    second: smoke transition 12fps_00019_24
+  - first:
+      213: 7749238558810609769
+    second: smoke transition 12fps_00019_25
+  - first:
+      213: 332265707497545320
+    second: smoke transition 12fps_00019_26
+  - first:
+      213: 7913078451377270510
+    second: smoke transition 12fps_00019_27
+  - first:
+      213: 1131694890184207035
+    second: smoke transition 12fps_00019_28
+  - first:
+      213: 5700919489572932014
+    second: smoke transition 12fps_00019_29
+  - first:
+      213: -7273824602341995711
+    second: smoke transition 12fps_00019_30
+  - first:
+      213: 1768825223957389451
+    second: smoke transition 12fps_00019_31
+  - first:
+      213: -6124645817841673271
+    second: smoke transition 12fps_00019_32
+  - first:
+      213: -8759468467095284740
+    second: smoke transition 12fps_00019_33
+  - first:
+      213: -5473445301418764856
+    second: smoke transition 12fps_00019_34
+  - first:
+      213: -2906277513272008097
+    second: smoke transition 12fps_00019_35
+  - first:
+      213: -1222298188170235823
+    second: smoke transition 12fps_00019_36
+  - first:
+      213: -3297325183392166490
+    second: smoke transition 12fps_00019_37
+  - first:
+      213: 1465935787976226068
+    second: smoke transition 12fps_00019_38
+  - first:
+      213: -43800376601824671
+    second: smoke transition 12fps_00019_39
+  - first:
+      213: 4001947957669094355
+    second: smoke transition 12fps_00019_40
+  - first:
+      213: 3833271364263169171
+    second: smoke transition 12fps_00019_41
+  - first:
+      213: -3591543709410997851
+    second: smoke transition 12fps_00019_42
+  - first:
+      213: 4882237255559719071
+    second: smoke transition 12fps_00019_43
+  - first:
+      213: -2268308677470557610
+    second: smoke transition 12fps_00019_44
+  - first:
+      213: 8870614385509669192
+    second: smoke transition 12fps_00019_45
+  - first:
+      213: -6960294850212505701
+    second: smoke transition 12fps_00019_46
+  - first:
+      213: 3906928080833299066
+    second: smoke transition 12fps_00019_47
+  - first:
+      213: -510393421809138816
+    second: smoke transition 12fps_00019_48
+  - first:
+      213: -2043387286726940351
+    second: smoke transition 12fps_00019_49
+  - first:
+      213: -7378187294272793473
+    second: smoke transition 12fps_00019_50
+  - first:
+      213: 1683018241940628796
+    second: smoke transition 12fps_00019_51
+  - first:
+      213: 1344761734093252037
+    second: smoke transition 12fps_00019_52
+  - first:
+      213: -788285177980243560
+    second: smoke transition 12fps_00019_53
+  - first:
+      213: 8496798989034368017
+    second: smoke transition 12fps_00019_54
+  - first:
+      213: 8040640062644895585
+    second: smoke transition 12fps_00019_55
+  - first:
+      213: 4791342935182773953
+    second: smoke transition 12fps_00019_56
+  - first:
+      213: 401323052356881232
+    second: smoke transition 12fps_00019_57
+  - first:
+      213: -4748730314665692347
+    second: smoke transition 12fps_00019_58
+  - first:
+      213: -5229131915615873182
+    second: smoke transition 12fps_00019_59
+  - first:
+      213: 4810052181301913228
+    second: smoke transition 12fps_00019_60
+  - first:
+      213: -3278800377936006617
+    second: smoke transition 12fps_00019_61
+  - first:
+      213: -3978343933937010878
+    second: smoke transition 12fps_00019_62
+  - first:
+      213: -8531841555775146901
+    second: smoke transition 12fps_00019_63
+  - first:
+      213: -6535989718201346340
+    second: smoke transition 12fps_00019_64
+  - first:
+      213: -6968757002733729732
+    second: smoke transition 12fps_00019_65
+  - first:
+      213: 5058584035273874508
+    second: smoke transition 12fps_00019_66
+  - first:
+      213: -6526864414273181125
+    second: smoke transition 12fps_00019_67
+  - first:
+      213: -5310759337281876435
+    second: smoke transition 12fps_00019_68
+  - first:
+      213: -7881416644318877309
+    second: smoke transition 12fps_00019_69
+  - first:
+      213: -2415505616885789152
+    second: smoke transition 12fps_00019_70
+  - first:
+      213: 352016311194738291
+    second: smoke transition 12fps_00019_71
+  - first:
+      213: 5171662737794298434
+    second: smoke transition 12fps_00019_72
+  - first:
+      213: -4626221357073942059
+    second: smoke transition 12fps_00019_73
+  - first:
+      213: -8228175302535460556
+    second: smoke transition 12fps_00019_74
+  - first:
+      213: 5172979033133846522
+    second: smoke transition 12fps_00019_75
+  - first:
+      213: 8569054793342666791
+    second: smoke transition 12fps_00019_76
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_0
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 751
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da1506c5b517ce120800000000000000
+      internalID: 2444453334961115565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 752
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b603ac298f24a840800000000000000
+      internalID: 5234360933117265587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 753
+        width: 14
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5894429e331553d20800000000000000
+      internalID: 3257599188869073285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 695
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4310a139640beb520800000000000000
+      internalID: 2719805042140512564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_4
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 728
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fefaa2aeb09d75010800000000000000
+      internalID: 1177648472777207791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_5
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 678
+        width: 46
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e823313c7c0cb770800000000000000
+      internalID: 8627784713675942120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_6
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 714
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 118f2cfe0ab7d54f0800000000000000
+      internalID: -838378024473528303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_7
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 377
+        width: 132
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20434a57ebfcfd920800000000000000
+      internalID: 3017358692285953026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_8
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 726
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fd11fb8b3518ff10800000000000000
+      internalID: 2303614554895097337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_9
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 703
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 031a6e21de4407f20800000000000000
+      internalID: 3418307902189248816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_10
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 403
+        width: 156
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68dc25570b53038a0800000000000000
+      internalID: -6327498444456669818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_11
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 694
+        width: 43
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6c1d66ad9defc520800000000000000
+      internalID: 2724657560940256363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_12
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 693
+        width: 43
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e12c6eff37cf9a0c0800000000000000
+      internalID: -4563839172218535394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_13
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 714
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9505d5c4e8e2d58b0800000000000000
+      internalID: -5161918409195302823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_14
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 714
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12debd6711a3cb020800000000000000
+      internalID: 2358824151518276897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_15
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 659
+        width: 22
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66b099e7e4b547660800000000000000
+      internalID: 7382626081856621414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_16
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 637
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 911a30cf9fc86e250800000000000000
+      internalID: 5973616961056383257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_17
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 667
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f05f9d6b3d1dcdd0800000000000000
+      internalID: -2464281280022359817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_18
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 621
+        width: 206
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74027bfb5071a96e0800000000000000
+      internalID: -1830124985113960377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_19
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 657
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00be145daee773e00800000000000000
+      internalID: 1024426987315391232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_20
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 613
+        width: 25
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdeedf50b66801b60800000000000000
+      internalID: 7714813955905810143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_21
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 602
+        width: 25
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3baca15fd3fafc880800000000000000
+      internalID: -8588453283732206925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_22
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 380
+        width: 38
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ec9f815aef700df0800000000000000
+      internalID: -216032137746342685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_23
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 607
+        width: 27
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4403deea8a701c750800000000000000
+      internalID: 6323343772875567172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_24
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 581
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3f0212e4317ddf70800000000000000
+      internalID: 9213644884614975292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 490
+        width: 29
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9689aa97963da8b60800000000000000
+      internalID: 7749238558810609769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_26
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 433
+        width: 79
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e5f6a86e17c9400800000000000000
+      internalID: 332265707497545320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_27
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 600
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeee32e1de6e0dd60800000000000000
+      internalID: 7913078451377270510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_28
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 503
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbaed83b18694bf00800000000000000
+      internalID: 1131694890184207035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_29
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 485
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea9881d221cbd1f40800000000000000
+      internalID: 5700919489572932014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_30
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 460
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14b88e2001f2e0b90800000000000000
+      internalID: -7273824602341995711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_31
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 462
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b802bb76b212c8810800000000000000
+      internalID: 1768825223957389451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_32
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 472
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cb17741413e00ba0800000000000000
+      internalID: -6124645817841673271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_33
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 453
+        width: 18
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf3dc8db6dd107680800000000000000
+      internalID: -8759468467095284740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_34
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 431
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c557677f7a6a04b0800000000000000
+      internalID: -5473445301418764856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_35
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 396
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5267b2fff3daa7d0800000000000000
+      internalID: -2906277513272008097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_36
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 377
+        width: 52
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 150728c1646890fe0800000000000000
+      internalID: -1222298188170235823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_37
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 394
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6adc5f6373c8d32d0800000000000000
+      internalID: -3297325183392166490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_38
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 389
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 415fad115dc085410800000000000000
+      internalID: 1465935787976226068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_39
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 238
+        width: 104
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 162be9f1ac3646ff0800000000000000
+      internalID: -43800376601824671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_40
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 228
+        width: 107
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3677ad676c98730800000000000000
+      internalID: 4001947957669094355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_41
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 378
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39c459a0ff3823530800000000000000
+      internalID: 3833271364263169171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_42
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 252
+        width: 146
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a9c44d6606482ec0800000000000000
+      internalID: -3591543709410997851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_43
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 376
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f98a0deaae031c340800000000000000
+      internalID: 4882237255559719071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_44
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 262
+        width: 115
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65a6e6e96495580e0800000000000000
+      internalID: -2268308677470557610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_45
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 341
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84916cbf8c0ca1b70800000000000000
+      internalID: 8870614385509669192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_46
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 358
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b975a1106b0186f90800000000000000
+      internalID: -6960294850212505701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_47
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 340
+        width: 25
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a724115c362383630800000000000000
+      internalID: 3906928080833299066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_48
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 340
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 083ce5513e7bae8f0800000000000000
+      internalID: -510393421809138816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_49
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 321
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 149671cc61e64a3e0800000000000000
+      internalID: -2043387286726940351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_50
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 320
+        width: 62
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74d1964fb96b9990800000000000000
+      internalID: -7378187294272793473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_51
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 312
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35af5d8c284b5710800000000000000
+      internalID: 1683018241940628796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 246
+        width: 6
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c5aa2c1cad89a210800000000000000
+      internalID: 1344761734093252037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_53
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 260
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89138c0aec27f05f0800000000000000
+      internalID: -788285177980243560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_54
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 244
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11caa4d99a1bae570800000000000000
+      internalID: 8496798989034368017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_55
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 220
+        width: 65
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16f39bc2987169f60800000000000000
+      internalID: 8040640062644895585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_56
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 247
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ce85a093054e7240800000000000000
+      internalID: 4791342935182773953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_57
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 256
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05b48e79039c19500800000000000000
+      internalID: 401323052356881232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_58
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 97
+        width: 125
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 543f83c40fe191eb0800000000000000
+      internalID: -4748730314665692347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_59
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 20
+        width: 214
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 267de065a346e67b0800000000000000
+      internalID: -5229131915615873182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_60
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 237
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c86e79169fcb0c240800000000000000
+      internalID: 4810052181301913228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_61
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 78
+        width: 170
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72235b79d6c5f72d0800000000000000
+      internalID: -3278800377936006617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_62
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 220
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 247ba5f25451ac8c0800000000000000
+      internalID: -3978343933937010878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_63
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 171
+        width: 23
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b643b140f4fc89980800000000000000
+      internalID: -8531841555775146901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_64
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 173
+        width: 29
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd6d00ffaff7b45a0800000000000000
+      internalID: -6535989718201346340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_65
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 199
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c384a069d600a4f90800000000000000
+      internalID: -6968757002733729732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_66
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 162
+        width: 24
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4c16f8e063b33640800000000000000
+      internalID: 5058584035273874508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_67
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 103
+        width: 53
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3aeb12656beb65a0800000000000000
+      internalID: -6526864414273181125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_68
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 92
+        width: 22
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2e89b535846c46b0800000000000000
+      internalID: -5310759337281876435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_69
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 124
+        width: 75
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 389a58cc1559f9290800000000000000
+      internalID: -7881416644318877309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_70
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 109
+        width: 6
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02ecf8870766a7ed0800000000000000
+      internalID: -2415505616885789152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_71
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 77
+        width: 39
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37ed7ef48fc92e400800000000000000
+      internalID: 352016311194738291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_72
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 90
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2427a500cdf65c740800000000000000
+      internalID: 5171662737794298434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_73
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 59
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9384fbf2c5ccfb0800000000000000
+      internalID: -4626221357073942059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_74
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 40
+        width: 13
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4394bb63826afcd80800000000000000
+      internalID: -8228175302535460556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_75
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 32
+        width: 16
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aff8c74e50d1ac740800000000000000
+      internalID: 5172979033133846522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smoke transition 12fps_00019_76
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 10
+        width: 24
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7284c0a0fe56be670800000000000000
+      internalID: 8569054793342666791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      smoke transition 12fps_00019_0: 2444453334961115565
+      smoke transition 12fps_00019_1: 5234360933117265587
+      smoke transition 12fps_00019_10: -6327498444456669818
+      smoke transition 12fps_00019_11: 2724657560940256363
+      smoke transition 12fps_00019_12: -4563839172218535394
+      smoke transition 12fps_00019_13: -5161918409195302823
+      smoke transition 12fps_00019_14: 2358824151518276897
+      smoke transition 12fps_00019_15: 7382626081856621414
+      smoke transition 12fps_00019_16: 5973616961056383257
+      smoke transition 12fps_00019_17: -2464281280022359817
+      smoke transition 12fps_00019_18: -1830124985113960377
+      smoke transition 12fps_00019_19: 1024426987315391232
+      smoke transition 12fps_00019_2: 3257599188869073285
+      smoke transition 12fps_00019_20: 7714813955905810143
+      smoke transition 12fps_00019_21: -8588453283732206925
+      smoke transition 12fps_00019_22: -216032137746342685
+      smoke transition 12fps_00019_23: 6323343772875567172
+      smoke transition 12fps_00019_24: 9213644884614975292
+      smoke transition 12fps_00019_25: 7749238558810609769
+      smoke transition 12fps_00019_26: 332265707497545320
+      smoke transition 12fps_00019_27: 7913078451377270510
+      smoke transition 12fps_00019_28: 1131694890184207035
+      smoke transition 12fps_00019_29: 5700919489572932014
+      smoke transition 12fps_00019_3: 2719805042140512564
+      smoke transition 12fps_00019_30: -7273824602341995711
+      smoke transition 12fps_00019_31: 1768825223957389451
+      smoke transition 12fps_00019_32: -6124645817841673271
+      smoke transition 12fps_00019_33: -8759468467095284740
+      smoke transition 12fps_00019_34: -5473445301418764856
+      smoke transition 12fps_00019_35: -2906277513272008097
+      smoke transition 12fps_00019_36: -1222298188170235823
+      smoke transition 12fps_00019_37: -3297325183392166490
+      smoke transition 12fps_00019_38: 1465935787976226068
+      smoke transition 12fps_00019_39: -43800376601824671
+      smoke transition 12fps_00019_4: 1177648472777207791
+      smoke transition 12fps_00019_40: 4001947957669094355
+      smoke transition 12fps_00019_41: 3833271364263169171
+      smoke transition 12fps_00019_42: -3591543709410997851
+      smoke transition 12fps_00019_43: 4882237255559719071
+      smoke transition 12fps_00019_44: -2268308677470557610
+      smoke transition 12fps_00019_45: 8870614385509669192
+      smoke transition 12fps_00019_46: -6960294850212505701
+      smoke transition 12fps_00019_47: 3906928080833299066
+      smoke transition 12fps_00019_48: -510393421809138816
+      smoke transition 12fps_00019_49: -2043387286726940351
+      smoke transition 12fps_00019_5: 8627784713675942120
+      smoke transition 12fps_00019_50: -7378187294272793473
+      smoke transition 12fps_00019_51: 1683018241940628796
+      smoke transition 12fps_00019_52: 1344761734093252037
+      smoke transition 12fps_00019_53: -788285177980243560
+      smoke transition 12fps_00019_54: 8496798989034368017
+      smoke transition 12fps_00019_55: 8040640062644895585
+      smoke transition 12fps_00019_56: 4791342935182773953
+      smoke transition 12fps_00019_57: 401323052356881232
+      smoke transition 12fps_00019_58: -4748730314665692347
+      smoke transition 12fps_00019_59: -5229131915615873182
+      smoke transition 12fps_00019_6: -838378024473528303
+      smoke transition 12fps_00019_60: 4810052181301913228
+      smoke transition 12fps_00019_61: -3278800377936006617
+      smoke transition 12fps_00019_62: -3978343933937010878
+      smoke transition 12fps_00019_63: -8531841555775146901
+      smoke transition 12fps_00019_64: -6535989718201346340
+      smoke transition 12fps_00019_65: -6968757002733729732
+      smoke transition 12fps_00019_66: 5058584035273874508
+      smoke transition 12fps_00019_67: -6526864414273181125
+      smoke transition 12fps_00019_68: -5310759337281876435
+      smoke transition 12fps_00019_69: -7881416644318877309
+      smoke transition 12fps_00019_7: 3017358692285953026
+      smoke transition 12fps_00019_70: -2415505616885789152
+      smoke transition 12fps_00019_71: 352016311194738291
+      smoke transition 12fps_00019_72: 5171662737794298434
+      smoke transition 12fps_00019_73: -4626221357073942059
+      smoke transition 12fps_00019_74: -8228175302535460556
+      smoke transition 12fps_00019_75: 5172979033133846522
+      smoke transition 12fps_00019_76: 8569054793342666791
+      smoke transition 12fps_00019_8: 2303614554895097337
+      smoke transition 12fps_00019_9: 3418307902189248816
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
