@@ -29,7 +29,7 @@ public class BonusManager : MonoBehaviour
 
   [Header("Slot References")]
   [SerializeField] private List<SlotImage> TotalMiniSlotImages;     //class to store total images
-  [SerializeField] private List<SlotTransform> Slot;
+  [SerializeField] internal List<SlotTransform> Slot;
 
   private Dictionary<Transform, Tween> activeTweens = new Dictionary<Transform, Tween>();
   private int IconSizeFactor = 202;
@@ -356,6 +356,29 @@ public class BonusManager : MonoBehaviour
             }
           }
         }
+        else if (SocketManager.resultData.matrix[j][i] == "17")
+        {
+          if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > symbolId)
+          {
+            img.sprite = slotManager.SlotSymbols[symbolId];
+          }
+          bool found = false;
+          foreach (var coins in SocketManager.resultData.payload.coinPositions)
+          {
+            if (coins.position[0] == j && coins.position[1] == i)
+            {
+              if (view != null) view.SetLosPolosValue(coins.coinValue);
+              found = true;
+              break;
+            }
+          }
+          if (!found)
+          {
+            int[] tempIndex = { 2, 3, 4, 5, 7 };
+            int randomIndex = tempIndex[Random.Range(0, tempIndex.Length)];
+            if (view != null) view.SetLosPolosValue(randomIndex);
+          }
+        }
         else if (SocketManager.resultData.matrix[j][i] == "14")
         {
           img.sprite = CC_Sprite;
@@ -420,6 +443,42 @@ public class BonusManager : MonoBehaviour
     {
       uiManager.WinningsTextAnimation();
     }
+
+    bool freeSpinTriggered = SocketManager.resultData.payload.isFreeSpinTriggered;
+    if (freeSpinTriggered)
+    {
+      bool isRetrigger = slotManager.WasFreeSpinPaused || slotManager.IsFreeSpin;
+
+      // 1. Build the feature queue so that FreeSpins is enqueued and ready
+      slotManager.featureQueue.BuildFromResponse(SocketManager.resultData.payload, isRetrigger);
+
+      // 2. Consume the FreeSpin/FreeSpinRetrigger feature since we are playing it manually now
+      if (slotManager.featureQueue.HasPending && 
+          (slotManager.featureQueue.Peek() == FeatureType.FreeSpin || slotManager.featureQueue.Peek() == FeatureType.FreeSpinRetrigger))
+      {
+          slotManager.featureQueue.Dequeue();
+      }
+
+      // 3. Play the Free Spin Trigger sequence with the fromBonusSlot = true flag!
+      var fsResult = SocketManager.resultData.payload.freeSpinResult;
+      yield return uiManager.PlayFreeSpinTriggerSequence(fsResult, isRetrigger, true);
+
+      // 4. Mark Free Spin active on slotManager and update HUD buttons
+      slotManager.IsFreeSpin = true;
+      slotManager.WasFreeSpinPaused = false;
+      slotManager.IsFeatureTransitioning = false;
+      uiManager.UpdateButtonsState();
+
+      int remainingSpins = SocketManager.resultData.payload.freeSpinsRemaining;
+      slotManager.SetFreeSpinsCount(remainingSpins);
+      yield return new WaitForSeconds(1f);
+
+      slotManager.TriggerSpinState(false);
+      slotManager.FreeSpin(slotManager.FreeSpinsCount);
+      yield break;
+    }
+
+    // Default flow when Free Spins are NOT triggered:
     uiManager.CloseBonusUI();
     yield return null;
 
@@ -447,6 +506,36 @@ public class BonusManager : MonoBehaviour
       uiManager.SetNormalSpinButtonActive(true);
       slotManager.OnLinkFeatureCompleted();
     });
+  }
+
+  public IEnumerator TransitionFromBonusToNormalSlot()
+  {
+      if (BonusSlot_CG != null)
+      {
+          BonusSlot_CG.interactable = false;
+          BonusSlot_CG.blocksRaycasts = false;
+      }
+      
+      bool transitionDone = false;
+      BonusSlot_CG.DOFade(0, 0.5f);
+      NormalSlot_CG.DOFade(1, 0.5f).OnComplete(() =>
+      {
+          if (NormalSlot_CG != null)
+          {
+              NormalSlot_CG.interactable = true;
+              NormalSlot_CG.blocksRaycasts = true;
+          }
+          if (BonusSlot_CG != null)
+          {
+              BonusSlot_CG.gameObject.SetActive(false);
+          }
+
+          staticSymbol.Reset();
+          ResetMatrix();
+          transitionDone = true;
+      });
+      
+      yield return new WaitUntil(() => transitionDone);
   }
 
   private void ResetMatrix()
@@ -597,13 +686,31 @@ public class BonusManager : MonoBehaviour
         SlotSymbolView view = img.GetComponent<SlotSymbolView>();
         if (view != null)
         {
-          img.sprite = coinFrame;
           if (view.specialSymbolLayer != null)
           {
             view.specialSymbolLayer.gameObject.SetActive(false);
           }
-          view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
-          slotManager.ConfigureSymbolView(view, 15);
+
+          if (coin.symbolId == 17)
+          {
+            if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 17)
+            {
+              img.sprite = slotManager.SlotSymbols[17];
+            }
+            view.SetLosPolosValue(coin.coinValue);
+            slotManager.ConfigureSymbolView(view, 17);
+          }
+          else if (coin.symbolId == 16)
+          {
+            img.sprite = Diamond_Sprite;
+            slotManager.ConfigureSymbolView(view, 16);
+          }
+          else
+          {
+            img.sprite = coinFrame;
+            view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+            slotManager.ConfigureSymbolView(view, 15);
+          }
         }
       }
 
@@ -619,7 +726,7 @@ public class BonusManager : MonoBehaviour
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
         if (staticSymbol.freezedLocations[col].index[row] == 0 &&
-            (SocketManager.resultData.matrix[row][col] == "11" || SocketManager.resultData.matrix[row][col] == "12" || SocketManager.resultData.matrix[row][col] == "14" || SocketManager.resultData.matrix[row][col] == "15" || SocketManager.resultData.matrix[row][col] == "16"))
+            (SocketManager.resultData.matrix[row][col] == "11" || SocketManager.resultData.matrix[row][col] == "12" || SocketManager.resultData.matrix[row][col] == "14" || SocketManager.resultData.matrix[row][col] == "15" || SocketManager.resultData.matrix[row][col] == "16" || SocketManager.resultData.matrix[row][col] == "17"))
         {
           List<int> rXc = new() { row, col };
           loc.Add(rXc);

@@ -9490,10 +9490,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIconanim (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13388,6 +13384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotIcon (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 424440719340797616, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1084805222762838139, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -13408,6 +13408,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1688729031343563815, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4763586901640980210, guid: c9a40aca834724b38a27271dbfd41fbc, type: 3}
     - target: {fileID: 2584982399877648103, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -13534,6 +13538,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6525210065339304368, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133524432510578422, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7962235499522691113, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
@@ -30539,7 +30547,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: 3963d676c77a486fb40d552c0b876603
+  testToken: 43e5b4118f2c4aae9f04de36d2b3190c
 --- !u!4 &1787183091
 Transform:
   m_ObjectHideFlags: 0
@@ -32957,10 +32965,6 @@ PrefabInstance:
     - target: {fileID: 424440719340797616, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
       propertyPath: m_Name
       value: SlotIcon (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 424440719340797616, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4948629311926323217, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
       propertyPath: m_Pivot.x

@@ -142,12 +142,12 @@ TextureImporter:
       name: SL_BB_Symbol_Resize_Blue Frame_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 221
-        height: 221
+        x: 2
+        y: 1
+        width: 218
+        height: 219
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d8046bed2b2ae4a09ac17d487c8c8956
     internalID: 0
     vertices: []
     indices: 

@@ -1081,23 +1081,22 @@ public class FeatureQueue
             Enqueue(FeatureType.PrizeCoinJackpot);
         }
 
-        // 2. Cash Collect & Link: plays second — transitions to BonusManager
+        // 2. FreeSpinRetrigger: if already in Free Spins, retrigger animation plays BEFORE transitioning to Link
+        if (hasFreeSpin && isFreeSpinCurrentlyActive)
+        {
+            Enqueue(FeatureType.FreeSpinRetrigger);
+        }
+
+        // 3. Cash Collect & Link: transitions to BonusManager
         if (hasLink)
         {
             Enqueue(FeatureType.CashCollectAndLink);
         }
 
-        // 3. Free Spin: plays last
-        if (hasFreeSpin)
+        // 4. Free Spin: plays last (new trigger from normal game, transitions after Link)
+        if (hasFreeSpin && !isFreeSpinCurrentlyActive)
         {
-            if (isFreeSpinCurrentlyActive)
-            {
-                Enqueue(FeatureType.FreeSpinRetrigger);
-            }
-            else
-            {
-                Enqueue(FeatureType.FreeSpin);
-            }
+            Enqueue(FeatureType.FreeSpin);
         }
 
         Debug.Log($"[FeatureQueue] Built queue with {_queue.Count} feature(s) | " +

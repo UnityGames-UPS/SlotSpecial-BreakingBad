@@ -259,7 +259,7 @@ public class UIManager : MonoBehaviour
       if (turboButton != null) turboButton.gameObject.SetActive(false);
       if (autoplayCounterObject != null) autoplayCounterObject.SetActive(true);
 
-      if (featureWinText != null) featureWinText.text = FormatSpriteText(initialWin.ToString("F2"));
+      if (featureWinText != null) featureWinText.text = FormatSpriteText(initialWin.ToString("F3"));
       SetBonusSpinCounter(totalSpins);
       UpdateFeatureButtonsState(false, totalSpins);
   }
@@ -283,7 +283,7 @@ public class UIManager : MonoBehaviour
   public void SetFeatureWinText(double value)
   {
       if (featureWinText != null)
-          featureWinText.text = FormatSpriteText(value.ToString("F2"));
+          featureWinText.text = FormatSpriteText(value.ToString("F3"));
   }
 
   public void OpenFeaturePopup(Action onStartClicked)
@@ -305,7 +305,10 @@ public class UIManager : MonoBehaviour
       featurePopup.SetActive(true);
       bool isFSTriggered = (slotManager.OriginalFeatureTriggerResult != null &&
                             slotManager.OriginalFeatureTriggerResult.payload != null &&
-                            slotManager.OriginalFeatureTriggerResult.payload.isFreeSpinTriggered);
+                            slotManager.OriginalFeatureTriggerResult.payload.isFreeSpinTriggered) ||
+                           (slotManager.ResultData != null &&
+                            slotManager.ResultData.payload != null &&
+                            slotManager.ResultData.payload.isFreeSpinTriggered);
       if (slotManager != null && !slotManager.IsBonus && (slotManager.IsFreeSpin || isFSTriggered))
       {
           if (featureTitleObject != null) featureTitleObject.SetActive(false);
@@ -370,7 +373,7 @@ public class UIManager : MonoBehaviour
       }
       if (featureWinAmountText != null)
       {
-          featureWinAmountText.text = winAmount.ToString("F2");
+          featureWinAmountText.text = winAmount.ToString("F3");
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
@@ -750,7 +753,7 @@ public class UIManager : MonoBehaviour
       if (tempWin < 0) tempWin = 0;
       DOTween.To(() => tempWin, (val) => tempWin = val, targetFeatureWin, 0.8f).OnUpdate(() =>
       {
-        if (featureWinText) featureWinText.text = FormatSpriteText(tempWin.ToString("F2"));
+         if (featureWinText) featureWinText.text = FormatSpriteText(tempWin.ToString("F3"));
       }).OnComplete(() => checkComplete());
     }
 
@@ -955,9 +958,61 @@ public class UIManager : MonoBehaviour
       return result;
   }
 
-  public IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false)
+  public IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false, bool fromBonusSlot = false)
   {
-      if (!isRetrigger)
+      int totalSpins = 0;
+      if (fsResult != null && fsResult.triggerCoins != null && fsResult.triggerCoins.Count > 0)
+      {
+          foreach (var coin in fsResult.triggerCoins)
+          {
+              totalSpins += coin.coinValue;
+          }
+      }
+      else
+      {
+          totalSpins = fsResult != null ? fsResult.freeSpinCount : (slotManager != null ? slotManager.FreeSpinsCount : 0);
+      }
+
+      int previousRemaining = 0;
+      int previousTotal = 0;
+
+      if (fsResult != null)
+      {
+          previousRemaining = fsResult.freeSpinsRemaining - totalSpins;
+          if (fsResult.totalFreeSpins > 0)
+          {
+              previousTotal = fsResult.totalFreeSpins - totalSpins;
+          }
+          else
+          {
+              previousTotal = totalFreeSpins; // fallback
+          }
+      }
+      else
+      {
+          previousRemaining = slotManager != null ? slotManager.FreeSpinsCount : 0;
+          previousTotal = totalFreeSpins;
+      }
+
+      int previousSpinsUsed = previousTotal - previousRemaining;
+      if (previousSpinsUsed < 0) previousSpinsUsed = 0;
+
+      if (isRetrigger)
+      {
+          if (spinCounterPanel != null) spinCounterPanel.SetActive(true);
+          if (featureWinPanel != null) featureWinPanel.SetActive(true);
+          if (spinCounterText != null)
+          {
+              spinCounterText.text = $"{previousSpinsUsed}/{previousTotal}";
+              spinCounterText.gameObject.SetActive(true);
+          }
+          if (featureWinText != null)
+          {
+              featureWinText.text = FormatSpriteText(accumulatedFreeSpinWin.ToString("F3"));
+              featureWinText.gameObject.SetActive(true);
+          }
+      }
+      else
       {
           accumulatedFreeSpinWin = 0f;
 
@@ -973,9 +1028,9 @@ public class UIManager : MonoBehaviour
 
       yield return new WaitForSeconds(0.5f);
 
-      int totalSpins = 0;
       List<Vector3> coinWorldPositions = new List<Vector3>();
       List<string> coinTexts = new List<string>();
+      List<TMP_Text> sourceTexts = new List<TMP_Text>();
 
       if (fsResult != null && fsResult.triggerCoins != null && fsResult.triggerCoins.Count > 0)
       {
@@ -983,18 +1038,38 @@ public class UIManager : MonoBehaviour
           {
               int row = coin.position[0];
               int col = coin.position[1];
-              totalSpins += coin.coinValue;
 
-              if (slotManager != null && slotManager.ResultMatrix != null && row < slotManager.ResultMatrix.Count)
+              if (fromBonusSlot)
               {
-                  var rowImages = slotManager.ResultMatrix[row].slotImages;
-                  if (col < rowImages.Count)
+                  if (bonusManager != null && bonusManager.Slot != null && col < bonusManager.Slot.Count)
                   {
-                      var view = rowImages[col].GetComponent<SlotSymbolView>();
-                      if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                      var rowTransforms = bonusManager.Slot[col].slotTransforms;
+                      if (row < rowTransforms.Count)
                       {
-                          coinWorldPositions.Add(view.losPolosValueText.transform.position);
-                          coinTexts.Add(view.losPolosValueText.text);
+                          var view = rowTransforms[row].GetChild(2).GetComponent<SlotSymbolView>();
+                          if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                          {
+                              coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                              coinTexts.Add(view.losPolosValueText.text);
+                              sourceTexts.Add(view.losPolosValueText);
+                          }
+                      }
+                  }
+              }
+              else
+              {
+                  if (slotManager != null && slotManager.ResultMatrix != null && row < slotManager.ResultMatrix.Count)
+                  {
+                      var rowImages = slotManager.ResultMatrix[row].slotImages;
+                      if (col < rowImages.Count)
+                      {
+                          var view = rowImages[col].GetComponent<SlotSymbolView>();
+                          if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                          {
+                              coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                              coinTexts.Add(view.losPolosValueText.text);
+                              sourceTexts.Add(view.losPolosValueText);
+                          }
                       }
                   }
               }
@@ -1002,28 +1077,32 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-          if (slotManager != null && slotManager.ResultMatrix != null)
+          if (fromBonusSlot)
           {
-              for (int r = 0; r < slotManager.ResultMatrix.Count; r++)
+              if (bonusManager != null && bonusManager.Slot != null)
               {
-                  var rowImages = slotManager.ResultMatrix[r].slotImages;
-                  for (int c = 0; c < rowImages.Count; c++)
+                  for (int col = 0; col < bonusManager.Slot.Count; col++)
                   {
-                       var triggerResult = (slotManager != null && slotManager.OriginalFeatureTriggerResult != null)
-                           ? slotManager.OriginalFeatureTriggerResult
-                           : (socketManager != null ? socketManager.resultData : null);
+                      var rowTransforms = bonusManager.Slot[col].slotTransforms;
+                      for (int row = 0; row < rowTransforms.Count; row++)
+                      {
+                          var triggerResult = (slotManager != null && slotManager.OriginalFeatureTriggerResult != null)
+                              ? slotManager.OriginalFeatureTriggerResult
+                              : (socketManager != null ? socketManager.resultData : null);
 
-                       if (triggerResult != null && triggerResult.matrix != null)
-                       {
-                           if (r < triggerResult.matrix.Count && c < triggerResult.matrix[r].Count)
-                           {
-                               if (triggerResult.matrix[r][c] == "17")
+                          if (triggerResult != null && triggerResult.matrix != null)
+                          {
+                              if (row < triggerResult.matrix.Count && col < triggerResult.matrix[row].Count)
                               {
-                                  var view = rowImages[c].GetComponent<SlotSymbolView>();
-                                  if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                                  if (triggerResult.matrix[row][col] == "17")
                                   {
-                                      coinWorldPositions.Add(view.losPolosValueText.transform.position);
-                                      coinTexts.Add(view.losPolosValueText.text);
+                                      var view = rowTransforms[row].GetChild(2).GetComponent<SlotSymbolView>();
+                                      if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                                      {
+                                          coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                                          coinTexts.Add(view.losPolosValueText.text);
+                                          sourceTexts.Add(view.losPolosValueText);
+                                      }
                                   }
                               }
                           }
@@ -1031,7 +1110,39 @@ public class UIManager : MonoBehaviour
                   }
               }
           }
-          totalSpins = fsResult != null ? fsResult.freeSpinCount : slotManager.FreeSpinsCount;
+          else
+          {
+              if (slotManager != null && slotManager.ResultMatrix != null)
+              {
+                  for (int r = 0; r < slotManager.ResultMatrix.Count; r++)
+                  {
+                      var rowImages = slotManager.ResultMatrix[r].slotImages;
+                      for (int c = 0; c < rowImages.Count; c++)
+                      {
+                           var triggerResult = (slotManager != null && slotManager.OriginalFeatureTriggerResult != null)
+                               ? slotManager.OriginalFeatureTriggerResult
+                               : (socketManager != null ? socketManager.resultData : null);
+
+                           if (triggerResult != null && triggerResult.matrix != null)
+                           {
+                               if (r < triggerResult.matrix.Count && c < triggerResult.matrix[r].Count)
+                               {
+                                   if (triggerResult.matrix[r][c] == "17")
+                                   {
+                                       var view = rowImages[c].GetComponent<SlotSymbolView>();
+                                       if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                                       {
+                                           coinWorldPositions.Add(view.losPolosValueText.transform.position);
+                                           coinTexts.Add(view.losPolosValueText.text);
+                                           sourceTexts.Add(view.losPolosValueText);
+                                       }
+                                   }
+                               }
+                           }
+                      }
+                  }
+              }
+          }
       }
 
       if (fsResult != null && fsResult.totalFreeSpins > 0)
@@ -1056,11 +1167,40 @@ public class UIManager : MonoBehaviour
 
       Transform spawnParent = flyingTextParent != null ? flyingTextParent : this.transform;
       List<TMP_Text> tempTexts = new List<TMP_Text>();
+      List<Vector3> initialLocalScales = new List<Vector3>();
+
       for (int i = 0; i < coinWorldPositions.Count; i++)
       {
           TMP_Text tempText = Instantiate(losPolosTextPrefab, spawnParent);
           tempText.transform.position = coinWorldPositions[i];
           tempText.text = coinTexts[i];
+
+          if (i < sourceTexts.Count && sourceTexts[i] != null)
+          {
+              Vector3 sourceLossyScale = sourceTexts[i].transform.lossyScale;
+              Vector3 parentLossyScale = spawnParent.lossyScale;
+              Vector3 matchedLocalScale = new Vector3(
+                  parentLossyScale.x != 0 ? sourceLossyScale.x / parentLossyScale.x : 1f,
+                  parentLossyScale.y != 0 ? sourceLossyScale.y / parentLossyScale.y : 1f,
+                  parentLossyScale.z != 0 ? sourceLossyScale.z / parentLossyScale.z : 1f
+              );
+              tempText.transform.localScale = matchedLocalScale;
+              initialLocalScales.Add(matchedLocalScale);
+
+              RectTransform rectTrans = tempText.GetComponent<RectTransform>();
+              RectTransform sourceRectTrans = sourceTexts[i].GetComponent<RectTransform>();
+              if (rectTrans != null && sourceRectTrans != null)
+              {
+                  rectTrans.sizeDelta = sourceRectTrans.sizeDelta;
+              }
+
+              sourceTexts[i].gameObject.SetActive(false);
+          }
+          else
+          {
+              initialLocalScales.Add(Vector3.one);
+          }
+
           tempText.gameObject.SetActive(true);
           tempTexts.Add(tempText);
       }
@@ -1077,9 +1217,11 @@ public class UIManager : MonoBehaviour
       yield return new WaitForSeconds(moveDuration);
 
       TMP_Text sumTextPrefab = null;
+      Vector3 sumInitialScale = Vector3.one;
       if (tempTexts.Count > 0)
       {
           sumTextPrefab = tempTexts[0];
+          sumInitialScale = initialLocalScales[0];
           string sumSpriteText = "<sprite=10>";
           string totalSpinsStr = totalSpins.ToString();
           foreach (char c in totalSpinsStr)
@@ -1100,9 +1242,9 @@ public class UIManager : MonoBehaviour
 
       if (sumTextPrefab != null)
       {
-          sumTextPrefab.transform.DOScale(1.5f, 0.4f).SetEase(Ease.OutBack);
+          sumTextPrefab.transform.DOScale(sumInitialScale * 1.8f, 0.4f).SetEase(Ease.OutBack);
           yield return new WaitForSeconds(0.4f);
-          sumTextPrefab.transform.DOScale(1.0f, 0.3f).SetEase(Ease.InQuad);
+          sumTextPrefab.transform.DOScale(sumInitialScale * 1.4f, 0.3f).SetEase(Ease.InQuad);
           yield return new WaitForSeconds(0.3f);
 
           yield return new WaitForSeconds(0.5f);
@@ -1136,6 +1278,11 @@ public class UIManager : MonoBehaviour
           }
       }
 
+      if (fromBonusSlot)
+      {
+          yield return bonusManager.TransitionFromBonusToNormalSlot();
+      }
+
       if (!isRetrigger)
       {
           yield return new WaitForSeconds(0.5f);
@@ -1149,7 +1296,7 @@ public class UIManager : MonoBehaviour
 
           if (featureWinText != null)
           {
-              featureWinText.text = FormatSpriteText("0.00");
+              featureWinText.text = FormatSpriteText("0.000");
               featureWinText.gameObject.SetActive(true);
           }
       }
