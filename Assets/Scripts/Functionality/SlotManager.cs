@@ -147,7 +147,7 @@ public class SlotManager : MonoBehaviour
   [Header("Sprites References")]
   [SerializeField] internal Sprite[] SlotSymbols;  //images taken initially
   [SerializeField] public Sprite[] JackpotSlotSymbols;
-  [SerializeField] private Sprite[] SpecialLayerSymbols; // 0: Link, 1: MegaLink, 2: CashCollect, 3: Diamond
+  [SerializeField] private Sprite[] SpecialLayerSymbols; // 0: Link, 1: MegaLink, 2: CashCollect, 3: Diamond, 4: LosPollos
 
   [Header("Slot References")]
   [SerializeField] private List<SlotImage> images;     //class to store total images
@@ -203,6 +203,7 @@ public class SlotManager : MonoBehaviour
   private int numberOfSlots = 5;          //number of columns
   [SerializeField] private int IconSizeFactor = 100;       //set this parameter according to the size of the icon and spacing
   [SerializeField] private float stopCooldownDuration = 0.4f; // cooldown after stop before next spin
+  [SerializeField] private float specialSymbolStaggerIncrease = 0.75f; // extra delay added to next reels if special symbol lands
 
   private float SpinDelay = 0.2f;
 
@@ -822,13 +823,45 @@ public class SlotManager : MonoBehaviour
     bool wasStopPressed = StopSpinToggle;
     StopSpinToggle = false;
 
-    // Start stopping each reel in parallel
+    // Start stopping each reel in parallel with dynamic stagger increase for special symbols
     wasStopPressedGlobal = wasStopPressed;
-    float stagger = IsTurboOn ? 0.03f : ((wasStopPressed) ? 0.05f : reelStopStagger);
+    float baseStagger = IsTurboOn ? 0.03f : ((wasStopPressed) ? 0.05f : reelStopStagger);
+    
+    System.Func<string, bool> isSpecialSymbol = id =>
+        id == "11" || id == "12" || id == "14" ||
+        id == "15" || id == "16" || id == "17";
+
+    float currentDelay = 0f;
     for (int i = 0; i < numberOfSlots; i++)
     {
-      float delay = i * stagger;
-      StartCoroutine(TriggerReelStopAfterDelay(i, delay));
+      if (i > 0)
+      {
+        // Check if the previous reel (i - 1) contains any special symbols
+        bool prevHasSpecial = false;
+        if (SocketManager.resultData != null && SocketManager.resultData.matrix != null)
+        {
+          for (int r = 0; r < 3; r++)
+          {
+            if (r < SocketManager.resultData.matrix.Count && (i - 1) < SocketManager.resultData.matrix[r].Count)
+            {
+              string symId = SocketManager.resultData.matrix[r][i - 1];
+              if (isSpecialSymbol(symId))
+              {
+                prevHasSpecial = true;
+                break;
+              }
+            }
+          }
+        }
+
+        float currentStagger = baseStagger;
+        if (prevHasSpecial && !IsTurboOn && !wasStopPressed)
+        {
+          currentStagger += specialSymbolStaggerIncrease;
+        }
+        currentDelay += currentStagger;
+      }
+      StartCoroutine(TriggerReelStopAfterDelay(i, currentDelay));
     }
 
     if (SocketManager.resultData.payload.winAmount > 0)
@@ -844,8 +877,8 @@ public class SlotManager : MonoBehaviour
     float speed = IsTurboOn ? 3500f : spinSpeed;
     float cycleDuration = symbolHeight / speed;
     float longestStopTime = (IsTurboOn || wasStopPressed)
-        ? ((numberOfSlots - 1) * stagger + 5f * cycleDuration + quickStopDuration)
-        : ((numberOfSlots - 1) * stagger + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
+        ? (currentDelay + 5f * cycleDuration + quickStopDuration)
+        : (currentDelay + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
 
     yield return new WaitForSeconds(longestStopTime + 0.05f);
     KillAllTweens();
@@ -866,12 +899,8 @@ public class SlotManager : MonoBehaviour
       yield return new WaitForSeconds(0.2f);
     }
     
-    // Play winning symbol animations through the AnimationManager
-    System.Func<string, bool> isSpecial = id =>
-        id == "11" || id == "12" || id == "14" ||
-        id == "15" || id == "16" || id == "17";
-    
-    yield return animationManager.PlaySpecialSymbolAnimations(isSpecial, SocketManager.resultData.matrix);
+    // Wait for all landing animations to settle completely before starting win lines or features
+    yield return new WaitUntil(() => !animationManager.AreLandingAnimationsPlaying);
     
     yield return new WaitForSeconds(0.3f);
     if (SocketManager.resultData.payload.winAmount > 0)
@@ -1301,9 +1330,9 @@ public class SlotManager : MonoBehaviour
       if (sym != null && sym.name != null)
       {
           string lowerName = sym.name.ToLower();
-          return lowerName.Contains("link") || lowerName.Contains("collect") || lowerName.Contains("diamond") || lowerName.Contains("prize");
+          return lowerName.Contains("link") || lowerName.Contains("collect") || lowerName.Contains("diamond") || lowerName.Contains("prize") || lowerName.Contains("pollos") || lowerName.Contains("lp");
       }
-      return symbolId == 11 || symbolId == 12 || symbolId == 14 || symbolId == 16;
+      return symbolId == 11 || symbolId == 12 || symbolId == 14 || symbolId == 16 || symbolId == 17;
   }
 
   private Sprite GetSpecialLayerSprite(int symbolId)
@@ -1330,6 +1359,10 @@ public class SlotManager : MonoBehaviour
           {
               if (SpecialLayerSymbols.Length > 3) return SpecialLayerSymbols[3];
           }
+          else if (lowerName.Contains("pollos") || lowerName.Contains("lp"))
+          {
+              if (SpecialLayerSymbols.Length > 4) return SpecialLayerSymbols[4];
+          }
       }
 
       switch (symbolId)
@@ -1342,6 +1375,8 @@ public class SlotManager : MonoBehaviour
               return SpecialLayerSymbols.Length > 2 ? SpecialLayerSymbols[2] : null;
           case 16: // Diamond
               return SpecialLayerSymbols.Length > 3 ? SpecialLayerSymbols[3] : null;
+          case 17: // Los Pollos
+              return SpecialLayerSymbols.Length > 4 ? SpecialLayerSymbols[4] : null;
           default:
               return null;
       }
@@ -1836,8 +1871,29 @@ public class SlotManager : MonoBehaviour
       stopSeq.Append(slotTransform.DOLocalMoveY(restY,                         stopSettleDuration   ).SetEase(Ease.InOutQuad));
     }
 
+    stopSeq.OnComplete(() => OnReelStopped(col));
     alltweens[col] = stopSeq;
     stopSeq.Play();
+  }
+
+  private void OnReelStopped(int col)
+  {
+      System.Func<string, bool> isSpecial = id =>
+          id == "11" || id == "12" || id == "14" ||
+          id == "15" || id == "16" || id == "17";
+
+      for (int row = 0; row < 3; row++)
+      {
+          if (SocketManager.resultData != null && SocketManager.resultData.matrix != null &&
+              row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
+          {
+              string symbolIdStr = SocketManager.resultData.matrix[row][col];
+              if (isSpecial(symbolIdStr))
+              {
+                  animationManager.PlaySpecialAnimationForCell(row, col);
+              }
+          }
+      }
   }
 
   // Copies the visual state (special layer, hat, value texts) from one view to another

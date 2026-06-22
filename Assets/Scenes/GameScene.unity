@@ -2653,7 +2653,6 @@ RectTransform:
   - {fileID: 1494213758}
   - {fileID: 1421310637}
   - {fileID: 1014120770}
-  - {fileID: 341970039}
   - {fileID: 636352898}
   m_Father: {fileID: 952472658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6284,11 +6283,11 @@ RectTransform:
   - {fileID: 1469134299}
   - {fileID: 538899449}
   - {fileID: 663696054}
-  m_Father: {fileID: 191298093}
+  m_Father: {fileID: 952472658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5.2279997, y: -1.8999997}
   m_SizeDelta: {x: 1286.09, y: 763.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &358033739
@@ -16229,6 +16228,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 191298093}
+  - {fileID: 341970039}
   - {fileID: 368326612}
   m_Father: {fileID: 887616460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30555,7 +30555,7 @@ MonoBehaviour:
   playerdata:
     balance: 0
   bonusdata: []
-  testToken: b115c7a06c36413b86bd4b3166db07c3
+  testToken: fa04811c001f45a49e55b52ee4ceaa97
 --- !u!4 &1787183091
 Transform:
   m_ObjectHideFlags: 0
@@ -31629,13 +31629,14 @@ MonoBehaviour:
   - {fileID: 3662014866950229404, guid: 9e336f5187ca74764b0e46e6cfdd95c3, type: 3}
   - {fileID: 3830747266416824813, guid: dd40254df98ca4498a0fccd3cac38e2b, type: 3}
   - {fileID: 2988344672356449206, guid: 274748f0c5cf84408bba319e31fb76e5, type: 3}
-  - {fileID: 619632671383141319, guid: f9f1a5ab1b28a45d094d5e249f88bc3a, type: 3}
+  - {fileID: -3992734833195870362, guid: 6aabe0c124d84496799a55288096bc27, type: 3}
   JackpotSlotSymbols: []
   SpecialLayerSymbols:
   - {fileID: 1663807130438180608, guid: 4522c3dfabaff4d8c8381af7cc336534, type: 3}
   - {fileID: 8784816691124700658, guid: 6d0980b2cde91473295370c902d44ecf, type: 3}
   - {fileID: -3313113391255114896, guid: 16dc3bf311b364cfdaeaca4ff503c27b, type: 3}
   - {fileID: 3424781359011866854, guid: f4d1a9f82da8541cb9cb2b5c88b3cdc8, type: 3}
+  - {fileID: -2684102947291226346, guid: f50cb24a03c9c425191d9c190e826054, type: 3}
   images:
   - slotImages:
     - {fileID: 1560152843}
@@ -32294,6 +32295,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 110e84ee9972a457ebb336f935e27540, type: 3}
   IconSizeFactor: 252
   stopCooldownDuration: 0.4
+  specialSymbolStaggerIncrease: 0.75
   swipeThreshold: 50
 --- !u!224 &1840228117
 RectTransform:
