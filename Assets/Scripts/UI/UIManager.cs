@@ -123,9 +123,16 @@ public class UIManager : MonoBehaviour
           "15 Spins",
           "10 Spins",
           "5 Spins",
-          "3 Spins"
+          "3 Spins",
+          "" // Extra item at the end for scroll padding
       };
       autoplayOptionsDropdown.AddOptions(options);
+
+      DropdownItemDisabler disabler = autoplayOptionsDropdown.gameObject.GetComponent<DropdownItemDisabler>();
+      if (disabler == null) {
+          disabler = autoplayOptionsDropdown.gameObject.AddComponent<DropdownItemDisabler>();
+      }
+      disabler.indexesToDisable = new List<int> { options.Count - 1 };
     }
     if (autoplaySelectionPanel) autoplaySelectionPanel.SetActive(false);
     if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
@@ -1301,4 +1308,75 @@ public class UIManager : MonoBehaviour
           }
       }
   }
+}
+
+public class DropdownItemDisabler : MonoBehaviour, UnityEngine.EventSystems.IPointerClickHandler
+{
+    public List<int> indexesToDisable = new List<int>();
+
+    public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
+    {
+        StartCoroutine(DisableItemsCoroutine());
+    }
+
+    private IEnumerator DisableItemsCoroutine()
+    {
+        yield return null;
+
+        var dropdown = GetComponent<TMP_Dropdown>();
+        if (dropdown == null) yield break;
+
+        Transform dropdownList = dropdown.transform.Find("Dropdown List");
+        if (dropdownList == null)
+        {
+            var canvas = GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                dropdownList = canvas.transform.Find("Dropdown List");
+            }
+        }
+
+        if (dropdownList == null)
+        {
+            var go = GameObject.Find("Dropdown List");
+            if (go != null)
+            {
+                dropdownList = go.transform;
+            }
+        }
+
+        if (dropdownList != null)
+        {
+            Transform content = dropdownList.Find("Viewport/Content");
+            if (content != null)
+            {
+                List<Toggle> optionToggles = new List<Toggle>();
+                for (int i = 0; i < content.childCount; i++)
+                {
+                    Transform child = content.GetChild(i);
+                    if (child.gameObject.activeSelf)
+                    {
+                        Toggle toggle = child.GetComponent<Toggle>();
+                        if (toggle != null)
+                        {
+                            optionToggles.Add(toggle);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < optionToggles.Count; i++)
+                {
+                    if (indexesToDisable.Contains(i))
+                    {
+                        optionToggles[i].interactable = false;
+                        var graphics = optionToggles[i].GetComponentsInChildren<UnityEngine.UI.Graphic>(true);
+                        foreach (var graphic in graphics)
+                        {
+                            graphic.enabled = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
