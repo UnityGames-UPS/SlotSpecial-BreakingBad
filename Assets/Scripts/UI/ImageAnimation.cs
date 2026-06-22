@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +20,10 @@ public class ImageAnimation : MonoBehaviour
     public Image rendererDelegate;
     public bool useSharedMaterial = true;
     public bool doLoopAnimation = true;
+
+    [Header("Dynamic Timing")]
+    public bool useDynamicFramerate = false;
+    public float dynamicLoopDuration = 2.0f;
 
     [Header("Startup")]
     [SerializeField] private bool StartOnAwake = false;
@@ -110,10 +114,20 @@ public class ImageAnimation : MonoBehaviour
         indexOfTexture = 0;
         currentLoopCount = 0;
 
+        currentAnimationState = ImageState.NONE;
+
         if (currentAnimationState == ImageState.NONE)
         {
             RevertToInitialState();
-            delayBetweenAnimation = IdealFrameRate * textureArray.Count / AnimationSpeed;
+            if (useDynamicFramerate && textureArray != null && textureArray.Count > 0)
+            {
+                AnimationSpeed = (float)textureArray.Count / dynamicLoopDuration;
+                delayBetweenAnimation = 1f / AnimationSpeed;
+            }
+            else
+            {
+                delayBetweenAnimation = IdealFrameRate * textureArray.Count / AnimationSpeed;
+            }
             currentAnimationState = ImageState.PLAYING;
             Invoke(nameof(AnimationProcess), delayBetweenAnimation);
         }

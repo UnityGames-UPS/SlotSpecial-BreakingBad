@@ -188,11 +188,7 @@ public class SlotManager : MonoBehaviour
   [SerializeField] private Sprite[] Yellow_Sprites;
   [SerializeField] private Sprite[] Diamond_Sprites;
   [SerializeField] private Sprite[] CC_Sprites;
-  [SerializeField] private Sprite[] LP2_Sprites;
-  [SerializeField] private Sprite[] LP3_Sprites;
-  [SerializeField] private Sprite[] LP4_Sprites;
-  [SerializeField] private Sprite[] LP5_Sprites;
-  [SerializeField] private Sprite[] LP7_Sprites;
+  [SerializeField] private Sprite[] LP_Sprites;
   [SerializeField] private Sprite[] GoldCoin_Sprites;
 
   private List<Tween> alltweens = new List<Tween>();
@@ -600,91 +596,57 @@ public class SlotManager : MonoBehaviour
     if (animScript == null) return;
     animScript.textureArray.Clear();
     animScript.textureArray.TrimExcess();
+    animScript.AnimationSpeed = 30f;
     
     switch (val)
     {
       case 0:
         foreach (Sprite s in C_Sprites) animScript.textureArray.Add(s);
-        animScript.AnimationSpeed = 19f;
         break;
       case 1:
         foreach (Sprite s in O_Sprites) animScript.textureArray.Add(s);
-        animScript.AnimationSpeed = 19f;
         break;
       case 2:
         foreach (Sprite sprite in N_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 19f;
         break;
       case 3:
         foreach (Sprite sprite in B_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 19f;
         break;
       case 4:
         foreach (Sprite sprite in Barrel_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 5:
         foreach (Sprite sprite in Bus_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 6:
         foreach (Sprite sprite in Orange_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 7:
         foreach (Sprite sprite in Purple_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 8:
         foreach (Sprite sprite in Blue_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 10:
         foreach (Sprite sprite in Yellow_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 16f;
         break;
       case 11:
         foreach (Sprite sprite in Link_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 22f;
         break;
       case 12:
         foreach (Sprite sprite in MegaLink_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 12f;
         break;
       case 14:
         foreach (Sprite sprite in CC_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 12f;
         break;
       case 15:
         foreach (Sprite sprite in GoldCoin_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 22f;
         break;
       case 16:
         foreach (Sprite sprite in Diamond_Sprites) animScript.textureArray.Add(sprite);
-        animScript.AnimationSpeed = 17f;
         break;
       case 17:
-        if (LP == 2)
-        {
-          foreach (Sprite sprite in LP2_Sprites) animScript.textureArray.Add(sprite);
-        }
-        else if (LP == 3)
-        {
-          foreach (Sprite sprite in LP3_Sprites) animScript.textureArray.Add(sprite);
-        }
-        else if (LP == 4)
-        {
-          foreach (Sprite sprite in LP4_Sprites) animScript.textureArray.Add(sprite);
-        }
-        else if (LP == 5)
-        {
-          foreach (Sprite sprite in LP5_Sprites) animScript.textureArray.Add(sprite);
-        }
-        else if (LP == 7)
-        {
-          foreach (Sprite sprite in LP7_Sprites) animScript.textureArray.Add(sprite);
-        }
-        animScript.AnimationSpeed = 12f;
+        foreach (Sprite sprite in LP_Sprites) animScript.textureArray.Add(sprite);
         break;
     }
   }
@@ -925,6 +887,10 @@ public class SlotManager : MonoBehaviour
     if (IsAutoSpin || SocketManager.resultData.payload.isFreeSpinActive || SocketManager.resultData.payload.linkFeatureActive)
     {
       yield return new WaitUntil(() => animationManager.gameObject.activeSelf || !CheckPopups); // wait for popups
+      if (LineAnimRoutine != null)
+      {
+        yield return LineAnimRoutine;
+      }
       StopGameAnimation();
       yield return new WaitForSeconds(.2f);
     }
