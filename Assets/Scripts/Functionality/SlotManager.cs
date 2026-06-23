@@ -141,7 +141,7 @@ public class SlotManager : MonoBehaviour
   [SerializeField] private StickySymbolManager stickySymbolManager;
   [SerializeField] private UIManager uiManager;
   [SerializeField] private BonusManager _bonusManager;
-  [SerializeField] private AnimationManager animationManager;
+  [SerializeField] internal AnimationManager animationManager;
   [SerializeField] public JackpotManager jackpotManager;
   [SerializeField] private PopupManager popupManager;
 
@@ -1179,6 +1179,10 @@ public class SlotManager : MonoBehaviour
           yield return HandlePrizeCoinJackpot();
           break;
 
+        case FeatureType.CashCollect:
+          yield return HandleCashCollectSequence();
+          break;
+
         case FeatureType.CashCollectAndLink:
           // Show winnings before transitioning to bonus
           if (SocketManager.resultData.payload.winAmount > 0 && !winningsDisplayed)
@@ -1347,6 +1351,38 @@ public class SlotManager : MonoBehaviour
     _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
     TriggerSpinState(false);
     // yield break is handled by the caller
+  }
+
+  private IEnumerator HandleCashCollectSequence()
+  {
+    Debug.Log("[FeatureQueue] HandleCashCollectSequence: Starting cash collect sequence");
+    
+    IsFeatureTransitioning = true;
+    uiManager.UpdateButtonsState();
+
+    // Stop winning line animations during cash collect sequence
+    StopGameAnimation();
+    yield return new WaitForSeconds(0.2f);
+
+    var ccResult = SocketManager.resultData.payload.cashCollectResult;
+    if (ccResult != null && ccResult.triggered)
+    {
+      yield return uiManager.PlayCashCollectSequence(ccResult);
+    }
+
+    // Restart winning line animations if they were active
+    if (SocketManager.resultData.payload.lineWins != null && SocketManager.resultData.payload.lineWins.Count > 0)
+    {
+      List<LineWin> winLine = new();
+      foreach (var item in SocketManager.resultData.payload.lineWins)
+      {
+        winLine.Add(item);
+      }
+      CheckPayoutLineBackend(winLine);
+    }
+
+    IsFeatureTransitioning = false;
+    uiManager.UpdateButtonsState();
   }
 
   /// <summary>
@@ -1847,7 +1883,7 @@ public class SlotManager : MonoBehaviour
           bottomView.ClearValues();
           ConfigureSymbolView(bottomView, symbolToFeed);
         }
-        ConfigureSpecialValues(col, targetRowIndex, symbolToFeed, imgs[lastIdx]);
+        ConfigureSpecialValues(col, GetSourceRowIndex(col, targetRowIndex), symbolToFeed, imgs[lastIdx]);
       }
       else
       {
@@ -1912,7 +1948,7 @@ public class SlotManager : MonoBehaviour
           topView.ClearValues();
           ConfigureSymbolView(topView, symbolToFeed);
         }
-        ConfigureSpecialValues(col, targetRowIndex, symbolToFeed, imgs[0]);
+        ConfigureSpecialValues(col, GetSourceRowIndex(col, targetRowIndex), symbolToFeed, imgs[0]);
       }
       else
       {
@@ -1964,24 +2000,65 @@ public class SlotManager : MonoBehaviour
     }
   }
 
-  private int GetResultSymbolId(int col, int row)
+  private int GetSourceRowIndex(int col, int targetRowIndex)
+  {
+    if (isMagnetScenarioActive && col == magnetCol)
+    {
+      if (magnetRow == 0) // top row, nudge down
+      {
+        if (targetRowIndex == 0) return 1;
+        if (targetRowIndex == 1) return 2;
+      }
+      else if (magnetRow == 2) // bottom row, nudge up
+      {
+        if (targetRowIndex == 1) return 0;
+        if (targetRowIndex == 2) return 1;
+      }
+    }
+    return targetRowIndex;
+  }
+
+  private int GetResultSymbolIdInternal(int col, int row)
   {
     if (SocketManager.resultData == null || SocketManager.resultData.matrix == null)
       return UnityEngine.Random.Range(0, 9);
-
-    if (isMagnetScenarioActive && col == magnetCol && row == magnetRow)
-    {
-      int r;
-      do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
-      return r;
-    }
-
     int resultNum = int.Parse(SocketManager.resultData.matrix[row][col]);
     if (resultNum == 9) // BLANK SYMBOL - NEEDS RANDOM SYMBOL
     {
       return UnityEngine.Random.Range(0, 9); // 0 to 8 inclusive
     }
     return resultNum;
+  }
+
+  private int GetResultSymbolId(int col, int row)
+  {
+    if (isMagnetScenarioActive && col == magnetCol)
+    {
+      if (magnetRow == 0) // top row, nudge down
+      {
+        if (row == 0) return GetResultSymbolIdInternal(col, 1);
+        if (row == 1) return GetResultSymbolIdInternal(col, 2);
+        if (row == 2)
+        {
+          int r;
+          do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
+          return r;
+        }
+      }
+      else if (magnetRow == 2) // bottom row, nudge up
+      {
+        if (row == 0)
+        {
+          int r;
+          do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
+          return r;
+        }
+        if (row == 1) return GetResultSymbolIdInternal(col, 0);
+        if (row == 2) return GetResultSymbolIdInternal(col, 1);
+      }
+    }
+
+    return GetResultSymbolIdInternal(col, row);
   }
 
   private void ConfigureSpecialValues(int col, int row, int symbolId, Image img)

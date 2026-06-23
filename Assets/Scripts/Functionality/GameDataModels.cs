@@ -1002,6 +1002,7 @@ public enum FeatureType
 {
     None,
     PrizeCoinJackpot,     // Mini jackpot slot (PrizeCoin with CashCollect)
+    CashCollect,          // Normal Cash Collect feature
     CashCollectAndLink,   // Heisenberg Cash Collect & Link feature
     FreeSpin,             // Free spins trigger (from normal spin)
     FreeSpinRetrigger     // Free spins re-trigger (during active free spins)
@@ -1054,8 +1055,10 @@ public class FeatureQueue
     /// Builds the feature queue from a spin response payload.
     /// Determines which features triggered and enqueues them in priority order:
     ///   1. PrizeCoinJackpot   (plays inline — jackpot mini-slot animation)
-    ///   2. CashCollectAndLink (transitions to BonusManager)
-    ///   3. FreeSpin / FreeSpinRetrigger (starts or adds to free spins)
+    ///   2. CashCollect        (normal Cash Collect sequence)
+    ///   3. CashCollectAndLink (transitions to BonusManager)
+    ///   4. FreeSpin / FreeSpinRetrigger (starts or adds to free spins)
+    ///   5. FreeSpin: plays last (new trigger from normal game, transitions after Link)
     /// </summary>
     /// <param name="payload">The server spin response payload.</param>
     /// <param name="isFreeSpinCurrentlyActive">Whether free spins are already running.</param>
@@ -1087,13 +1090,19 @@ public class FeatureQueue
             Enqueue(FeatureType.FreeSpinRetrigger);
         }
 
-        // 3. Cash Collect & Link: transitions to BonusManager
+        // 3. Normal Cash Collect (if triggered without Link)
+        if (hasCC && !hasLink)
+        {
+            Enqueue(FeatureType.CashCollect);
+        }
+
+        // 4. Cash Collect & Link: transitions to BonusManager
         if (hasLink)
         {
             Enqueue(FeatureType.CashCollectAndLink);
         }
 
-        // 4. Free Spin: plays last (new trigger from normal game, transitions after Link)
+        // 5. Free Spin: plays last (new trigger from normal game, transitions after Link)
         if (hasFreeSpin && !isFreeSpinCurrentlyActive)
         {
             Enqueue(FeatureType.FreeSpin);

@@ -814,4 +814,134 @@ public class AnimationManager : MonoBehaviour
             activeLandingAnimationsCount = Mathf.Max(0, activeLandingAnimationsCount - 1);
         }
     }
+
+    public void StartSymbolAnimationLoop(int row, int col)
+    {
+        if (slotManager == null || slotManager.ResultData == null || slotManager.ResultData.matrix == null) return;
+        if (row < 0 || row >= 3 || col < 0 || col >= 5) return;
+
+        string symbolStr = slotManager.ResultData.matrix[row][col];
+        int symbolId = int.Parse(symbolStr);
+
+        SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
+        if (symbolView == null) return;
+
+        // 1. Fade out the corresponding main display symbol
+        symbolView.DOKill();
+        if (symbolView.canvasGroup != null)
+        {
+            symbolView.canvasGroup.DOKill();
+            symbolView.canvasGroup.alpha = 0f;
+        }
+        else if (symbolView.mainImage != null)
+        {
+            symbolView.mainImage.DOKill();
+            symbolView.mainImage.color = new Color(symbolView.mainImage.color.r, symbolView.mainImage.color.g, symbolView.mainImage.color.b, 0f);
+        }
+        symbolView.SetBackTintActive(false);
+
+        // 2. Enable matching animation object on the Animation Slot
+        ImageAnimation animCell = animationGrid[row][col];
+        animCell.transform.position = symbolView.transform.position;
+        
+        animCell.DOKill();
+        CanvasGroup animCG = animCell.GetComponent<CanvasGroup>();
+        if (animCG != null)
+        {
+            animCG.DOKill();
+            animCG.alpha = 1f;
+        }
+        else if (animCell.rendererDelegate != null)
+        {
+            animCell.rendererDelegate.DOKill();
+            animCell.rendererDelegate.color = new Color(animCell.rendererDelegate.color.r, animCell.rendererDelegate.color.g, animCell.rendererDelegate.color.b, 1f);
+        }
+        animCell.gameObject.SetActive(true);
+
+        // Configure and run
+        int lpVal = 0;
+        string coinTxt = null;
+        var coinPos = slotManager.GetCoinPosition(row, col);
+        if (coinPos != null)
+        {
+            lpVal = coinPos.coinValue;
+            if (symbolId == 15) coinTxt = (coinPos.coinValue * slotManager.TotalBet).ToString() + "x";
+            else if (symbolId == 17) lpVal = coinPos.coinValue;
+        }
+
+        slotManager.ConfigureAnimationSprites(animCell, symbolId, lpVal, coinTxt);
+
+        animCell.useDynamicFramerate = true;
+        animCell.dynamicLoopDuration = winSymbolLoopDuration;
+
+        // Sync and animate overlay text
+        AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
+        if (textHelper == null)
+        {
+            textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
+        }
+        textHelper.SetupFromHierarchy();
+        if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
+        {
+            textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, false);
+        }
+        else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
+        {
+            textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, false);
+        }
+        else
+        {
+            textHelper.Clear();
+        }
+
+        animCell.doLoopAnimation = true;
+        animCell.onLoopComplete = null;
+        animCell.StopAnimation();
+        animCell.StartAnimation();
+    }
+
+    public void StopSymbolAnimationLoop(int row, int col)
+    {
+        if (row < 0 || row >= 3 || col < 0 || col >= 5) return;
+        ImageAnimation animCell = animationGrid[row][col];
+        animCell.DOKill();
+        animCell.onLoopComplete = null;
+        animCell.StopAnimation();
+
+        AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
+        if (textHelper != null)
+        {
+            textHelper.Clear();
+        }
+
+        CanvasGroup animCG = animCell.GetComponent<CanvasGroup>();
+        if (animCG != null)
+        {
+            animCG.DOFade(0f, 0.1f).OnComplete(() => animCell.gameObject.SetActive(false));
+        }
+        else if (animCell.rendererDelegate != null)
+        {
+            animCell.rendererDelegate.DOFade(0f, 0.1f).OnComplete(() => animCell.gameObject.SetActive(false));
+        }
+        else
+        {
+            animCell.gameObject.SetActive(false);
+        }
+
+        SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
+        if (symbolView != null)
+        {
+            symbolView.DOKill();
+            if (symbolView.canvasGroup != null)
+            {
+                symbolView.canvasGroup.DOKill();
+                symbolView.canvasGroup.alpha = 1f;
+            }
+            else if (symbolView.mainImage != null)
+            {
+                symbolView.mainImage.DOKill();
+                symbolView.mainImage.color = new Color(symbolView.mainImage.color.r, symbolView.mainImage.color.g, symbolView.mainImage.color.b, 1f);
+            }
+        }
+    }
 }

@@ -69,6 +69,14 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject freeSpinPopupTitleObject;
   [SerializeField] private TMP_Text freeSpinPopupSpinsText;
 
+  [Header("Cash Collect Feature UI")]
+  [SerializeField] private CanvasGroup jackpotPanelCanvasGroup;
+  [SerializeField] private CanvasGroup coinWinDisplayPanelCanvasGroup;
+  [SerializeField] private TMP_Text coinWinDisplayText;
+  [SerializeField] private GameObject trailRendererPrefab;
+  [Range(0.2f, 3.0f)]
+  [SerializeField] private float trailMoveDuration = 1.0f;
+
   internal int totalFreeSpins = 0;
   private double accumulatedFreeSpinWin = 0f;
   internal double AccumulatedFreeSpinWin => accumulatedFreeSpinWin;
@@ -104,6 +112,7 @@ public class UIManager : MonoBehaviour
 
   private void Start()
   {
+
     if (totalWinText != null) totalWinText.text = "0.000";
     if (featureWinPanel != null) featureWinPanel.SetActive(false);
     if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
@@ -656,6 +665,175 @@ public class UIManager : MonoBehaviour
   internal IEnumerator TrailRendererAnimation(GameObject TrailRendererGO, int textIndex, int coinvalue, bool IsBonus = false)
   {
     yield break;
+  }
+
+  internal IEnumerator PlayCashCollectSequence(CashCollectResult result)
+  {
+      if (result == null || !result.triggered) yield break;
+
+      // 1. Hide Jackpot Panel & Show Coin Win Display Panel
+      if (jackpotPanelCanvasGroup != null)
+      {
+          jackpotPanelCanvasGroup.DOKill();
+          jackpotPanelCanvasGroup.DOFade(0f, 0.5f);
+      }
+      
+      if (coinWinDisplayPanelCanvasGroup != null)
+      {
+          coinWinDisplayPanelCanvasGroup.DOKill();
+          coinWinDisplayPanelCanvasGroup.gameObject.SetActive(true);
+          coinWinDisplayPanelCanvasGroup.alpha = 0f;
+          coinWinDisplayPanelCanvasGroup.DOFade(1f, 0.5f);
+      }
+
+      if (coinWinDisplayText != null)
+      {
+          coinWinDisplayText.text = "0.000";
+      }
+
+      yield return new WaitForSeconds(0.5f);
+
+      // Start loop animations on the CashCollect symbols
+      List<List<int>> ccPositions = new List<List<int>>();
+      if (result.positions != null)
+      {
+          foreach (var pos in result.positions)
+          {
+              if (pos.Type == Newtonsoft.Json.Linq.JTokenType.Array)
+              {
+                  int r = (int)pos[0];
+                  int c = (int)pos[1];
+                  ccPositions.Add(new List<int> { r, c });
+                  if (slotManager.animationManager != null)
+                  {
+                      slotManager.animationManager.StartSymbolAnimationLoop(r, c);
+                  }
+              }
+          }
+      }
+
+      double accumulatedVal = 0f;
+      int activeFlyingCoins = 0;
+      if (result.collectedCoins != null)
+      {
+          activeFlyingCoins = result.collectedCoins.Count;
+      }
+
+      // 2. Play flying animations from cash coins to display panel
+      if (result.collectedCoins != null && result.collectedCoins.Count > 0)
+      {
+          foreach (var coin in result.collectedCoins)
+          {
+              int r = coin.position[0];
+              int c = coin.position[1];
+              SlotSymbolView cashCoinView = slotManager.GetSymbolView(r, c);
+              if (cashCoinView == null)
+              {
+                  activeFlyingCoins--;
+                  continue;
+              }
+
+              // Pop animation on gold coin
+              cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.4f, 1, 0.5f);
+
+              // Spawn trail renderer prefab in the middle of the cash coin
+              if (trailRendererPrefab != null)
+              {
+                  GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
+                  
+                  // Ensure local scale is (1,1,1) to avoid canvas scale distortions
+                  trInstance.transform.localScale = Vector3.one;
+                  
+                  // Position at coin's world position
+                  trInstance.transform.position = cashCoinView.transform.position;
+                  
+                  // Reset local Z position to 0 to ensure rendering on the UI camera view plane
+                  Vector3 localPos = trInstance.transform.localPosition;
+                  localPos.z = 0f;
+                  trInstance.transform.localPosition = localPos;
+
+                  // Set text of the spawned object to show the coin's collected value
+                  double coinAmt = coin.coinValue * slotManager.TotalBet;
+                  TMP_Text trText = trInstance.GetComponentInChildren<TMP_Text>();
+                  if (trText != null)
+                  {
+                      trText.text = coinAmt.ToString("F3");
+                  }
+
+                  // Fly animation using DOTween to the coinWinDisplayPanel position
+                  Vector3 targetPos = coinWinDisplayPanelCanvasGroup != null ? coinWinDisplayPanelCanvasGroup.transform.position : Vector3.zero;
+                  
+                  double finalTarget = accumulatedVal + coinAmt;
+                  accumulatedVal = finalTarget;
+
+                  trInstance.transform.DOMove(targetPos, trailMoveDuration).SetEase(Ease.OutQuad).OnComplete(() =>
+                  {
+                      Destroy(trInstance);
+                      
+                      double currentVal = 0;
+                      if (coinWinDisplayText != null)
+                      {
+                          double.TryParse(coinWinDisplayText.text, out currentVal);
+                      }
+                      
+                      DOTween.To(() => currentVal, (val) =>
+                      {
+                          if (coinWinDisplayText != null)
+                              coinWinDisplayText.text = val.ToString("F3");
+                      }, finalTarget, 0.3f).OnComplete(() =>
+                      {
+                          activeFlyingCoins--;
+                      });
+                  });
+
+                  // Stagger before next coin
+                  yield return new WaitForSeconds(0.4f);
+              }
+              else
+              {
+                  // Fallback if no prefab is assigned
+                  double startVal = accumulatedVal;
+                  accumulatedVal += coin.coinValue * slotManager.TotalBet;
+                  double endVal = accumulatedVal;
+                  if (coinWinDisplayText != null)
+                      coinWinDisplayText.text = endVal.ToString("F3");
+                  activeFlyingCoins--;
+                  yield return new WaitForSeconds(0.4f);
+              }
+          }
+      }
+
+      // Wait for all active flying coins to hit the target and complete their count-up tweens
+      yield return new WaitUntil(() => activeFlyingCoins == 0);
+
+      yield return new WaitForSeconds(1.0f);
+
+      // Stop loop animations on the CashCollect symbols
+      foreach (var ccPos in ccPositions)
+      {
+          if (slotManager.animationManager != null)
+          {
+              slotManager.animationManager.StopSymbolAnimationLoop(ccPos[0], ccPos[1]);
+          }
+      }
+
+      // 3. Hide Coin Win Display Panel & Show Jackpot Panel
+      if (coinWinDisplayPanelCanvasGroup != null)
+      {
+          coinWinDisplayPanelCanvasGroup.DOKill();
+          coinWinDisplayPanelCanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+          {
+              coinWinDisplayPanelCanvasGroup.gameObject.SetActive(false);
+          });
+      }
+
+      if (jackpotPanelCanvasGroup != null)
+      {
+          jackpotPanelCanvasGroup.DOKill();
+          jackpotPanelCanvasGroup.DOFade(1f, 0.5f);
+      }
+
+      yield return new WaitForSeconds(0.5f);
   }
 
   internal IEnumerator MidGameImageAnimation(ImageAnimation imageAnimation, double num = 0)

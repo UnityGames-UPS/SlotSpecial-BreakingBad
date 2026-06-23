@@ -1860,10 +1860,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotManager: {fileID: 2046803210}
   SocketManager: {fileID: 500036492}
-  audioController: {fileID: 1030743558465206379}
   uiManager: {fileID: 377874625}
   staticSymbol: {fileID: 525894857}
-  BonusWinningsImageAnimation: {fileID: 704012395}
   index9Sprites:
   - {fileID: 21300000, guid: 6363bb94a65c940548b9deda19960f39, type: 3}
   - {fileID: 21300000, guid: 20578f00cf2374d4fae3f59e5e062333, type: 3}
@@ -1877,18 +1875,6 @@ MonoBehaviour:
   Diamond_Sprite: {fileID: 21300000, guid: f77e2565121d04d769d42382418d9dd2, type: 3}
   NormalSlot_CG: {fileID: 633269480}
   BonusSlot_CG: {fileID: 1157817364}
-  BonusSlotStart_Button: {fileID: 1431186201}
-  NormalSlotStart_Button: {fileID: 1704493507}
-  AutoSpin_Button: {fileID: 865388906}
-  BonusSpinCounter_Text: {fileID: 315755866}
-  BonusWinnings_Text: {fileID: 1439442878}
-  GrandPayoutTRTransform: {fileID: 1413371893}
-  BonusWinningsPosition: {fileID: 1609369693}
-  WinningsUI_Panel: {fileID: 1013406162}
-  FreeSpinsCounterUI_Panel: {fileID: 1101532588}
-  lines: {fileID: 1064242909}
-  lineBet: {fileID: 314042190}
-  totalBet: {fileID: 1357515784}
   TotalMiniSlotImages:
   - slotImages:
     - {fileID: 1027784037}
@@ -2014,7 +2000,6 @@ MonoBehaviour:
     - {fileID: 678020070}
     - {fileID: 1695022945}
     - {fileID: 108974315}
-  allcoinPositions: []
 --- !u!1 &66086470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,6 +3881,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 133102264}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -4822,6 +4809,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 184767113}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -7486,6 +7475,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 251644019}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -7629,6 +7620,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 253371603}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -8579,6 +8572,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 283576121}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -9011,6 +9006,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 293408888}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 16
@@ -9288,6 +9285,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 306305976}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -10912,6 +10911,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 358730801}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -11256,6 +11257,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 363433457}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -11718,231 +11721,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f2c8ee610c34558839b64290afe0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioController: {fileID: 1030743558465206379}
   slotManager: {fileID: 2046803210}
   socketManager: {fileID: 500036492}
-  MainPopup_Object: {fileID: 1952695970}
+  bonusManager: {fileID: 0}
+  popupManager: {fileID: 0}
+  infoPanel: {fileID: 0}
+  infoButton: {fileID: 0}
+  infoBackButton: {fileID: 0}
+  symbolTextMaps: []
+  autoplaySelectionPanel: {fileID: 0}
+  autoplayOptionsDropdown: {fileID: 0}
+  autoplayStartButton: {fileID: 0}
+  autoplayPanelClose: {fileID: 0}
+  autoplayCounterObject: {fileID: 0}
+  autoplayCounterText: {fileID: 0}
   JackpotText:
   - {fileID: 1828104853}
   - {fileID: 1547560990}
   - {fileID: 1687635693}
   - {fileID: 1914329161}
-  WinPopup_Object: {fileID: 1585514364}
-  Winnings_ImageAnimation: {fileID: 293408887}
-  WinTextBgImage: {fileID: 93783419}
-  Win_Text: {fileID: 2054037593}
-  BigWin_Sprites:
-  - {fileID: 21300000, guid: fbac7edcc321c4166b475a31a018c74b, type: 3}
-  - {fileID: 21300000, guid: 1489c23e7d81c438eaad1cf62022de7f, type: 3}
-  - {fileID: 21300000, guid: 454bd208e3d664bfd9635a52026400ca, type: 3}
-  - {fileID: 21300000, guid: c0f0a98686ecc48c3a251e32a35e8714, type: 3}
-  - {fileID: 21300000, guid: bb26f39c324f849c499b288a1a171c5b, type: 3}
-  - {fileID: 21300000, guid: c4f22c8ceadd54a9d91756c2968c3098, type: 3}
-  - {fileID: 21300000, guid: 2615dade69964464bb61e56b80e845c7, type: 3}
-  - {fileID: 21300000, guid: 542c6838d125b4d959d9911e2cac1fc2, type: 3}
-  - {fileID: 21300000, guid: 560bd2f09478741d38cf3c166e155f77, type: 3}
-  - {fileID: 21300000, guid: 933c0295c902c4af587fde5f62d39b48, type: 3}
-  - {fileID: 21300000, guid: 1a5030d10c0d347879d09e9361ec6173, type: 3}
-  - {fileID: 21300000, guid: 525a8680d4fcb4679823faca1e3903e4, type: 3}
-  - {fileID: 21300000, guid: 876c1ed34295a4b67ad12b5470f03fcb, type: 3}
-  - {fileID: 21300000, guid: 7b50070b1cbd8490aa65a72910d478d1, type: 3}
-  - {fileID: 21300000, guid: 8b16de9b3f58b439aa667897049685fe, type: 3}
-  - {fileID: 21300000, guid: c57aec8223a4146ab90b12de091651ac, type: 3}
-  - {fileID: 21300000, guid: 9a711040428464bf6b78acf82e6746ff, type: 3}
-  - {fileID: 21300000, guid: 975d4d67513d94a16a7405a0d04541b1, type: 3}
-  - {fileID: 21300000, guid: 8f25cf7cc33944beba3a8d643fc08bfa, type: 3}
-  - {fileID: 21300000, guid: 46a72aeba2add412799fb090e497c0fe, type: 3}
-  - {fileID: 21300000, guid: 73b5491f430524d829a8050d18f89cc0, type: 3}
-  - {fileID: 21300000, guid: afda144bbd7644dacafd359a2b98ee21, type: 3}
-  - {fileID: 21300000, guid: 56ab9bac4d00448aca280beae446721e, type: 3}
-  - {fileID: 21300000, guid: c4c66cb7773184afaa6b857c1a1ebcb3, type: 3}
-  - {fileID: 21300000, guid: ed9a10c44d30a4031b4835e481c8dcc6, type: 3}
-  - {fileID: 21300000, guid: 96c089a2902564dac934f7fac996fdea, type: 3}
-  - {fileID: 21300000, guid: db6bf7cd999364b899cc2160f4b5c56d, type: 3}
-  - {fileID: 21300000, guid: 23b314b08827b48d68abc84731f3d37c, type: 3}
-  - {fileID: 21300000, guid: 8723dce6b9c1f4fdd957104a22f7aac0, type: 3}
-  - {fileID: 21300000, guid: 89da65b7c2d5f48a6b6dfe0b3bfe39b6, type: 3}
-  - {fileID: 21300000, guid: c664612412aa14c318de4000bb60fa87, type: 3}
-  - {fileID: 21300000, guid: 2644d9d2aec4d41e2b322ec525c29c21, type: 3}
-  - {fileID: 21300000, guid: d81a234473ebc489985e521d98f2af8d, type: 3}
-  - {fileID: 21300000, guid: 997c0e5d1bb304300b1aaa6786af1adc, type: 3}
-  - {fileID: 21300000, guid: 57fbcbb2d06c44cf4b49c0a54079b9b9, type: 3}
-  - {fileID: 21300000, guid: 704c53e813f1d43578776f4574644185, type: 3}
-  - {fileID: 21300000, guid: 2c96bdce9771d44b6a8e20ec736700b0, type: 3}
-  - {fileID: 21300000, guid: 4d264afc6a8164457b9afc8ebcb911ca, type: 3}
-  - {fileID: 21300000, guid: 0685e09a8fdda41f9bb007b7070849fb, type: 3}
-  - {fileID: 21300000, guid: f6b134fbb9b4a45c3bb07af1c24d7979, type: 3}
-  - {fileID: 21300000, guid: 5f5309f4ebab242afae79911ffd43e6f, type: 3}
-  - {fileID: 21300000, guid: 8a3093ca2c4a34c77824ea2f307ca479, type: 3}
-  - {fileID: 21300000, guid: 82ebfbbaf734c41bda3797c359a75a4f, type: 3}
-  - {fileID: 21300000, guid: 50da9576bf378447f810c3b0845cdd9c, type: 3}
-  - {fileID: 21300000, guid: ba5958d621136433fa98125f0c9fc187, type: 3}
-  - {fileID: 21300000, guid: 26695407be5db44888d3fc80f59e5162, type: 3}
-  - {fileID: 21300000, guid: d2d71de0e5b704d95a34253a949d3556, type: 3}
-  - {fileID: 21300000, guid: 53a6c5b63e384453cb6b85833a7afa24, type: 3}
-  MegaWin_Sprites:
-  - {fileID: 21300000, guid: 3356af5235e524aeca72748d1229d5c8, type: 3}
-  - {fileID: 21300000, guid: 3356af5235e524aeca72748d1229d5c8, type: 3}
-  - {fileID: 21300000, guid: 2651d59d21ae04195a45d09d3344dfff, type: 3}
-  - {fileID: 21300000, guid: aed2c0bb07d0445cd98edd5df4ae748e, type: 3}
-  - {fileID: 21300000, guid: 0dfbe19507d3847e2851a1b05b27c2d0, type: 3}
-  - {fileID: 21300000, guid: 60a93d92781db4063971a38c5774e9c8, type: 3}
-  - {fileID: 21300000, guid: 60a93d92781db4063971a38c5774e9c8, type: 3}
-  - {fileID: 21300000, guid: f41a5723921fe46faab195d91e70fde3, type: 3}
-  - {fileID: 21300000, guid: 1e7a8b48810054af4a3d402b752fdf2d, type: 3}
-  - {fileID: 21300000, guid: f093c9afd42a1407b96f51331ab68db6, type: 3}
-  - {fileID: 21300000, guid: 3db86f39eb5e746a897112e37ddeff22, type: 3}
-  - {fileID: 21300000, guid: 8c52f213e6aa549cbb0005a608362f36, type: 3}
-  - {fileID: 21300000, guid: 109ec14a7665b481a8bf6e5e1a7ecf7b, type: 3}
-  - {fileID: 21300000, guid: ab6bf2970ca224ea4896996a6cc5bd33, type: 3}
-  - {fileID: 21300000, guid: 7b05b5d6e536643dfb8faac6cf834ef5, type: 3}
-  - {fileID: 21300000, guid: 46220f070f9bf4d478f75e446a142340, type: 3}
-  - {fileID: 21300000, guid: 8ffdd526702a84476b6586cc22353735, type: 3}
-  - {fileID: 21300000, guid: f76a610f1bb0b41c4b44b6b3a3cf5edc, type: 3}
-  - {fileID: 21300000, guid: 2b0f3d599cc224ab7975c1412d16a971, type: 3}
-  - {fileID: 21300000, guid: 35fd816e7ada34e9d8c7d55d60490358, type: 3}
-  - {fileID: 21300000, guid: ac57cb45814834702ae0e988e807842c, type: 3}
-  - {fileID: 21300000, guid: d6222d2bcb2be4a41a9a91dee4dd8478, type: 3}
-  - {fileID: 21300000, guid: a2e268134b6a24227b5c3768cee4ecab, type: 3}
-  - {fileID: 21300000, guid: 8a1b271f442ff44febced6c915be970d, type: 3}
-  - {fileID: 21300000, guid: c738cbb654ef6462f97c7f4fa061027c, type: 3}
-  - {fileID: 21300000, guid: 08e7313ce4d7b4e1696143f479b90251, type: 3}
-  - {fileID: 21300000, guid: 7b6cb9866d2024e1582d435dec6b4fe4, type: 3}
-  - {fileID: 21300000, guid: 7bdc75811564447b2a73bc26e1b2f4ab, type: 3}
-  - {fileID: 21300000, guid: ba59a960c6f074fa5af18b8281dda631, type: 3}
-  - {fileID: 21300000, guid: cf99d324efc2040b69cd4eb5936aff9d, type: 3}
-  - {fileID: 21300000, guid: 7924302747c4e49b696a3cb4865fec3b, type: 3}
-  - {fileID: 21300000, guid: 7928d24703eeb4b89973e7433ed882a1, type: 3}
-  - {fileID: 21300000, guid: 52e1d79e497cf4679ba1125b534ccd26, type: 3}
-  - {fileID: 21300000, guid: 72d348a4c689f4b0bbe56eba1dbbd305, type: 3}
-  - {fileID: 21300000, guid: 2b447a16cef2d4d80a86715b2ac2703b, type: 3}
-  - {fileID: 21300000, guid: 9a24039fb96c8494798dd9d29378d232, type: 3}
-  - {fileID: 21300000, guid: 8cec81e83d9fb4f71a072bfb5d34d9c3, type: 3}
-  - {fileID: 21300000, guid: 610eb0b491cc84e1a8f8db02ae5775c8, type: 3}
-  - {fileID: 21300000, guid: aad050f0909564bc3b93c94211732670, type: 3}
-  - {fileID: 21300000, guid: e5eed0f9f959141778fd389e66081273, type: 3}
-  - {fileID: 21300000, guid: c8354a700627841de8ec10f633e09cf2, type: 3}
-  - {fileID: 21300000, guid: c3c491a703b4a4ff5a55c6700a246050, type: 3}
-  - {fileID: 21300000, guid: 4e47fb531c86247ad9ae06ca1773f343, type: 3}
-  - {fileID: 21300000, guid: a8e376f3877804188a7bae3696982953, type: 3}
-  - {fileID: 21300000, guid: ef7414d75802749378ee72fedd5f5bff, type: 3}
-  - {fileID: 21300000, guid: 04460ae762bdd4975ac004b925e2e6ce, type: 3}
-  - {fileID: 21300000, guid: dd02cf48f3484481295ce98ea8d5f145, type: 3}
-  - {fileID: 21300000, guid: d89b182e29a2d49e282a89fe8832f09e, type: 3}
-  - {fileID: 21300000, guid: f3c58517d39954db58c86ff2f7236926, type: 3}
-  - {fileID: 21300000, guid: b8525d98bfdf148b18b22d9256b63b5f, type: 3}
-  - {fileID: 21300000, guid: 3138844bd575a4d02b3cb07a8f2bd1cf, type: 3}
-  - {fileID: 21300000, guid: 3293d2ac748434942a06ebe55611bd55, type: 3}
-  - {fileID: 21300000, guid: 2a8274045f7734fb3b4c8a7ed5b2ce90, type: 3}
-  - {fileID: 21300000, guid: ad23ab0ff736449068d487bbd9f62874, type: 3}
-  - {fileID: 21300000, guid: 3ca1d580e0989424683c47c0198708c7, type: 3}
-  - {fileID: 21300000, guid: c1b2e86989e264aa2845c9102cd92204, type: 3}
-  - {fileID: 21300000, guid: 04ef95c0ce29c44b1b73b97015630df6, type: 3}
-  - {fileID: 21300000, guid: 790c939d617b04bf4916a21be81b0bcf, type: 3}
-  - {fileID: 21300000, guid: 2f41bc117e1b443ada30a0f821d12187, type: 3}
-  - {fileID: 21300000, guid: 8c2985c53b8e3469a81e2e90baf873f2, type: 3}
-  - {fileID: 21300000, guid: 3ebfe88049ee14d9a890d977b5a65803, type: 3}
-  - {fileID: 21300000, guid: 898a67291611c49e295816b1ff5608e3, type: 3}
-  BonusWinnings_Sprites:
-  - {fileID: 21300000, guid: a4261040dc4a14e02bd08ae7fbe39c2d, type: 3}
-  - {fileID: 21300000, guid: c1978f5ec093c4421ab8c4a3715e2738, type: 3}
-  - {fileID: 21300000, guid: 8ab87ea98e9764ec08404a6f482f38a6, type: 3}
-  - {fileID: 21300000, guid: 003e12280e9d3400ca11e31e603eef94, type: 3}
-  - {fileID: 21300000, guid: a6cd5ec087f3c4db0b0e1697be1a52cc, type: 3}
-  - {fileID: 21300000, guid: 3b3090bc2763740ea886c458ffe635b1, type: 3}
-  - {fileID: 21300000, guid: 5d9685fc2b8cb40d9875e960c7ff1735, type: 3}
-  - {fileID: 21300000, guid: cab907e8b588840869b6366627ef1915, type: 3}
-  - {fileID: 21300000, guid: 28e5afa1b89ca44998d408f9909f852e, type: 3}
-  - {fileID: 21300000, guid: 3395d6c6b1aa342b1ae568ef58a783a9, type: 3}
-  - {fileID: 21300000, guid: 6596437e7438a4979b9a86a9ee73be29, type: 3}
-  - {fileID: 21300000, guid: d3d1ac8b69a7f4f40b75cc11386dd21f, type: 3}
-  - {fileID: 21300000, guid: 41f287dff79bc489c92513c3ac7a8756, type: 3}
-  - {fileID: 21300000, guid: 3128d36ff30734c01ba4301a91b29a2a, type: 3}
-  - {fileID: 21300000, guid: d05171f7e4bb04733b0cdf53aa63a844, type: 3}
-  - {fileID: 21300000, guid: 7a489984c6c3e480ca5deb3ee96ad8f8, type: 3}
-  - {fileID: 21300000, guid: e6b04ab2d44b646069c01d63da383e81, type: 3}
-  - {fileID: 21300000, guid: 879e89ce931c54d3b80c783a87e8fde4, type: 3}
-  - {fileID: 21300000, guid: 0d24a48a4b1b6445d91c24c6b28ba386, type: 3}
-  - {fileID: 21300000, guid: b3bb0146683a8482395e584b654d0bd5, type: 3}
-  - {fileID: 21300000, guid: e1cf6e285817d4eeda7e8eb896f1a133, type: 3}
-  - {fileID: 21300000, guid: d843d7e4004dc4e52889599f4a0d2039, type: 3}
-  - {fileID: 21300000, guid: 3a1553b83f76c41ecbec7a7dbfa21cb3, type: 3}
-  - {fileID: 21300000, guid: f2bf64f257aa04ae099580a5b87ab357, type: 3}
-  - {fileID: 21300000, guid: 410fa1d17c69b41ed96fecd0bd2e6c4e, type: 3}
-  - {fileID: 21300000, guid: f8ec5226b46564594b0bd8df84884c52, type: 3}
-  - {fileID: 21300000, guid: 9224727ca401145e0a98ade855d92133, type: 3}
-  - {fileID: 21300000, guid: 0af4183da32414ae6baff81513851e61, type: 3}
-  - {fileID: 21300000, guid: ca29edff6e53548069a02d177e3573b5, type: 3}
-  - {fileID: 21300000, guid: 88a789baf75bb44f78b51f12ab943aad, type: 3}
-  - {fileID: 21300000, guid: 7d7aadf6d117c4ca5b20dfef92330dc1, type: 3}
-  BonusWinningsPosition: {fileID: 857453820}
-  BonusWinnings_Text: {fileID: 1439442878}
-  BaseWinningsPosition: {fileID: 1763154967}
-  BaseWinnings_Text: {fileID: 822939517}
-  SkipWinAnimation: {fileID: 1585514366}
-  ReconectingPopup_Object: {fileID: 855100515}
-  CloseDisconnect_Button: {fileID: 1284807844}
-  DisconnectPopup_Object: {fileID: 1301951257}
-  ADPopup_Object: {fileID: 1151925436}
-  LBPopup_Object: {fileID: 426756446}
-  LBExit_Button: {fileID: 813518731}
-  Settings_Object: {fileID: 69541374}
-  SettingsQuit_Button: {fileID: 1410425571}
-  Sound_Slider: {fileID: 31441368}
-  Music_Slider: {fileID: 2102078874}
-  PaytableMenuObject: {fileID: 1202583360}
-  Paytable_Button: {fileID: 1556346883}
-  PaytableClose_Button: {fileID: 117379315}
-  PaytableLeft_Button: {fileID: 415647116}
-  PaytableRight_Button: {fileID: 1223135349}
-  GameRulesPages:
-  - {fileID: 1856808253}
-  - {fileID: 381132041}
-  - {fileID: 1391799241}
-  - {fileID: 1085688457}
-  - {fileID: 674047173}
-  - {fileID: 1994916402}
-  SymbolsText:
-  - {fileID: 1152684373}
-  - {fileID: 1429296760}
-  - {fileID: 481444093}
-  - {fileID: 601469880}
-  - {fileID: 358934106}
-  - {fileID: 1058706766}
-  - {fileID: 2063227562}
-  - {fileID: 2094127309}
-  - {fileID: 514512866}
-  SpecialSymbolsText:
-  - {fileID: 293347378}
-  - {fileID: 1791006765}
-  - {fileID: 1362406428}
-  - {fileID: 1327542689}
-  - {fileID: 993403397}
-  - {fileID: 1140840215}
-  - {fileID: 690304707}
-  RaycastLayerButton: {fileID: 474581859}
-  QuitMenuObject: {fileID: 1904511577}
-  Quit_Button: {fileID: 13217051}
-  QuitYes_Button: {fileID: 868780178}
-  QuitNo_Button: {fileID: 1733246799}
-  Menu_Button: {fileID: 834976445}
-  Info_Button: {fileID: 1556346883}
-  Settings_Button: {fileID: 1770888688}
-  Info_BttnTransform: {fileID: 1556346882}
-  Settings_BttnTransform: {fileID: 1770888687}
-  FreeSpinsText: {fileID: 1015475151}
-  BonusGameWinningsText: {fileID: 1315372115}
-  TopPayoutTextUI: []
   RaycastBlocker: {fileID: 1855286925}
-  DiamondPayoutObject: {fileID: 541661169988502595, guid: cc36f5829f7c041be9eaf641f637389a, type: 3}
-  DiamondPayoutParent: {fileID: 500730208}
-  diamondPayout: {fileID: 4623143273790128506, guid: cc36f5829f7c041be9eaf641f637389a, type: 3}
-  diamondPaoutSprite:
-  - {fileID: -214993696, guid: f1d8d0bb2b76949e6a3602b60d00717f, type: 3}
-  - {fileID: 1667795466, guid: f1d8d0bb2b76949e6a3602b60d00717f, type: 3}
-  - {fileID: -780623193, guid: f1d8d0bb2b76949e6a3602b60d00717f, type: 3}
-  - {fileID: -1182359677, guid: f1d8d0bb2b76949e6a3602b60d00717f, type: 3}
-  DiamondSlotFinalPosition: {fileID: 500730209}
+  featureWinPanel: {fileID: 0}
+  spinCounterPanel: {fileID: 0}
+  featureWinText: {fileID: 0}
+  spinCounterText: {fileID: 0}
+  featurePopup: {fileID: 0}
+  featureStartButton: {fileID: 0}
+  featureTitleObject: {fileID: 0}
+  featureWinObject: {fileID: 0}
+  featureWinAmountText: {fileID: 0}
+  walterStashPopup: {fileID: 0}
+  walterStashAmountText: {fileID: 0}
+  featureSpinButton: {fileID: 0}
+  normalBgCanvasGroup: {fileID: 0}
+  freeSpinBgCanvasGroup: {fileID: 0}
+  losPolosTextPrefab: {fileID: 0}
+  spinCountSnapParent: {fileID: 0}
+  flyingTextParent: {fileID: 0}
+  freeSpinPopupTitleObject: {fileID: 0}
+  freeSpinPopupSpinsText: {fileID: 0}
+  jackpotPanelCanvasGroup: {fileID: 0}
+  coinWinDisplayPanelCanvasGroup: {fileID: 0}
+  coinWinDisplayText: {fileID: 0}
+  trailRendererPrefab: {fileID: 0}
+  slotStartButton: {fileID: 0}
+  autoSpinButton: {fileID: 0}
+  autoSpinStopButton: {fileID: 0}
+  totalBetPlusButton: {fileID: 0}
+  totalBetMinusButton: {fileID: 0}
+  turboButton: {fileID: 0}
+  turboOnObject: {fileID: 0}
+  stopSpinButton: {fileID: 0}
+  gameExitButton: {fileID: 0}
+  balanceText: {fileID: 0}
+  totalBetText: {fileID: 0}
+  totalWinText: {fileID: 0}
+  fsNumText: {fileID: 0}
 --- !u!1 &381132041
 GameObject:
   m_ObjectHideFlags: 0
@@ -12174,6 +12008,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 385592477}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -13925,6 +13761,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 431181185}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -14893,6 +14731,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 465346935}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -16192,68 +16032,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6dee67c9fb64b7bbed44da112a7af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testToken: 3d55ad48100c408da441757fcbfdfc1a
   slotManager: {fileID: 2046803210}
   uiManager: {fileID: 377874625}
+  popupManager: {fileID: 0}
   JSManager: {fileID: 162598546}
-  resultData:
-    success: 0
-    id: 
-    payload:
-      winAmount: 0
-      lineWins: []
-      coinPositions: []
-      cashCollectResult:
-        triggered: 0
-        totalValue: 0
-        positions: 
-      linkFeatureResult:
-        triggered: 0
-        linkType: 
-        initialCoins: []
-        respins: 0
-        finalCoins: []
-        totalValue: 0
-        cashCollectPositions: 
-      activeLines: 0
-      freeSpinsRemaining: 0
-      isFreeSpinActive: 0
-      linkFeatureActive: 0
-      linkRespinsRemaining: 0
-      isFreeSpinTriggered: 0
-      freeSpinResult:
-        triggered: 0
-        freeSpinCount: 0
-        triggerCoins: []
-        lpValues: 
-        freeSpinsRemaining: 0
-      isLinkTriggered: 0
-      isPrizeCoinTriggered: 0
-    features:
-      bonus:
-        type: 
-        isEnabled: 0
-        noOfItem: 0
-        payOut: 
-        payOutProb: []
-      freeSpin:
-        isEnabled: 0
-        LPValue: 
-        LPValueProbs: []
-      jackpot:
-        payout: 
-        payoutProbs: []
-    player:
-      balance: 0
-    gameData:
-      bets: []
-      totalLines: 0
-    uiData:
-      paylines:
-        symbols: []
-  playerdata:
-    balance: 0
-  bonusdata: []
-  testToken: 3d55ad48100c408da441757fcbfdfc1a
+  RaycastBlocker: {fileID: 0}
 --- !u!1 &500730208
 GameObject:
   m_ObjectHideFlags: 0
@@ -17255,6 +17039,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 517452422}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -17588,7 +17374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   socketManager: {fileID: 500036492}
   slotManager: {fileID: 2046803210}
-  bonusController: {fileID: 65498559}
+  bonusManager: {fileID: 0}
   Slot:
   - slotImages:
     - {fileID: 1598150118}
@@ -17608,25 +17394,6 @@ MonoBehaviour:
     - {fileID: 2058662578}
     - {fileID: 1133547460}
     - {fileID: 1335324420}
-  images:
-  - {fileID: 21300000, guid: 4ba15e50a694640278ecf9eca45f73a7, type: 3}
-  - {fileID: 21300000, guid: 7e5214323dfc14e308a967e114771e8a, type: 3}
-  - {fileID: 21300000, guid: 6363bb94a65c940548b9deda19960f39, type: 3}
-  - {fileID: 21300000, guid: 9487692e5536a4e219d12bd537baedc6, type: 3}
-  - {fileID: 21300000, guid: a8041621724204054b72489286bc670e, type: 3}
-  - {fileID: 21300000, guid: d4fdf915a0117428bb8493c64c1c75d4, type: 3}
-  - {fileID: 21300000, guid: 82c14e251c1eb431496341df626f7326, type: 3}
-  - {fileID: 21300000, guid: 66d353955e5aa4832bab24492a04cd92, type: 3}
-  - {fileID: 21300000, guid: a927a4b9e28e5443784a7eaefe5df017, type: 3}
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 767cf2551484f43b2b688921c0e55c6c, type: 3}
-  - {fileID: 21300000, guid: a6305cc7ed9334e5f93feb4e1a274b38, type: 3}
-  - {fileID: 21300000, guid: f4d891519e9a14b73be8b1a38ad60d1d, type: 3}
-  - {fileID: 21300000, guid: 6e5eacf13bf314364ae668826acafdf1, type: 3}
-  - {fileID: 21300000, guid: 492ede3deac4f4051a28f327807b7d47, type: 3}
-  - {fileID: 21300000, guid: 038fc05b661554dfe9d67dcbe23222dc, type: 3}
-  - {fileID: 21300000, guid: f77e2565121d04d769d42382418d9dd2, type: 3}
-  - {fileID: 21300000, guid: 1570ace01c18c465c9dd117abf1c430b, type: 3}
   LinkToGoldCoin_Animation:
   - {fileID: 21300000, guid: 178bf420fbd0c45f18adf13235d9465a, type: 3}
   - {fileID: 21300000, guid: 178bf420fbd0c45f18adf13235d9465a, type: 3}
@@ -18531,6 +18298,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 578707438}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -19222,6 +18991,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 602850006}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 15
@@ -20988,6 +20759,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 661537530}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -22483,6 +22256,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 698534690}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -22612,6 +22387,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 704012396}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 15
@@ -22794,6 +22571,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 707322042}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -23378,170 +23157,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719214019}
   m_CullTransparentMesh: 1
---- !u!1 &721807160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 721807161}
-  - component: {fileID: 721807162}
-  m_Layer: 5
-  m_Name: TR
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &721807161
+--- !u!224 &721807161 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+  m_PrefabInstance: {fileID: 4236241158668064843}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721807160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1071623917}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!96 &721807162
-TrailRenderer:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721807160}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 5e55a65427b1449778c6a513b4929142, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_MaskInteraction: 0
-  m_Time: 0.2
-  m_PreviewTimeScale: 1
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 1
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.45620728
-        value: 0.5470085
-        inSlope: -1.374606
-        outSlope: -1.374606
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.308721
-      - serializedVersion: 3
-        time: 1
-        value: 0.1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: 0
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    textureScale: {x: 1, y: 1}
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_MinVertexDistance: 0.1
-  m_Autodestruct: 0
-  m_Emitting: 1
-  m_ApplyActiveColorSpace: 1
 --- !u!1 &722294783
 GameObject:
   m_ObjectHideFlags: 0
@@ -24086,6 +23706,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 741066313}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -24336,6 +23958,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 744774635}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -26767,6 +26391,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 829490094}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -26855,6 +26481,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 831446495}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -27222,6 +26850,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 844038232}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 20
@@ -28202,6 +27832,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 871353071}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 15
@@ -30225,6 +29857,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 945777699}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -30326,6 +29960,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 948835065}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -30678,6 +30314,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 953330126}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -34717,6 +34355,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1071623918}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -36449,6 +36089,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1130313019}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -36560,6 +36202,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1133547460}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -37288,6 +36932,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1150497665}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -37920,6 +37566,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1159701782}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -40491,6 +40139,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1241319335}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -41146,6 +40796,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1250093389}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -42154,6 +41806,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1283391157}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -42872,6 +42526,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1303457545}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -43822,6 +43478,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1326713325}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -44431,6 +44089,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1335324420}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -44519,6 +44179,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1336763865}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -46036,6 +45698,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1379133105}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -46199,6 +45863,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1380941172}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -46325,6 +45991,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1382457725}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -46649,6 +46317,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1400182494}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -47535,6 +47205,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1415226698}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -48691,75 +48363,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439442876}
   m_CullTransparentMesh: 1
---- !u!1001 &1440280494
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 328.62454
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 222.59514
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.2645333
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5192868532353726121, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5451103279541212290, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: UIWrapper
-      value: 
-      objectReference: {fileID: 1485219722}
-    - target: {fileID: 5451103279541212290, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5451103279541212290, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: CanvasScaler
-      value: 
-      objectReference: {fileID: 51930702}
-    - target: {fileID: 7529451675493458776, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
-      propertyPath: m_Name
-      value: OC
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c1a8915795f514e2f8322c3eb0fde0aa, type: 3}
 --- !u!1 &1443019868
 GameObject:
   m_ObjectHideFlags: 0
@@ -52361,6 +51964,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1597559562}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -52497,6 +52102,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1598150118}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -52643,6 +52250,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1602687252}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 20
@@ -53468,6 +53077,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1627199031}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -53993,6 +53604,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1638913622}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -54378,6 +53991,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1669915038}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -55945,6 +55560,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1714472869}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -56622,6 +56239,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1725963079}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -57366,6 +56985,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1748382088}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -58066,6 +57687,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1763853155}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -58267,6 +57890,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1770148512}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -59809,6 +59434,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1810453764}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -61062,6 +60689,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1841124563}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -63109,6 +62738,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1901942319}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -63592,6 +63223,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1916373406}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 9
@@ -65533,6 +65166,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1969975235}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -65771,6 +65406,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 1971500014}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -66745,6 +66382,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2010482993}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -67090,6 +66729,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2023159362}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -68042,10 +67683,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SocketManager: {fileID: 500036492}
-  staticSymbolController: {fileID: 525894857}
-  audioController: {fileID: 1030743558465206379}
+  stickySymbolManager: {fileID: 0}
   uiManager: {fileID: 377874625}
   _bonusManager: {fileID: 65498559}
+  animationManager: {fileID: 0}
+  jackpotManager: {fileID: 0}
+  popupManager: {fileID: 0}
   SlotSymbols:
   - {fileID: 21300000, guid: 4ba15e50a694640278ecf9eca45f73a7, type: 3}
   - {fileID: 21300000, guid: 7e5214323dfc14e308a967e114771e8a, type: 3}
@@ -68065,30 +67708,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 038fc05b661554dfe9d67dcbe23222dc, type: 3}
   - {fileID: 21300000, guid: f77e2565121d04d769d42382418d9dd2, type: 3}
   - {fileID: 21300000, guid: 1570ace01c18c465c9dd117abf1c430b, type: 3}
-  losPollosSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 1fc4afb2fc21a4d9d94e69e1a6a8541f, type: 3}
-  - {fileID: 21300000, guid: 5020112cd5937417daf4deb08bdd8d03, type: 3}
-  - {fileID: 21300000, guid: 0755f8d04fb804246b12f58acb1a47bb, type: 3}
-  - {fileID: 21300000, guid: 285baf3d1575d4a2caec5c2e3205257a, type: 3}
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 64f287b5562b141b9a2690e8cff79f17, type: 3}
-  losPollosNumberSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: -797373658, guid: de41bce89e6474af89ca81961cf02881, type: 3}
-  - {fileID: -259522823, guid: de41bce89e6474af89ca81961cf02881, type: 3}
-  - {fileID: 1958966299, guid: de41bce89e6474af89ca81961cf02881, type: 3}
-  - {fileID: -1258361681, guid: de41bce89e6474af89ca81961cf02881, type: 3}
-  - {fileID: 0}
-  - {fileID: -2068199167, guid: de41bce89e6474af89ca81961cf02881, type: 3}
-  losPollosNoNumberSprite: {fileID: 21300000, guid: 1570ace01c18c465c9dd117abf1c430b, type: 3}
   JackpotSlotSymbols:
   - {fileID: 394260089, guid: 17521c1e391f444a0ac5b8f25a9ac9be, type: 3}
   - {fileID: 1214601208, guid: 17521c1e391f444a0ac5b8f25a9ac9be, type: 3}
   - {fileID: -515675115, guid: 17521c1e391f444a0ac5b8f25a9ac9be, type: 3}
   - {fileID: -83282178, guid: 17521c1e391f444a0ac5b8f25a9ac9be, type: 3}
+  SpecialLayerSymbols: []
   images:
   - slotImages:
     - {fileID: 1388488213}
@@ -68192,52 +67817,21 @@ MonoBehaviour:
     - {fileID: 770597376}
   anticipationUpDistance: 30
   anticipationUpDuration: 0.15
-  dropDownDistance: 15
-  dropDownDuration: 0.12
-  settleBounceDuration: 0.18
   stopOvershootDistance: 50
   stopOvershootDuration: 0.15
-  stopBounceBackDistance: 15
-  stopBounceBackDuration: 0.25
   stopSettleDuration: 0.35
   quickStopOvershoot: 20
   quickStopDuration: 0.2
-  spinCycleDuration: 0.05
   symbolHeight: 100
+  reelStopStagger: 0.12
+  minimumSpinDuration: 2
+  spinSpeed: 2000
   Slot_Transform:
   - {fileID: 1566577724}
   - {fileID: 707351674}
   - {fileID: 1680630546}
   - {fileID: 1463007666}
   - {fileID: 1153505539}
-  SlotStart_Button: {fileID: 1704493507}
-  AutoSpin_Button: {fileID: 865388906}
-  AutoSpinStop_Button: {fileID: 649775510}
-  TotalBetPlus_Button: {fileID: 939590060}
-  TotalBetMinus_Button: {fileID: 751808322}
-  LineBetPlus_Button: {fileID: 3679504}
-  LineBetMinus_Button: {fileID: 1206313711}
-  Turbo_Button: {fileID: 741066312}
-  StopSpin_Button: {fileID: 2113539272}
-  Balance_text: {fileID: 1771885944}
-  TotalBet_text: {fileID: 1875856110}
-  LineBet_text: {fileID: 1062305055}
-  TotalWin_text: {fileID: 23625003}
-  BigWin_Text: {fileID: 0}
-  CoinWinning_Text: {fileID: 822939517}
-  FSnum_text: {fileID: 1118439270}
-  BonusImageAnimation: {fileID: 871353070}
-  FreeGamesImageAnimation: {fileID: 1916373405}
-  LeftMagnetImageAnimation: {fileID: 844038231}
-  RightMagnetImageAnimation: {fileID: 1602687251}
-  FreeSpinsUI_Panel: {fileID: 1101532588}
-  WinningsUI_Panel: {fileID: 613575391}
-  TopPayoutUI_CG: {fileID: 1150469087}
-  LinesUI: {fileID: 1064242909}
-  TotalBetUI: {fileID: 1357515784}
-  LineBetUI: {fileID: 314042190}
-  FreeSpinCountUIPositon: {fileID: 2103821566}
-  AnimationParent: {fileID: 1335198579}
   B_Sprites:
   - {fileID: 21300000, guid: 68a5fed89248b44ed8606c2ef79a5856, type: 3}
   - {fileID: 21300000, guid: d274994e8148a49c388f4f8b370b26e6, type: 3}
@@ -68679,96 +68273,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1ad1dc0b22a2f43c1b5eb431739b4548, type: 3}
   - {fileID: 21300000, guid: 1089781678d334851a286aa5812e5610, type: 3}
   - {fileID: 21300000, guid: 08ccce306303647e2b2139afb650f384, type: 3}
-  LP2_Sprites:
-  - {fileID: 21300000, guid: 1fc4afb2fc21a4d9d94e69e1a6a8541f, type: 3}
-  - {fileID: 21300000, guid: b9cb6ee356e424cfaaf59f9015ae5a6e, type: 3}
-  - {fileID: 21300000, guid: 2478afef7e355422fb80785a8e832e49, type: 3}
-  - {fileID: 21300000, guid: 36335f40c57384d23821b166c14febc9, type: 3}
-  - {fileID: 21300000, guid: 063767d6cbccd44259e5ca6325ab9364, type: 3}
-  - {fileID: 21300000, guid: 9e3dad476a6c3432ab4811d649136d45, type: 3}
-  - {fileID: 21300000, guid: 58cac39fd67c6427a8ef9ead3fbbdffc, type: 3}
-  - {fileID: 21300000, guid: 3326ba747b2794a4d829e5e9757d675c, type: 3}
-  - {fileID: 21300000, guid: 7535bc83da33b4a50aed3a55c7e6e15f, type: 3}
-  - {fileID: 21300000, guid: 8c574f86870534592b9a851444aec229, type: 3}
-  - {fileID: 21300000, guid: 8e8ec159c2c6a4f6eb80d367fbd5f1f2, type: 3}
-  - {fileID: 21300000, guid: fd1a0bac41e6340a7afbe175ddec354d, type: 3}
-  - {fileID: 21300000, guid: 2e0e65f486b5d41d488a8bb66647f36a, type: 3}
-  - {fileID: 21300000, guid: 76c7a6a1c45ea481185123f6b2eb7560, type: 3}
-  - {fileID: 21300000, guid: f48aab274be0843b6b82767bffa25399, type: 3}
-  - {fileID: 21300000, guid: 911d97acfafb14fc29ec821c70f6477f, type: 3}
-  - {fileID: 21300000, guid: cd4fdd5e768754bcfb8a195e7571fea8, type: 3}
-  LP3_Sprites:
-  - {fileID: 21300000, guid: 5020112cd5937417daf4deb08bdd8d03, type: 3}
-  - {fileID: 21300000, guid: 504804c2ed7334055bd0f38b12f2ec8a, type: 3}
-  - {fileID: 21300000, guid: 5d4a5f07acff6468c9b9fc707be764d5, type: 3}
-  - {fileID: 21300000, guid: 8516c151baa2547ff93863c9d215fd05, type: 3}
-  - {fileID: 21300000, guid: 48d7643343d46431fbf9640a92bbde2d, type: 3}
-  - {fileID: 21300000, guid: 82f46890cced543c7a96c386daaf0bca, type: 3}
-  - {fileID: 21300000, guid: e6658687f2af6455db26a317baa19486, type: 3}
-  - {fileID: 21300000, guid: 69b4543bef10242c5a5df91b572bc449, type: 3}
-  - {fileID: 21300000, guid: d1a7dce854c2b4a97abaf2a8f349ac58, type: 3}
-  - {fileID: 21300000, guid: 6b8307e52f8f547e2a3d5ec5e96ca508, type: 3}
-  - {fileID: 21300000, guid: d00cc5563e5d540aa842f8ffb0e9917c, type: 3}
-  - {fileID: 21300000, guid: d4de26965b89d400286c7df5ff42ac8e, type: 3}
-  - {fileID: 21300000, guid: 2d4696805ef854e34b5932688fe76a2e, type: 3}
-  - {fileID: 21300000, guid: 7d67a6a2b99ba44e88feaab4d8e27544, type: 3}
-  - {fileID: 21300000, guid: 3dc4a5be86a6e4e97a25af55787d9af0, type: 3}
-  - {fileID: 21300000, guid: 68c0b4a0052d647f89a5eafdab99dbf6, type: 3}
-  - {fileID: 21300000, guid: 3ff3d7dd4b87543659ee7856c3c8e7e6, type: 3}
-  LP4_Sprites:
-  - {fileID: 21300000, guid: 0755f8d04fb804246b12f58acb1a47bb, type: 3}
-  - {fileID: 21300000, guid: 0e788c13f3ffe4e58922ce809e826935, type: 3}
-  - {fileID: 21300000, guid: 09e1c1a1555864f36a740087cb26e50c, type: 3}
-  - {fileID: 21300000, guid: 4f9ce8695c8824ce3a6b5b5fff71e947, type: 3}
-  - {fileID: 21300000, guid: 81c9bd5faf4be48978b7d35049dd3fe8, type: 3}
-  - {fileID: 21300000, guid: 7572625503a3947c291757f224851d23, type: 3}
-  - {fileID: 21300000, guid: de448012193cc462aa421d4ce8694572, type: 3}
-  - {fileID: 21300000, guid: 58736a63c76054752bd92cc6ee4ce6fa, type: 3}
-  - {fileID: 21300000, guid: a9ff4246f43854961be4b332fce1bd28, type: 3}
-  - {fileID: 21300000, guid: 2d57a6faf49b64fcb93827e584173416, type: 3}
-  - {fileID: 21300000, guid: 3b7863551785f493f989d2a77a510350, type: 3}
-  - {fileID: 21300000, guid: ceaff58e874b647eca5e3f2115755aee, type: 3}
-  - {fileID: 21300000, guid: b5a1e9513815c4037bffc0cb7cccb0d2, type: 3}
-  - {fileID: 21300000, guid: abede2edd44dc4595accdd0a49059a73, type: 3}
-  - {fileID: 21300000, guid: 9b6adad2e75164825b89a9f3f3b61058, type: 3}
-  - {fileID: 21300000, guid: 78202e3c7fa274bb9904b2f9b2e7aca4, type: 3}
-  - {fileID: 21300000, guid: c8695608c94ab47bd9562c794772dbcf, type: 3}
-  LP5_Sprites:
-  - {fileID: 21300000, guid: 285baf3d1575d4a2caec5c2e3205257a, type: 3}
-  - {fileID: 21300000, guid: 633788844412d4e338b606b7677cb649, type: 3}
-  - {fileID: 21300000, guid: f48b52684f17740458d59bb3456ee58f, type: 3}
-  - {fileID: 21300000, guid: 088647a3b2f264e87a1551415a230716, type: 3}
-  - {fileID: 21300000, guid: dda80792d09f0429cbb7bd2cfb5f78a6, type: 3}
-  - {fileID: 21300000, guid: e713e067b86fe4cd18fe23dd5f6eedcb, type: 3}
-  - {fileID: 21300000, guid: 77a215c24a289429693ee0a8be2df912, type: 3}
-  - {fileID: 21300000, guid: 7788c5995ac8c43ef8da1c5aacc28299, type: 3}
-  - {fileID: 21300000, guid: 14f742e11a5574a1b8d087c764c11dfa, type: 3}
-  - {fileID: 21300000, guid: a085fae6ce7c6414789447f188a72144, type: 3}
-  - {fileID: 21300000, guid: 59803573673924fc99aa6fc88ac0a72b, type: 3}
-  - {fileID: 21300000, guid: c41abfa9cfd834e04b654967a348864a, type: 3}
-  - {fileID: 21300000, guid: 1ee8c2b732d0f42b99c4299d323a8921, type: 3}
-  - {fileID: 21300000, guid: 9733c2b7c12614571ade8d4c1006fe82, type: 3}
-  - {fileID: 21300000, guid: c708f8394e5d8481e92cdc633d51bf20, type: 3}
-  - {fileID: 21300000, guid: 57f11ebce9df545a0888604e34ae2be0, type: 3}
-  - {fileID: 21300000, guid: b7632f51b39784f95a903db1c2a285b1, type: 3}
-  LP7_Sprites:
-  - {fileID: 21300000, guid: 64f287b5562b141b9a2690e8cff79f17, type: 3}
-  - {fileID: 21300000, guid: 59f33fa552b26411a92d249e5d0b1a52, type: 3}
-  - {fileID: 21300000, guid: 1d52a0160e85d4022926a86286aad9aa, type: 3}
-  - {fileID: 21300000, guid: 82ef76b138de44a958ebfb69f76ad570, type: 3}
-  - {fileID: 21300000, guid: 56d822f1623764ee0a58051d0a485eb2, type: 3}
-  - {fileID: 21300000, guid: bff5bcfccbb5749c29a3efd7f102af17, type: 3}
-  - {fileID: 21300000, guid: 1d6932775f9844ef9870fc7207912c91, type: 3}
-  - {fileID: 21300000, guid: 18f5076f8a663485f843f8f7cb710092, type: 3}
-  - {fileID: 21300000, guid: 76847b7fc089640f2a7a562049dc3eae, type: 3}
-  - {fileID: 21300000, guid: 613ec4fed46484e448638d9bd2c2c1d0, type: 3}
-  - {fileID: 21300000, guid: e267463ed363b4d4a8099c32383fca01, type: 3}
-  - {fileID: 21300000, guid: 2d2b9095bdc374effb1eaefbee4be52d, type: 3}
-  - {fileID: 21300000, guid: 985a947dbb3d74a7e810abc446dc6485, type: 3}
-  - {fileID: 21300000, guid: 9d4bd5ea2574e4fafa45632419384307, type: 3}
-  - {fileID: 21300000, guid: a6e3f564026e64091b2225a98f44c6d3, type: 3}
-  - {fileID: 21300000, guid: 933f3c09162ce48c5925d4ed0f596ce2, type: 3}
-  - {fileID: 21300000, guid: eb3df035b75d0455baf92b91f2997343, type: 3}
+  LP_Sprites: []
   GoldCoin_Sprites:
   - {fileID: 21300000, guid: cafe969d0620149ec87e9a06d800d139, type: 3}
   - {fileID: 21300000, guid: 82a67bf879fc246b3af6fa5ab57ec3cb, type: 3}
@@ -68799,88 +68304,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7774ee303f66a438da8579b5a52cbd5d, type: 3}
   - {fileID: 21300000, guid: 39747edbf364047c9b471f4230f260f1, type: 3}
   - {fileID: 21300000, guid: 8d2b57c66b65941278673d3d098eaadd, type: 3}
-  MagnetInSprites:
-  - {fileID: 21300000, guid: 9d100d139e98d42c3b5c8e0a6d27bfee, type: 3}
-  - {fileID: 21300000, guid: 40c466dfbbb4f4017934ad12a0c9c9e5, type: 3}
-  - {fileID: 21300000, guid: af43a1a50bbd54f52af5ea952517cb22, type: 3}
-  - {fileID: 21300000, guid: fd2a76543616449049de379812e7b94e, type: 3}
-  - {fileID: 21300000, guid: e39f70da6e3ee4d86943ead3fb64581b, type: 3}
-  - {fileID: 21300000, guid: 2a09207e4bbaf49928691f0110ff3943, type: 3}
-  - {fileID: 21300000, guid: ad260b4bcaabc4125aafb2dd63fd193c, type: 3}
-  - {fileID: 21300000, guid: 39911a9a2ba4b40a6b4d7a8e658578f1, type: 3}
-  - {fileID: 21300000, guid: bbae06197baf14888ad825b796dfa065, type: 3}
-  - {fileID: 21300000, guid: 17f03aed01b914396bbccebba59c0b27, type: 3}
-  - {fileID: 21300000, guid: 60fb47698bd6244ac80770bc2fd429f1, type: 3}
-  - {fileID: 21300000, guid: 99048441fd6e74f11b7366268645cc74, type: 3}
-  - {fileID: 21300000, guid: be9a98b476e2e4a15ba1bc9bf354feaa, type: 3}
-  - {fileID: 21300000, guid: 044bf435cc096443f8a4fed69092d42d, type: 3}
-  MagnetLightening_Sprites:
-  - {fileID: 21300000, guid: 95523a65328bb436a907803962855b34, type: 3}
-  - {fileID: 21300000, guid: 2f5643de7edb84be598a2bb236c781b9, type: 3}
-  - {fileID: 21300000, guid: e847817156eac4c99bd6d7fae312f1fb, type: 3}
-  - {fileID: 21300000, guid: d020fd176153f422db69ca13fba61877, type: 3}
-  - {fileID: 21300000, guid: aead1b61411d34957ac7b44e8008924e, type: 3}
-  - {fileID: 21300000, guid: f405110bad11a44258c1189b172f8d06, type: 3}
-  - {fileID: 21300000, guid: f5575d1648bf14006beed1ac1964e5f4, type: 3}
-  - {fileID: 21300000, guid: 022c8e113af2c42d5b36960c19828306, type: 3}
-  - {fileID: 21300000, guid: 5383b63053c5e4ded8f755caa99f96db, type: 3}
-  - {fileID: 21300000, guid: c7b2249e406e9408f8279319c0a58573, type: 3}
-  - {fileID: 21300000, guid: 1b270981ddc95443d942ec4848546a7e, type: 3}
-  - {fileID: 21300000, guid: 8d8b27bdb5fd04b54b69ee7e2abc54d0, type: 3}
-  - {fileID: 21300000, guid: 9a370c75138574d8c92fef8f2d20ef9a, type: 3}
-  - {fileID: 21300000, guid: 14d38327bde1841458789117e9b51a7c, type: 3}
-  - {fileID: 21300000, guid: 7dcf02ad60a214d37963b5ba6ee66c9f, type: 3}
-  - {fileID: 21300000, guid: a5e862c3977c9410e9dd39fdbab25f66, type: 3}
-  - {fileID: 21300000, guid: 47b7ed12cc51341eba1490356e650b50, type: 3}
-  - {fileID: 21300000, guid: adceb9c85737a41a39452b7ec231ef73, type: 3}
-  - {fileID: 21300000, guid: 893ba3af6e3624cbd99973ddd43ca0b8, type: 3}
-  - {fileID: 21300000, guid: d5cd319b2901a4365a62f51d74ef3641, type: 3}
-  - {fileID: 21300000, guid: 8b7475cfea2fc455a99da2487d467fce, type: 3}
-  - {fileID: 21300000, guid: 883b4b34cb85440b48842c12b2395a25, type: 3}
-  - {fileID: 21300000, guid: 9dbce61007e2d4167ab0b482e2bd7583, type: 3}
-  - {fileID: 21300000, guid: 13c3ed025390e4838ab446d0235fd29c, type: 3}
-  - {fileID: 21300000, guid: e971070cd37354c94965c448c774bdb8, type: 3}
-  - {fileID: 21300000, guid: c4aa0e55c093b4ac89db0a2a7b03469d, type: 3}
-  - {fileID: 21300000, guid: 5d3c48e9d24184f9cb19b27fd869c18f, type: 3}
-  - {fileID: 21300000, guid: f08dc85d0760c4cf08b2816e91ff2349, type: 3}
-  - {fileID: 21300000, guid: 7f6166da6d4ef4f2faafa2d47e9a0b5d, type: 3}
-  - {fileID: 21300000, guid: e92e4146eaf7546949f341a4d58065a7, type: 3}
-  - {fileID: 21300000, guid: 04c75e1335ba94379adbbb70527d9751, type: 3}
-  - {fileID: 21300000, guid: 1d078dc0fbf2842dda4f46d89bdea51d, type: 3}
-  - {fileID: 21300000, guid: c00e5b31192f04ced97520f2d348bfce, type: 3}
-  - {fileID: 21300000, guid: 148080b3c0f3346b4929656adbc4af46, type: 3}
-  - {fileID: 21300000, guid: 17c843d8cd4b0411eb38d27223064d4a, type: 3}
-  - {fileID: 21300000, guid: bbe01f3464ff9447daa1c663fe4245a5, type: 3}
-  - {fileID: 21300000, guid: d40cc8db35077440580d56b52c0408da, type: 3}
-  - {fileID: 21300000, guid: 8cd7345b869ba48b68f708939a31a443, type: 3}
-  - {fileID: 21300000, guid: 047ff8b4f24574d8dacdc9f766f888de, type: 3}
-  - {fileID: 21300000, guid: eb375625e4950443bb994332cac4e7d7, type: 3}
-  - {fileID: 21300000, guid: 85fa4bf4a2a9e406aafa8397e8f687fb, type: 3}
-  - {fileID: 21300000, guid: 509fb0a4b64664d13bb2117be7bd07db, type: 3}
-  - {fileID: 21300000, guid: 532a22cd16aa840858dd9f935240bce8, type: 3}
-  - {fileID: 21300000, guid: edfe77222b14f4437b042509cd26b6d5, type: 3}
-  - {fileID: 21300000, guid: 40c32cfde86874abd84cd64ab29185f8, type: 3}
-  - {fileID: 21300000, guid: d066bfca8e06e4d43a804ce60c1a3df4, type: 3}
-  - {fileID: 21300000, guid: fcae533d6a4564e5dad9a70dbaaa71d9, type: 3}
-  - {fileID: 21300000, guid: 774956aeaf0e848e581cb607e2a2fe44, type: 3}
-  - {fileID: 21300000, guid: 4b64f92dca6f94960a5afa58e9d2440e, type: 3}
-  - {fileID: 21300000, guid: 6533af862443f4eb5ad1756588ec0f55, type: 3}
-  - {fileID: 21300000, guid: b5e5541a035c84a7b9ad7cd8f6909693, type: 3}
-  - {fileID: 21300000, guid: 98769cbc0238a4ef9a404f6688e68cef, type: 3}
-  - {fileID: 21300000, guid: 890bf45327db94e14b07263c1b1e1ffb, type: 3}
-  - {fileID: 21300000, guid: 7f6425d8de7e34010a2813da04fd07dc, type: 3}
-  - {fileID: 21300000, guid: 2af17931e7ba34aa3a6be347496a5968, type: 3}
-  - {fileID: 21300000, guid: da5b63a1df8ea463eb122522538c864d, type: 3}
-  - {fileID: 21300000, guid: a955f7f364db542ea8b7c9f5e934b234, type: 3}
-  - {fileID: 21300000, guid: 33ec4e674127f4f38a7685bc149017e8, type: 3}
-  - {fileID: 21300000, guid: 001e0b747222f4d6bb7e3876d4a1ad79, type: 3}
-  - {fileID: 21300000, guid: 3d27e48e3ac1244a185bdece4d50af9d, type: 3}
-  - {fileID: 21300000, guid: 7cb76cca021b64da2a66bde0c0be1a8e, type: 3}
-  - {fileID: 21300000, guid: 4364e62395a9345349a9d0cc8a4ac6ec, type: 3}
-  - {fileID: 21300000, guid: e86e3fe3353104b01aaf2f56dfd0164d, type: 3}
-  - {fileID: 21300000, guid: 6ff4b1602166c423e8d8099ca7149a6c, type: 3}
-  TurboToggleSprite: {fileID: 21300000, guid: a92ef1ca8a7f84c75a608c4cfbac7d61, type: 3}
+  leftTopMagnet: {fileID: 0}
+  leftBottomMagnet: {fileID: 0}
+  rightTopMagnet: {fileID: 0}
+  rightBottomMagnet: {fileID: 0}
+  magnetNudgeDuration: 0.5
+  magnetAnimDuration: 1
+  magnetTriggerChance: 0.5
+  nearMissChance: 0.3
   IconSizeFactor: 221
+  stopCooldownDuration: 0.4
+  specialSymbolStaggerIncrease: 0.75
+  swipeThreshold: 50
 --- !u!1 &2050976199
 GameObject:
   m_ObjectHideFlags: 0
@@ -69339,6 +68774,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2058662578}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -69437,6 +68874,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2059765889}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -70799,6 +70238,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2089453265}
   useSharedMaterial: 1
   doLoopAnimation: 0
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 5
@@ -71728,6 +71169,8 @@ MonoBehaviour:
   rendererDelegate: {fileID: 2114304929}
   useSharedMaterial: 1
   doLoopAnimation: 1
+  useDynamicFramerate: 0
+  dynamicLoopDuration: 2
   StartOnAwake: 0
   StartonEnable: 0
   AnimationSpeed: 13
@@ -72516,23 +71959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a047ea6ad54319834e4c76486aab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bg_adudio: {fileID: 5767972125323714644}
-  audioPlayer_wl: {fileID: 1099861978960025974}
-  audioPlayer_button: {fileID: 1742219840284188182}
-  audioSpin_button: {fileID: 3653419156959999269}
-  clips:
-  - {fileID: 8300000, guid: 1d27ae9953862413d9d42f25f3966bf1, type: 3}
-  - {fileID: 8300000, guid: bdd2dab9086e642cbaa7eafd06ae788f, type: 3}
-  - {fileID: 8300000, guid: 3d16ec92dbbba4da98b845fe61435d55, type: 3}
-  - {fileID: 8300000, guid: c22ed6637c4bd4c7688bb3632e20e6b0, type: 3}
-  - {fileID: 8300000, guid: 8f9f600850a7c4fcb9fb71f926fbefbc, type: 3}
-  - {fileID: 8300000, guid: 411117d9a7c8f43b282f434ee116abd5, type: 3}
-  - {fileID: 8300000, guid: 490b0e131643c4f788da65ec261d511a, type: 3}
-  - {fileID: 8300000, guid: 900fc5ad8f99e4cfab80514d3031ca68, type: 3}
-  - {fileID: 8300000, guid: 48eb16c135c724359bd9386a717b9305, type: 3}
-  - {fileID: 8300000, guid: 6131b4f467ef84874865fb5580a00184, type: 3}
-  bg_audioBonus: {fileID: 2088709731818720374}
-  audioPlayer_Bonus: {fileID: 4701576512886553455}
 --- !u!82 &1099861978960025974
 AudioSource:
   m_ObjectHideFlags: 0
@@ -72942,6 +72368,103 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &4236241158668064843
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1071623917}
+    m_Modifications:
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 847892187613699712, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367533578338078388, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
+      propertyPath: m_Name
+      value: TR
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
 --- !u!82 &4701576512886553455
 AudioSource:
   m_ObjectHideFlags: 0
@@ -73199,4 +72722,3 @@ SceneRoots:
   - {fileID: 8217964018994044620}
   - {fileID: 5907248699278876388}
   - {fileID: 162598547}
-  - {fileID: 1440280494}
