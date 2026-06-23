@@ -200,6 +200,27 @@ public class SlotManager : MonoBehaviour
   private bool isSettling = false; // cooldown flag after stop button
   internal bool IsFeatureTransitioning = false;
 
+  [Header("Magnet Scenario References")]
+  [SerializeField] private GameObject leftTopMagnet;
+  [SerializeField] private GameObject leftBottomMagnet;
+  [SerializeField] private GameObject rightTopMagnet;
+  [SerializeField] private GameObject rightBottomMagnet;
+  [SerializeField] private float magnetNudgeDuration = 0.5f;
+  [SerializeField] private float magnetAnimDuration = 1.0f;
+  [SerializeField] [Range(0f, 1f)] private float magnetTriggerChance = 0.5f;
+  [SerializeField] [Range(0f, 1f)] private float nearMissChance = 0.3f;
+
+  // Runtime State for Magnet Scenario
+  private bool isMagnetScenarioActive = false;
+  private int magnetCol = -1;
+  private int magnetRow = -1;
+  private float magnetNudgeDir = 0f; // -1 for pull down, 1 for pull up
+
+  // Runtime State for Cash Collect Near Miss
+  private bool isNearMissActive = false;
+  private int nearMissCol = -1;
+  private int nearMissType = -1; // 0 for top near miss, 1 for bottom near miss
+
   int tweenHeight = 0;  //calculate the height at which tweening is done
   private int numberOfSlots = 5;          //number of columns
   [SerializeField] private int IconSizeFactor = 100;       //set this parameter according to the size of the icon and spacing
@@ -284,8 +305,12 @@ public class SlotManager : MonoBehaviour
 
   private void Start()
   {
-    tweenHeight = (13 * IconSizeFactor) - 280;
+    if (leftTopMagnet != null) leftTopMagnet.SetActive(false);
+    if (leftBottomMagnet != null) leftBottomMagnet.SetActive(false);
+    if (rightTopMagnet != null) rightTopMagnet.SetActive(false);
+    if (rightBottomMagnet != null) rightBottomMagnet.SetActive(false);
 
+    tweenHeight = (13 * IconSizeFactor) - 280;
     initialYPositions = new float[numberOfSlots];
     for (int i = 0; i < numberOfSlots; i++)
     {
@@ -676,6 +701,15 @@ public class SlotManager : MonoBehaviour
     // Forcefully clean up any previous spin state to prevent glitches
     ForceCleanupPreviousSpin();
 
+    // Reset scenario states
+    isMagnetScenarioActive = false;
+    magnetCol = -1;
+    magnetRow = -1;
+    magnetNudgeDir = 0f;
+    isNearMissActive = false;
+    nearMissCol = -1;
+    nearMissType = -1;
+
     if (IsFreeSpin)
     {
       SetFreeSpinsCount(FreeSpinsCount - 1);
@@ -739,6 +773,89 @@ public class SlotManager : MonoBehaviour
     }
   }
 
+  private void DetermineFakeScenarios()
+  {
+    isMagnetScenarioActive = false;
+    magnetCol = -1;
+    magnetRow = -1;
+    magnetNudgeDir = 0f;
+
+    isNearMissActive = false;
+    nearMissCol = -1;
+    nearMissType = -1;
+
+    if (SocketManager.resultData == null || SocketManager.resultData.matrix == null) return;
+
+    var matrix = SocketManager.resultData.matrix;
+    var payload = SocketManager.resultData.payload;
+
+    bool isCCTriggered = payload != null && payload.cashCollectResult != null && payload.cashCollectResult.triggered;
+    bool isLinkTriggered = payload != null && payload.isLinkTriggered;
+    bool featureTriggered = isCCTriggered || isLinkTriggered;
+
+    if (featureTriggered)
+    {
+      int[] checkCols = { 0, 4 };
+      int[] checkRows = { 0, 2 };
+
+      List<(int col, int row)> candidates = new List<(int, int)>();
+      foreach (int c in checkCols)
+      {
+        foreach (int r in checkRows)
+        {
+          if (r < matrix.Count && c < matrix[r].Count)
+          {
+            if (matrix[r][c] == "14")
+            {
+              candidates.Add((c, r));
+            }
+          }
+        }
+      }
+
+      if (candidates.Count > 0)
+      {
+        float roll = UnityEngine.Random.value;
+        if (roll < magnetTriggerChance)
+        {
+          var selected = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+          isMagnetScenarioActive = true;
+          magnetCol = selected.col;
+          magnetRow = selected.row;
+          magnetNudgeDir = (magnetRow == 0) ? -1f : 1f;
+          Debug.Log($"[FakeScenario] Magnet Scenario Selected! Reel {magnetCol}, Row {magnetRow}, NudgeDir {magnetNudgeDir}");
+          return;
+        }
+      }
+    }
+
+    bool hasCCInMatrix = false;
+    for (int r = 0; r < matrix.Count; r++)
+    {
+      for (int c = 0; c < matrix[r].Count; c++)
+      {
+        if (matrix[r][c] == "14")
+        {
+          hasCCInMatrix = true;
+          break;
+        }
+      }
+      if (hasCCInMatrix) break;
+    }
+
+    if (!hasCCInMatrix)
+    {
+      float roll = UnityEngine.Random.value;
+      if (roll < nearMissChance)
+      {
+        isNearMissActive = true;
+        nearMissCol = (UnityEngine.Random.value < 0.5f) ? 0 : 4;
+        nearMissType = (UnityEngine.Random.value < 0.5f) ? 0 : 1;
+        Debug.Log($"[FakeScenario] Cash Collect Near-Miss Selected! Reel {nearMissCol}, Type {(nearMissType == 0 ? "Top" : "Bottom")}");
+      }
+    }
+  }
+
   //manage the Routine for spinning of the slots
   private IEnumerator TweenRoutine()
   {
@@ -775,6 +892,7 @@ public class SlotManager : MonoBehaviour
     yield return new WaitUntil(() => SocketManager.isResultdone);
     UpdateFromSpinResult(SocketManager.resultData);
     OriginalFeatureTriggerResult = SocketManager.resultData;
+    DetermineFakeScenarios();
     bool isCCTriggered = false;
     if (SocketManager.resultData != null && SocketManager.resultData.payload != null)
     {
@@ -896,6 +1014,12 @@ public class SlotManager : MonoBehaviour
         : (currentDelay + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
 
     yield return new WaitForSeconds(longestStopTime + 0.05f);
+
+    if (isMagnetScenarioActive)
+    {
+      yield return PlayMagnetSequence();
+    }
+
     KillAllTweens();
     ResetSlotPositions();
     TriggerSpinState(false);
@@ -1806,12 +1930,52 @@ public class SlotManager : MonoBehaviour
         }
       }
     }
+
+    // Apply near-miss or magnet buffer override on the final stop cycle
+    if (stopStatus[col] == 5)
+    {
+      // 1. Top Near Miss / Magnet Pull Down (stops at top buffer, i.e., index 1)
+      bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) ||
+                             (isNearMissActive && col == nearMissCol && nearMissType == 0);
+      if (shouldShowAtTop)
+      {
+        imgs[1].sprite = SlotSymbols[14];
+        SlotSymbolView topView = imgs[1].GetComponent<SlotSymbolView>();
+        if (topView != null)
+        {
+          topView.ClearValues();
+          ConfigureSymbolView(topView, 14);
+        }
+      }
+
+      // 2. Bottom Near Miss / Magnet Pull Up (stops at bottom buffer, i.e., index 5)
+      bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) ||
+                                (isNearMissActive && col == nearMissCol && nearMissType == 1);
+      if (shouldShowAtBottom && imgs.Count > 5)
+      {
+        imgs[5].sprite = SlotSymbols[14];
+        SlotSymbolView bottomView = imgs[5].GetComponent<SlotSymbolView>();
+        if (bottomView != null)
+        {
+          bottomView.ClearValues();
+          ConfigureSymbolView(bottomView, 14);
+        }
+      }
+    }
   }
 
   private int GetResultSymbolId(int col, int row)
   {
     if (SocketManager.resultData == null || SocketManager.resultData.matrix == null)
       return UnityEngine.Random.Range(0, 9);
+
+    if (isMagnetScenarioActive && col == magnetCol && row == magnetRow)
+    {
+      int r;
+      do { r = UnityEngine.Random.Range(0, SlotSymbols.Length - 8); } while (r == 9);
+      return r;
+    }
+
     int resultNum = int.Parse(SocketManager.resultData.matrix[row][col]);
     if (resultNum == 9) // BLANK SYMBOL - NEEDS RANDOM SYMBOL
     {
@@ -1900,8 +2064,83 @@ public class SlotManager : MonoBehaviour
     stopSeq.Play();
   }
 
+  private IEnumerator PlayMagnetSequence()
+  {
+    if (!isMagnetScenarioActive || magnetCol < 0 || magnetCol >= Slot_Transform.Length) yield break;
+
+    GameObject activeMagnet = null;
+    if (magnetCol == 0) // Left
+    {
+      activeMagnet = (magnetRow == 0) ? leftBottomMagnet : leftTopMagnet;
+    }
+    else if (magnetCol == 4) // Right
+    {
+      activeMagnet = (magnetRow == 0) ? rightBottomMagnet : rightTopMagnet;
+    }
+
+    if (activeMagnet != null)
+    {
+      activeMagnet.SetActive(true);
+    }
+
+    Debug.Log($"[FakeScenario] Magnet sequence playing! Activating magnet on Reel {magnetCol}, Opposite row {((magnetRow == 0) ? "Bottom" : "Top")}");
+
+    yield return new WaitForSeconds(magnetAnimDuration);
+
+    Transform reelTrans = Slot_Transform[magnetCol];
+    float startY = initialYPositions[magnetCol];
+    float targetY = startY + (magnetNudgeDir * symbolHeight);
+
+    bool nudgeComplete = false;
+    reelTrans.DOLocalMoveY(targetY, magnetNudgeDuration)
+      .SetEase(Ease.OutBack)
+      .OnComplete(() => {
+        nudgeComplete = true;
+      });
+
+    yield return new WaitUntil(() => nudgeComplete);
+
+    if (activeMagnet != null)
+    {
+      activeMagnet.SetActive(false);
+    }
+
+    isMagnetScenarioActive = false;
+
+    PopulateResultMatrixForColumn(magnetCol);
+    reelTrans.localPosition = new Vector3(reelTrans.localPosition.x, startY, 0f);
+
+    Debug.Log($"[FakeScenario] Magnet nudge complete! Reel {magnetCol} populated with final correct server symbols.");
+
+    // Play all special landing animations on the magnet column now that it has settled!
+    System.Func<string, bool> isSpecial = id =>
+        id == "11" || id == "12" || id == "14" ||
+        id == "15" || id == "16" || id == "17";
+
+    for (int row = 0; row < 3; row++)
+    {
+        if (SocketManager.resultData != null && SocketManager.resultData.matrix != null &&
+            row < SocketManager.resultData.matrix.Count && magnetCol < SocketManager.resultData.matrix[row].Count)
+        {
+            string symbolIdStr = SocketManager.resultData.matrix[row][magnetCol];
+            if (isSpecial(symbolIdStr))
+            {
+                animationManager.PlaySpecialAnimationForCell(row, magnetCol);
+            }
+        }
+    }
+
+    yield return new WaitForSeconds(0.2f);
+  }
+
   private void OnReelStopped(int col)
   {
+      if (isMagnetScenarioActive && col == magnetCol)
+      {
+          // Delay all landing animations on this column until the magnet nudge is complete!
+          return;
+      }
+
       System.Func<string, bool> isSpecial = id =>
           id == "11" || id == "12" || id == "14" ||
           id == "15" || id == "16" || id == "17";
