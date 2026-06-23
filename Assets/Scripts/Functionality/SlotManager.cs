@@ -1580,6 +1580,14 @@ public class SlotManager : MonoBehaviour
     EnableAllBackTints(false);
   }
 
+  public void PerformStop()
+  {
+    if (uiManager != null)
+    {
+      uiManager.PerformStop();
+    }
+  }
+
   #region TweeningCode
   private int[] reelCycleCount = new int[5];
   private const int MinCyclesBeforeStop = 3;

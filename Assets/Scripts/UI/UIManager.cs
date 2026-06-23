@@ -243,27 +243,7 @@ public class UIManager : MonoBehaviour
       }
       if (stopSpinButton) {
           stopSpinButton.onClick.RemoveAllListeners();
-          stopSpinButton.onClick.AddListener(() => { 
-              if (slotManager)
-              {
-                  if (slotManager.IsBonus)
-                  {
-                      if (bonusManager != null)
-                      {
-                          bonusManager.StopSpinToggle = true;
-                          // Immediately change stop button to disabled feature spin button during feature
-                          UpdateFeatureButtonsState(false, slotManager.LinkRespinsRemaining);
-                          if (featureSpinButton != null) featureSpinButton.interactable = false;
-                      }
-                  }
-                  else
-                  {
-                      slotManager.StopSpinToggle = true;
-                      // Immediately change stop button to disabled spin button for normal game
-                      ShowSpinButtonCooldown(true);
-                  }
-              }
-          });
+          stopSpinButton.onClick.AddListener(() => { PerformStop(); });
       }
 
       if (gameExitButton) {
@@ -1047,6 +1027,31 @@ public class UIManager : MonoBehaviour
         }
       }
     }
+  }
+
+  public void PerformStop()
+  {
+      if (slotManager == null) return;
+
+      if (slotManager.IsBonus)
+      {
+          if (bonusManager != null && bonusManager.IsSpinning)
+          {
+              bonusManager.StopSpinToggle = true;
+              // Immediately change stop button to disabled feature spin button during feature
+              UpdateFeatureButtonsState(false, slotManager.LinkRespinsRemaining);
+              if (featureSpinButton != null) featureSpinButton.interactable = false;
+          }
+      }
+      else
+      {
+          if (slotManager.IsSpinning && !slotManager.StopSpinToggle)
+          {
+              slotManager.StopSpinToggle = true;
+              // Immediately change stop button to disabled spin button for normal game
+              ShowSpinButtonCooldown(true);
+          }
+      }
   }
 
   private string FormatSpriteText(string input)
