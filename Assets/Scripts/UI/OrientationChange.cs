@@ -7,9 +7,7 @@ public class OrientationChange : MonoBehaviour
 {
   [SerializeField] private RectTransform UIWrapper;
   [SerializeField] private CanvasScaler CanvasScaler;
-  [SerializeField] private float MatchWidth = 0f;
-  [SerializeField] private float MatchHeight = 1f;
-  [SerializeField] private float PortraitMatchHeight = 1f;
+
   [SerializeField] private float transitionDuration = 0.2f;
   [SerializeField] private float waitForRotation = 0.2f;
 
