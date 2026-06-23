@@ -52,9 +52,13 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         if (swipeDetected || slotManager == null || slotManager.IsSpinning || slotManager.IsFeatureTransitioning) return;
 
-        Vector2 currentPosition = eventData.position;
-        float diffY = currentPosition.y - startPosition.y;
-        float diffX = currentPosition.x - startPosition.x;
+        Vector2 screenDelta = eventData.position - startPosition;
+        // Transform the screen-space delta vector by the inverse of the object's rotation
+        // to get the delta vector aligned with the local axes of the UI wrapper/slots.
+        Vector3 localDelta = Quaternion.Inverse(transform.rotation) * (Vector3)screenDelta;
+
+        float diffY = localDelta.y;
+        float diffX = localDelta.x;
 
         float swipeThreshold = slotManager.SwipeThresholdValue;
 

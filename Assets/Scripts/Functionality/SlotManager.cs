@@ -143,6 +143,7 @@ public class SlotManager : MonoBehaviour
   [SerializeField] private BonusManager _bonusManager;
   [SerializeField] private AnimationManager animationManager;
   [SerializeField] public JackpotManager jackpotManager;
+  [SerializeField] private PopupManager popupManager;
 
   [Header("Sprites References")]
   [SerializeField] internal Sprite[] SlotSymbols;  //images taken initially
@@ -381,6 +382,17 @@ public class SlotManager : MonoBehaviour
         yield break;
       }
 
+      // Check balance before starting next autoplay spin
+      if (Balance < TotalBet && !IsFreeSpin)
+      {
+        StopAutoSpin();
+        if (popupManager != null)
+        {
+          popupManager.ShowInsufficientFundsError();
+        }
+        yield break;
+      }
+
       StartSlots(true);
       yield return tweenroutine;
 
@@ -419,7 +431,10 @@ public class SlotManager : MonoBehaviour
   {
     if (Balance < TotalBet)
     {
-      uiManager.LowBalPopup();
+      if (popupManager != null)
+      {
+        popupManager.ShowInsufficientFundsError();
+      }
     }
   }
 
@@ -1301,7 +1316,7 @@ public class SlotManager : MonoBehaviour
     return loc;
   }
 
-  private ServerSymbolInfo GetSymbolInfo(int symbolId)
+  internal ServerSymbolInfo GetSymbolInfo(int symbolId)
   {
       if (SocketManager != null && SocketManager.initialData != null && SocketManager.initialData.uiData != null && SocketManager.initialData.uiData.paylines != null)
       {
@@ -1546,6 +1561,7 @@ public class SlotManager : MonoBehaviour
 
   internal void CallCloseSocket()
   {
+    SocketManager.isExiting = true;
     StartCoroutine(SocketManager.CloseSocket());
   }
 

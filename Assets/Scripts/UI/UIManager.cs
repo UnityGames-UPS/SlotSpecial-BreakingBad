@@ -11,11 +11,26 @@ public class UIManager : MonoBehaviour
   [SerializeField] private SlotManager slotManager;
   [SerializeField] private SocketIOManager socketManager;
   [SerializeField] private BonusManager bonusManager;
+  [SerializeField] private PopupManager popupManager;
+
+  [System.Serializable]
+  public struct SymbolTextMap
+  {
+      public int symbolId;
+      public TMP_Text textComponent;
+  }
+
+  [Header("Info Panel UI")]
+  [SerializeField] private GameObject infoPanel;
+  [SerializeField] private Button infoButton;
+  [SerializeField] private Button infoBackButton;
+  [SerializeField] private List<SymbolTextMap> symbolTextMaps;
 
   [Header("Spin & Autoplay Rework UI")]
   [SerializeField] private GameObject autoplaySelectionPanel;
   [SerializeField] private TMP_Dropdown autoplayOptionsDropdown;
   [SerializeField] private Button autoplayStartButton;
+  [SerializeField] private Button autoplayPanelClose;
   [SerializeField] private GameObject autoplayCounterObject;
   [SerializeField] private TMP_Text autoplayCounterText;
 
@@ -76,6 +91,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button turboButton;
   [SerializeField] private GameObject turboOnObject;
   [SerializeField] private Button stopSpinButton;
+  [SerializeField] private Button gameExitButton;
 
   [SerializeField] private TMP_Text balanceText;
   [SerializeField] private TMP_Text totalBetText;
@@ -113,6 +129,10 @@ public class UIManager : MonoBehaviour
       autoplayStartButton.onClick.RemoveAllListeners();
       autoplayStartButton.onClick.AddListener(OnAutoplayStartPressed);
     }
+    if (autoplayPanelClose) {
+      autoplayPanelClose.onClick.RemoveAllListeners();
+      autoplayPanelClose.onClick.AddListener(CloseAutoplayPanel);
+    }
     if (autoplayOptionsDropdown) {
       autoplayOptionsDropdown.ClearOptions();
       List<string> options = new List<string> {
@@ -136,6 +156,21 @@ public class UIManager : MonoBehaviour
     }
     if (autoplaySelectionPanel) autoplaySelectionPanel.SetActive(false);
     if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
+
+    if (infoButton != null)
+    {
+        infoButton.onClick.RemoveAllListeners();
+        infoButton.onClick.AddListener(OpenInfoPanel);
+    }
+    if (infoBackButton != null)
+    {
+        infoBackButton.onClick.RemoveAllListeners();
+        infoBackButton.onClick.AddListener(CloseInfoPanel);
+    }
+    if (infoPanel != null)
+    {
+        infoPanel.SetActive(false);
+    }
 
     InitializeHUD();
 
@@ -228,6 +263,18 @@ public class UIManager : MonoBehaviour
                       ShowSpinButtonCooldown(true);
                   }
               }
+          });
+      }
+
+      if (gameExitButton) {
+          gameExitButton.onClick.RemoveAllListeners();
+          gameExitButton.onClick.AddListener(() => {
+              if (popupManager != null) {
+                  popupManager.ShowExitGamePopup();
+              } else {
+                  CallOnExitFunction();
+              }
+              CanCloseMenu();
           });
       }
 
@@ -497,6 +544,7 @@ public class UIManager : MonoBehaviour
   {
       if (totalBetText) totalBetText.text = val.ToString();
       UpdateJackpotDisplay();
+      UpdateInfoMultiplierTexts();
   }
 
   private void UpdateFreeSpinsText(int val)
@@ -543,6 +591,8 @@ public class UIManager : MonoBehaviour
       if (autoSpinButton && !slotManager.IsAutoSpin) autoSpinButton.interactable = toggle;
       if (totalBetPlusButton && !slotManager.IsAutoSpin) totalBetPlusButton.interactable = toggle;
       if (totalBetMinusButton && !slotManager.IsAutoSpin) totalBetMinusButton.interactable = toggle;
+      if (infoButton && !slotManager.IsAutoSpin) infoButton.interactable = toggle;
+      if (gameExitButton && !slotManager.IsAutoSpin) gameExitButton.interactable = toggle;
   }
 
   public void SetAutoSpinActive(bool active)
@@ -620,7 +670,7 @@ public class UIManager : MonoBehaviour
 
   internal void InitialiseUIData(PaylineData symbolsText)
   {
-    // No-op
+      UpdateInfoMultiplierTexts();
   }
 
   internal IEnumerator TrailRendererAnimation(GameObject TrailRendererGO, int textIndex, int coinvalue, bool IsBonus = false)
@@ -796,6 +846,54 @@ public class UIManager : MonoBehaviour
     if (autoplaySelectionPanel) autoplaySelectionPanel.SetActive(true);
   }
 
+  private void CloseAutoplayPanel()
+  {
+    if (autoplaySelectionPanel) autoplaySelectionPanel.SetActive(false);
+  }
+
+  private void OpenInfoPanel()
+  {
+      if (infoPanel != null)
+      {
+          infoPanel.SetActive(true);
+          UpdateInfoMultiplierTexts();
+      }
+  }
+
+  private void CloseInfoPanel()
+  {
+      if (infoPanel != null)
+      {
+          infoPanel.SetActive(false);
+      }
+  }
+
+  private void UpdateInfoMultiplierTexts()
+  {
+      if (slotManager == null || symbolTextMaps == null) return;
+
+      double totalBet = slotManager.TotalBet;
+
+      foreach (var map in symbolTextMaps)
+      {
+          if (map.textComponent == null) continue;
+
+          var symbolInfo = slotManager.GetSymbolInfo(map.symbolId);
+          if (symbolInfo != null && symbolInfo.multiplier != null && symbolInfo.multiplier.Count >= 3)
+          {
+              double mult5 = symbolInfo.multiplier[0];
+              double mult4 = symbolInfo.multiplier[1];
+              double mult3 = symbolInfo.multiplier[2];
+
+              double val5 = totalBet * mult5;
+              double val4 = totalBet * mult4;
+              double val3 = totalBet * mult3;
+
+              map.textComponent.text = $"5x {val5:F3}\n4x {val4:F3}\n3x {val3:F3}";
+          }
+      }
+  }
+
   private void OnAutoplayStartPressed()
   {
     if (!autoplayOptionsDropdown) return;
@@ -872,11 +970,16 @@ public class UIManager : MonoBehaviour
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
         if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
         if (featureSpinButton) featureSpinButton.gameObject.SetActive(false);
+        if (infoButton) infoButton.interactable = false;
+        if (gameExitButton) gameExitButton.interactable = false;
         return;
     }
 
     if (slotManager.IsSpinning)
     {
+      if (infoButton) infoButton.interactable = false;
+      if (gameExitButton) gameExitButton.interactable = false;
+
       if (slotManager.IsAutoSpin)
       {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
@@ -900,6 +1003,8 @@ public class UIManager : MonoBehaviour
     {
       if (slotManager.IsAutoSpin)
       {
+        if (infoButton) infoButton.interactable = false;
+        if (gameExitButton) gameExitButton.interactable = false;
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
@@ -907,6 +1012,8 @@ public class UIManager : MonoBehaviour
       }
       else if (slotManager.IsFreeSpin)
       {
+        if (infoButton) infoButton.interactable = false;
+        if (gameExitButton) gameExitButton.interactable = false;
         if (slotStartButton) {
           slotStartButton.gameObject.SetActive(true);
           slotStartButton.interactable = false;
@@ -922,6 +1029,8 @@ public class UIManager : MonoBehaviour
       }
       else
       {
+        if (infoButton) infoButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
+        if (gameExitButton) gameExitButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
         if (slotStartButton) {
           slotStartButton.gameObject.SetActive(true);
           // Disable the normal spin button if the feature is active or transition/trigger is happening

@@ -1,0 +1,936 @@
+fileFormatVersion: 2
+guid: 7c5f8f0a88fd14d0a91872fc0cd8917f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 847230538226374544
+    second: SL_BB_UI_Paylines_0
+  - first:
+      213: 8507239524737026435
+    second: SL_BB_UI_Paylines_1
+  - first:
+      213: 1247909074916491062
+    second: SL_BB_UI_Paylines_2
+  - first:
+      213: 3999572189014696129
+    second: SL_BB_UI_Paylines_3
+  - first:
+      213: -5980089690572311691
+    second: SL_BB_UI_Paylines_4
+  - first:
+      213: 417848522415929237
+    second: SL_BB_UI_Paylines_5
+  - first:
+      213: 5382882706518926349
+    second: SL_BB_UI_Paylines_6
+  - first:
+      213: -2613294636927047049
+    second: SL_BB_UI_Paylines_7
+  - first:
+      213: -1499501106956481173
+    second: SL_BB_UI_Paylines_8
+  - first:
+      213: 7877309171806569153
+    second: SL_BB_UI_Paylines_9
+  - first:
+      213: -6766599013706145714
+    second: SL_BB_UI_Paylines_10
+  - first:
+      213: 4204334995533142150
+    second: SL_BB_UI_Paylines_11
+  - first:
+      213: -7938253963278388121
+    second: SL_BB_UI_Paylines_12
+  - first:
+      213: -6786519371448293289
+    second: SL_BB_UI_Paylines_13
+  - first:
+      213: 983390787855674929
+    second: SL_BB_UI_Paylines_14
+  - first:
+      213: 4040316937046694605
+    second: SL_BB_UI_Paylines_15
+  - first:
+      213: 5648695597180692091
+    second: SL_BB_UI_Paylines_16
+  - first:
+      213: -4120248960988152620
+    second: SL_BB_UI_Paylines_17
+  - first:
+      213: -8538864981003361967
+    second: SL_BB_UI_Paylines_18
+  - first:
+      213: 851531587965077348
+    second: SL_BB_UI_Paylines_19
+  - first:
+      213: 8777014414888860118
+    second: SL_BB_UI_Paylines_20
+  - first:
+      213: -1911021229102714269
+    second: SL_BB_UI_Paylines_21
+  - first:
+      213: 6392327787173491366
+    second: SL_BB_UI_Paylines_22
+  - first:
+      213: -8710344740475036873
+    second: SL_BB_UI_Paylines_23
+  - first:
+      213: -5726417640135069846
+    second: SL_BB_UI_Paylines_24
+  - first:
+      213: -275006237689068559
+    second: SL_BB_UI_Paylines_25
+  - first:
+      213: -2465778540315147479
+    second: SL_BB_UI_Paylines_26
+  - first:
+      213: -4583535805431917565
+    second: SL_BB_UI_Paylines_27
+  - first:
+      213: -5847758676713011231
+    second: SL_BB_UI_Paylines_28
+  - first:
+      213: 2135108414815370183
+    second: SL_BB_UI_Paylines_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_0
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09798d98fa7f1cb00800000000000000
+      internalID: 847230538226374544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_1
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3890d134649cf0670800000000000000
+      internalID: 8507239524737026435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_2
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63f326221b6715110800000000000000
+      internalID: 1247909074916491062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_3
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c0a0cb17b5518730800000000000000
+      internalID: 3999572189014696129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_4
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 573367c3c14720da0800000000000000
+      internalID: -5980089690572311691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_5
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 1096
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 597f58c640f7cc500800000000000000
+      internalID: 417848522415929237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_6
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0467a54d47d3ba40800000000000000
+      internalID: 5382882706518926349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_7
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77aa780af56bbbbd0800000000000000
+      internalID: -2613294636927047049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_8
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6dcd8b10b3b03be0800000000000000
+      internalID: -1499501106956481173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_9
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c2057bb4f2d15d60800000000000000
+      internalID: 7877309171806569153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_10
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40698a4c063812a0800000000000000
+      internalID: -6766599013706145714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_11
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 840
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6881f75276cc85a30800000000000000
+      internalID: 4204334995533142150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_12
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76474fd3418a5d190800000000000000
+      internalID: -7938253963278388121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_13
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7586483969071d1a0800000000000000
+      internalID: -6786519371448293289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_14
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13e678916b4b5ad00800000000000000
+      internalID: 983390787855674929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_15
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dca99a409d6121830800000000000000
+      internalID: 4040316937046694605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_16
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76a442b7b2346e40800000000000000
+      internalID: 5648695597180692091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_17
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 584
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dcf026666fe1d6c0800000000000000
+      internalID: -4120248960988152620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_18
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 151a5466a8bdf7980800000000000000
+      internalID: -8538864981003361967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_19
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 467cea7b77f31db00800000000000000
+      internalID: 851531587965077348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_20
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d9fee39b183ec970800000000000000
+      internalID: 8777014414888860118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_21
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3623a113150ba75e0800000000000000
+      internalID: -1911021229102714269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_22
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a2b552214c16b850800000000000000
+      internalID: 6392327787173491366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_23
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 328
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73b1bc0ab93ae1780800000000000000
+      internalID: -8710344740475036873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_24
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6fe7340f7da780b0800000000000000
+      internalID: -5726417640135069846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_25
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f3c68ba84bfe2cf0800000000000000
+      internalID: -275006237689068559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_26
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9230cb95b7bc7cdd0800000000000000
+      internalID: -2465778540315147479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_27
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30452f538720460c0800000000000000
+      internalID: -4583535805431917565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_28
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e7005e577698dea0800000000000000
+      internalID: -5847758676713011231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SL_BB_UI_Paylines_29
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 72
+        width: 182
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cb740e7acd61ad10800000000000000
+      internalID: 2135108414815370183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SL_BB_UI_Paylines_0: 847230538226374544
+      SL_BB_UI_Paylines_1: 8507239524737026435
+      SL_BB_UI_Paylines_10: -6766599013706145714
+      SL_BB_UI_Paylines_11: 4204334995533142150
+      SL_BB_UI_Paylines_12: -7938253963278388121
+      SL_BB_UI_Paylines_13: -6786519371448293289
+      SL_BB_UI_Paylines_14: 983390787855674929
+      SL_BB_UI_Paylines_15: 4040316937046694605
+      SL_BB_UI_Paylines_16: 5648695597180692091
+      SL_BB_UI_Paylines_17: -4120248960988152620
+      SL_BB_UI_Paylines_18: -8538864981003361967
+      SL_BB_UI_Paylines_19: 851531587965077348
+      SL_BB_UI_Paylines_2: 1247909074916491062
+      SL_BB_UI_Paylines_20: 8777014414888860118
+      SL_BB_UI_Paylines_21: -1911021229102714269
+      SL_BB_UI_Paylines_22: 6392327787173491366
+      SL_BB_UI_Paylines_23: -8710344740475036873
+      SL_BB_UI_Paylines_24: -5726417640135069846
+      SL_BB_UI_Paylines_25: -275006237689068559
+      SL_BB_UI_Paylines_26: -2465778540315147479
+      SL_BB_UI_Paylines_27: -4583535805431917565
+      SL_BB_UI_Paylines_28: -5847758676713011231
+      SL_BB_UI_Paylines_29: 2135108414815370183
+      SL_BB_UI_Paylines_3: 3999572189014696129
+      SL_BB_UI_Paylines_4: -5980089690572311691
+      SL_BB_UI_Paylines_5: 417848522415929237
+      SL_BB_UI_Paylines_6: 5382882706518926349
+      SL_BB_UI_Paylines_7: -2613294636927047049
+      SL_BB_UI_Paylines_8: -1499501106956481173
+      SL_BB_UI_Paylines_9: 7877309171806569153
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
