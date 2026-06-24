@@ -671,27 +671,44 @@ public class UIManager : MonoBehaviour
   {
       if (result == null || !result.triggered) yield break;
 
-      // 1. Hide Jackpot Panel & Show Coin Win Display Panel
-      if (jackpotPanelCanvasGroup != null)
+      // Check if there are any actual cash coins to display in the Coin Win Display Panel
+      bool hasCashCoins = false;
+      if (result.collectedCoins != null)
       {
-          jackpotPanelCanvasGroup.DOKill();
-          jackpotPanelCanvasGroup.DOFade(0f, 0.5f);
-      }
-      
-      if (coinWinDisplayPanelCanvasGroup != null)
-      {
-          coinWinDisplayPanelCanvasGroup.DOKill();
-          coinWinDisplayPanelCanvasGroup.gameObject.SetActive(true);
-          coinWinDisplayPanelCanvasGroup.alpha = 0f;
-          coinWinDisplayPanelCanvasGroup.DOFade(1f, 0.5f);
-      }
-
-      if (coinWinDisplayText != null)
-      {
-          coinWinDisplayText.text = "0.000";
+          foreach (var coin in result.collectedCoins)
+          {
+              if (coin.symbolId == 13 || coin.symbolId == 15 || coin.symbolId == 16)
+              {
+                  hasCashCoins = true;
+                  break;
+              }
+          }
       }
 
-      yield return new WaitForSeconds(0.5f);
+      // 1. Hide Jackpot Panel & Show Coin Win Display Panel (only if there are cash coins)
+      if (hasCashCoins)
+      {
+          if (jackpotPanelCanvasGroup != null)
+          {
+              jackpotPanelCanvasGroup.DOKill();
+              jackpotPanelCanvasGroup.DOFade(0f, 0.5f);
+          }
+          
+          if (coinWinDisplayPanelCanvasGroup != null)
+          {
+              coinWinDisplayPanelCanvasGroup.DOKill();
+              coinWinDisplayPanelCanvasGroup.gameObject.SetActive(true);
+              coinWinDisplayPanelCanvasGroup.alpha = 0f;
+              coinWinDisplayPanelCanvasGroup.DOFade(1f, 0.5f);
+          }
+
+          if (coinWinDisplayText != null)
+          {
+              coinWinDisplayText.text = "0.000";
+          }
+
+          yield return new WaitForSeconds(0.5f);
+      }
 
       // Start loop animations on the CashCollect symbols
       List<List<int>> ccPositions = new List<List<int>>();
@@ -722,7 +739,15 @@ public class UIManager : MonoBehaviour
       // 2. Play flying animations from cash coins to display panel
       if (result.collectedCoins != null && result.collectedCoins.Count > 0)
       {
-          foreach (var coin in result.collectedCoins)
+          List<CollectedCoin> sortedCoins = new List<CollectedCoin>(result.collectedCoins);
+          sortedCoins.Sort((a, b) =>
+          {
+              if (a.symbolId == 16 && b.symbolId != 16) return -1;
+              if (b.symbolId == 16 && a.symbolId != 16) return 1;
+              return 0;
+          });
+
+          foreach (var coin in sortedCoins)
           {
               int r = coin.position[0];
               int c = coin.position[1];
@@ -736,8 +761,8 @@ public class UIManager : MonoBehaviour
               // Pop animation on gold coin
               cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.4f, 1, 0.5f);
 
-              // Spawn trail renderer prefab in the middle of the cash coin
-              if (trailRendererPrefab != null)
+              // Spawn trail renderer prefab in the middle of the cash coin (only for Cash Coin [15], Multiplier Coin [13], and Prize Coin [16])
+              if (trailRendererPrefab != null && (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13))
               {
                   GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
                   
@@ -791,14 +816,22 @@ public class UIManager : MonoBehaviour
               }
               else
               {
-                  // Fallback if no prefab is assigned
-                  double startVal = accumulatedVal;
-                  accumulatedVal += coin.coinValue * slotManager.TotalBet;
-                  double endVal = accumulatedVal;
-                  if (coinWinDisplayText != null)
-                      coinWinDisplayText.text = endVal.ToString("F3");
-                  activeFlyingCoins--;
-                  yield return new WaitForSeconds(0.4f);
+                  // Fallback if no prefab is assigned, or it's not a cash coin/prize coin (e.g. it is symbolId 17)
+                  if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13)
+                  {
+                      double startVal = accumulatedVal;
+                      accumulatedVal += coin.coinValue * slotManager.TotalBet;
+                      double endVal = accumulatedVal;
+                      if (coinWinDisplayText != null)
+                          coinWinDisplayText.text = endVal.ToString("F3");
+                      activeFlyingCoins--;
+                      yield return new WaitForSeconds(0.4f);
+                  }
+                  else
+                  {
+                      // For non-cash/prize coins (like symbolId 17 - Los Pollos), we do not update text or wait
+                      activeFlyingCoins--;
+                  }
               }
           }
       }
@@ -817,23 +850,26 @@ public class UIManager : MonoBehaviour
           }
       }
 
-      // 3. Hide Coin Win Display Panel & Show Jackpot Panel
-      if (coinWinDisplayPanelCanvasGroup != null)
+      // 3. Hide Coin Win Display Panel & Show Jackpot Panel (only if they were modified)
+      if (hasCashCoins)
       {
-          coinWinDisplayPanelCanvasGroup.DOKill();
-          coinWinDisplayPanelCanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+          if (coinWinDisplayPanelCanvasGroup != null)
           {
-              coinWinDisplayPanelCanvasGroup.gameObject.SetActive(false);
-          });
-      }
+              coinWinDisplayPanelCanvasGroup.DOKill();
+              coinWinDisplayPanelCanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+              {
+                  coinWinDisplayPanelCanvasGroup.gameObject.SetActive(false);
+              });
+          }
 
-      if (jackpotPanelCanvasGroup != null)
-      {
-          jackpotPanelCanvasGroup.DOKill();
-          jackpotPanelCanvasGroup.DOFade(1f, 0.5f);
-      }
+          if (jackpotPanelCanvasGroup != null)
+          {
+              jackpotPanelCanvasGroup.DOKill();
+              jackpotPanelCanvasGroup.DOFade(1f, 0.5f);
+          }
 
-      yield return new WaitForSeconds(0.5f);
+          yield return new WaitForSeconds(0.5f);
+      }
   }
 
   internal IEnumerator MidGameImageAnimation(ImageAnimation imageAnimation, double num = 0)

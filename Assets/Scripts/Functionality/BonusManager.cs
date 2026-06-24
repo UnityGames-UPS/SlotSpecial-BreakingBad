@@ -291,6 +291,49 @@ public class BonusManager : MonoBehaviour
         }
       }
 
+      var ccResult = SocketManager.resultData.payload.cashCollectResult;
+      if (ccResult != null && ccResult.triggered)
+      {
+        yield return uiManager.PlayCashCollectSequence(ccResult);
+      }
+      else
+      {
+          var customResult = new CashCollectResult();
+          customResult.triggered = true;
+          customResult.collectedCoins = new List<CollectedCoin>();
+          foreach (var coin in allcoinPositions)
+          {
+              if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 17 || coin.symbolId == 13)
+              {
+                  customResult.collectedCoins.Add(new CollectedCoin
+                  {
+                      position = coin.position,
+                      coinValue = coin.coinValue,
+                      symbolId = coin.symbolId,
+                      symbolName = coin.symbolName
+                  });
+              }
+          }
+          
+          if (customResult.collectedCoins.Count > 0)
+          {
+              var ccPositionsList = new List<Newtonsoft.Json.Linq.JArray>();
+              for (int r = 0; r < SocketManager.resultData.matrix.Count; r++)
+              {
+                  for (int c = 0; c < SocketManager.resultData.matrix[r].Count; c++)
+                  {
+                      if (SocketManager.resultData.matrix[r][c] == "14")
+                      {
+                          var arr = new Newtonsoft.Json.Linq.JArray { r, c };
+                          ccPositionsList.Add(arr);
+                      }
+                  }
+              }
+              customResult.positions = new Newtonsoft.Json.Linq.JArray(ccPositionsList.ToArray());
+              yield return uiManager.PlayCashCollectSequence(customResult);
+          }
+      }
+
 
       allcoinPositions.Clear();
       allcoinPositions.TrimExcess();
@@ -343,6 +386,21 @@ public class BonusManager : MonoBehaviour
         if (SocketManager.resultData.matrix[j][i] == "9")
         {
           img.sprite = index9Sprites[Random.Range(0, index9Sprites.Length)];
+        }
+        else if (SocketManager.resultData.matrix[j][i] == "13")
+        {
+          foreach (var coins in SocketManager.resultData.payload.coinPositions)
+          {
+            if (coins.symbolId == 13 && coins.position[0] == j && coins.position[1] == i)
+            {
+              if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > symbolId)
+              {
+                img.sprite = slotManager.SlotSymbols[symbolId];
+              }
+              if (view != null) view.SetMultiplierCoinValue(coins.coinValue, slotManager.TotalBet);
+              break;
+            }
+          }
         }
         else if (SocketManager.resultData.matrix[j][i] == "15")
         {
@@ -704,6 +762,15 @@ public class BonusManager : MonoBehaviour
           {
             img.sprite = Diamond_Sprite;
             slotManager.ConfigureSymbolView(view, 16);
+          }
+          else if (coin.symbolId == 13)
+          {
+            if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 13)
+            {
+              img.sprite = slotManager.SlotSymbols[13];
+            }
+            view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+            slotManager.ConfigureSymbolView(view, 13);
           }
           else
           {

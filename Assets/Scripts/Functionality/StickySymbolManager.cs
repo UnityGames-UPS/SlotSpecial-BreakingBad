@@ -237,7 +237,14 @@ public class StickySymbolManager : MonoBehaviour
                 SlotSymbolView view = symbolViews[col][row];
                 if (view != null)
                 {
-                    view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                    if (coin.symbolId == 13)
+                    {
+                        view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                    }
+                    else
+                    {
+                        view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                    }
                 }
                 break;
             }

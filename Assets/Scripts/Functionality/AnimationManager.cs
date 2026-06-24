@@ -95,10 +95,14 @@ public class AnimationManager : MonoBehaviour
     {
         if (lineWins == null || lineWins.Count == 0) yield break;
 
-        // Determine if it is free spin or autospin flow
-        bool isAutoOrFree = slotManager.IsFreeSpin || slotManager.IsAutoSpin || 
+        // Determine if it is free spin, autospin, or bonus/link feature flow
+        bool isAutoOrFree = slotManager.IsFreeSpin || slotManager.IsAutoSpin || slotManager.IsBonus ||
             (slotManager.ResultData != null && slotManager.ResultData.payload != null && 
-             (slotManager.ResultData.payload.isFreeSpinActive || slotManager.ResultData.payload.freeSpinsRemaining > 0));
+             (slotManager.ResultData.payload.isFreeSpinActive || 
+              slotManager.ResultData.payload.isFreeSpinTriggered || 
+              slotManager.ResultData.payload.freeSpinsRemaining > 0 ||
+              slotManager.ResultData.payload.linkFeatureActive ||
+              slotManager.ResultData.payload.isLinkTriggered));
 
         // Apply back tint on all main display cells initially
         slotManager.EnableAllBackTints(true, 0.85f);
@@ -180,6 +184,10 @@ public class AnimationManager : MonoBehaviour
                     else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
                     {
                         textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, true);
+                    }
+                    else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
+                    {
+                        textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration, true);
                     }
                     else
                     {
@@ -363,6 +371,10 @@ public class AnimationManager : MonoBehaviour
                 else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
                 {
                     textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, true);
+                }
+                else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
+                {
+                    textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration, true);
                 }
                 else
                 {
@@ -553,6 +565,7 @@ public class AnimationManager : MonoBehaviour
                 {
                     lpVal = coinPos.coinValue;
                     if (symbolId == 15) coinTxt = (coinPos.coinValue * slotManager.TotalBet).ToString() + "x";
+                    else if (symbolId == 13) coinTxt = "X" + coinPos.coinValue.ToString();
                     else if (symbolId == 17) lpVal = coinPos.coinValue;
                 }
 
@@ -576,6 +589,10 @@ public class AnimationManager : MonoBehaviour
                 else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
                 {
                     textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, false);
+                }
+                else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
+                {
+                    textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration, false);
                 }
                 else
                 {
@@ -731,13 +748,14 @@ public class AnimationManager : MonoBehaviour
             {
                 lpVal = coinPos.coinValue;
                 if (symbolId == 15) coinTxt = (coinPos.coinValue * slotManager.TotalBet).ToString() + "x";
+                else if (symbolId == 13) coinTxt = "X" + coinPos.coinValue.ToString();
                 else if (symbolId == 17) lpVal = coinPos.coinValue;
             }
 
             slotManager.ConfigureAnimationSprites(animCell, symbolId, lpVal, coinTxt);
 
             animCell.useDynamicFramerate = true;
-            animCell.dynamicLoopDuration = winSymbolLoopDuration;
+            animCell.dynamicLoopDuration = winSymbolLoopDuration / 2f;
 
             // Sync and animate overlay text
             AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
@@ -748,11 +766,15 @@ public class AnimationManager : MonoBehaviour
             textHelper.SetupFromHierarchy();
             if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
             {
-                textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, false);
+                textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration / 2f, false);
             }
             else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
             {
-                textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, false);
+                textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration / 2f, false);
+            }
+            else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
+            {
+                textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration / 2f, false);
             }
             else
             {
@@ -768,7 +790,7 @@ public class AnimationManager : MonoBehaviour
             bool done = false;
             animCell.onLoopComplete = (_) => { done = true; };
 
-            float timeout = winSymbolLoopDuration + 0.5f;
+            float timeout = (winSymbolLoopDuration / 2f) + 0.25f;
             float elapsed = 0f;
             while (!done && elapsed < timeout)
             {
@@ -866,6 +888,7 @@ public class AnimationManager : MonoBehaviour
         {
             lpVal = coinPos.coinValue;
             if (symbolId == 15) coinTxt = (coinPos.coinValue * slotManager.TotalBet).ToString() + "x";
+            else if (symbolId == 13) coinTxt = "X" + coinPos.coinValue.ToString();
             else if (symbolId == 17) lpVal = coinPos.coinValue;
         }
 
@@ -888,6 +911,10 @@ public class AnimationManager : MonoBehaviour
         else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
         {
             textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, false);
+        }
+        else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
+        {
+            textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration, false);
         }
         else
         {

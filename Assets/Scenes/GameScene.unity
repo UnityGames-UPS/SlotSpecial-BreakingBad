@@ -25305,7 +25305,6 @@ RectTransform:
   m_Children:
   - {fileID: 191298093}
   - {fileID: 341970039}
-  - {fileID: 1634563475}
   - {fileID: 368326612}
   m_Father: {fileID: 887616460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32584,7 +32583,7 @@ MonoBehaviour:
   coinWinDisplayPanelCanvasGroup: {fileID: 1038798842}
   coinWinDisplayText: {fileID: 185065585}
   trailRendererPrefab: {fileID: 5367533578338078388, guid: faa025a7f9a13439c8636e2e61c89914, type: 3}
-  trailMoveDuration: 0.4
+  trailMoveDuration: 0.5
   slotStartButton: {fileID: 902433698}
   autoSpinButton: {fileID: 0}
   autoSpinStopButton: {fileID: 684108587}
@@ -44295,11 +44294,11 @@ RectTransform:
   - {fileID: 2088176913}
   - {fileID: 1096871680}
   - {fileID: 1368396214}
-  m_Father: {fileID: 952472658}
+  m_Father: {fileID: 2146390924}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.9500041, y: 1.2200003}
+  m_AnchoredPosition: {x: -58.929996, y: 4.8100004}
   m_SizeDelta: {x: 1270, y: 758}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1634706184
@@ -48642,7 +48641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6dee67c9fb64b7bbed44da112a7af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketIOManager
-  testToken: 3e77eced2b2a42ff90b489968c373750
+  testToken: cd2a1fea580c47f7ba1a0299695c95fe
   slotManager: {fileID: 1840228116}
   uiManager: {fileID: 1198241101}
   popupManager: {fileID: 1134263423}
@@ -50741,8 +50740,8 @@ MonoBehaviour:
   rightBottomMagnet: {fileID: 1368396213}
   magnetNudgeDuration: 2
   magnetAnimDuration: 2.5
-  magnetTriggerChance: 0.9
-  nearMissChance: 0.3
+  magnetTriggerChance: 1
+  nearMissChance: 0.133
   IconSizeFactor: 252
   stopCooldownDuration: 0.4
   specialSymbolStaggerIncrease: 0.75
@@ -57986,6 +57985,7 @@ GameObject:
   - component: {fileID: 2146390924}
   - component: {fileID: 2146390926}
   - component: {fileID: 2146390925}
+  - component: {fileID: 2146390927}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -58014,6 +58014,7 @@ RectTransform:
   - {fileID: 1382200886}
   - {fileID: 1867642127}
   - {fileID: 2032981809}
+  - {fileID: 1634563475}
   - {fileID: 121914063}
   - {fileID: 530414140}
   - {fileID: 359081666}
@@ -58063,6 +58064,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146390923}
   m_CullTransparentMesh: 1
+--- !u!114 &2146390927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146390923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
 --- !u!1001 &3491028568398842764
 PrefabInstance:
   m_ObjectHideFlags: 0

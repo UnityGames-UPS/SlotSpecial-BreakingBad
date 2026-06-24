@@ -257,6 +257,18 @@ public class SlotManager : MonoBehaviour
 
   public SlotSymbolView GetSymbolView(int row, int col)
   {
+      if (IsBonus && _bonusManager != null)
+      {
+          if (_bonusManager.Slot != null && col >= 0 && col < _bonusManager.Slot.Count)
+          {
+              if (_bonusManager.Slot[col].slotTransforms != null && row >= 0 && row < _bonusManager.Slot[col].slotTransforms.Count)
+              {
+                  return _bonusManager.Slot[col].slotTransforms[row].GetComponentInChildren<SlotSymbolView>();
+              }
+          }
+          return null;
+      }
+
       // Row 2,3,4 are display rows. Since ResultMatrix has row first and col second:
       if (ResultMatrix != null && row >= 0 && row < ResultMatrix.Count)
       {
@@ -680,6 +692,7 @@ public class SlotManager : MonoBehaviour
       case 14:
         foreach (Sprite sprite in CC_Sprites) animScript.textureArray.Add(sprite);
         break;
+      case 13:
       case 15:
         foreach (Sprite sprite in GoldCoin_Sprites) animScript.textureArray.Add(sprite);
         break;
@@ -988,10 +1001,12 @@ public class SlotManager : MonoBehaviour
         }
 
         float currentStagger = baseStagger;
+        /*
         if (prevHasSpecial && !IsTurboOn && !wasStopPressed)
         {
           currentStagger += specialSymbolStaggerIncrease;
         }
+        */
         currentDelay += currentStagger;
       }
       StartCoroutine(TriggerReelStopAfterDelay(i, currentDelay));
@@ -1042,7 +1057,14 @@ public class SlotManager : MonoBehaviour
     yield return new WaitUntil(() => !animationManager.AreLandingAnimationsPlaying);
     
     yield return new WaitForSeconds(0.3f);
-    if (SocketManager.resultData.payload.winAmount > 0)
+
+    // --- FEATURE QUEUE: Build first to check for Prize Coin / Cash Coin flows ---
+    featureQueue.BuildFromResponse(SocketManager.resultData.payload, IsFreeSpin);
+
+    // Check if prize coin jackpot or cash collect flow is triggered
+    bool hasPrizeOrCashFlow = featureQueue.Contains(FeatureType.PrizeCoinJackpot) || featureQueue.Contains(FeatureType.CashCollect);
+
+    if (SocketManager.resultData.payload.winAmount > 0 && !hasPrizeOrCashFlow)
     {
       List<LineWin> winLine = new();
       foreach (var item in SocketManager.resultData.payload.lineWins)
@@ -1052,7 +1074,7 @@ public class SlotManager : MonoBehaviour
       CheckPayoutLineBackend(winLine);
     }
 
-    if (IsAutoSpin || SocketManager.resultData.payload.isFreeSpinActive || SocketManager.resultData.payload.linkFeatureActive)
+    if (!hasPrizeOrCashFlow && (IsAutoSpin || SocketManager.resultData.payload.isFreeSpinActive || SocketManager.resultData.payload.linkFeatureActive))
     {
       yield return new WaitUntil(() => animationManager.gameObject.activeSelf || !CheckPopups); // wait for popups
       if (LineAnimRoutine != null)
@@ -1062,11 +1084,22 @@ public class SlotManager : MonoBehaviour
       StopGameAnimation();
       yield return new WaitForSeconds(.2f);
     }
-    // --- FEATURE QUEUE: Build and process features in priority order ---
-    featureQueue.BuildFromResponse(SocketManager.resultData.payload, IsFreeSpin);
 
     // Process the feature queue sequentially
     yield return ProcessFeatureQueue(winningsDisplayed);
+
+    // If we bypassed starting line animations initially because of prize coin or cash collect flow,
+    // and those features have now finished, start the line animations and wait for them in AutoSpin/FreeSpin/Link.
+    if (hasPrizeOrCashFlow && (IsAutoSpin || SocketManager.resultData.payload.isFreeSpinActive || SocketManager.resultData.payload.linkFeatureActive))
+    {
+      yield return new WaitUntil(() => animationManager.gameObject.activeSelf || !CheckPopups); // wait for popups
+      if (LineAnimRoutine != null)
+      {
+        yield return LineAnimRoutine;
+      }
+      StopGameAnimation();
+      yield return new WaitForSeconds(.2f);
+    }
   }
   #endregion
   
@@ -1491,16 +1524,18 @@ public class SlotManager : MonoBehaviour
 
   internal bool IsWildSymbol(int symbolId)
   {
+      if (symbolId == 13 || symbolId == 14 || symbolId == 15) return false;
       var sym = GetSymbolInfo(symbolId);
       if (sym != null && sym.name != null)
       {
           return sym.name.ToLower().Contains("wild");
       }
-      return symbolId == 10 || symbolId == 13 || symbolId == 14 || symbolId == 15;
+      return symbolId == 10;
   }
 
   internal bool IsSpecialSymbol(int symbolId)
   {
+      if (symbolId == 13) return false;
       var sym = GetSymbolInfo(symbolId);
       if (sym != null && sym.name != null)
       {
@@ -1512,6 +1547,7 @@ public class SlotManager : MonoBehaviour
 
   private Sprite GetSpecialLayerSprite(int symbolId)
   {
+      if (symbolId == 13) return null;
       if (SpecialLayerSymbols == null || SpecialLayerSymbols.Length == 0) return null;
 
       var sym = GetSymbolInfo(symbolId);
@@ -1621,6 +1657,24 @@ public class SlotManager : MonoBehaviour
             int randomIndex = tempIndex[UnityEngine.Random.Range(0, tempIndex.Length)];
             SlotImage.sprite = SlotSymbols[resultNum];
             if (view != null) view.SetLosPolosValue(randomIndex);
+          }
+        }
+        else if (resultNum == 13) // multiplier coin
+        {
+          bool found = false;
+          foreach (var coin in SocketManager.resultData.payload.coinPositions)
+          {
+            if (coin.symbolId == 13 && coin.position[0] == row && coin.position[1] == col)
+            {
+              SlotImage.sprite = SlotSymbols[resultNum];
+              if (view != null) view.SetMultiplierCoinValue(coin.coinValue, TotalBet);
+              found = true;
+              break;
+            }
+          }
+          if (!found)
+          {
+            SlotImage.sprite = SlotSymbols[resultNum];
           }
         }
         else if (resultNum == 15) // gold coin
@@ -2088,6 +2142,20 @@ public class SlotManager : MonoBehaviour
         view.SetLosPolosValue(randomIndex);
       }
     }
+    else if (symbolId == 13) // multiplier coin
+    {
+      if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.coinPositions != null)
+      {
+        foreach (var coin in SocketManager.resultData.payload.coinPositions)
+        {
+          if (coin.symbolId == 13 && coin.position[0] == row && coin.position[1] == col)
+          {
+            view.SetMultiplierCoinValue(coin.coinValue, TotalBet);
+            break;
+          }
+        }
+      }
+    }
     else if (symbolId == 15) // gold coin
     {
       if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.coinPositions != null)
@@ -2155,8 +2223,10 @@ public class SlotManager : MonoBehaviour
       activeMagnet = (magnetRow == 0) ? rightBottomMagnet : rightTopMagnet;
     }
 
+    Vector3 initialMagnetPos = Vector3.zero;
     if (activeMagnet != null)
     {
+      initialMagnetPos = activeMagnet.transform.localPosition;
       activeMagnet.SetActive(true);
     }
 
@@ -2169,6 +2239,15 @@ public class SlotManager : MonoBehaviour
     float targetY = startY + (magnetNudgeDir * symbolHeight);
 
     bool nudgeComplete = false;
+
+    // Move the active magnet backward during the nudge to simulate pulling tension, matching the slot's movement
+    if (activeMagnet != null)
+    {
+      float pullbackOffset = magnetNudgeDir * symbolHeight;
+      activeMagnet.transform.DOLocalMoveY(initialMagnetPos.y + pullbackOffset, magnetNudgeDuration)
+        .SetEase(Ease.OutBack);
+    }
+
     reelTrans.DOLocalMoveY(targetY, magnetNudgeDuration)
       .SetEase(Ease.OutBack)
       .OnComplete(() => {
@@ -2180,6 +2259,7 @@ public class SlotManager : MonoBehaviour
     if (activeMagnet != null)
     {
       activeMagnet.SetActive(false);
+      activeMagnet.transform.localPosition = initialMagnetPos; // Restore position for future use
     }
 
     isMagnetScenarioActive = false;
@@ -2269,6 +2349,17 @@ public class SlotManager : MonoBehaviour
     else if (dst.goldCoinValueText != null)
     {
       dst.goldCoinValueText.gameObject.SetActive(false);
+    }
+
+    // Multiplier coin value text
+    if (dst.multiplierValueText != null && src.multiplierValueText != null)
+    {
+      dst.multiplierValueText.gameObject.SetActive(src.multiplierValueText.gameObject.activeSelf);
+      dst.multiplierValueText.text = src.multiplierValueText.text;
+    }
+    else if (dst.multiplierValueText != null)
+    {
+      dst.multiplierValueText.gameObject.SetActive(false);
     }
 
     // Los Polos value text

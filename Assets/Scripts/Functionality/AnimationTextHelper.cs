@@ -6,6 +6,7 @@ public class AnimationTextHelper : MonoBehaviour
 {
     [SerializeField] public TMP_Text losPolosText;
     [SerializeField] public TMP_Text goldCoinText;
+    [SerializeField] public TMP_Text multiplierText;
     [SerializeField] public TMP_Text payoutText;
 
     private Tween activeTextTween;
@@ -29,6 +30,10 @@ public class AnimationTextHelper : MonoBehaviour
             else if (lowerName.Contains("payout") || lowerName.Contains("win"))
             {
                 payoutText = txt;
+            }
+            else if (lowerName.Contains("multi") || lowerName.Contains("x"))
+            {
+                multiplierText = txt;
             }
         }
 
@@ -70,6 +75,12 @@ public class AnimationTextHelper : MonoBehaviour
             goldCoinText.text = "";
             goldCoinText.gameObject.SetActive(false);
             goldCoinText.transform.localRotation = Quaternion.identity;
+        }
+        if (multiplierText != null)
+        {
+            multiplierText.text = "";
+            multiplierText.gameObject.SetActive(false);
+            multiplierText.transform.localScale = Vector3.one;
         }
         if (payoutText != null)
         {
@@ -117,6 +128,20 @@ public class AnimationTextHelper : MonoBehaviour
                     seq.SetLoops(-1);
                 }
                 activeTextTween = seq;
+            }
+        }
+        else if (symbolId == 13) // Multiplier Coin
+        {
+            if (multiplierText != null)
+            {
+                multiplierText.text = textContent;
+                multiplierText.gameObject.SetActive(true);
+                
+                multiplierText.transform.localScale = Vector3.one;
+                int loops = loopIndefinitely ? -1 : 2;
+                activeTextTween = multiplierText.transform.DOScale(1.2f, duration * 0.5f)
+                    .SetLoops(loops, LoopType.Yoyo)
+                    .SetEase(Ease.InOutQuad);
             }
         }
     }

@@ -13,6 +13,7 @@ public class SlotSymbolView : MonoBehaviour
     [SerializeField] public GameObject hatObject;
     [SerializeField] public TMP_Text losPolosValueText;
     [SerializeField] public TMP_Text goldCoinValueText;
+    [SerializeField] public TMP_Text multiplierValueText;
     [SerializeField] public GameObject jackpotObject;
     [SerializeField] public Transform jackpotStripParent;
     [SerializeField] public TMP_Text jackpotResultText;
@@ -52,6 +53,18 @@ public class SlotSymbolView : MonoBehaviour
                 if (oldImg != null) oldImg.enabled = false;
             }
         }
+        if (transform.childCount > 5 && multiplierValueText == null)
+        {
+            var child5 = transform.GetChild(5);
+            multiplierValueText = child5.GetComponent<TMP_Text>();
+            if (multiplierValueText == null)
+            {
+                multiplierValueText = child5.gameObject.AddComponent<TMP_Text>();
+                // Disable any legacy Image component on this object to prevent overlap
+                var oldImg = child5.GetComponent<Image>();
+                if (oldImg != null) oldImg.enabled = false;
+            }
+        }
         if (transform.childCount > 6 && jackpotObject == null)
         {
             jackpotObject = transform.GetChild(6).gameObject;
@@ -86,6 +99,11 @@ public class SlotSymbolView : MonoBehaviour
         {
             goldCoinValueText.text = "";
             goldCoinValueText.gameObject.SetActive(false);
+        }
+        if (multiplierValueText != null)
+        {
+            multiplierValueText.text = "";
+            multiplierValueText.gameObject.SetActive(false);
         }
         if (specialSymbolLayer != null)
         {
@@ -174,7 +192,7 @@ public class SlotSymbolView : MonoBehaviour
 
         // Sprite Asset Mapping: Index 0-9 -> Digits 0-9, Index 10 -> decimal point "."
         // Rule: Show decimals only when provided by the data
-        string valStr = value.ToString("F2");
+        string valStr = value.ToString("F3");
         string formattedText = "";
         foreach (char c in valStr)
         {
@@ -190,6 +208,14 @@ public class SlotSymbolView : MonoBehaviour
 
         goldCoinValueText.text = formattedText;
         goldCoinValueText.gameObject.SetActive(true);
+    }
+
+    public void SetMultiplierCoinValue(double multiplierValue, double totalBet)
+    {
+        if (multiplierValueText == null) return;
+
+        multiplierValueText.text = "X" + multiplierValue.ToString();
+        multiplierValueText.gameObject.SetActive(true);
     }
 
     public void SetBackTintActive(bool active, float alpha = 0.85f)

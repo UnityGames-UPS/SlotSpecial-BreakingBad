@@ -1051,6 +1051,11 @@ public class FeatureQueue
         Current = FeatureType.None;
     }
 
+    public bool Contains(FeatureType type)
+    {
+        return _queue.Contains(type);
+    }
+
     /// <summary>
     /// Builds the feature queue from a spin response payload.
     /// Determines which features triggered and enqueues them in priority order:
@@ -1090,8 +1095,8 @@ public class FeatureQueue
             Enqueue(FeatureType.FreeSpinRetrigger);
         }
 
-        // 3. Normal Cash Collect (if triggered without Link)
-        if (hasCC && !hasLink)
+        // 3. Normal Cash Collect
+        if (hasCC)
         {
             Enqueue(FeatureType.CashCollect);
         }
