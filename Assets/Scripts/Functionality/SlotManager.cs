@@ -405,7 +405,10 @@ public class SlotManager : MonoBehaviour
     {
       TriggerAutoSpinState(false);
       OnAutoplayStopped?.Invoke();
-      StartCoroutine(StopAutoSpinCoroutine());
+      if (!IsSpinning)
+      {
+        if (!IsBonus) uiManager.SetButtonsInteractable(true);
+      }
     }
   }
 
@@ -450,17 +453,6 @@ public class SlotManager : MonoBehaviour
 
       yield return new WaitForSeconds(SpinDelay);
     }
-  }
-
-  private IEnumerator StopAutoSpinCoroutine()
-  {
-    yield return new WaitUntil(() => !IsSpinning);
-    if (tweenroutine != null)
-    {
-      StopCoroutine(tweenroutine);
-      tweenroutine = null;
-    }
-    if (!IsBonus) uiManager.SetButtonsInteractable(true);
   }
   #endregion
 
@@ -974,7 +966,7 @@ public class SlotManager : MonoBehaviour
     float baseStagger = IsTurboOn ? 0.03f : ((wasStopPressed) ? 0.05f : reelStopStagger);
     
     System.Func<string, bool> isSpecialSymbol = id =>
-        id == "11" || id == "12" || id == "14" ||
+        id == "11" || id == "12" || id == "13" || id == "14" ||
         id == "15" || id == "16" || id == "17";
 
     float currentDelay = 0f;
@@ -2271,7 +2263,7 @@ public class SlotManager : MonoBehaviour
 
     // Play all special landing animations on the magnet column now that it has settled!
     System.Func<string, bool> isSpecial = id =>
-        id == "11" || id == "12" || id == "14" ||
+        id == "11" || id == "12" || id == "13" || id == "14" ||
         id == "15" || id == "16" || id == "17";
 
     for (int row = 0; row < 3; row++)
@@ -2299,7 +2291,7 @@ public class SlotManager : MonoBehaviour
       }
 
       System.Func<string, bool> isSpecial = id =>
-          id == "11" || id == "12" || id == "14" ||
+          id == "11" || id == "12" || id == "13" || id == "14" ||
           id == "15" || id == "16" || id == "17";
 
       for (int row = 0; row < 3; row++)

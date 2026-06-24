@@ -20,10 +20,6 @@ public class StickySymbolManager : MonoBehaviour
     [Header("Slots Reference")]
     [SerializeField] public List<SlotImage> Slot;
 
-    [Header("Animation Sprites References")]
-    [SerializeField] private Sprite[] LinkToGoldCoin_Animation;
-    [SerializeField] private Sprite[] MegaLinkToGoldCoin_Animation;
-
     [SerializeField] internal List<Column> freezedLocations = new();
     [SerializeField] internal List<List<int>> Locations = new();
 
@@ -118,23 +114,19 @@ public class StickySymbolManager : MonoBehaviour
 
                     if (view != null) view.ClearValues();
 
-                    if (matrixVal == "11") // Link -> coin transition
+                    if (matrixVal == "11" || matrixVal == "12") // Link / MegaLink symbols - transition plays on main slot
                     {
-                        SetupAnimationOnSlot(i, j, LinkToGoldCoin_Animation);
-                        AssignCoinText(i, j);
+                        Slot[i].slotImages[j].gameObject.SetActive(false);
                     }
-                    else if (matrixVal == "12") // MegaLink -> coin transition
+                    else
                     {
-                        SetupAnimationOnSlot(i, j, MegaLinkToGoldCoin_Animation);
-                        AssignCoinText(i, j);
-                    }
+                        Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(j, i).sprite;
+                        Slot[i].slotImages[j].gameObject.SetActive(true);
 
-                    Slot[i].slotImages[j].sprite = slotManager.GetResultMatrixImage(j, i).sprite;
-                    Slot[i].slotImages[j].gameObject.SetActive(true);
-
-                    if (view != null)
-                    {
-                        slotManager.ConfigureSymbolView(view, symbolId);
+                        if (view != null)
+                        {
+                            slotManager.ConfigureSymbolView(view, symbolId);
+                        }
                     }
                 }
                 else
@@ -143,44 +135,6 @@ public class StickySymbolManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    internal IEnumerator ChangeLinksToGoldCoin()
-    {
-        for (int i = 0; i < Slot.Count; i++)
-        {
-            for (int j = 0; j < Slot[i].slotImages.Count; j++)
-            {
-                ImageAnimation anim = Slot[i].slotImages[j].GetComponent<ImageAnimation>();
-                if (anim == null || !anim.isAnim) continue;
-
-                anim.AnimationSpeed = 17;
-                anim.onLoopComplete = null;
-                anim.StartAnimation();
-
-                yield return new WaitUntil(() =>
-                    anim.rendererDelegate != null &&
-                    anim.textureArray.Count > 7 &&
-                    anim.rendererDelegate.sprite == anim.textureArray[7]);
-
-                anim.transform.GetChild(0).gameObject.SetActive(true);
-
-                yield return new WaitUntil(() =>
-                    anim.rendererDelegate != null &&
-                    anim.textureArray.Count > 0 &&
-                    anim.rendererDelegate.sprite == anim.textureArray[^1]);
-
-                anim.StopAnimation();
-                var slotView = slotManager.GetSymbolView(j, i);
-                if (slotView != null)
-                {
-                    anim.rendererDelegate.sprite = slotView.mainImage.sprite;
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(1f);
-        bonusManager.OnInitialTransitionComplete();
     }
 
     internal void Reset()

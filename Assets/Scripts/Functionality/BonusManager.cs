@@ -20,6 +20,9 @@ public class BonusManager : MonoBehaviour
   [SerializeField] private Sprite coinFrame;
   [SerializeField] private Sprite CC_Sprite;
   [SerializeField] private Sprite Diamond_Sprite;
+  [Header("Transition Animation Sprites")]
+  [SerializeField] private Sprite[] LinkToGoldCoin_Animation;
+  [SerializeField] private Sprite[] MegaLinkToGoldCoin_Animation;
 
   [Header("UI Objects References")]
   [SerializeField] private CanvasGroup NormalSlot_CG;
@@ -117,13 +120,51 @@ public class BonusManager : MonoBehaviour
       int col = coin.position[1];
       Transform cell = Slot[col].slotTransforms[row];
       Image img = cell.GetChild(2).GetComponent<Image>();
-      Sprite normalSlotSprite = slotManager.GetResultMatrixImage(row, col).sprite;
-      img.sprite = normalSlotSprite;
       SlotSymbolView view = img.GetComponent<SlotSymbolView>();
-      if (view != null)
+      
+      string matrixVal = SocketManager.resultData.matrix[row][col];
+      if (matrixVal == "11" || matrixVal == "12")
       {
-        view.ClearValues();
-        slotManager.ConfigureSymbolView(view, coin.symbolId);
+        Sprite normalSlotSprite = slotManager.GetResultMatrixImage(row, col).sprite;
+        img.sprite = normalSlotSprite;
+        if (view != null)
+        {
+          view.ClearValues();
+        }
+      }
+      else
+      {
+        if (view != null) view.ClearValues();
+        
+        if (coin.symbolId == 17)
+        {
+          if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 17)
+          {
+            img.sprite = slotManager.SlotSymbols[17];
+          }
+          if (view != null) view.SetLosPolosValue(coin.coinValue);
+          slotManager.ConfigureSymbolView(view, 17);
+        }
+        else if (coin.symbolId == 16)
+        {
+          img.sprite = Diamond_Sprite;
+          slotManager.ConfigureSymbolView(view, 16);
+        }
+        else if (coin.symbolId == 13)
+        {
+          if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 13)
+          {
+            img.sprite = slotManager.SlotSymbols[13];
+          }
+          if (view != null) view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+          slotManager.ConfigureSymbolView(view, 13);
+        }
+        else
+        {
+          img.sprite = coinFrame;
+          if (view != null) view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+          slotManager.ConfigureSymbolView(view, 15);
+        }
       }
     }
 
@@ -174,7 +215,7 @@ public class BonusManager : MonoBehaviour
         Debug.LogError("Error parsing cashCollectPositions: " + ex.Message);
       }
     }
-    staticSymbol.GenerateFreezeMatrix(initialLocations);
+    staticSymbol.TurnOnIndices(initialLocations);
 
     NormalSlot_CG.DOFade(0, 0.5f);
     if (BonusSlot_CG != null)
@@ -183,7 +224,7 @@ public class BonusManager : MonoBehaviour
     }
     BonusSlot_CG.DOFade(1, .5f).OnComplete(() =>
     {
-      OnInitialTransitionComplete();
+      StartCoroutine(PlayTransitionAnimations());
     });
   }
 
@@ -793,7 +834,7 @@ public class BonusManager : MonoBehaviour
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
         if (staticSymbol.freezedLocations[col].index[row] == 0 &&
-            (SocketManager.resultData.matrix[row][col] == "11" || SocketManager.resultData.matrix[row][col] == "12" || SocketManager.resultData.matrix[row][col] == "14" || SocketManager.resultData.matrix[row][col] == "15" || SocketManager.resultData.matrix[row][col] == "16" || SocketManager.resultData.matrix[row][col] == "17"))
+            (SocketManager.resultData.matrix[row][col] == "11" || SocketManager.resultData.matrix[row][col] == "12" || SocketManager.resultData.matrix[row][col] == "13" || SocketManager.resultData.matrix[row][col] == "14" || SocketManager.resultData.matrix[row][col] == "15" || SocketManager.resultData.matrix[row][col] == "16" || SocketManager.resultData.matrix[row][col] == "17"))
         {
           List<int> rXc = new() { row, col };
           loc.Add(rXc);
@@ -801,5 +842,219 @@ public class BonusManager : MonoBehaviour
       }
     }
     return loc;
+  }
+
+  private IEnumerator PlayTransitionAnimations()
+  {
+      var initialCoins = SocketManager.resultData.payload.linkFeatureResult?.initialCoins;
+      if (initialCoins == null)
+      {
+        initialCoins = new List<InitialCoin>();
+        if (SocketManager.resultData.payload.coinPositions != null)
+        {
+          foreach (var coin in SocketManager.resultData.payload.coinPositions)
+          {
+            InitialCoin initCoin = new InitialCoin();
+            initCoin.position = coin.position;
+            initCoin.coinValue = coin.coinValue;
+            initCoin.symbolId = coin.symbolId;
+            initCoin.symbolName = coin.symbolName;
+            initialCoins.Add(initCoin);
+          }
+        }
+      }
+
+      List<ImageAnimation> runningAnims = new List<ImageAnimation>();
+
+      foreach (var coin in initialCoins)
+      {
+          int row = coin.position[0];
+          int col = coin.position[1];
+          string matrixVal = SocketManager.resultData.matrix[row][col];
+
+          if (matrixVal == "11" || matrixVal == "12")
+          {
+              Transform cell = Slot[col].slotTransforms[row];
+              // Get the animation component from child 0 or 1
+              ImageAnimation anim = null;
+              for (int i = 0; i < Mathf.Min(cell.childCount, 2); i++)
+              {
+                  anim = cell.GetChild(i).GetComponent<ImageAnimation>();
+                  if (anim != null) break;
+              }
+
+              if (anim != null)
+              {
+                  anim.textureArray.Clear();
+                  anim.textureArray.TrimExcess();
+                  Sprite[] animSprites = (matrixVal == "11") ? LinkToGoldCoin_Animation : MegaLinkToGoldCoin_Animation;
+                  if (animSprites != null)
+                  {
+                      foreach (Sprite s in animSprites)
+                      {
+                          anim.textureArray.Add(s);
+                      }
+                  }
+
+                  anim.AnimationSpeed = 17;
+                  anim.onLoopComplete = null;
+                  
+                  Image animImg = anim.GetComponent<Image>();
+                  if (animImg != null)
+                  {
+                      animImg.color = Color.white;
+                      animImg.gameObject.SetActive(true);
+                  }
+
+                  anim.StartAnimation();
+                  runningAnims.Add(anim);
+
+                  // Keep the main image disabled during the animation so only transition animation plays
+                  Image mainImg = cell.GetChild(2).GetComponent<Image>();
+                  mainImg.enabled = false;
+              }
+          }
+      }
+
+      if (runningAnims.Count > 0)
+      {
+          // Wait until they reach frame 7 (to show the text)
+          yield return new WaitUntil(() => {
+              foreach (var anim in runningAnims)
+              {
+                  if (anim != null && anim.rendererDelegate != null && anim.textureArray.Count > 7)
+                  {
+                      if (anim.rendererDelegate.sprite != anim.textureArray[7])
+                      {
+                          return false; // Wait until all reach at least frame 7 (meaning they reached this sprite)
+                      }
+                  }
+              }
+              return true;
+          });
+
+          // Show the coin values/texts on the main slot views
+          foreach (var coin in initialCoins)
+          {
+              int row = coin.position[0];
+              int col = coin.position[1];
+              string matrixVal = SocketManager.resultData.matrix[row][col];
+              if (matrixVal == "11" || matrixVal == "12")
+              {
+                  Transform cell = Slot[col].slotTransforms[row];
+                  Image mainImg = cell.GetChild(2).GetComponent<Image>();
+                  SlotSymbolView view = mainImg.GetComponent<SlotSymbolView>();
+                  if (view != null)
+                  {
+                      if (coin.symbolId == 17)
+                      {
+                          view.SetLosPolosValue(coin.coinValue);
+                      }
+                      else if (coin.symbolId == 13)
+                      {
+                          view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                      }
+                      else
+                      {
+                          view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                      }
+                  }
+              }
+          }
+
+          // Wait until they reach the final frame
+          yield return new WaitUntil(() => {
+              foreach (var anim in runningAnims)
+              {
+                  if (anim != null && anim.rendererDelegate != null && anim.textureArray.Count > 0)
+                  {
+                      if (anim.rendererDelegate.sprite != anim.textureArray[^1])
+                      {
+                          return false;
+                      }
+                  }
+              }
+              return true;
+          });
+
+          // Stop animations, hide animation gameobjects, and show main slot cells with final sprites
+          foreach (var anim in runningAnims)
+          {
+              if (anim != null)
+              {
+                  anim.StopAnimation();
+                  anim.gameObject.SetActive(false);
+              }
+          }
+
+          foreach (var coin in initialCoins)
+          {
+              int row = coin.position[0];
+              int col = coin.position[1];
+              string matrixVal = SocketManager.resultData.matrix[row][col];
+              if (matrixVal == "11" || matrixVal == "12")
+              {
+                  Transform cell = Slot[col].slotTransforms[row];
+                  Image mainImg = cell.GetChild(2).GetComponent<Image>();
+                  mainImg.enabled = true;
+                  
+                  // Make sure main image sprite is the final coin sprite
+                  if (coin.symbolId == 17)
+                  {
+                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 17)
+                      {
+                          mainImg.sprite = slotManager.SlotSymbols[17];
+                      }
+                  }
+                  else if (coin.symbolId == 16)
+                  {
+                      mainImg.sprite = Diamond_Sprite;
+                  }
+                  else if (coin.symbolId == 13)
+                  {
+                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 13)
+                      {
+                          mainImg.sprite = slotManager.SlotSymbols[13];
+                      }
+                  }
+                  else
+                  {
+                      mainImg.sprite = coinFrame;
+                  }
+
+                  // Also activate the freeze overlay representation in StickySymbolManager so it acts as frozen
+                  if (staticSymbol != null && staticSymbol.Slot != null && col < staticSymbol.Slot.Count)
+                  {
+                      var overlayImg = staticSymbol.Slot[col].slotImages[row];
+                      if (overlayImg != null)
+                      {
+                          overlayImg.sprite = mainImg.sprite;
+                          overlayImg.gameObject.SetActive(true);
+                          
+                          SlotSymbolView overlayView = overlayImg.GetComponent<SlotSymbolView>();
+                          if (overlayView != null)
+                          {
+                              slotManager.ConfigureSymbolView(overlayView, coin.symbolId);
+                              if (coin.symbolId == 17)
+                              {
+                                  overlayView.SetLosPolosValue(coin.coinValue);
+                              }
+                              else if (coin.symbolId == 13)
+                              {
+                                  overlayView.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                              }
+                              else
+                              {
+                                  overlayView.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+      yield return new WaitForSeconds(0.5f);
+      OnInitialTransitionComplete();
   }
 }

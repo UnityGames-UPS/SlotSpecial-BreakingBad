@@ -27,7 +27,7 @@ public class AnimationManager : MonoBehaviour
 
     [Header("Dynamic Timing settings")]
     [SerializeField] private bool useDynamicFramerate = true;
-    [SerializeField] private float winSymbolLoopDuration = 1.5f;
+    [SerializeField] internal float winSymbolLoopDuration = 1.5f;
 
     public void Initialize(SlotManager manager)
     {
@@ -895,7 +895,7 @@ public class AnimationManager : MonoBehaviour
         slotManager.ConfigureAnimationSprites(animCell, symbolId, lpVal, coinTxt);
 
         animCell.useDynamicFramerate = true;
-        animCell.dynamicLoopDuration = winSymbolLoopDuration;
+        animCell.dynamicLoopDuration = winSymbolLoopDuration / 2f;
 
         // Sync and animate overlay text
         AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
@@ -906,15 +906,15 @@ public class AnimationManager : MonoBehaviour
         textHelper.SetupFromHierarchy();
         if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
         {
-            textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, false);
+            textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration / 2f, false);
         }
         else if (symbolId == 15 && symbolView.goldCoinValueText != null && symbolView.goldCoinValueText.gameObject.activeSelf)
         {
-            textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration, false);
+            textHelper.PlayTextAnimation(15, symbolView.goldCoinValueText.text, winSymbolLoopDuration / 2f, false);
         }
         else if (symbolId == 13 && symbolView.multiplierValueText != null && symbolView.multiplierValueText.gameObject.activeSelf)
         {
-            textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration, false);
+            textHelper.PlayTextAnimation(13, symbolView.multiplierValueText.text, winSymbolLoopDuration / 2f, false);
         }
         else
         {

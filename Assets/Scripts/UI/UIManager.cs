@@ -758,8 +758,21 @@ public class UIManager : MonoBehaviour
                   continue;
               }
 
-              // Pop animation on gold coin
-              cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.4f, 1, 0.5f);
+               // Pop animation on gold coin
+               float animDuration = slotManager.animationManager != null ? slotManager.animationManager.winSymbolLoopDuration / 2f : 0.75f;
+               cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), animDuration, 1, 0.5f);
+
+               // Play one-loop animation on each Cash Collect symbol at 2x speed at the exact same time
+               if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13)
+               {
+                   foreach (var ccPos in ccPositions)
+                   {
+                       if (slotManager.animationManager != null)
+                       {
+                           slotManager.animationManager.PlaySpecialAnimationForCell(ccPos[0], ccPos[1]);
+                       }
+                   }
+               }
 
               // Spawn trail renderer prefab in the middle of the cash coin (only for Cash Coin [15], Multiplier Coin [13], and Prize Coin [16])
               if (trailRendererPrefab != null && (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13))
