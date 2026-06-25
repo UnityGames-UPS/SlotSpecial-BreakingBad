@@ -1,13 +1,31 @@
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-
+using UnityEngine.UI;
 public class AnimationTextHelper : MonoBehaviour
 {
     [SerializeField] public TMP_Text losPolosText;
     [SerializeField] public TMP_Text goldCoinText;
     [SerializeField] public TMP_Text multiplierText;
     [SerializeField] public TMP_Text payoutText;
+
+    [Header("Locked Cash Collect Count")]
+    [SerializeField] public Image countImage;
+    [SerializeField] public Sprite[] countSprites;
+
+    public void SetCountValue(int count)
+    {
+        if (countImage == null) return;
+        if (countSprites != null && count >= 1 && count <= countSprites.Length)
+        {
+            countImage.sprite = countSprites[count - 1];
+            countImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            countImage.gameObject.SetActive(false);
+        }
+    }
 
     private Tween activeTextTween;
 
@@ -88,6 +106,10 @@ public class AnimationTextHelper : MonoBehaviour
             payoutText.text = "";
             payoutText.gameObject.SetActive(false);
             payoutText.transform.localScale = Vector3.one;
+        }
+        if (countImage != null)
+        {
+            countImage.gameObject.SetActive(false);
         }
     }
 

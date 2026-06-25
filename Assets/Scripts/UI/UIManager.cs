@@ -1357,7 +1357,7 @@ public class UIManager : MonoBehaviour
       {
           foreach (var coin in fsResult.triggerCoins)
           {
-              totalSpins += coin.coinValue;
+              totalSpins += (int)coin.coinValue;
           }
       }
       else

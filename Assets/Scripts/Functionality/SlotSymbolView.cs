@@ -18,6 +18,24 @@ public class SlotSymbolView : MonoBehaviour
     [SerializeField] public Transform jackpotStripParent;
     [SerializeField] public TMP_Text jackpotResultText;
 
+    [Header("Locked Cash Collect")]
+    [SerializeField] public Image countImage;
+    [SerializeField] public Sprite[] countSprites;
+
+    public void SetCountValue(int count)
+    {
+        if (countImage == null) return;
+        if (countSprites != null && count >= 1 && count <= countSprites.Length)
+        {
+            countImage.sprite = countSprites[count - 1];
+            countImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            countImage.gameObject.SetActive(false);
+        }
+    }
+
     public void SetupFromHierarchy()
     {
         // Try to set references dynamically if not assigned in the inspector
@@ -124,13 +142,17 @@ public class SlotSymbolView : MonoBehaviour
         }
         if (mainImage != null)
         {
-            mainImage.gameObject.SetActive(true);
+            // mainImage.gameObject.SetActive(true);
             mainImage.enabled = true;
             mainImage.color = new Color(mainImage.color.r, mainImage.color.g, mainImage.color.b, 1f);
         }
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 1f;
+        }
+        if (countImage != null)
+        {
+            countImage.gameObject.SetActive(false);
         }
     }
 

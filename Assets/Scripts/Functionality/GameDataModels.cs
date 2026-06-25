@@ -145,7 +145,7 @@ public class ServerPayload
     public bool isFreeSpinActive;
     public bool linkFeatureActive;
     public int linkRespinsRemaining;
-    public List<object> lockedCashCollects;
+    public List<LockedCashCollect> lockedCashCollects;
     public bool isFreeSpinTriggered;
     public FreeSpinResult freeSpinResult;
     public bool isLinkTriggered;
@@ -852,11 +852,19 @@ public class Bonus
 public class CoinPosition
 {
     public List<int> position;
-    public int coinValue;
+    public double coinValue;
     public int symbolId;
     public string symbolName;
     public string prizeType;
     public int? prizeTypeIndex;
+}
+
+[Serializable]
+public class LockedCashCollect
+{
+    public List<int> position;
+    public int spinsRemaining;
+    public bool isFrozenByHeisenberg;
 }
 
 [Serializable]
@@ -872,7 +880,7 @@ public class CashCollectResult
 public class CollectedCoin
 {
     public List<int> position;
-    public int coinValue;
+    public double coinValue;
     public int symbolId;
     public string symbolName;
 }
@@ -895,16 +903,18 @@ public class LinkFeatureResult
 public class InitialCoin
 {
     public List<int> position;
-    public int coinValue;
+    public double coinValue;
     public int symbolId;
     public string symbolName;
+    public string prizeType;
+    public int? prizeTypeIndex;
 }
 
 [Serializable]
 public class FinalCoin
 {
     public List<int> position;
-    public int coinValue;
+    public double coinValue;
     public int symbolId;
     public string symbolName;
 }
@@ -936,7 +946,7 @@ public class FreeSpinResult
 public class TriggerCoin
 {
     public List<int> position;
-    public int coinValue;
+    public double coinValue;
     public int symbolId;
     public string symbolName;
 }

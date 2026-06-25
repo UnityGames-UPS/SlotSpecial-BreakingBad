@@ -204,4 +204,89 @@ public class StickySymbolManager : MonoBehaviour
             }
         }
     }
+
+    internal void UpdateLockedCashCollects(List<LockedCashCollect> lockedList)
+    {
+        Debug.Log($"[LockedCashCollect] UpdateLockedCashCollects called. lockedList Count: {(lockedList != null ? lockedList.Count.ToString() : "null")}");
+
+        int[,] lockedMatrix = new int[Slot.Count, Slot[0].slotImages.Count];
+        int[,] remainingSpinsMatrix = new int[Slot.Count, Slot[0].slotImages.Count];
+
+        if (lockedList != null)
+        {
+            foreach (var item in lockedList)
+            {
+                if (item.position != null && item.position.Count == 2)
+                {
+                    int row = item.position[0];
+                    int col = item.position[1];
+                    Debug.Log($"[LockedCashCollect] Item position: [{row}, {col}], spinsRemaining: {item.spinsRemaining}");
+                    if (col >= 0 && col < Slot.Count && row >= 0 && row < Slot[col].slotImages.Count)
+                    {
+                        if (item.spinsRemaining > 0)
+                        {
+                            lockedMatrix[col, row] = 1;
+                            remainingSpinsMatrix[col, row] = item.spinsRemaining;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < Slot.Count; i++) // col
+        {
+            for (int j = 0; j < Slot[i].slotImages.Count; j++) // row
+            {
+                SlotSymbolView view = symbolViews[i][j];
+                if (lockedMatrix[i, j] == 1)
+                {
+                    Debug.Log($"[LockedCashCollect] ENABLING overlay at col {i}, row {j} with count {remainingSpinsMatrix[i, j]}");
+                    if (view != null) view.ClearValues();
+
+                    if (slotManager != null && slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 14)
+                    {
+                        Slot[i].slotImages[j].sprite = slotManager.SlotSymbols[14];
+                    }
+                    Slot[i].slotImages[j].gameObject.SetActive(true);
+
+                    if (view != null)
+                    {
+                        slotManager.ConfigureSymbolView(view, 14);
+                        view.SetCountValue(remainingSpinsMatrix[i, j]);
+                    }
+                }
+                else
+                {
+                    // Check if it was active before deactivating it
+                    if (Slot[i].slotImages[j].gameObject.activeSelf)
+                    {
+                        Debug.Log($"[LockedCashCollect] Deactivating active overlay at col {i}, row {j}");
+                    }
+                    if (view != null)
+                    {
+                        view.ClearValues();
+                    }
+                    Slot[i].slotImages[j].gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    internal bool IsPositionLocked(int col, int row)
+    {
+        if (col >= 0 && col < Slot.Count && row >= 0 && row < Slot[col].slotImages.Count)
+        {
+            return Slot[col].slotImages[row].gameObject.activeSelf;
+        }
+        return false;
+    }
+
+    internal SlotSymbolView GetLockedSymbolView(int col, int row)
+    {
+        if (col >= 0 && col < Slot.Count && row >= 0 && row < Slot[col].slotImages.Count)
+        {
+            return symbolViews[col][row];
+        }
+        return null;
+    }
 }

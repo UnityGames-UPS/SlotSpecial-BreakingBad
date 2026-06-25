@@ -141,7 +141,8 @@ public class SlotManager : MonoBehaviour
       OnAutoSpinStateChanged?.Invoke(IsAutoSpin);
   }
   [SerializeField] private SocketIOManager SocketManager;
-  [SerializeField] private StickySymbolManager stickySymbolManager;
+  [SerializeField] internal StickySymbolManager stickySymbolManager;
+  private List<LockedCashCollect> savedLockedCashCollects;
   [SerializeField] private UIManager uiManager;
   [SerializeField] private BonusManager _bonusManager;
   [SerializeField] internal AnimationManager animationManager;
@@ -375,6 +376,13 @@ public class SlotManager : MonoBehaviour
     {
       StopCoroutine(LineAnimRoutine);
       LineAnimRoutine = null;
+    }
+
+    if (savedLockedCashCollects != null && stickySymbolManager != null)
+    {
+      Debug.Log($"[LockedCashCollect] Restoring savedLockedCashCollects inside FreeSpin method. count: {savedLockedCashCollects.Count}");
+      stickySymbolManager.UpdateLockedCashCollects(savedLockedCashCollects);
+      savedLockedCashCollects = null;
     }
 
     StartSlots();
@@ -673,10 +681,10 @@ public class SlotManager : MonoBehaviour
         foreach (Sprite s in O_Sprites) animScript.textureArray.Add(s);
         break;
       case 2:
-        foreach (Sprite sprite in N_Sprites) animScript.textureArray.Add(sprite);
+        foreach (Sprite sprite in B_Sprites) animScript.textureArray.Add(sprite);
         break;
       case 3:
-        foreach (Sprite sprite in B_Sprites) animScript.textureArray.Add(sprite);
+        foreach (Sprite sprite in N_Sprites) animScript.textureArray.Add(sprite);
         break;
       case 4:
         foreach (Sprite sprite in Barrel_Sprites) animScript.textureArray.Add(sprite);
@@ -726,6 +734,11 @@ public class SlotManager : MonoBehaviour
     IsFeatureTransitioning = false;
     // Forcefully clean up any previous spin state to prevent glitches
     ForceCleanupPreviousSpin();
+
+    if (!IsFreeSpin && stickySymbolManager != null)
+    {
+      stickySymbolManager.Reset();
+    }
 
     IsAutoplayStoppedMidSpin = false;
 
@@ -837,6 +850,10 @@ public class SlotManager : MonoBehaviour
           {
             if (matrix[r][c] == "14")
             {
+              if (stickySymbolManager != null && stickySymbolManager.IsPositionLocked(c, r))
+              {
+                continue;
+              }
               candidates.Add((c, r));
             }
           }
@@ -1075,6 +1092,13 @@ public class SlotManager : MonoBehaviour
     
     yield return new WaitForSeconds(0.3f);
 
+    // Update locked cash collect overlays
+    if (IsFreeSpin && stickySymbolManager != null && SocketManager.resultData != null && SocketManager.resultData.payload != null)
+    {
+        Debug.Log($"[LockedCashCollect] Calling UpdateLockedCashCollects from TweenRoutine. list count: {(SocketManager.resultData.payload.lockedCashCollects != null ? SocketManager.resultData.payload.lockedCashCollects.Count.ToString() : "null")}");
+        stickySymbolManager.UpdateLockedCashCollects(SocketManager.resultData.payload.lockedCashCollects);
+    }
+
     // --- FEATURE QUEUE: Build first to check for Prize Coin / Cash Coin flows ---
     featureQueue.BuildFromResponse(SocketManager.resultData.payload, IsFreeSpin);
 
@@ -1243,6 +1267,10 @@ public class SlotManager : MonoBehaviour
             yield return new WaitUntil(() => !CheckPopups);
             yield return new WaitForSeconds(.5f);
           }
+          if (IsFreeSpin && SocketManager.resultData != null && SocketManager.resultData.payload != null)
+          {
+              savedLockedCashCollects = SocketManager.resultData.payload.lockedCashCollects;
+          }
           yield return HandleCashCollectAndLink();
           yield break; // EXIT — BonusManager takes over, OnLinkFeatureCompleted will continue queue
 
@@ -1320,6 +1348,10 @@ public class SlotManager : MonoBehaviour
 
         IsFreeSpin = false;
         uiManager.CloseFreeSpinsUI();
+        if (stickySymbolManager != null)
+        {
+          stickySymbolManager.Reset();
+        }
         if (WasAutoSpinOn)
         {
           WasAutoSpinOn = false;
@@ -1664,7 +1696,7 @@ public class SlotManager : MonoBehaviour
             if (coin.symbolId == 17 && coin.position[0] == row && coin.position[1] == col)
             {
               SlotImage.sprite = SlotSymbols[resultNum];
-              if (view != null) view.SetLosPolosValue(coin.coinValue);
+              if (view != null) view.SetLosPolosValue((int)coin.coinValue);
               found = true;
               break;
             }
@@ -1759,7 +1791,7 @@ public class SlotManager : MonoBehaviour
       if (SocketManager.resultData.payload.coinPositions[i].symbolId == 17)
       {
         CoinPosition lp = SocketManager.resultData.payload.coinPositions[i];
-        uiManager.AddFreeSpinsText(lp.coinValue);
+        uiManager.AddFreeSpinsText((int)lp.coinValue);
       }
     }
   }
@@ -2147,7 +2179,7 @@ public class SlotManager : MonoBehaviour
         {
           if (coin.symbolId == 17 && coin.position[0] == row && coin.position[1] == col)
           {
-            view.SetLosPolosValue(coin.coinValue);
+            view.SetLosPolosValue((int)coin.coinValue);
             found = true;
             break;
           }

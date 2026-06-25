@@ -12,6 +12,7 @@ public class JackpotManager : MonoBehaviour
     [SerializeField] private GameObject jackpotSlotMain;         // Single object for Jackpot
     [SerializeField] private RectTransform jackpotSlotMainRT;     // RectTransform of the main jackpot slot
     [SerializeField] private CanvasGroup jackpotSlotMainCG;       // CanvasGroup for fade control
+    [SerializeField] private GameObject shineObject;              // Shine effect object on result image
 
     [Header("Diamond Layer Visuals")]
     [SerializeField] private GameObject baseLayer;                // Diamond base layer
@@ -49,6 +50,10 @@ public class JackpotManager : MonoBehaviour
         if (winBlur != null)
         {
             winBlur.SetActive(false);
+        }
+        if (shineObject != null)
+        {
+            shineObject.SetActive(false);
         }
         if ((jackpotImages == null || jackpotImages.Length == 0) && slotParent != null)
         {
@@ -179,6 +184,11 @@ public class JackpotManager : MonoBehaviour
         {
             Debug.LogError("triggeringSymbolView is null!");
             yield break;
+        }
+
+        if (shineObject != null)
+        {
+            shineObject.SetActive(false);
         }
 
         int resolvedPrizeIndex = getPrizeIndex(prizeType, prizeTypeIndex);
@@ -340,7 +350,17 @@ public class JackpotManager : MonoBehaviour
         if (winBlur != null) winBlur.SetActive(true);
         if (resultText != null) resultText.text = prizeValue;
 
+        if (shineObject != null)
+        {
+            shineObject.SetActive(true);
+        }
+
         yield return new WaitForSeconds(2.0f);
+
+        if (shineObject != null)
+        {
+            shineObject.SetActive(false);
+        }
 
         // Return to start position and scale down
         Sequence returnSeq = DOTween.Sequence();
@@ -365,5 +385,9 @@ public class JackpotManager : MonoBehaviour
 
         if (winBlur != null) winBlur.SetActive(false);
         if (resultText != null) resultText.text = "";
+        if (shineObject != null)
+        {
+            shineObject.SetActive(false);
+        }
     }
 }

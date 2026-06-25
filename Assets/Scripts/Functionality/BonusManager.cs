@@ -12,7 +12,8 @@ public class BonusManager : MonoBehaviour
   [SerializeField] private SlotManager slotManager;
   [SerializeField] private SocketIOManager SocketManager;
   [SerializeField] private UIManager uiManager;
-  [SerializeField] private StickySymbolManager staticSymbol;
+  [SerializeField] internal List<Column> freezedLocations = new();
+  [SerializeField] internal List<List<int>> Locations = new();
 
 
   [Header("Sprites References")]
@@ -73,6 +74,7 @@ public class BonusManager : MonoBehaviour
 
   internal void StartBonusGame(int count)
   {
+    ResetStaticSymbol();
     if (NormalSlot_CG != null)
     {
       NormalSlot_CG.interactable = false;
@@ -109,6 +111,8 @@ public class BonusManager : MonoBehaviour
           initCoin.coinValue = coin.coinValue;
           initCoin.symbolId = coin.symbolId;
           initCoin.symbolName = coin.symbolName;
+          initCoin.prizeType = coin.prizeType;
+          initCoin.prizeTypeIndex = coin.prizeTypeIndex;
           initialCoins.Add(initCoin);
         }
       }
@@ -142,7 +146,7 @@ public class BonusManager : MonoBehaviour
           {
             img.sprite = slotManager.SlotSymbols[17];
           }
-          if (view != null) view.SetLosPolosValue(coin.coinValue);
+          if (view != null) view.SetLosPolosValue((int)coin.coinValue);
           slotManager.ConfigureSymbolView(view, 17);
         }
         else if (coin.symbolId == 16)
@@ -215,7 +219,8 @@ public class BonusManager : MonoBehaviour
         Debug.LogError("Error parsing cashCollectPositions: " + ex.Message);
       }
     }
-    staticSymbol.TurnOnIndices(initialLocations);
+    // staticSymbol.TurnOnIndices(initialLocations);
+    GenerateFreezeMatrix(initialLocations);
 
     NormalSlot_CG.DOFade(0, 0.5f);
     if (BonusSlot_CG != null)
@@ -260,7 +265,7 @@ public class BonusManager : MonoBehaviour
     {
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
-        if (staticSymbol.freezedLocations[col].index[row] == 0) // Only initialize non-frozen slots
+        if (freezedLocations[col].index[row] == 0) // Only initialize non-frozen slots
         {
           InitializeSingleSlotTweening(Slot[col].slotTransforms[row]);
         }
@@ -283,7 +288,7 @@ public class BonusManager : MonoBehaviour
     {
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
-        if (staticSymbol.freezedLocations[col].index[row] == 0) // Stop only non-frozen slots
+        if (freezedLocations[col].index[row] == 0) // Stop only non-frozen slots
         {
           int flattenedIndex = col * Slot[col].slotTransforms.Count + row;
           yield return StopSingleSlotTweening(3, Slot[col].slotTransforms[row], flattenedIndex, StopSpinToggle);
@@ -293,7 +298,7 @@ public class BonusManager : MonoBehaviour
 
     KillAllTweens();
 
-    staticSymbol.GenerateFreezeMatrix(GenerateFreezedLocations());
+    GenerateFreezeMatrix(GenerateFreezedLocations());
 
     if (SocketManager.resultData.payload.winAmount > 0)
     {
@@ -412,7 +417,7 @@ public class BonusManager : MonoBehaviour
     {
       for (int i = 0; i < 5; i++)
       {
-        if (staticSymbol.freezedLocations[i].index[j] == 1)
+        if (freezedLocations[i].index[j] == 1)
         {
           continue; // Skip frozen slot positions
         }
@@ -466,7 +471,7 @@ public class BonusManager : MonoBehaviour
           {
             if (coins.position[0] == j && coins.position[1] == i)
             {
-              if (view != null) view.SetLosPolosValue(coins.coinValue);
+              if (view != null) view.SetLosPolosValue((int)coins.coinValue);
               found = true;
               break;
             }
@@ -562,6 +567,8 @@ public class BonusManager : MonoBehaviour
       var fsResult = SocketManager.resultData.payload.freeSpinResult;
       yield return uiManager.PlayFreeSpinTriggerSequence(fsResult, isRetrigger, true);
 
+      ResetStaticSymbol();
+
       // 4. Mark Free Spin active on slotManager and update HUD buttons
       slotManager.IsFreeSpin = true;
       slotManager.WasFreeSpinPaused = false;
@@ -594,7 +601,7 @@ public class BonusManager : MonoBehaviour
         BonusSlot_CG.gameObject.SetActive(false);
       }
 
-      staticSymbol.Reset();
+      ResetStaticSymbol();
       ResetMatrix();
 
       // OnLinkFeatureCompleted now handles ALL return paths:
@@ -629,7 +636,7 @@ public class BonusManager : MonoBehaviour
               BonusSlot_CG.gameObject.SetActive(false);
           }
 
-          staticSymbol.Reset();
+          ResetStaticSymbol();
           ResetMatrix();
           transitionDone = true;
       });
@@ -771,6 +778,8 @@ public class BonusManager : MonoBehaviour
             initCoin.coinValue = coin.coinValue;
             initCoin.symbolId = coin.symbolId;
             initCoin.symbolName = coin.symbolName;
+            initCoin.prizeType = coin.prizeType;
+            initCoin.prizeTypeIndex = coin.prizeTypeIndex;
             initialCoins.Add(initCoin);
           }
         }
@@ -796,7 +805,7 @@ public class BonusManager : MonoBehaviour
             {
               img.sprite = slotManager.SlotSymbols[17];
             }
-            view.SetLosPolosValue(coin.coinValue);
+            view.SetLosPolosValue((int)coin.coinValue);
             slotManager.ConfigureSymbolView(view, 17);
           }
           else if (coin.symbolId == 16)
@@ -833,7 +842,7 @@ public class BonusManager : MonoBehaviour
     {
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
-        if (staticSymbol.freezedLocations[col].index[row] == 0 &&
+        if (freezedLocations[col].index[row] == 0 &&
             (SocketManager.resultData.matrix[row][col] == "11" || SocketManager.resultData.matrix[row][col] == "12" || SocketManager.resultData.matrix[row][col] == "13" || SocketManager.resultData.matrix[row][col] == "14" || SocketManager.resultData.matrix[row][col] == "15" || SocketManager.resultData.matrix[row][col] == "16" || SocketManager.resultData.matrix[row][col] == "17"))
         {
           List<int> rXc = new() { row, col };
@@ -859,12 +868,15 @@ public class BonusManager : MonoBehaviour
             initCoin.coinValue = coin.coinValue;
             initCoin.symbolId = coin.symbolId;
             initCoin.symbolName = coin.symbolName;
+            initCoin.prizeType = coin.prizeType;
+            initCoin.prizeTypeIndex = coin.prizeTypeIndex;
             initialCoins.Add(initCoin);
           }
         }
       }
 
       List<ImageAnimation> runningAnims = new List<ImageAnimation>();
+      List<bool> animCompleted = new List<bool>();
 
       foreach (var coin in initialCoins)
       {
@@ -872,19 +884,87 @@ public class BonusManager : MonoBehaviour
           int col = coin.position[1];
           string matrixVal = SocketManager.resultData.matrix[row][col];
 
+          int targetSymbolId = coin.symbolId;
+          if (targetSymbolId == 11 || targetSymbolId == 12)
+          {
+              targetSymbolId = 15;
+          }
+
+          CoinPosition coinPos = new CoinPosition
+          {
+              position = coin.position,
+              coinValue = coin.coinValue,
+              symbolId = targetSymbolId,
+              symbolName = coin.symbolName,
+              prizeType = coin.prizeType,
+              prizeTypeIndex = coin.prizeTypeIndex
+          };
+          allcoinPositions.Add(coinPos);
+
           if (matrixVal == "11" || matrixVal == "12")
           {
               Transform cell = Slot[col].slotTransforms[row];
-              // Get the animation component from child 0 or 1
-              ImageAnimation anim = null;
-              for (int i = 0; i < Mathf.Min(cell.childCount, 2); i++)
+              
+              // Pre-configure static main cell and disable the image component (keep gameobject active so SlotManager can find view)
+              Image mainImg = cell.GetChild(2).GetComponent<Image>();
+              SlotSymbolView view = mainImg.GetComponent<SlotSymbolView>();
+              if (view != null)
               {
-                  anim = cell.GetChild(i).GetComponent<ImageAnimation>();
-                  if (anim != null) break;
+                  view.ClearValues();
+                  if (coin.symbolId == 17)
+                  {
+                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 17)
+                      {
+                          mainImg.sprite = slotManager.SlotSymbols[17];
+                      }
+                      view.SetLosPolosValue((int)coin.coinValue);
+                      slotManager.ConfigureSymbolView(view, 17);
+                  }
+                  else if (coin.symbolId == 16)
+                  {
+                      mainImg.sprite = Diamond_Sprite;
+                      slotManager.ConfigureSymbolView(view, 16);
+                  }
+                  else if (coin.symbolId == 13)
+                  {
+                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 13)
+                      {
+                          mainImg.sprite = slotManager.SlotSymbols[13];
+                      }
+                      view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                      slotManager.ConfigureSymbolView(view, 13);
+                  }
+                  else
+                  {
+                      mainImg.sprite = coinFrame;
+                      view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                      slotManager.ConfigureSymbolView(view, 15);
+                  }
               }
+
+              // Get the animation cell from animationManager instead of slot icon children
+              ImageAnimation anim = slotManager.animationManager.GetAnimationCell(row, col);
 
               if (anim != null)
               {
+                  anim.transform.position = cell.position;
+                  anim.DOKill();
+
+                  CanvasGroup animCG = anim.GetComponent<CanvasGroup>();
+                  if (animCG != null)
+                  {
+                      animCG.DOKill();
+                      animCG.alpha = 1f;
+                  }
+
+                  if (anim.rendererDelegate != null)
+                  {
+                      anim.rendererDelegate.DOKill();
+                      anim.rendererDelegate.color = Color.white;
+                  }
+
+                  anim.gameObject.SetActive(true);
+
                   anim.textureArray.Clear();
                   anim.textureArray.TrimExcess();
                   Sprite[] animSprites = (matrixVal == "11") ? LinkToGoldCoin_Animation : MegaLinkToGoldCoin_Animation;
@@ -896,21 +976,22 @@ public class BonusManager : MonoBehaviour
                       }
                   }
 
-                  anim.AnimationSpeed = 17;
-                  anim.onLoopComplete = null;
-                  
-                  Image animImg = anim.GetComponent<Image>();
-                  if (animImg != null)
+                  // 1.5 - 2 sec duration (1.8 seconds is perfect)
+                  anim.useDynamicFramerate = true;
+                  anim.dynamicLoopDuration = 1.8f;
+                  anim.doLoopAnimation = false;
+
+                  int animIndex = runningAnims.Count;
+                  animCompleted.Add(false);
+                  anim.onLoopComplete = (loopCount) =>
                   {
-                      animImg.color = Color.white;
-                      animImg.gameObject.SetActive(true);
-                  }
+                      animCompleted[animIndex] = true;
+                  };
 
                   anim.StartAnimation();
                   runningAnims.Add(anim);
 
-                  // Keep the main image disabled during the animation so only transition animation plays
-                  Image mainImg = cell.GetChild(2).GetComponent<Image>();
+                  // Keep mainImg GameObject active so GetComponentInChildren does not return null, only disable the Image renderer component
                   mainImg.enabled = false;
               }
           }
@@ -918,22 +999,23 @@ public class BonusManager : MonoBehaviour
 
       if (runningAnims.Count > 0)
       {
-          // Wait until they reach frame 7 (to show the text)
+          // Wait until they reach frame 46 (to show the text)
           yield return new WaitUntil(() => {
               foreach (var anim in runningAnims)
               {
-                  if (anim != null && anim.rendererDelegate != null && anim.textureArray.Count > 7)
+                  if (anim != null && anim.rendererDelegate != null && anim.textureArray.Count > 46)
                   {
-                      if (anim.rendererDelegate.sprite != anim.textureArray[7])
+                      int currentFrame = anim.textureArray.IndexOf(anim.rendererDelegate.sprite);
+                      if (currentFrame < 46)
                       {
-                          return false; // Wait until all reach at least frame 7 (meaning they reached this sprite)
+                          return false; // Wait until all reach at least frame 46
                       }
                   }
               }
               return true;
           });
 
-          // Show the coin values/texts on the main slot views
+          // Enable text object with value in AnimationTextHelper on the animation cell
           foreach (var coin in initialCoins)
           {
               int row = coin.position[0];
@@ -941,52 +1023,87 @@ public class BonusManager : MonoBehaviour
               string matrixVal = SocketManager.resultData.matrix[row][col];
               if (matrixVal == "11" || matrixVal == "12")
               {
-                  Transform cell = Slot[col].slotTransforms[row];
-                  Image mainImg = cell.GetChild(2).GetComponent<Image>();
-                  SlotSymbolView view = mainImg.GetComponent<SlotSymbolView>();
-                  if (view != null)
+                  ImageAnimation anim = slotManager.animationManager.GetAnimationCell(row, col);
+                  if (anim != null)
                   {
-                      if (coin.symbolId == 17)
+                      AnimationTextHelper textHelper = anim.GetComponent<AnimationTextHelper>();
+                      if (textHelper == null)
                       {
-                          view.SetLosPolosValue(coin.coinValue);
+                          textHelper = anim.gameObject.AddComponent<AnimationTextHelper>();
                       }
-                      else if (coin.symbolId == 13)
+                      textHelper.SetupFromHierarchy();
+
+                      string formattedText = "";
+                      int symbolId = coin.symbolId;
+                      if (symbolId == 17)
                       {
-                          view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                          string valStr = coin.coinValue.ToString();
+                          formattedText = "<sprite=10>";
+                          foreach (char c in valStr)
+                          {
+                              if (char.IsDigit(c)) formattedText += $"<sprite={c - '0'}>";
+                          }
+                          textHelper.PlayTextAnimation(17, formattedText, 1f, false);
+                      }
+                      else if (symbolId == 13)
+                      {
+                          formattedText = "X" + coin.coinValue.ToString();
+                          textHelper.PlayTextAnimation(13, formattedText, 1f, false);
+                      }
+                      else if (symbolId == 16)
+                      {
+                          textHelper.Clear();
                       }
                       else
                       {
-                          view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                          double value = coin.coinValue * slotManager.TotalBet;
+                          string valStr = value.ToString("F3");
+                          formattedText = "";
+                          foreach (char c in valStr)
+                          {
+                              if (char.IsDigit(c))
+                              {
+                                  formattedText += $"<sprite={c - '0'}>";
+                              }
+                              else if (c == '.')
+                              {
+                                  formattedText += "<sprite=10>";
+                              }
+                          }
+                          textHelper.PlayTextAnimation(15, formattedText, 1f, false);
                       }
                   }
               }
           }
 
-          // Wait until they reach the final frame
+          // Wait until the single loop animation ends
           yield return new WaitUntil(() => {
-              foreach (var anim in runningAnims)
+              foreach (bool completed in animCompleted)
               {
-                  if (anim != null && anim.rendererDelegate != null && anim.textureArray.Count > 0)
-                  {
-                      if (anim.rendererDelegate.sprite != anim.textureArray[^1])
-                      {
-                          return false;
-                      }
-                  }
+                  if (!completed) return false;
               }
               return true;
           });
 
-          // Stop animations, hide animation gameobjects, and show main slot cells with final sprites
+          // Stop animations, hide animation cells, and clear animation texts
           foreach (var anim in runningAnims)
           {
               if (anim != null)
               {
                   anim.StopAnimation();
+                  anim.onLoopComplete = null;
+
+                  AnimationTextHelper textHelper = anim.GetComponent<AnimationTextHelper>();
+                  if (textHelper != null)
+                  {
+                      textHelper.Clear();
+                  }
+
                   anim.gameObject.SetActive(false);
               }
           }
 
+          // Enable main slot cells and configure the sticky symbol overlay
           foreach (var coin in initialCoins)
           {
               int row = coin.position[0];
@@ -994,67 +1111,66 @@ public class BonusManager : MonoBehaviour
               string matrixVal = SocketManager.resultData.matrix[row][col];
               if (matrixVal == "11" || matrixVal == "12")
               {
+                  // Removed StickySymbolManager activations since we freeze the main slots directly
                   Transform cell = Slot[col].slotTransforms[row];
                   Image mainImg = cell.GetChild(2).GetComponent<Image>();
                   mainImg.enabled = true;
-                  
-                  // Make sure main image sprite is the final coin sprite
-                  if (coin.symbolId == 17)
-                  {
-                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 17)
-                      {
-                          mainImg.sprite = slotManager.SlotSymbols[17];
-                      }
-                  }
-                  else if (coin.symbolId == 16)
-                  {
-                      mainImg.sprite = Diamond_Sprite;
-                  }
-                  else if (coin.symbolId == 13)
-                  {
-                      if (slotManager.SlotSymbols != null && slotManager.SlotSymbols.Length > 13)
-                      {
-                          mainImg.sprite = slotManager.SlotSymbols[13];
-                      }
-                  }
-                  else
-                  {
-                      mainImg.sprite = coinFrame;
-                  }
-
-                  // Also activate the freeze overlay representation in StickySymbolManager so it acts as frozen
-                  if (staticSymbol != null && staticSymbol.Slot != null && col < staticSymbol.Slot.Count)
-                  {
-                      var overlayImg = staticSymbol.Slot[col].slotImages[row];
-                      if (overlayImg != null)
-                      {
-                          overlayImg.sprite = mainImg.sprite;
-                          overlayImg.gameObject.SetActive(true);
-                          
-                          SlotSymbolView overlayView = overlayImg.GetComponent<SlotSymbolView>();
-                          if (overlayView != null)
-                          {
-                              slotManager.ConfigureSymbolView(overlayView, coin.symbolId);
-                              if (coin.symbolId == 17)
-                              {
-                                  overlayView.SetLosPolosValue(coin.coinValue);
-                              }
-                              else if (coin.symbolId == 13)
-                              {
-                                  overlayView.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
-                              }
-                              else
-                              {
-                                  overlayView.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
-                              }
-                          }
-                      }
-                  }
               }
           }
       }
 
+
       yield return new WaitForSeconds(0.5f);
       OnInitialTransitionComplete();
+  }
+
+  internal List<List<int>> GenerateFreezeMatrix(List<List<int>> loc, bool dontReturn = false)
+  {
+      for (int i = 0; i < loc.Count; i++)
+      {
+          if (!Locations.Contains(loc[i]))
+              Locations.Add(loc[i]);
+      }
+
+      // Build matrix of zeros
+      List<List<int>> freezeMatrix = new List<List<int>>();
+      for (int i = 0; i < Slot.Count; i++)
+      {
+          List<int> row = new List<int>(new int[Slot[i].slotTransforms.Count]);
+          freezeMatrix.Add(row);
+      }
+
+      // Mark frozen positions
+      foreach (List<int> indexPair in Locations)
+      {
+          if (indexPair.Count == 2)
+          {
+              int row = indexPair[0];
+              int column = indexPair[1];
+              if (column >= 0 && column < freezeMatrix.Count &&
+                  row >= 0 && row < freezeMatrix[column].Count)
+              {
+                  freezeMatrix[column][row] = 1;
+              }
+          }
+      }
+
+      // Sync freezedLocations
+      freezedLocations.Clear();
+      foreach (var row in freezeMatrix)
+      {
+          Column column = new() { index = new List<int>(row) };
+          freezedLocations.Add(column);
+      }
+
+      return dontReturn ? null : freezeMatrix;
+  }
+
+  internal void ResetStaticSymbol()
+  {
+      freezedLocations.Clear();
+      freezedLocations.TrimExcess();
+      Locations.Clear();
+      Locations.TrimExcess();
   }
 }
