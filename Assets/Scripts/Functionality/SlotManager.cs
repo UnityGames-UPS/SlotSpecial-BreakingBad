@@ -24,6 +24,8 @@ public class SlotManager : MonoBehaviour
   public int AutoplayCount { get; private set; }
   public bool AutoplayUntilFeature { get; private set; }
 
+  private Coroutine autoplayRoutine;
+
   // Feature queue for ordered execution of triggered features
   internal FeatureQueue featureQueue = new FeatureQueue();
 
@@ -387,7 +389,7 @@ public class SlotManager : MonoBehaviour
       TriggerAutoSpinState(true);
       OnAutoplayCountChanged?.Invoke(AutoplayCount, AutoplayUntilFeature);
 
-      StartCoroutine(AutoSpinCoroutine());
+      autoplayRoutine = StartCoroutine(AutoSpinCoroutine());
     }
   }
 
@@ -405,9 +407,14 @@ public class SlotManager : MonoBehaviour
     {
       TriggerAutoSpinState(false);
       OnAutoplayStopped?.Invoke();
-      if (!IsSpinning)
+      if (autoplayRoutine != null)
       {
-        if (!IsBonus) uiManager.SetButtonsInteractable(true);
+        StopCoroutine(autoplayRoutine);
+        autoplayRoutine = null;
+      }
+      if (!IsSpinning && !IsFeatureTransitioning && !IsBonus)
+      {
+        uiManager.SetButtonsInteractable(true);
       }
     }
   }
@@ -433,14 +440,14 @@ public class SlotManager : MonoBehaviour
         yield break;
       }
 
-      StartSlots(true);
-      yield return tweenroutine;
-
       if (!AutoplayUntilFeature)
       {
         AutoplayCount--;
         OnAutoplayCountChanged?.Invoke(AutoplayCount, AutoplayUntilFeature);
       }
+
+      StartSlots(true);
+      yield return tweenroutine;
 
       if (AutoplayUntilFeature && ResultData != null && ResultData.payload != null &&
           (ResultData.payload.isFreeSpinTriggered || ResultData.payload.isLinkTriggered))

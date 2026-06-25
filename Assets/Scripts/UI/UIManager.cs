@@ -76,6 +76,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject trailRendererPrefab;
   [Range(0.2f, 3.0f)]
   [SerializeField] private float trailMoveDuration = 1.0f;
+  [SerializeField] private float delayBetweenTrails = 0.5f;
 
   internal int totalFreeSpins = 0;
   private double accumulatedFreeSpinWin = 0f;
@@ -109,6 +110,7 @@ public class UIManager : MonoBehaviour
 
 
   private Tween BalanceTween;
+  private Coroutine autoClickCoroutine;
 
   private void Start()
   {
@@ -329,6 +331,15 @@ public class UIManager : MonoBehaviour
           featureWinText.text = FormatSpriteText(value.ToString("F3"));
   }
 
+  private IEnumerator AutoClickFeatureStart(float delay)
+  {
+      yield return new WaitForSeconds(delay);
+      if (featureStartButton != null && featureStartButton.gameObject.activeSelf && featureStartButton.interactable)
+      {
+          featureStartButton.onClick.Invoke();
+      }
+  }
+
   public void OpenFeaturePopup(Action onStartClicked)
   {
       if (featurePopup == null || featureStartButton == null)
@@ -377,9 +388,20 @@ public class UIManager : MonoBehaviour
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
+          if (autoClickCoroutine != null)
+          {
+              StopCoroutine(autoClickCoroutine);
+              autoClickCoroutine = null;
+          }
           featurePopup.SetActive(false);
           onStartClicked?.Invoke();
       });
+
+      if (slotManager != null && (slotManager.IsAutoSpin || slotManager.WasAutoSpinOn))
+      {
+          if (autoClickCoroutine != null) StopCoroutine(autoClickCoroutine);
+          autoClickCoroutine = StartCoroutine(AutoClickFeatureStart(2f));
+      }
   }
 
   public void OpenFeatureWinPopup(double winAmount, Action onCloseClicked)
@@ -420,9 +442,20 @@ public class UIManager : MonoBehaviour
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
+          if (autoClickCoroutine != null)
+          {
+              StopCoroutine(autoClickCoroutine);
+              autoClickCoroutine = null;
+          }
           featurePopup.SetActive(false);
           onCloseClicked?.Invoke();
       });
+
+      if (slotManager != null && (slotManager.IsAutoSpin || slotManager.WasAutoSpinOn))
+      {
+          if (autoClickCoroutine != null) StopCoroutine(autoClickCoroutine);
+          autoClickCoroutine = StartCoroutine(AutoClickFeatureStart(2f));
+      }
   }
 
   public void OpenWalterStashPopup(double amount, Action onComplete)
@@ -710,7 +743,7 @@ public class UIManager : MonoBehaviour
           yield return new WaitForSeconds(0.5f);
       }
 
-      // Start loop animations on the CashCollect symbols
+      // Get CashCollect symbol positions
       List<List<int>> ccPositions = new List<List<int>>();
       if (result.positions != null)
       {
@@ -721,23 +754,14 @@ public class UIManager : MonoBehaviour
                   int r = (int)pos[0];
                   int c = (int)pos[1];
                   ccPositions.Add(new List<int> { r, c });
-                  if (slotManager.animationManager != null)
-                  {
-                      slotManager.animationManager.StartSymbolAnimationLoop(r, c);
-                  }
               }
           }
       }
 
       double accumulatedVal = 0f;
-      int activeFlyingCoins = 0;
-      if (result.collectedCoins != null)
-      {
-          activeFlyingCoins = result.collectedCoins.Count;
-      }
 
-      // 2. Play flying animations from cash coins to display panel
-      if (result.collectedCoins != null && result.collectedCoins.Count > 0)
+      // 2. Play flying animations from cash coins to Cash Collect symbols sequentially (one by one pair)
+      if (result.collectedCoins != null && result.collectedCoins.Count > 0 && ccPositions.Count > 0)
       {
           List<CollectedCoin> sortedCoins = new List<CollectedCoin>(result.collectedCoins);
           sortedCoins.Sort((a, b) =>
@@ -747,114 +771,107 @@ public class UIManager : MonoBehaviour
               return 0;
           });
 
-          foreach (var coin in sortedCoins)
+          foreach (var ccPos in ccPositions)
           {
-              int r = coin.position[0];
-              int c = coin.position[1];
-              SlotSymbolView cashCoinView = slotManager.GetSymbolView(r, c);
-              if (cashCoinView == null)
+              SlotSymbolView ccView = slotManager.GetSymbolView(ccPos[0], ccPos[1]);
+
+              foreach (var coin in sortedCoins)
               {
-                  activeFlyingCoins--;
-                  continue;
-              }
-
-               // Pop animation on gold coin
-               float animDuration = slotManager.animationManager != null ? slotManager.animationManager.winSymbolLoopDuration / 2f : 0.75f;
-               cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), animDuration, 1, 0.5f);
-
-               // Play one-loop animation on each Cash Collect symbol at 2x speed at the exact same time
-               if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13)
-               {
-                   foreach (var ccPos in ccPositions)
-                   {
-                       if (slotManager.animationManager != null)
-                       {
-                           slotManager.animationManager.PlaySpecialAnimationForCell(ccPos[0], ccPos[1]);
-                       }
-                   }
-               }
-
-              // Spawn trail renderer prefab in the middle of the cash coin (only for Cash Coin [15], Multiplier Coin [13], and Prize Coin [16])
-              if (trailRendererPrefab != null && (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13))
-              {
-                  GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
-                  
-                  // Ensure local scale is (1,1,1) to avoid canvas scale distortions
-                  trInstance.transform.localScale = Vector3.one;
-                  
-                  // Position at coin's world position
-                  trInstance.transform.position = cashCoinView.transform.position;
-                  
-                  // Reset local Z position to 0 to ensure rendering on the UI camera view plane
-                  Vector3 localPos = trInstance.transform.localPosition;
-                  localPos.z = 0f;
-                  trInstance.transform.localPosition = localPos;
-
-                  // Set text of the spawned object to show the coin's collected value
-                  double coinAmt = coin.coinValue * slotManager.TotalBet;
-                  TMP_Text trText = trInstance.GetComponentInChildren<TMP_Text>();
-                  if (trText != null)
-                  {
-                      trText.text = coinAmt.ToString("F3");
-                  }
-
-                  // Fly animation using DOTween to the coinWinDisplayPanel position
-                  Vector3 targetPos = coinWinDisplayPanelCanvasGroup != null ? coinWinDisplayPanelCanvasGroup.transform.position : Vector3.zero;
-                  
-                  double finalTarget = accumulatedVal + coinAmt;
-                  accumulatedVal = finalTarget;
-
-                  trInstance.transform.DOMove(targetPos, trailMoveDuration).SetEase(Ease.OutQuad).OnComplete(() =>
-                  {
-                      Destroy(trInstance);
-                      
-                      double currentVal = 0;
-                      if (coinWinDisplayText != null)
-                      {
-                          double.TryParse(coinWinDisplayText.text, out currentVal);
-                      }
-                      
-                      DOTween.To(() => currentVal, (val) =>
-                      {
-                          if (coinWinDisplayText != null)
-                              coinWinDisplayText.text = val.ToString("F3");
-                      }, finalTarget, 0.3f).OnComplete(() =>
-                      {
-                          activeFlyingCoins--;
-                      });
-                  });
-
-                  // Stagger before next coin
-                  yield return new WaitForSeconds(0.4f);
-              }
-              else
-              {
-                  // Fallback if no prefab is assigned, or it's not a cash coin/prize coin (e.g. it is symbolId 17)
+                  // Only for Cash Coin [15], Multiplier Coin [13], and Prize Coin [16]
                   if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13)
                   {
-                      double startVal = accumulatedVal;
-                      accumulatedVal += coin.coinValue * slotManager.TotalBet;
-                      double endVal = accumulatedVal;
-                      if (coinWinDisplayText != null)
-                          coinWinDisplayText.text = endVal.ToString("F3");
-                      activeFlyingCoins--;
-                      yield return new WaitForSeconds(0.4f);
-                  }
-                  else
-                  {
-                      // For non-cash/prize coins (like symbolId 17 - Los Pollos), we do not update text or wait
-                      activeFlyingCoins--;
+                      int r = coin.position[0];
+                      int c = coin.position[1];
+                      SlotSymbolView cashCoinView = slotManager.GetSymbolView(r, c);
+                      if (cashCoinView == null)
+                      {
+                          continue;
+                      }
+
+                      // Pop animation on cash/prize coin (punch scale)
+                      float animDuration = slotManager.animationManager != null ? slotManager.animationManager.winSymbolLoopDuration / 2f : 0.75f;
+                      cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), animDuration, 1, 0.5f);
+
+                      // Play one-loop animation on the active Cash Collect symbol
+                      if (slotManager.animationManager != null)
+                      {
+                          slotManager.animationManager.PlaySpecialAnimationForCell(ccPos[0], ccPos[1]);
+                      }
+
+                      // Spawn trail renderer prefab in the middle of the cash coin
+                      if (trailRendererPrefab != null)
+                      {
+                          GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
+                          
+                          // Ensure local scale is (1,1,1) to avoid canvas scale distortions
+                          trInstance.transform.localScale = Vector3.one;
+                          
+                          // Position at coin's world position
+                          trInstance.transform.position = cashCoinView.transform.position;
+                          
+                          // Reset local Z position to 0 to ensure rendering on the UI camera view plane
+                          Vector3 localPos = trInstance.transform.localPosition;
+                          localPos.z = 0f;
+                          trInstance.transform.localPosition = localPos;
+
+                          // Set text of the spawned object to show the coin's collected value
+                          double coinAmt = coin.coinValue * slotManager.TotalBet;
+                          TMP_Text trText = trInstance.GetComponentInChildren<TMP_Text>();
+                          if (trText != null)
+                          {
+                              trText.text = coinAmt.ToString("F3");
+                          }
+
+                          // Fly animation using DOTween to the coinWinDisplayPanel position
+                          Vector3 targetPos = coinWinDisplayPanelCanvasGroup != null ? coinWinDisplayPanelCanvasGroup.transform.position : Vector3.zero;
+                          
+                          double finalTarget = accumulatedVal + coinAmt;
+                          accumulatedVal = finalTarget;
+
+                          bool trailCompleted = false;
+                          trInstance.transform.DOMove(targetPos, trailMoveDuration).SetEase(Ease.OutQuad).OnComplete(() =>
+                          {
+                              Destroy(trInstance);
+                              
+                              double currentVal = 0;
+                              if (coinWinDisplayText != null)
+                              {
+                                  double.TryParse(coinWinDisplayText.text, out currentVal);
+                              }
+                              
+                              DOTween.To(() => currentVal, (val) =>
+                              {
+                                  if (coinWinDisplayText != null)
+                                      coinWinDisplayText.text = val.ToString("F3");
+                              }, finalTarget, 0.3f).OnComplete(() =>
+                              {
+                                  trailCompleted = true;
+                              });
+                          });
+
+                          // Wait for this specific trail to complete (reach target + count-up finished)
+                          yield return new WaitUntil(() => trailCompleted);
+                      }
+                      else
+                      {
+                          // Fallback if no prefab is assigned
+                          double startVal = accumulatedVal;
+                          accumulatedVal += coin.coinValue * slotManager.TotalBet;
+                          double endVal = accumulatedVal;
+                          if (coinWinDisplayText != null)
+                              coinWinDisplayText.text = endVal.ToString("F3");
+                      }
+
+                      // Wait between trails
+                      yield return new WaitForSeconds(delayBetweenTrails);
                   }
               }
           }
       }
 
-      // Wait for all active flying coins to hit the target and complete their count-up tweens
-      yield return new WaitUntil(() => activeFlyingCoins == 0);
-
       yield return new WaitForSeconds(1.0f);
 
-      // Stop loop animations on the CashCollect symbols
+      // Stop loop animations on the CashCollect symbols (safety cleanup)
       foreach (var ccPos in ccPositions)
       {
           if (slotManager.animationManager != null)
@@ -1079,7 +1096,7 @@ public class UIManager : MonoBehaviour
   {
       if (slotManager == null || symbolTextMaps == null) return;
 
-      double totalBet = slotManager.TotalBet;
+      double lineBet = slotManager.LineBet;
 
       foreach (var map in symbolTextMaps)
       {
@@ -1092,9 +1109,9 @@ public class UIManager : MonoBehaviour
               double mult4 = symbolInfo.multiplier[1];
               double mult3 = symbolInfo.multiplier[2];
 
-              double val5 = totalBet * mult5;
-              double val4 = totalBet * mult4;
-              double val3 = totalBet * mult3;
+              double val5 = lineBet * mult5;
+              double val4 = lineBet * mult4;
+              double val3 = lineBet * mult3;
 
               map.textComponent.text = $"5x {val5:F3}\n4x {val4:F3}\n3x {val3:F3}";
           }
@@ -1192,7 +1209,7 @@ public class UIManager : MonoBehaviour
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
-        if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(!slotManager.AutoplayUntilFeature);
       }
       else
       {
@@ -1215,7 +1232,7 @@ public class UIManager : MonoBehaviour
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
-        if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(!slotManager.AutoplayUntilFeature);
       }
       else if (slotManager.IsFreeSpin)
       {
