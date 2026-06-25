@@ -68,6 +68,8 @@ public class UIManager : MonoBehaviour
   [SerializeField] private RectTransform flyingTextParent;
   [SerializeField] private GameObject freeSpinPopupTitleObject;
   [SerializeField] private TMP_Text freeSpinPopupSpinsText;
+  [SerializeField] private GameObject midSumAnimObj;
+  [SerializeField] private GameObject dissolveAnimObj;
 
   [Header("Cash Collect Feature UI")]
   [SerializeField] private CanvasGroup jackpotPanelCanvasGroup;
@@ -121,6 +123,9 @@ public class UIManager : MonoBehaviour
     if (featurePopup != null) featurePopup.SetActive(false);
     if (walterStashPopup != null) walterStashPopup.SetActive(false);
     if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+
+    if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
+    if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
 
     if (normalBgCanvasGroup != null) normalBgCanvasGroup.alpha = 1f;
     if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.alpha = 0f;
@@ -1123,6 +1128,11 @@ public class UIManager : MonoBehaviour
     if (!autoplayOptionsDropdown) return;
 
     int selectedIndex = autoplayOptionsDropdown.value;
+    DropdownItemDisabler disabler = autoplayOptionsDropdown.GetComponent<DropdownItemDisabler>();
+    if (disabler != null && disabler.SelectedIndexOverride != -1)
+    {
+      selectedIndex = disabler.SelectedIndexOverride;
+    }
     string selectedText = autoplayOptionsDropdown.options[selectedIndex].text;
 
     int spinCount = 0;
@@ -1213,14 +1223,28 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
-        if (stopSpinButton)
+        if (slotManager.IsAutoplayStoppedMidSpin)
         {
-          stopSpinButton.gameObject.SetActive(true);
-          stopSpinButton.interactable = true;
+          if (slotStartButton)
+          {
+            slotStartButton.gameObject.SetActive(true);
+            slotStartButton.interactable = false;
+          }
+          if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
+          if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+          if (autoplayCounterObject) autoplayCounterObject.SetActive(false);
         }
-        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
-        if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+        else
+        {
+          if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+          if (stopSpinButton)
+          {
+            stopSpinButton.gameObject.SetActive(true);
+            stopSpinButton.interactable = true;
+          }
+          if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+          if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
+        }
       }
     }
     else
@@ -1325,6 +1349,9 @@ public class UIManager : MonoBehaviour
 
   public IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false, bool fromBonusSlot = false)
   {
+      if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
+      if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
+
       int totalSpins = 0;
       if (fsResult != null && fsResult.triggerCoins != null && fsResult.triggerCoins.Count > 0)
       {
@@ -1581,6 +1608,8 @@ public class UIManager : MonoBehaviour
 
       yield return new WaitForSeconds(moveDuration);
 
+      if (midSumAnimObj != null) midSumAnimObj.SetActive(true);
+
       TMP_Text sumTextPrefab = null;
       Vector3 sumInitialScale = Vector3.one;
       if (tempTexts.Count > 0)
@@ -1620,8 +1649,12 @@ public class UIManager : MonoBehaviour
               targetPos = spinCountSnapParent.position;
           }
 
+          if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
+
           sumTextPrefab.transform.DOMove(targetPos, moveDuration).SetEase(Ease.InOutQuad);
           yield return new WaitForSeconds(moveDuration);
+
+          if (dissolveAnimObj != null) dissolveAnimObj.SetActive(true);
 
           if (spinCounterText != null)
           {
@@ -1631,6 +1664,9 @@ public class UIManager : MonoBehaviour
               spinCounterText.gameObject.SetActive(true);
           }
           Destroy(sumTextPrefab.gameObject);
+
+          yield return new WaitForSeconds(1.0f);
+          if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
       }
       else
       {
@@ -1671,9 +1707,11 @@ public class UIManager : MonoBehaviour
 public class DropdownItemDisabler : MonoBehaviour, UnityEngine.EventSystems.IPointerClickHandler
 {
     public List<int> indexesToDisable = new List<int>();
+    public int SelectedIndexOverride = -1;
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
+        SelectedIndexOverride = -1;
         StartCoroutine(DisableItemsCoroutine());
     }
 
@@ -1724,6 +1762,14 @@ public class DropdownItemDisabler : MonoBehaviour, UnityEngine.EventSystems.IPoi
 
                 for (int i = 0; i < optionToggles.Count; i++)
                 {
+                    int index = i;
+                    optionToggles[i].onValueChanged.AddListener((isOn) => {
+                        if (isOn) {
+                            SelectedIndexOverride = index;
+                            StartCoroutine(SetDropdownValueCoroutine(dropdown, index));
+                        }
+                    });
+
                     if (indexesToDisable.Contains(i))
                     {
                         optionToggles[i].interactable = false;
@@ -1736,5 +1782,11 @@ public class DropdownItemDisabler : MonoBehaviour, UnityEngine.EventSystems.IPoi
                 }
             }
         }
+    }
+
+    private IEnumerator SetDropdownValueCoroutine(TMP_Dropdown dropdown, int index)
+    {
+        yield return null;
+        dropdown.value = index;
     }
 }

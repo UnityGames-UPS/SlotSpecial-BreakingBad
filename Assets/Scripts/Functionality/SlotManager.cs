@@ -23,6 +23,7 @@ public class SlotManager : MonoBehaviour
   public bool CheckPopups { get; set; }
   public int AutoplayCount { get; private set; }
   public bool AutoplayUntilFeature { get; private set; }
+  public bool IsAutoplayStoppedMidSpin { get; set; }
 
   private Coroutine autoplayRoutine;
 
@@ -407,14 +408,22 @@ public class SlotManager : MonoBehaviour
     {
       TriggerAutoSpinState(false);
       OnAutoplayStopped?.Invoke();
-      if (autoplayRoutine != null)
+      
+      if (IsSpinning)
       {
-        StopCoroutine(autoplayRoutine);
-        autoplayRoutine = null;
+        IsAutoplayStoppedMidSpin = true;
       }
-      if (!IsSpinning && !IsFeatureTransitioning && !IsBonus)
+      else
       {
-        uiManager.SetButtonsInteractable(true);
+        if (autoplayRoutine != null)
+        {
+          StopCoroutine(autoplayRoutine);
+          autoplayRoutine = null;
+        }
+        if (!IsFeatureTransitioning && !IsBonus)
+        {
+          uiManager.SetButtonsInteractable(true);
+        }
       }
     }
   }
@@ -456,10 +465,15 @@ public class SlotManager : MonoBehaviour
         yield break;
       }
 
-      if (!IsAutoSpin) yield break;
+      if (!IsAutoSpin)
+      {
+        autoplayRoutine = null;
+        yield break;
+      }
 
       yield return new WaitForSeconds(SpinDelay);
     }
+    autoplayRoutine = null;
   }
   #endregion
 
@@ -713,6 +727,8 @@ public class SlotManager : MonoBehaviour
     // Forcefully clean up any previous spin state to prevent glitches
     ForceCleanupPreviousSpin();
 
+    IsAutoplayStoppedMidSpin = false;
+
     // Reset scenario states
     isMagnetScenarioActive = false;
     magnetCol = -1;
@@ -744,6 +760,8 @@ public class SlotManager : MonoBehaviour
       StopCoroutine(tweenroutine);
       tweenroutine = null;
     }
+
+    IsAutoplayStoppedMidSpin = false;
 
     // Kill all running tweens
     KillAllTweens();
@@ -1272,6 +1290,7 @@ public class SlotManager : MonoBehaviour
     }
 
     // Post-spin cleanup
+    IsAutoplayStoppedMidSpin = false;
     TriggerSpinState(false);
 
     if (IsFreeSpin)
