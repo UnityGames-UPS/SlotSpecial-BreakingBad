@@ -74,6 +74,7 @@ public class BonusManager : MonoBehaviour
 
   internal void StartBonusGame(int count)
   {
+    if (AudioController.Instance != null) AudioController.Instance.PlayBonusBg();
     ResetStaticSymbol();
     if (NormalSlot_CG != null)
     {
@@ -585,6 +586,7 @@ public class BonusManager : MonoBehaviour
     }
 
     // Default flow when Free Spins are NOT triggered:
+    if (AudioController.Instance != null) AudioController.Instance.PlayMainBg();
     uiManager.CloseBonusUI();
     yield return null;
 
@@ -720,6 +722,8 @@ public class BonusManager : MonoBehaviour
     float targetY = 0f;
     float overshootDistance = 15f;
 
+    if (AudioController.Instance != null) AudioController.Instance.PlaySlotStop();
+
     // Phase 1: Snap to slightly past target (overshoot)
     Sequence stopSeq = DOTween.Sequence();
     stopSeq.Append(slotTransform.DOLocalMoveY(targetY - overshootDistance, 0.08f).SetEase(Ease.InQuad));
@@ -727,6 +731,30 @@ public class BonusManager : MonoBehaviour
     stopSeq.Append(slotTransform.DOLocalMoveY(targetY, 0.15f).SetEase(Ease.OutBack, 1.5f));
 
     yield return stopSeq.WaitForCompletion();
+
+    int col = index / 3;
+    int row = index % 3;
+
+    if (SocketManager.resultData != null && SocketManager.resultData.matrix != null &&
+        row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
+    {
+        string symbolIdStr = SocketManager.resultData.matrix[row][col];
+        if (int.TryParse(symbolIdStr, out int symbolId))
+        {
+            if (symbolId == 15 || symbolId == 16) // Gold Coin / Prize Coin
+            {
+                if (AudioController.Instance != null) AudioController.Instance.PlayCashCoinLand();
+            }
+            else if (symbolId == 11 || symbolId == 12) // Link / MegaLink
+            {
+                if (AudioController.Instance != null) AudioController.Instance.PlayLinkLand();
+            }
+            else if (symbolId == 14 || symbolId == 17) // Cash Collect / Los Pollos
+            {
+                if (AudioController.Instance != null) AudioController.Instance.PlayCashCollectLand();
+            }
+        }
+    }
     
     if (activeTween != null)
     {

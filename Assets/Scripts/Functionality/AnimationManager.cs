@@ -111,6 +111,7 @@ public class AnimationManager : MonoBehaviour
         bool skipFirstPhase = !isAutoOrFree && lineWins.Count == 1;
         if (!skipFirstPhase)
         {
+            if (AudioController.Instance != null) AudioController.Instance.PlayWinLine();
             List<ImageAnimation> activeAnims = new();
 
             foreach (var win in lineWins)
@@ -269,6 +270,7 @@ public class AnimationManager : MonoBehaviour
         while (true)
         {
             LineWin win = lineWins[currentLineIndex];
+            if (AudioController.Instance != null) AudioController.Instance.PlayWinLine();
             string payoutString = win.payout.ToString("0.###");
 
             // Reset all board symbols to dimmed state initially

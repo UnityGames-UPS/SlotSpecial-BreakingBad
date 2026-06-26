@@ -386,6 +386,7 @@ public class SlotManager : MonoBehaviour
     }
 
     animationManager.Initialize(this);
+    if (AudioController.Instance != null) AudioController.Instance.PlayMainBg();
   }
 
   public float SwipeThresholdValue => swipeThreshold;
@@ -2516,6 +2517,7 @@ public class SlotManager : MonoBehaviour
 
   private void PlayStopBounceSequence(int col, Transform slotTransform, float restY)
   {
+    if (AudioController.Instance != null) AudioController.Instance.PlaySlotStop();
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
     // For bottom near-miss: snap to restY immediately since the slow glide of cycle 4 already completed the stop
@@ -2586,6 +2588,7 @@ public class SlotManager : MonoBehaviour
     Vector3 initialMagnetPos = Vector3.zero;
     if (activeMagnet != null)
     {
+      if (AudioController.Instance != null) AudioController.Instance.PlayMagnetOn();
       initialMagnetPos = activeMagnet.transform.localPosition;
       activeMagnet.SetActive(true);
     }
@@ -2618,6 +2621,7 @@ public class SlotManager : MonoBehaviour
 
     if (activeMagnet != null)
     {
+      if (AudioController.Instance != null) AudioController.Instance.StopMagnetOn();
       activeMagnet.SetActive(false);
       activeMagnet.transform.localPosition = initialMagnetPos; // Restore position for future use
     }
@@ -2672,7 +2676,24 @@ public class SlotManager : MonoBehaviour
               {
                   SetColumnBackTintActive(c, true);
               }
+              if (AudioController.Instance != null) AudioController.Instance.PlayMultiTension();
           }
+      }
+
+      // Single reel nearmiss tension builder triggers
+      if (isNearMissActive && col == nearMissCol - 1)
+      {
+          if (AudioController.Instance != null) AudioController.Instance.PlaySingleTension();
+      }
+      if (isNearMissActive && col == nearMissCol)
+      {
+          if (AudioController.Instance != null) AudioController.Instance.StopSingleTension();
+      }
+
+      // 4 slot tension builder stop trigger
+      if (col == numberOfSlots - 1 && col0HasCC)
+      {
+          if (AudioController.Instance != null) AudioController.Instance.StopMultiTension();
       }
 
       System.Func<string, bool> isSpecial = id =>
@@ -2685,6 +2706,22 @@ public class SlotManager : MonoBehaviour
               row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
           {
               string symbolIdStr = SocketManager.resultData.matrix[row][col];
+              if (int.TryParse(symbolIdStr, out int symbolId))
+              {
+                  if (symbolId == 15 || symbolId == 16) // Gold Coin / Cash Coin or Prize Coin
+                  {
+                      if (AudioController.Instance != null) AudioController.Instance.PlayCashCoinLand();
+                  }
+                  else if (symbolId == 11 || symbolId == 12) // Link / MegaLink
+                  {
+                      if (AudioController.Instance != null) AudioController.Instance.PlayLinkLand();
+                  }
+                  else if (symbolId == 14 || symbolId == 17) // Cash Collect or Los Pollos
+                  {
+                      if (AudioController.Instance != null) AudioController.Instance.PlayCashCollectLand();
+                  }
+              }
+
               if (isSpecial(symbolIdStr))
               {
                   animationManager.PlaySpecialAnimationForCell(row, col);

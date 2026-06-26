@@ -82,6 +82,7 @@ public class WinTypePopup : MonoBehaviour
 
     public void StartPopup(double winAmount, double totalBetAmount, bool isAuto, Action onComplete)
     {
+        if (AudioController.Instance != null) AudioController.Instance.PlayWinTypeLoop();
         finalWinAmount = winAmount;
         totalBet = totalBetAmount;
         isAutoMode = isAuto;
@@ -285,6 +286,7 @@ public class WinTypePopup : MonoBehaviour
 
     private void ClosePopup()
     {
+        if (AudioController.Instance != null) AudioController.Instance.StopWinTypeLoop();
         if (countCoroutine != null) StopCoroutine(countCoroutine);
         if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
 

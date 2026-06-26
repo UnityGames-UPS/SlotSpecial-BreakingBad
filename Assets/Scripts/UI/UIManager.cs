@@ -111,6 +111,13 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text totalBetText;
   [SerializeField] private TMP_Text totalWinText;
   [SerializeField] private TMP_Text fsNumText;
+
+  [Header("Settings Panel UI")]
+  [SerializeField] private GameObject settingsPopupPanel;
+  [SerializeField] private Button settingsButton;
+  [SerializeField] private Button settingsQuitButton;
+  [SerializeField] private Slider musicVolumeSlider;
+  [SerializeField] private Slider soundVolumeSlider;
   
 
 
@@ -146,11 +153,17 @@ public class UIManager : MonoBehaviour
 
     if (autoplayStartButton) {
       autoplayStartButton.onClick.RemoveAllListeners();
-      autoplayStartButton.onClick.AddListener(OnAutoplayStartPressed);
+      autoplayStartButton.onClick.AddListener(() => {
+          if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+          OnAutoplayStartPressed();
+      });
     }
     if (autoplayPanelClose) {
       autoplayPanelClose.onClick.RemoveAllListeners();
-      autoplayPanelClose.onClick.AddListener(CloseAutoplayPanel);
+      autoplayPanelClose.onClick.AddListener(() => {
+          if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+          CloseAutoplayPanel();
+      });
     }
     if (autoplayOptionsDropdown) {
       autoplayOptionsDropdown.ClearOptions();
@@ -179,16 +192,26 @@ public class UIManager : MonoBehaviour
     if (infoButton != null)
     {
         infoButton.onClick.RemoveAllListeners();
-        infoButton.onClick.AddListener(OpenInfoPanel);
+        infoButton.onClick.AddListener(() => {
+            if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+            OpenInfoPanel();
+        });
     }
     if (infoBackButton != null)
     {
         infoBackButton.onClick.RemoveAllListeners();
-        infoBackButton.onClick.AddListener(CloseInfoPanel);
+        infoBackButton.onClick.AddListener(() => {
+            if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+            CloseInfoPanel();
+        });
     }
     if (infoPanel != null)
     {
         infoPanel.SetActive(false);
+    }
+    if (settingsPopupPanel != null)
+    {
+        settingsPopupPanel.SetActive(false);
     }
 
     InitializeHUD();
@@ -199,6 +222,7 @@ public class UIManager : MonoBehaviour
         featureSpinButton.onClick.AddListener(() => {
             if (featureSpinButton.IsInteractable() && slotManager.IsBonus && !bonusManager.IsSpinning)
             {
+                if (AudioController.Instance != null) AudioController.Instance.PlaySpinBtn();
                 bonusManager.StartBonusSlot();
             }
         });
@@ -220,8 +244,7 @@ public class UIManager : MonoBehaviour
           holdHandler.onClick.RemoveAllListeners();
           holdHandler.onClick.AddListener(() => {
               if (slotStartButton.IsInteractable() && slotManager && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus) {
-                  // Allow starting a new spin even if animations are playing
-                  // ForceCleanupPreviousSpin inside StartSlots handles cleanup
+                  if (AudioController.Instance != null) AudioController.Instance.PlaySpinBtn();
                   slotManager.StartSlots();
                   CanCloseMenu();
               }
@@ -229,6 +252,7 @@ public class UIManager : MonoBehaviour
           holdHandler.onLongPress.RemoveAllListeners();
           holdHandler.onLongPress.AddListener(() => {
               if (slotStartButton.IsInteractable() && slotManager && !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsBonus) {
+                  if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
                   OpenAutoplayPanel();
                   CanCloseMenu();
               }
@@ -238,6 +262,7 @@ public class UIManager : MonoBehaviour
           autoSpinButton.onClick.RemoveAllListeners();
           autoSpinButton.onClick.AddListener(() => {
               if (autoSpinButton.IsInteractable()) {
+                  if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
                   OpenAutoplayPanel();
                   CanCloseMenu();
               }
@@ -245,15 +270,27 @@ public class UIManager : MonoBehaviour
       }
       if (autoSpinStopButton) {
           autoSpinStopButton.onClick.RemoveAllListeners();
-          autoSpinStopButton.onClick.AddListener(() => { if (slotManager) slotManager.StopAutoSpin(); CanCloseMenu(); });
+          autoSpinStopButton.onClick.AddListener(() => { 
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+              if (slotManager) slotManager.StopAutoSpin(); 
+              CanCloseMenu(); 
+          });
       }
       if (totalBetPlusButton) {
           totalBetPlusButton.onClick.RemoveAllListeners();
-          totalBetPlusButton.onClick.AddListener(() => { if (slotManager) slotManager.ChangeBet(true); CanCloseMenu(); });
+          totalBetPlusButton.onClick.AddListener(() => { 
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+              if (slotManager) slotManager.ChangeBet(true); 
+              CanCloseMenu(); 
+          });
       }
       if (totalBetMinusButton) {
           totalBetMinusButton.onClick.RemoveAllListeners();
-          totalBetMinusButton.onClick.AddListener(() => { if (slotManager) slotManager.ChangeBet(false); CanCloseMenu(); });
+          totalBetMinusButton.onClick.AddListener(() => { 
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+              if (slotManager) slotManager.ChangeBet(false); 
+              CanCloseMenu(); 
+          });
       }
 
       if (turboButton) {
@@ -263,18 +300,53 @@ public class UIManager : MonoBehaviour
       }
       if (stopSpinButton) {
           stopSpinButton.onClick.RemoveAllListeners();
-          stopSpinButton.onClick.AddListener(() => { PerformStop(); });
+          stopSpinButton.onClick.AddListener(() => { 
+              if (AudioController.Instance != null) AudioController.Instance.PlaySpinBtn();
+              PerformStop(); 
+          });
       }
 
       if (gameExitButton) {
           gameExitButton.onClick.RemoveAllListeners();
           gameExitButton.onClick.AddListener(() => {
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
               if (popupManager != null) {
                   popupManager.ShowExitGamePopup();
               } else {
                   CallOnExitFunction();
               }
               CanCloseMenu();
+          });
+      }
+
+      if (settingsButton) {
+          settingsButton.onClick.RemoveAllListeners();
+          settingsButton.onClick.AddListener(() => {
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+              if (settingsPopupPanel != null) settingsPopupPanel.SetActive(true);
+              CanCloseMenu();
+          });
+      }
+      if (settingsQuitButton) {
+          settingsQuitButton.onClick.RemoveAllListeners();
+          settingsQuitButton.onClick.AddListener(() => {
+              if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
+              if (settingsPopupPanel != null) settingsPopupPanel.SetActive(false);
+              CanCloseMenu();
+          });
+      }
+      if (musicVolumeSlider) {
+          if (AudioController.Instance != null) musicVolumeSlider.value = AudioController.Instance.MusicVolume;
+          musicVolumeSlider.onValueChanged.RemoveAllListeners();
+          musicVolumeSlider.onValueChanged.AddListener((val) => {
+              if (AudioController.Instance != null) AudioController.Instance.MusicVolume = val;
+          });
+      }
+      if (soundVolumeSlider) {
+          if (AudioController.Instance != null) soundVolumeSlider.value = AudioController.Instance.SfxVolume;
+          soundVolumeSlider.onValueChanged.RemoveAllListeners();
+          soundVolumeSlider.onValueChanged.AddListener((val) => {
+              if (AudioController.Instance != null) AudioController.Instance.SfxVolume = val;
           });
       }
 
@@ -397,6 +469,7 @@ public class UIManager : MonoBehaviour
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
+          if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
           if (autoClickCoroutine != null)
           {
               StopCoroutine(autoClickCoroutine);
@@ -451,6 +524,7 @@ public class UIManager : MonoBehaviour
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
+          if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
           if (autoClickCoroutine != null)
           {
               StopCoroutine(autoClickCoroutine);
@@ -708,6 +782,7 @@ public class UIManager : MonoBehaviour
 
   private void TurboToggle()
   {
+    if (AudioController.Instance != null) AudioController.Instance.PlayTurboToggle();
     if (slotManager.IsTurboOn)
     {
       slotManager.IsTurboOn = false;
@@ -854,6 +929,7 @@ public class UIManager : MonoBehaviour
                       // Spawn trail renderer prefab in the middle of the cash coin
                       if (trailRendererPrefab != null)
                       {
+                          if (AudioController.Instance != null) AudioController.Instance.PlayTrailStart();
                           GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
                           
                           // Ensure local scale is (1,1,1) to avoid canvas scale distortions
@@ -1020,6 +1096,7 @@ public class UIManager : MonoBehaviour
 
   internal void CloseFreeSpinsUI()
   {
+    if (AudioController.Instance != null) AudioController.Instance.PlayMainBg();
     slotManager.IsFreeSpin = false;
     if (fsNumText) fsNumText.text = "0";
     totalFreeSpins = 0;
@@ -1552,6 +1629,7 @@ public class UIManager : MonoBehaviour
               accumulatedFreeSpinWin = 0f;
           }
 
+          if (AudioController.Instance != null) AudioController.Instance.PlayBonusBg();
           if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(0f, 1f);
           if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.DOFade(1f, 1f);
 
