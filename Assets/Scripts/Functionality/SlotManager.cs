@@ -582,6 +582,11 @@ public class SlotManager : MonoBehaviour
     CompareBalance();
     uiManager.InitialiseUIData(SocketManager.initUIData.paylines);
     uiManager.SetJackpotText(SocketManager.initialData.features.jackpot);
+
+    if (DialoguePopupManager.Instance != null)
+    {
+      StartCoroutine(DialoguePopupManager.Instance.PlayGameStartDialogue());
+    }
   }
   #endregion
 
@@ -1265,6 +1270,7 @@ public class SlotManager : MonoBehaviour
     }
 
     // Process the feature queue sequentially
+    yield return ProcessDialoguePopups();
     yield return ProcessFeatureQueue(winningsDisplayed);
 
     // If we bypassed starting line animations initially because of prize coin or cash collect flow,
@@ -1479,6 +1485,11 @@ public class SlotManager : MonoBehaviour
         {
           totalFeatureWin = uiManager.AccumulatedFreeSpinWin;
         }
+        if (DialoguePopupManager.Instance != null)
+        {
+          yield return DialoguePopupManager.Instance.PlayFreeSpinEndDialogue(totalFeatureWin, TotalBet);
+        }
+
         uiManager.OpenFeatureWinPopup(totalFeatureWin, () => {
             winPopupClosed = true;
         });
@@ -2575,6 +2586,11 @@ public class SlotManager : MonoBehaviour
   {
     if (!isMagnetScenarioActive || magnetCol < 0 || magnetCol >= Slot_Transform.Length) yield break;
 
+    if (DialoguePopupManager.Instance != null)
+    {
+      yield return DialoguePopupManager.Instance.PlayMagnetAppearanceDialogue();
+    }
+
     GameObject activeMagnet = null;
     if (magnetCol == 0) // Left
     {
@@ -2872,14 +2888,136 @@ public class SlotManager : MonoBehaviour
     {
       dst.canvasGroup.alpha = src.canvasGroup.alpha;
     }
-    else if (dst.canvasGroup != null)
+  }
+
+  private IEnumerator ProcessDialoguePopups()
+  {
+    if (DialoguePopupManager.Instance == null || IsFreeSpin) yield break;
+
+    // 1. Too Many Special Symbols and Cash Collect Hit
+    int specialSymbolCount = GetSpecialSymbolsCountOnGrid();
+    bool isCCTriggered = SocketManager.resultData != null && 
+                         SocketManager.resultData.payload != null && 
+                         SocketManager.resultData.payload.cashCollectResult != null && 
+                         SocketManager.resultData.payload.cashCollectResult.triggered;
+
+    if (isCCTriggered && specialSymbolCount >= 4) // default threshold is 4
     {
-      dst.canvasGroup.alpha = 1f;
+      yield return DialoguePopupManager.Instance.PlayTooManySymbolsAndCashCollectDialogue();
+      yield break; // Play only one dialogue popup per spin
+    }
+
+    // 2. Free Spin Hit in normal spin (not bonus spin)
+    bool isFreeSpinTriggered = SocketManager.resultData != null && 
+                               SocketManager.resultData.payload != null && 
+                               SocketManager.resultData.payload.isFreeSpinTriggered;
+    if (isFreeSpinTriggered)
+    {
+      int spins = SocketManager.resultData.payload.freeSpinsRemaining;
+      yield return DialoguePopupManager.Instance.PlayFreeSpinHitDialogue(spins);
+      yield break;
+    }
+
+    // Link Feature Trigger in normal spin
+    bool isLinkTriggered = SocketManager.resultData != null && 
+                           SocketManager.resultData.payload != null && 
+                           SocketManager.resultData.payload.isLinkTriggered;
+    if (isLinkTriggered)
+    {
+      if (HasMegaLinkOnGrid())
+      {
+        yield return DialoguePopupManager.Instance.PlayMegaLinkFeatureTriggerDialogue();
+      }
+      else
+      {
+        yield return DialoguePopupManager.Instance.PlayLinkFeatureTriggerDialogue();
+      }
+      yield break;
+    }
+
+    // 3. Mini Jackpot/Prize Coin Hit triggered in normal spin
+    bool isJackpotTriggered = featureQueue != null && featureQueue.Contains(FeatureType.PrizeCoinJackpot);
+    if (isJackpotTriggered)
+    {
+      yield return DialoguePopupManager.Instance.PlayMiniJackpotDialogue();
+      yield break;
+    }
+
+    // 4. Cash Collect Trigger in normal spin
+    if (isCCTriggered)
+    {
+      yield return DialoguePopupManager.Instance.PlayCashCollectTriggerDialogue();
+      yield break;
+    }
+
+    // 5. Near Miss
+    if (isNearMissActive)
+    {
+      yield return DialoguePopupManager.Instance.PlayNearMissDialogue();
+      yield break;
+    }
+
+    // 6. Special Symbol Landed but No Feature Triggered
+    if (specialSymbolCount > 0 && (featureQueue == null || !featureQueue.HasPending))
+    {
+      yield return DialoguePopupManager.Instance.PlaySpecialSymbolNoTriggerDialogue();
+      yield break;
     }
   }
 
+  private int GetSpecialSymbolsCountOnGrid()
+  {
+    int count = 0;
+    if (SocketManager == null || SocketManager.resultData == null || SocketManager.resultData.matrix == null) return 0;
+    for (int i = 0; i < SocketManager.resultData.matrix.Count; i++)
+    {
+      for (int j = 0; j < SocketManager.resultData.matrix[i].Count; j++)
+      {
+        int symbolId;
+        if (int.TryParse(SocketManager.resultData.matrix[i][j], out symbolId))
+        {
+          if (IsSpecialSymbol(symbolId))
+          {
+            count++;
+          }
+        }
+      }
+    }
+    return count;
+  }
 
+  private bool HasMiniJackpotOnGrid()
+  {
+    if (SocketManager == null || SocketManager.resultData == null || SocketManager.resultData.payload == null || SocketManager.resultData.payload.coinPositions == null) return false;
+    foreach (var item in SocketManager.resultData.payload.coinPositions)
+    {
+      if (item.symbolId == 16) // PrizeCoin
+      {
+        string pType = item.prizeType;
+        if (!string.IsNullOrEmpty(pType) && pType.ToLower().Contains("mini"))
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
+  private bool HasMegaLinkOnGrid()
+  {
+    if (SocketManager == null || SocketManager.resultData == null || SocketManager.resultData.matrix == null) return false;
+    for (int i = 0; i < SocketManager.resultData.matrix.Count; i++)
+    {
+      for (int j = 0; j < SocketManager.resultData.matrix[i].Count; j++)
+      {
+        if (SocketManager.resultData.matrix[i][j] == "12")
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   private void KillAllTweens()
   {

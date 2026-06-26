@@ -20087,6 +20087,135 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca750c23074644f54b4873edb0e44e93, type: 3}
+--- !u!1 &730462439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730462441}
+  - component: {fileID: 730462440}
+  m_Layer: 0
+  m_Name: Dialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &730462440
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730462439}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &730462441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730462439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1125026306}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &735332599
 GameObject:
   m_ObjectHideFlags: 0
@@ -31765,6 +31894,7 @@ Transform:
   - {fileID: 2084570263}
   - {fileID: 1027956683}
   - {fileID: 1772548472}
+  - {fileID: 730462441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1127498675
@@ -35820,6 +35950,126 @@ RectTransform:
   m_AnchoredPosition: {x: 150, y: -675}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1276266795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276266797}
+  - component: {fileID: 1276266796}
+  m_Layer: 0
+  m_Name: DialoguePopupManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1276266796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276266795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fe3872685d744d7b4b773fc7f4ad83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialoguePopupManager
+  dialogueParent: {fileID: 1867642126}
+  dialogueAudioSource: {fileID: 730462440}
+  dialogueList:
+  - name: GameStart
+    popupObject: {fileID: 364723414}
+    audioClip: {fileID: 8300000, guid: 490b0e131643c4f788da65ec261d511a, type: 3}
+  - name: FreeSpinHit_1_5
+    popupObject: {fileID: 1710349155}
+    audioClip: {fileID: 8300000, guid: 4126a1b73938c4f25b632bf98afe5c15, type: 3}
+  - name: FreeSpinHit_5_8
+    popupObject: {fileID: 544951730}
+    audioClip: {fileID: 8300000, guid: 00ec44e3e19d04dffb97cc35630ce34b, type: 3}
+  - name: FreeSpinHit_Above_8
+    popupObject: {fileID: 643385545}
+    audioClip: {fileID: 8300000, guid: eab1acc8a3b1b437eb137c66b9aaec00, type: 3}
+  - name: FreeSpinEnd_NoWin
+    popupObject: {fileID: 1575214639}
+    audioClip: {fileID: 8300000, guid: d9d07cd9c25924e67b8ea19f1b173516, type: 3}
+  - name: FreeSpinEnd_SmallWin_1
+    popupObject: {fileID: 967722056}
+    audioClip: {fileID: 8300000, guid: cb0c908abf025493a8dc639c68d323b6, type: 3}
+  - name: FreeSpinEnd_SmallWin_2
+    popupObject: {fileID: 1945966440}
+    audioClip: {fileID: 0}
+  - name: FreeSpinEnd_AverageWin_1
+    popupObject: {fileID: 1625317643}
+    audioClip: {fileID: 8300000, guid: 60cca811e046040899bc1a4338ea3ff3, type: 3}
+  - name: FreeSpinEnd_AverageWin_2
+    popupObject: {fileID: 781801194}
+    audioClip: {fileID: 8300000, guid: fff9c5da833d94f33a364dde1b5daaa0, type: 3}
+  - name: FreeSpinEnd_HugeWin
+    popupObject: {fileID: 2064352478}
+    audioClip: {fileID: 0}
+  - name: CashCollectTrigger
+    popupObject: {fileID: 2087173812}
+    audioClip: {fileID: 8300000, guid: f701f4d96b32f4b2c86164dd58d6bee9, type: 3}
+  - name: NearMiss_1
+    popupObject: {fileID: 1809999296}
+    audioClip: {fileID: 8300000, guid: 995a03cacfea04b96bd51d159d53eeb5, type: 3}
+  - name: NearMiss_2
+    popupObject: {fileID: 660995702}
+    audioClip: {fileID: 8300000, guid: c96279111e7e546dba8400d5b404ee4f, type: 3}
+  - name: MagnetAppearance
+    popupObject: {fileID: 1682265425}
+    audioClip: {fileID: 8300000, guid: 132f0a231a2c64627a539fdd05e127e2, type: 3}
+  - name: SpecialSymbolNoTrigger
+    popupObject: {fileID: 657728273}
+    audioClip: {fileID: 0}
+  - name: TooManySymbolsAndCashCollect
+    popupObject: {fileID: 2102640082}
+    audioClip: {fileID: 8300000, guid: 3112b79089b984a79a85a97a13915af6, type: 3}
+  - name: LinkFeatureTrigger
+    popupObject: {fileID: 101103654}
+    audioClip: {fileID: 8300000, guid: 77be4bdd3299145c69474741c9a63086, type: 3}
+  - name: MegaLinkFeatureTrigger
+    popupObject: {fileID: 544951730}
+    audioClip: {fileID: 8300000, guid: 00ec44e3e19d04dffb97cc35630ce34b, type: 3}
+  chanceGameStart: 100
+  chanceFreeSpinHit: 90
+  chanceMiniJackpot: 80
+  chanceFreeSpinEndNoWin: 100
+  chanceFreeSpinEndSmallWin: 90
+  chanceFreeSpinEndAverageWin: 90
+  chanceFreeSpinEndHugeWin: 95
+  chanceDiamondSlotEnd: 95
+  chanceCashCollectTrigger: 90
+  chanceNearMiss: 90
+  chanceMagnetAppearance: 90
+  chanceSpecialSymbolNoTrigger: 70.3
+  chanceTooManySymbolsAndCashCollect: 100
+  chanceLinkFeatureTrigger: 90
+  chanceMegaLinkFeatureTrigger: 90
+  minDuration: 3
+  maxDuration: 8
+  smallWinMaxMultiplier: 5
+  averageWinMaxMultiplier: 25
+--- !u!4 &1276266797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276266795}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.90692, y: 2.09941, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1279129381
 GameObject:
   m_ObjectHideFlags: 0
@@ -61104,3 +61354,4 @@ SceneRoots:
   - {fileID: 1134263424}
   - {fileID: 1766092623}
   - {fileID: 1125026306}
+  - {fileID: 1276266797}

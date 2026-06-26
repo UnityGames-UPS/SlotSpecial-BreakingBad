@@ -537,6 +537,11 @@ public class BonusManager : MonoBehaviour
       yield return new WaitUntil(() => stashPopupClosed);
     }
 
+    if (DialoguePopupManager.Instance != null)
+    {
+      yield return DialoguePopupManager.Instance.PlayDiamondSlotEndDialogue(winAmt, slotManager.TotalBet);
+    }
+
     bool popupClosed = false;
     uiManager.OpenFeatureWinPopup(winAmt, () => {
         popupClosed = true;
