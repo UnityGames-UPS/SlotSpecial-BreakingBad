@@ -616,10 +616,12 @@ public class UIManager : MonoBehaviour
       if (slotStartButton && !slotManager.IsAutoSpin) slotStartButton.interactable = toggle;
       if (autoSpinButton && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin) autoSpinButton.gameObject.SetActive(toggle);
       if (autoSpinButton && !slotManager.IsAutoSpin) autoSpinButton.interactable = toggle;
-      if (totalBetPlusButton && !slotManager.IsAutoSpin) totalBetPlusButton.interactable = toggle;
-      if (totalBetMinusButton && !slotManager.IsAutoSpin) totalBetMinusButton.interactable = toggle;
-      if (infoButton && !slotManager.IsAutoSpin) infoButton.interactable = toggle;
-      if (gameExitButton && !slotManager.IsAutoSpin) gameExitButton.interactable = toggle;
+      if (totalBetPlusButton) totalBetPlusButton.interactable = (slotManager != null && slotManager.IsAutoSpin) ? false : toggle;
+      if (totalBetMinusButton) totalBetMinusButton.interactable = (slotManager != null && slotManager.IsAutoSpin) ? false : toggle;
+      
+      bool isInfoExitInteractable = slotManager == null || (!slotManager.IsBonus && !slotManager.IsFeatureTransitioning);
+      if (infoButton) infoButton.interactable = isInfoExitInteractable;
+      if (gameExitButton) gameExitButton.interactable = isInfoExitInteractable;
   }
 
   public void SetAutoSpinActive(bool active)
@@ -1220,11 +1222,18 @@ public class UIManager : MonoBehaviour
         return;
     }
 
+    // Set interactability for info and close/exit buttons: they should only be disabled if bonus or feature transition is active, or if popup is active (handled above)
+    bool isInfoExitInteractable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
+    if (infoButton) infoButton.interactable = isInfoExitInteractable;
+    if (gameExitButton) gameExitButton.interactable = isInfoExitInteractable;
+
+    // Bet buttons should be disabled while autoplay is on, or when spinning/features are active.
+    bool isBetInteractable = !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
+    if (totalBetPlusButton) totalBetPlusButton.interactable = isBetInteractable;
+    if (totalBetMinusButton) totalBetMinusButton.interactable = isBetInteractable;
+
     if (slotManager.IsSpinning)
     {
-      if (infoButton) infoButton.interactable = false;
-      if (gameExitButton) gameExitButton.interactable = false;
-
       if (slotManager.IsAutoSpin)
       {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
@@ -1262,8 +1271,6 @@ public class UIManager : MonoBehaviour
     {
       if (slotManager.IsAutoSpin)
       {
-        if (infoButton) infoButton.interactable = false;
-        if (gameExitButton) gameExitButton.interactable = false;
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
@@ -1271,8 +1278,6 @@ public class UIManager : MonoBehaviour
       }
       else if (slotManager.IsFreeSpin)
       {
-        if (infoButton) infoButton.interactable = false;
-        if (gameExitButton) gameExitButton.interactable = false;
         if (slotStartButton) {
           slotStartButton.gameObject.SetActive(true);
           slotStartButton.interactable = false;
@@ -1288,8 +1293,6 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-        if (infoButton) infoButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
-        if (gameExitButton) gameExitButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
         if (slotStartButton) {
           slotStartButton.gameObject.SetActive(true);
           // Disable the normal spin button if the feature is active or transition/trigger is happening
