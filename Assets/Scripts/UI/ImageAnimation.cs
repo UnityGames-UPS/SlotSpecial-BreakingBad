@@ -36,14 +36,24 @@ public class ImageAnimation : MonoBehaviour
     // ─── State ──────────────────────────────────────────────────────
     [HideInInspector] public ImageState currentAnimationState;
 
+    [Header("Loop Range Settings")]
+    public bool useLoopRange = false;
+    public int loopRangeStart = 0;
+    public int loopRangeEnd = 0;
+    public bool exitLoopRange = false;
+    public bool stopAtLastFrameOnEnd = false;
+
     /// <summary>True when this slot has win-animation sprites loaded (set by SlotBehaviour).</summary>
     internal bool isAnim = false;
 
     /// <summary>Fires every time a full loop completes. Passes the running loop count.</summary>
     public System.Action<int> onLoopComplete;
 
+    /// <summary>Fires every time the frame index changes. Passes the current frame index.</summary>
+    public System.Action<int> onFrameChanged;
+
     // ─── Private runtime ────────────────────────────────────────────
-    private int indexOfTexture;
+    internal int indexOfTexture;
     private float delayBetweenAnimation;
     private int currentLoopCount;
 
@@ -83,10 +93,30 @@ public class ImageAnimation : MonoBehaviour
     private void AnimationProcess()
     {
         SetTextureOfIndex();
+        onFrameChanged?.Invoke(indexOfTexture);
         indexOfTexture++;
+
+        if (useLoopRange && !exitLoopRange)
+        {
+            if (indexOfTexture > loopRangeEnd)
+            {
+                indexOfTexture = loopRangeStart;
+                currentLoopCount++;
+                onLoopComplete?.Invoke(currentLoopCount);
+                Invoke(nameof(AnimationProcess), delayBetweenAnimation + delayBetweenLoop);
+                return;
+            }
+        }
 
         if (indexOfTexture >= textureArray.Count)
         {
+            if (stopAtLastFrameOnEnd)
+            {
+                indexOfTexture = textureArray.Count - 1;
+                currentAnimationState = ImageState.NONE;
+                return;
+            }
+
             indexOfTexture = 0;
             currentLoopCount++;
             onLoopComplete?.Invoke(currentLoopCount);
@@ -119,6 +149,36 @@ public class ImageAnimation : MonoBehaviour
         if (currentAnimationState == ImageState.NONE)
         {
             RevertToInitialState();
+            if (useDynamicFramerate && textureArray != null && textureArray.Count > 0)
+            {
+                AnimationSpeed = (float)textureArray.Count / dynamicLoopDuration;
+                delayBetweenAnimation = 1f / AnimationSpeed;
+            }
+            else
+            {
+                delayBetweenAnimation = IdealFrameRate * textureArray.Count / AnimationSpeed;
+            }
+            currentAnimationState = ImageState.PLAYING;
+            Invoke(nameof(AnimationProcess), delayBetweenAnimation);
+        }
+    }
+
+    /// <summary>
+    /// Start (or restart) the animation from a specific frame index.
+    /// </summary>
+    public void StartAnimationFromFrame(int frameIndex)
+    {
+        if (textureArray == null || textureArray.Count == 0) return;
+
+        CancelInvoke(nameof(AnimationProcess));
+        indexOfTexture = frameIndex % textureArray.Count;
+        currentLoopCount = 0;
+
+        currentAnimationState = ImageState.NONE;
+
+        if (currentAnimationState == ImageState.NONE)
+        {
+            SetTextureOfIndex();
             if (useDynamicFramerate && textureArray != null && textureArray.Count > 0)
             {
                 AnimationSpeed = (float)textureArray.Count / dynamicLoopDuration;

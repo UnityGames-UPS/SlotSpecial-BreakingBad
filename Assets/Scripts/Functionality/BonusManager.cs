@@ -545,7 +545,7 @@ public class BonusManager : MonoBehaviour
 
     if (winAmt > 0)
     {
-      uiManager.WinningsTextAnimation();
+      uiManager.WinningsTextAnimation(null, winAmt);
     }
 
     bool freeSpinTriggered = SocketManager.resultData.payload.isFreeSpinTriggered;

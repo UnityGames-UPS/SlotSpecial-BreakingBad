@@ -577,6 +577,7 @@ public class SlotManager : MonoBehaviour
   {
     Initialize(SocketManager.initialData);
     shuffleInitialMatrix();
+    UpdateCashCollectIndicatorsForAllColumns();
     CompareBalance();
     uiManager.InitialiseUIData(SocketManager.initUIData.paylines);
     uiManager.SetJackpotText(SocketManager.initialData.features.jackpot);
@@ -1482,6 +1483,16 @@ public class SlotManager : MonoBehaviour
         });
         yield return new WaitUntil(() => winPopupClosed);
 
+        double enableThreshold = (uiManager != null && uiManager.winTypePopup != null) ? uiManager.winTypePopup.EnableWinThreshold : 3.0;
+        if (totalFeatureWin >= LineBet * enableThreshold)
+        {
+            bool winTypePopupClosed = false;
+            uiManager.WinningsTextAnimation(() => {
+                winTypePopupClosed = true;
+            }, totalFeatureWin);
+            yield return new WaitUntil(() => winTypePopupClosed);
+        }
+
         IsFreeSpin = false;
         uiManager.CloseFreeSpinsUI();
         if (stickySymbolManager != null)
@@ -1904,6 +1915,7 @@ public class SlotManager : MonoBehaviour
         ReorderImages(col);
       }
     }
+    UpdateCashCollectIndicators(col);
   }
 
   private void PopulateResultMatrix()
@@ -1911,6 +1923,53 @@ public class SlotManager : MonoBehaviour
     for (int col = 0; col < numberOfSlots; col++)
     {
       PopulateResultMatrixForColumn(col);
+    }
+  }
+
+  private void UpdateCashCollectIndicators(int col)
+  {
+    if (col < 0 || col >= images.Count) return;
+    var imgs = images[col].slotImages;
+    if (imgs == null) return;
+
+    // There are 3 visible rows, corresponding to indices 2, 3, 4 of images[col].slotImages
+    for (int row = 0; row < 3; row++)
+    {
+      int fullIndex = 2 + row;
+      if (fullIndex >= imgs.Count) continue;
+      if (imgs[fullIndex] == null) continue;
+
+      SlotSymbolView view = imgs[fullIndex].GetComponent<SlotSymbolView>();
+      if (view == null) continue;
+
+      bool isAbove = false;
+      if (fullIndex - 1 >= 0 && imgs[fullIndex - 1] != null)
+      {
+        isAbove = (imgs[fullIndex - 1].sprite == SlotSymbols[14]);
+      }
+
+      bool isBelow = false;
+      if (fullIndex + 1 < imgs.Count && imgs[fullIndex + 1] != null)
+      {
+        isBelow = (imgs[fullIndex + 1].sprite == SlotSymbols[14]);
+      }
+
+      if (view.cashCollectAboveObject != null)
+      {
+        view.cashCollectAboveObject.SetActive(isAbove);
+      }
+      if (view.cashCollectBelowObject != null)
+      {
+        view.cashCollectBelowObject.SetActive(isBelow);
+      }
+    }
+  }
+
+  private void UpdateCashCollectIndicatorsForAllColumns()
+  {
+    for (int col = 0; col < images.Count; col++)
+    {
+      UpdateCashCollectIndicators(col);
     }
   }
 
@@ -2632,6 +2691,7 @@ public class SlotManager : MonoBehaviour
               }
           }
       }
+      UpdateCashCollectIndicators(col);
   }
 
   // Copies the visual state (special layer, hat, value texts) from one view to another
@@ -2748,6 +2808,26 @@ public class SlotManager : MonoBehaviour
     else if (dst.jackpotStripParent != null)
     {
       dst.jackpotStripParent.gameObject.SetActive(false);
+    }
+
+    // Cash Collect Above
+    if (dst.cashCollectAboveObject != null && src.cashCollectAboveObject != null)
+    {
+      dst.cashCollectAboveObject.SetActive(src.cashCollectAboveObject.activeSelf);
+    }
+    else if (dst.cashCollectAboveObject != null)
+    {
+      dst.cashCollectAboveObject.SetActive(false);
+    }
+
+    // Cash Collect Below
+    if (dst.cashCollectBelowObject != null && src.cashCollectBelowObject != null)
+    {
+      dst.cashCollectBelowObject.SetActive(src.cashCollectBelowObject.activeSelf);
+    }
+    else if (dst.cashCollectBelowObject != null)
+    {
+      dst.cashCollectBelowObject.SetActive(false);
     }
 
     // Canvas group alpha

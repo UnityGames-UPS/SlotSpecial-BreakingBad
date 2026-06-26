@@ -22,6 +22,10 @@ public class SlotSymbolView : MonoBehaviour
     [SerializeField] public Image countImage;
     [SerializeField] public Sprite[] countSprites;
 
+    [Header("Cash Collect Indicators")]
+    [SerializeField] public GameObject cashCollectAboveObject;
+    [SerializeField] public GameObject cashCollectBelowObject;
+
     public void SetCountValue(int count)
     {
         if (countImage == null) return;
@@ -153,6 +157,14 @@ public class SlotSymbolView : MonoBehaviour
         if (countImage != null)
         {
             countImage.gameObject.SetActive(false);
+        }
+        if (cashCollectAboveObject != null)
+        {
+            cashCollectAboveObject.SetActive(false);
+        }
+        if (cashCollectBelowObject != null)
+        {
+            cashCollectBelowObject.SetActive(false);
         }
     }
 

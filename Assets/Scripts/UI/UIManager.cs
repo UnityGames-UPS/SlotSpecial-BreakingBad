@@ -57,6 +57,9 @@ public class UIManager : MonoBehaviour
   [SerializeField] private GameObject walterStashPopup;
   [SerializeField] private TMP_Text walterStashAmountText;
 
+  [Header("Win Type Popup UI")]
+  [SerializeField] internal WinTypePopup winTypePopup;
+
   [Header("Feature Controls")]
   [SerializeField] private Button featureSpinButton;
 
@@ -201,6 +204,7 @@ public class UIManager : MonoBehaviour
         });
     }
   }
+
 
 
   private void InitializeHUD()
@@ -492,11 +496,44 @@ public class UIManager : MonoBehaviour
           featureStartButton.gameObject.SetActive(false);
       }
 
-      walterStashPopup.SetActive(true);
       if (walterStashAmountText != null)
       {
-          walterStashAmountText.text = FormatStaticValue(amount);
+          walterStashAmountText.gameObject.SetActive(false);
+          walterStashAmountText.text = FormatStaticValue(0);
+          DOTween.Kill(walterStashAmountText);
       }
+
+      ImageAnimation imgAnim = walterStashPopup.GetComponentInChildren<ImageAnimation>(true);
+      if (imgAnim != null)
+      {
+          imgAnim.onFrameChanged = (frameIndex) =>
+          {
+              if (frameIndex == 34)
+              {
+                  if (walterStashAmountText != null)
+                  {
+                      walterStashAmountText.gameObject.SetActive(true);
+                      double startVal = 0;
+                      string animFormat = GetAnimationFormat(amount);
+                      DOTween.To(() => startVal, (val) =>
+                      {
+                          if (walterStashAmountText != null)
+                          {
+                              walterStashAmountText.text = amount <= 0 ? "00.00" : val.ToString(animFormat);
+                          }
+                      }, amount, 0.75f).SetEase(Ease.Linear).SetTarget(walterStashAmountText).OnComplete(() =>
+                      {
+                          if (walterStashAmountText != null)
+                          {
+                              walterStashAmountText.text = FormatStaticValue(amount);
+                          }
+                      });
+                  }
+              }
+          };
+      }
+
+      walterStashPopup.SetActive(true);
 
       StartCoroutine(CloseWalterStashAfterDelay(2f, onComplete));
   }
@@ -506,6 +543,15 @@ public class UIManager : MonoBehaviour
       yield return new WaitForSeconds(delay);
       if (walterStashPopup != null)
       {
+          ImageAnimation imgAnim = walterStashPopup.GetComponentInChildren<ImageAnimation>(true);
+          if (imgAnim != null)
+          {
+              imgAnim.onFrameChanged = null;
+          }
+          if (walterStashAmountText != null)
+          {
+              DOTween.Kill(walterStashAmountText);
+          }
           walterStashPopup.SetActive(false);
       }
       onComplete?.Invoke();
@@ -994,9 +1040,48 @@ public class UIManager : MonoBehaviour
     UpdateButtonsState();
   }
 
-  internal void WinningsTextAnimation(Action onComplete = null)
+  internal void WinningsTextAnimation(Action onComplete = null, double? customWinAmt = null)
   {
-    double winAmt = slotManager.WinAmount;
+    double winAmt = customWinAmt ?? slotManager.WinAmount;
+    double threshold = winTypePopup != null ? winTypePopup.EnableWinThreshold : 3.0;
+    if (winAmt >= slotManager.LineBet * threshold && winTypePopup != null)
+    {
+      bool isAutoMode = slotManager.IsFreeSpin || slotManager.IsAutoSpin;
+      winTypePopup.StartPopup(winAmt, slotManager.LineBet, isAutoMode, () =>
+      {
+          if (totalWinText) totalWinText.text = FormatStaticValue(winAmt);
+
+          if (slotManager.IsFreeSpin)
+          {
+              double targetFeatureWin = 0;
+              if (socketManager != null && socketManager.resultData != null && socketManager.resultData.features != null)
+              {
+                  targetFeatureWin = socketManager.resultData.features.featureWin;
+              }
+              else
+              {
+                  if (!customWinAmt.HasValue)
+                  {
+                      accumulatedFreeSpinWin += winAmt;
+                  }
+                  targetFeatureWin = accumulatedFreeSpinWin;
+              }
+              accumulatedFreeSpinWin = targetFeatureWin;
+              if (featureWinText) featureWinText.text = FormatSpriteText(FormatStaticValue(targetFeatureWin));
+          }
+
+          double Balance = 0;
+          if (double.TryParse(FormatStaticValue(socketManager.playerdata.balance), out double bal))
+          {
+              Balance = bal;
+          }
+          if (balanceText) balanceText.text = FormatStaticValue(Balance);
+
+          onComplete?.Invoke();
+      });
+      return;
+    }
+
     if (!double.TryParse(balanceText.text, out double currentBal))
     {
       Debug.Log("Error balance conversion: " + balanceText.text);
@@ -1040,7 +1125,10 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-          accumulatedFreeSpinWin += winAmt;
+          if (!customWinAmt.HasValue)
+          {
+              accumulatedFreeSpinWin += winAmt;
+          }
           targetFeatureWin = accumulatedFreeSpinWin;
       }
       accumulatedFreeSpinWin = targetFeatureWin;
@@ -1455,7 +1543,14 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-          accumulatedFreeSpinWin = 0f;
+          if (fromBonusSlot && socketManager != null && socketManager.resultData != null && socketManager.resultData.features != null)
+          {
+              accumulatedFreeSpinWin = socketManager.resultData.features.featureWin;
+          }
+          else
+          {
+              accumulatedFreeSpinWin = 0f;
+          }
 
           if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(0f, 1f);
           if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.DOFade(1f, 1f);
@@ -1744,11 +1839,18 @@ public class UIManager : MonoBehaviour
 
           yield return new WaitUntil(() => popupClicked);
 
-           if (featureWinText != null)
-           {
-               featureWinText.text = FormatSpriteText("00.00");
-               featureWinText.gameObject.SetActive(true);
-           }
+            if (featureWinText != null)
+            {
+                if (fromBonusSlot && accumulatedFreeSpinWin > 0)
+                {
+                    featureWinText.text = FormatSpriteText(FormatStaticValue(accumulatedFreeSpinWin));
+                }
+                else
+                {
+                    featureWinText.text = FormatSpriteText("00.00");
+                }
+                featureWinText.gameObject.SetActive(true);
+            }
       }
   }
 }
