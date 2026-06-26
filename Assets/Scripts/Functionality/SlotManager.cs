@@ -214,6 +214,7 @@ public class SlotManager : MonoBehaviour
   [SerializeField] [Range(0f, 1f)] private float magnetTriggerChance = 0.5f;
   [SerializeField] [Range(0f, 1f)] private float nearMissChance = 0.3f;
   [SerializeField] private bool testFakeScenarios = false;
+  [SerializeField] private bool testCol0CashCollect = false;
   private static int lastTestScenario = 0;
 
   // Runtime State for Magnet Scenario
@@ -227,6 +228,15 @@ public class SlotManager : MonoBehaviour
   private int nearMissCol = -1;
   private int nearMissType = -1; // 0 for top near miss, 1 for bottom near miss
   [SerializeField] private float nearMissExtraSpinDuration = 1.5f; // extra spin duration for anticipation
+  [SerializeField] private float col0CCExtraSpinDuration = 3.5f; // extra spin duration for columns 1-4 when Cash Collect lands in column 0
+  [SerializeField] private float col0CCSpeedMultiplier = 1.5f; // speed multiplier for columns 1-4 when Column 0 has Cash Collect
+  [SerializeField] private float col0CCSpeedUpDuration = 1.0f; // Phase 1: duration to smoothly ramp up the spin speed
+  [SerializeField] private float col0CCFastSpinDuration = 1.5f; // Phase 2: duration to spin at fast speed
+  [SerializeField] private float col0CCSlowDownDuration = 1.0f; // Phase 3: duration to smoothly ramp down the spin speed
+  [SerializeField] [Range(0f, 1f)] private float col0CCTriggerChance = 0.5f; // probability (0-1) that Column 0 Cash Collect triggers anticipation transition
+  private bool col0HasCC = false;
+  private bool col0Stopped = false;
+  private float col0StopTime = 0f;
 
   int tweenHeight = 0;  //calculate the height at which tweening is done
   private int numberOfSlots = 5;          //number of columns
@@ -318,6 +328,21 @@ public class SlotManager : MonoBehaviour
               {
                   view.SetBackTintActive(active, alpha);
               }
+          }
+      }
+  }
+
+  public void SetColumnBackTintActive(int col, bool active, float alpha = 0.85f)
+  {
+      if (col < 0 || col >= images.Count) return;
+      var imgs = images[col].slotImages;
+      if (imgs == null) return;
+      for (int i = 0; i < imgs.Count; i++)
+      {
+          SlotSymbolView view = imgs[i].GetComponent<SlotSymbolView>();
+          if (view != null)
+          {
+              view.SetBackTintActive(active, alpha);
           }
       }
   }
@@ -830,7 +855,46 @@ public class SlotManager : MonoBehaviour
     nearMissCol = -1;
     nearMissType = -1;
 
+    col0HasCC = false;
+
     if (SocketManager.resultData == null || SocketManager.resultData.matrix == null) return;
+
+    var matrix = SocketManager.resultData.matrix;
+    var payload = SocketManager.resultData.payload;
+
+    // Check if Column 0 has a Cash Collect symbol (14)
+    bool hasCCInCol0 = false;
+    for (int r = 0; r < matrix.Count; r++)
+    {
+      if (matrix[r] != null && matrix[r].Count > 0)
+      {
+        if (matrix[r][0] == "14")
+        {
+          hasCCInCol0 = true;
+          break;
+        }
+      }
+    }
+
+    if (hasCCInCol0)
+    {
+      float roll = UnityEngine.Random.value;
+      if (roll < col0CCTriggerChance)
+      {
+        col0HasCC = true;
+        Debug.Log($"[FakeScenario] Column 0 Cash Collect landed! Triggering transition (roll: {roll:F2} < chance: {col0CCTriggerChance:F2})");
+      }
+      else
+      {
+        Debug.Log($"[FakeScenario] Column 0 Cash Collect landed, but trigger chance failed (roll: {roll:F2} >= chance: {col0CCTriggerChance:F2})");
+      }
+    }
+
+    if (testCol0CashCollect)
+    {
+      col0HasCC = true;
+      Debug.Log("[FakeScenario TEST] Column 0 Cash Collect FORCED via testCol0CashCollect!");
+    }
 
     if (testFakeScenarios)
     {
@@ -850,9 +914,6 @@ public class SlotManager : MonoBehaviour
       Debug.Log($"[FakeScenario TEST] Cash Collect Near-Miss FORCED! Reel {nearMissCol}, Type {(nearMissType == 0 ? "Top" : "Bottom")}");
       return;
     }
-
-    var matrix = SocketManager.resultData.matrix;
-    var payload = SocketManager.resultData.payload;
 
     bool isCCTriggered = payload != null && payload.cashCollectResult != null && payload.cashCollectResult.triggered;
     bool isLinkTriggered = payload != null && payload.isLinkTriggered;
@@ -1091,6 +1152,10 @@ public class SlotManager : MonoBehaviour
         currentDelay += currentStagger;
       }
       float finalDelay = currentDelay;
+      if (col0HasCC && i > 0)
+      {
+        finalDelay += col0CCExtraSpinDuration;
+      }
       if (isNearMissActive && i == nearMissCol)
       {
         finalDelay += nearMissExtraSpinDuration;
@@ -1114,6 +1179,10 @@ public class SlotManager : MonoBehaviour
         ? (currentDelay + 5f * cycleDuration + quickStopDuration)
         : (currentDelay + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
 
+    if (col0HasCC)
+    {
+      longestStopTime += col0CCExtraSpinDuration;
+    }
     if (isNearMissActive)
     {
       longestStopTime += nearMissExtraSpinDuration;
@@ -1122,6 +1191,14 @@ public class SlotManager : MonoBehaviour
     }
 
     yield return new WaitForSeconds(longestStopTime + 0.05f);
+
+    if (col0HasCC)
+    {
+      for (int c = 1; c < numberOfSlots; c++)
+      {
+        SetColumnBackTintActive(c, false);
+      }
+    }
 
     if (isMagnetScenarioActive)
     {
@@ -1930,6 +2007,14 @@ public class SlotManager : MonoBehaviour
     stopStatus[col] = -1;
     float restY = initialYPositions[col];
 
+    SetColumnBackTintActive(col, false);
+
+    if (col == 0)
+    {
+      col0Stopped = false;
+      col0StopTime = 0f;
+    }
+
     while (alltweens.Count <= col) alltweens.Add(null);
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
@@ -1967,6 +2052,30 @@ public class SlotManager : MonoBehaviour
 
     // Calculate duration from speed: time = distance / speed
     float speed = IsTurboOn ? 3500f : spinSpeed;
+    if (col0HasCC && col0Stopped && col > 0)
+    {
+      float t = Time.time - col0StopTime;
+      float currentMultiplier = 1.0f;
+      if (t < col0CCSpeedUpDuration)
+      {
+        float lerpPct = Mathf.Clamp01(t / col0CCSpeedUpDuration);
+        currentMultiplier = Mathf.Lerp(1.0f, col0CCSpeedMultiplier, lerpPct);
+      }
+      else if (t < col0CCSpeedUpDuration + col0CCFastSpinDuration)
+      {
+        currentMultiplier = col0CCSpeedMultiplier;
+      }
+      else if (t < col0CCSpeedUpDuration + col0CCFastSpinDuration + col0CCSlowDownDuration)
+      {
+        float lerpPct = Mathf.Clamp01((t - (col0CCSpeedUpDuration + col0CCFastSpinDuration)) / col0CCSlowDownDuration);
+        currentMultiplier = Mathf.Lerp(col0CCSpeedMultiplier, 1.0f, lerpPct);
+      }
+      else
+      {
+        currentMultiplier = 1.0f;
+      }
+      speed *= currentMultiplier;
+    }
     float cycleDuration = symbolHeight / speed;
     Ease cycleEase = Ease.Linear;
 
@@ -2488,6 +2597,23 @@ public class SlotManager : MonoBehaviour
       {
           // Delay all landing animations on this column until the magnet nudge is complete!
           return;
+      }
+
+      if (col == 0)
+      {
+          col0Stopped = true;
+          col0StopTime = Time.time;
+      }
+
+      if (col0HasCC)
+      {
+          if (col == 0)
+          {
+              for (int c = 1; c < numberOfSlots; c++)
+              {
+                  SetColumnBackTintActive(c, true);
+              }
+          }
       }
 
       System.Func<string, bool> isSpecial = id =>

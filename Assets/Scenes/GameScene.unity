@@ -42220,7 +42220,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3479, y: 1600}
+  m_SizeDelta: {x: 4362, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1532818197
 CanvasGroup:
@@ -51418,7 +51418,16 @@ MonoBehaviour:
   magnetNudgeDuration: 2
   magnetAnimDuration: 2.5
   magnetTriggerChance: 0.5
-  nearMissChance: 0.133
+  nearMissChance: 0.4
+  testFakeScenarios: 0
+  testCol0CashCollect: 0
+  nearMissExtraSpinDuration: 1.5
+  col0CCExtraSpinDuration: 2.5
+  col0CCSpeedMultiplier: 1.5
+  col0CCSpeedUpDuration: 0.8
+  col0CCFastSpinDuration: 1.5
+  col0CCSlowDownDuration: 1
+  col0CCTriggerChance: 0.4
   IconSizeFactor: 252
   stopCooldownDuration: 0.4
   specialSymbolStaggerIncrease: 0.75
@@ -52451,7 +52460,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3479, y: 1600}
+  m_SizeDelta: {x: 4362, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1890224411
 CanvasGroup:
