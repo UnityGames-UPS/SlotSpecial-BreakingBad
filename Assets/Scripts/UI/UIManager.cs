@@ -117,7 +117,7 @@ public class UIManager : MonoBehaviour
   private void Start()
   {
 
-    if (totalWinText != null) totalWinText.text = "0.000";
+    if (totalWinText != null) totalWinText.text = "00.00";
     if (featureWinPanel != null) featureWinPanel.SetActive(false);
     if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
     if (featurePopup != null) featurePopup.SetActive(false);
@@ -309,7 +309,7 @@ public class UIManager : MonoBehaviour
       if (turboButton != null) turboButton.gameObject.SetActive(false);
       if (autoplayCounterObject != null) autoplayCounterObject.SetActive(true);
 
-      if (featureWinText != null) featureWinText.text = FormatSpriteText(initialWin.ToString("F3"));
+      if (featureWinText != null) featureWinText.text = FormatSpriteText(FormatStaticValue(initialWin));
       SetBonusSpinCounter(totalSpins);
       UpdateFeatureButtonsState(false, totalSpins);
   }
@@ -333,7 +333,7 @@ public class UIManager : MonoBehaviour
   public void SetFeatureWinText(double value)
   {
       if (featureWinText != null)
-          featureWinText.text = FormatSpriteText(value.ToString("F3"));
+          featureWinText.text = FormatSpriteText(FormatStaticValue(value));
   }
 
   private IEnumerator AutoClickFeatureStart(float delay)
@@ -443,7 +443,7 @@ public class UIManager : MonoBehaviour
       }
       if (featureWinAmountText != null)
       {
-          featureWinAmountText.text = winAmount.ToString("F3");
+          featureWinAmountText.text = FormatStaticValue(winAmount);
       }
       featureStartButton.onClick.RemoveAllListeners();
       featureStartButton.onClick.AddListener(() => {
@@ -495,7 +495,7 @@ public class UIManager : MonoBehaviour
       walterStashPopup.SetActive(true);
       if (walterStashAmountText != null)
       {
-          walterStashAmountText.text = amount.ToString("F2");
+          walterStashAmountText.text = FormatStaticValue(amount);
       }
 
       StartCoroutine(CloseWalterStashAfterDelay(2f, onComplete));
@@ -563,7 +563,7 @@ public class UIManager : MonoBehaviour
 
   private void UpdateBalanceText(double val)
   {
-      if (balanceText) balanceText.text = val.ToString("f3");
+      if (balanceText) balanceText.text = FormatStaticValue(val);
   }
 
 
@@ -742,7 +742,7 @@ public class UIManager : MonoBehaviour
 
           if (coinWinDisplayText != null)
           {
-              coinWinDisplayText.text = "0.000";
+              coinWinDisplayText.text = "00.00";
           }
 
           yield return new WaitForSeconds(0.5f);
@@ -824,7 +824,7 @@ public class UIManager : MonoBehaviour
                           TMP_Text trText = trInstance.GetComponentInChildren<TMP_Text>();
                           if (trText != null)
                           {
-                              trText.text = coinAmt.ToString("F3");
+                              trText.text = FormatStaticValue(coinAmt);
                           }
 
                           // Fly animation using DOTween to the coinWinDisplayPanel position
@@ -844,12 +844,15 @@ public class UIManager : MonoBehaviour
                                   double.TryParse(coinWinDisplayText.text, out currentVal);
                               }
                               
+                              string coinFormat = GetAnimationFormat(finalTarget);
                               DOTween.To(() => currentVal, (val) =>
                               {
                                   if (coinWinDisplayText != null)
-                                      coinWinDisplayText.text = val.ToString("F3");
+                                      coinWinDisplayText.text = finalTarget <= 0 ? "00.00" : val.ToString(coinFormat);
                               }, finalTarget, 0.3f).OnComplete(() =>
                               {
+                                  if (coinWinDisplayText != null)
+                                      coinWinDisplayText.text = FormatStaticValue(finalTarget);
                                   trailCompleted = true;
                               });
                           });
@@ -864,7 +867,7 @@ public class UIManager : MonoBehaviour
                           accumulatedVal += coin.coinValue * slotManager.TotalBet;
                           double endVal = accumulatedVal;
                           if (coinWinDisplayText != null)
-                              coinWinDisplayText.text = endVal.ToString("F3");
+                              coinWinDisplayText.text = FormatStaticValue(endVal);
                       }
 
                       // Wait between trails
@@ -942,7 +945,7 @@ public class UIManager : MonoBehaviour
       {
         double multiplier = currentJackpotData.payout[i];
         double jackpotValue = multiplier * totalBet;
-        JackpotText[i].text = jackpotValue.ToString("F2");
+        JackpotText[i].text = FormatStaticValue(jackpotValue);
       }
     }
   }
@@ -996,7 +999,7 @@ public class UIManager : MonoBehaviour
     {
       Debug.Log("Error balance conversion: " + balanceText.text);
     }
-    if (!double.TryParse(socketManager.playerdata.balance.ToString("f3"), out double Balance))
+    if (!double.TryParse(FormatStaticValue(socketManager.playerdata.balance), out double Balance))
     {
       Debug.Log("Error: " + socketManager.playerdata.balance);
     }
@@ -1017,10 +1020,14 @@ public class UIManager : MonoBehaviour
         }
     };
 
+    string winFormat = GetAnimationFormat(winAmt);
     DOTween.To(() => currentWin, (val) => currentWin = val, winAmt, 0.8f).OnUpdate(() =>
     {
-      if (totalWinText) totalWinText.text = currentWin.ToString("f3");
-    }).OnComplete(() => checkComplete());
+      if (totalWinText) totalWinText.text = winAmt <= 0 ? "00.00" : currentWin.ToString(winFormat);
+    }).OnComplete(() => {
+      if (totalWinText) totalWinText.text = FormatStaticValue(winAmt);
+      checkComplete();
+    });
 
     if (slotManager.IsFreeSpin)
     {
@@ -1037,30 +1044,34 @@ public class UIManager : MonoBehaviour
       accumulatedFreeSpinWin = targetFeatureWin;
       double tempWin = targetFeatureWin - winAmt;
       if (tempWin < 0) tempWin = 0;
+      string featFormat = GetAnimationFormat(targetFeatureWin);
       DOTween.To(() => tempWin, (val) => tempWin = val, targetFeatureWin, 0.8f).OnUpdate(() =>
       {
-         if (featureWinText) featureWinText.text = FormatSpriteText(tempWin.ToString("F3"));
-      }).OnComplete(() => checkComplete());
+         if (featureWinText) featureWinText.text = FormatSpriteText(targetFeatureWin <= 0 ? "00.00" : tempWin.ToString(featFormat));
+      }).OnComplete(() => {
+         if (featureWinText) featureWinText.text = FormatSpriteText(FormatStaticValue(targetFeatureWin));
+         checkComplete();
+      });
     }
 
     BalanceTween?.Kill();
+    string balFormat = GetAnimationFormat(Balance);
     BalanceTween = DOTween.To(() => currentBal, (val) => currentBal = val, Balance, 0.8f).OnUpdate(() =>
     {
-      if (balanceText) balanceText.text = currentBal.ToString("f3");
-    }).OnComplete(() => checkComplete());
+      if (balanceText) balanceText.text = Balance <= 0 ? "00.00" : currentBal.ToString(balFormat);
+    }).OnComplete(() => {
+      if (balanceText) balanceText.text = FormatStaticValue(Balance);
+      checkComplete();
+    });
   }
 
   internal void DeductBalanceUI()
   {
+    BalanceTween?.Kill();
     double bet = slotManager.TotalBet;
     double balance = slotManager.Balance;
-    double initAmount = balance;
     balance -= bet;
-
-    BalanceTween = DOTween.To(() => initAmount, (val) => initAmount = val, balance, 0.8f).OnUpdate(() =>
-    {
-      if (balanceText) balanceText.text = initAmount.ToString("f3");
-    });
+    if (balanceText) balanceText.text = FormatStaticValue(balance);
   }
   
   public void SwitchTopUI(bool trigger)
@@ -1118,7 +1129,7 @@ public class UIManager : MonoBehaviour
               double val4 = lineBet * mult4;
               double val3 = lineBet * mult3;
 
-              map.textComponent.text = $"5x {val5:F3}\n4x {val4:F3}\n3x {val3:F3}";
+              map.textComponent.text = $"5x {FormatStaticValue(val5)}\n4x {FormatStaticValue(val4)}\n3x {FormatStaticValue(val3)}";
           }
       }
   }
@@ -1322,6 +1333,41 @@ public class UIManager : MonoBehaviour
       }
   }
 
+  public static int GetDecimalPlaces(double value)
+  {
+      double rounded = Math.Round(value, 3);
+      string s = rounded.ToString(System.Globalization.CultureInfo.InvariantCulture);
+      int dotIndex = s.IndexOf('.');
+      if (dotIndex < 0) return 0;
+      return s.Length - dotIndex - 1;
+  }
+
+  public static string FormatStaticValue(double value)
+  {
+      if (value <= 0)
+      {
+          return "00.00";
+      }
+      return value.ToString("0.###");
+  }
+
+  public static string GetAnimationFormat(double resultAmount)
+  {
+      int decimals = GetDecimalPlaces(resultAmount);
+      if (decimals <= 1)
+      {
+          return "0.0";
+      }
+      else if (decimals == 2)
+      {
+          return "0.00";
+      }
+      else
+      {
+          return "0.000";
+      }
+  }
+
   private string FormatSpriteText(string input)
   {
       string result = "";
@@ -1400,7 +1446,7 @@ public class UIManager : MonoBehaviour
           }
           if (featureWinText != null)
           {
-              featureWinText.text = FormatSpriteText(accumulatedFreeSpinWin.ToString("F3"));
+              featureWinText.text = FormatSpriteText(FormatStaticValue(accumulatedFreeSpinWin));
               featureWinText.gameObject.SetActive(true);
           }
       }
@@ -1695,11 +1741,11 @@ public class UIManager : MonoBehaviour
 
           yield return new WaitUntil(() => popupClicked);
 
-          if (featureWinText != null)
-          {
-              featureWinText.text = FormatSpriteText("0.000");
-              featureWinText.gameObject.SetActive(true);
-          }
+           if (featureWinText != null)
+           {
+               featureWinText.text = FormatSpriteText("00.00");
+               featureWinText.gameObject.SetActive(true);
+           }
       }
   }
 }

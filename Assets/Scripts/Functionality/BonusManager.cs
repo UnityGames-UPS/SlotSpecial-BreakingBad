@@ -332,7 +332,7 @@ public class BonusManager : MonoBehaviour
                   prizeSprite = slotManager.JackpotSlotSymbols[coin.prizeTypeIndex ?? 0];
               }
               double jackpotAmount = coin.coinValue * slotManager.TotalBet;
-              yield return slotManager.jackpotManager.PlayJackpotSequence(symbolView, coin.prizeType, coin.prizeTypeIndex ?? 0, jackpotAmount.ToString("F2"), prizeSprite);
+              yield return slotManager.jackpotManager.PlayJackpotSequence(symbolView, coin.prizeType, coin.prizeTypeIndex ?? 0, jackpotAmount.ToString("0.###"), prizeSprite);
           }
         }
       }
@@ -1035,29 +1035,29 @@ public class BonusManager : MonoBehaviour
 
                       string formattedText = "";
                       int symbolId = coin.symbolId;
-                      if (symbolId == 17)
-                      {
-                          string valStr = coin.coinValue.ToString();
-                          formattedText = "<sprite=10>";
-                          foreach (char c in valStr)
-                          {
-                              if (char.IsDigit(c)) formattedText += $"<sprite={c - '0'}>";
-                          }
-                          textHelper.PlayTextAnimation(17, formattedText, 1f, false);
-                      }
-                      else if (symbolId == 13)
-                      {
-                          formattedText = "X" + coin.coinValue.ToString();
-                          textHelper.PlayTextAnimation(13, formattedText, 1f, false);
-                      }
-                      else if (symbolId == 16)
-                      {
-                          textHelper.Clear();
-                      }
-                      else
-                      {
-                          double value = coin.coinValue * slotManager.TotalBet;
-                          string valStr = value.ToString("F3");
+                       if (symbolId == 17)
+                       {
+                           string valStr = coin.coinValue.ToString("0.###");
+                           formattedText = "<sprite=10>";
+                           foreach (char c in valStr)
+                           {
+                               if (char.IsDigit(c)) formattedText += $"<sprite={c - '0'}>";
+                           }
+                           textHelper.PlayTextAnimation(17, formattedText, 1f, false);
+                       }
+                       else if (symbolId == 13)
+                       {
+                           formattedText = "X" + coin.coinValue.ToString("0.###");
+                           textHelper.PlayTextAnimation(13, formattedText, 1f, false);
+                       }
+                       else if (symbolId == 16)
+                       {
+                           textHelper.Clear();
+                       }
+                       else
+                       {
+                           double value = coin.coinValue * slotManager.TotalBet;
+                           string valStr = value.ToString("0.###");
                           formattedText = "";
                           foreach (char c in valStr)
                           {

@@ -213,6 +213,8 @@ public class SlotManager : MonoBehaviour
   [SerializeField] private float magnetAnimDuration = 1.0f;
   [SerializeField] [Range(0f, 1f)] private float magnetTriggerChance = 0.5f;
   [SerializeField] [Range(0f, 1f)] private float nearMissChance = 0.3f;
+  [SerializeField] private bool testFakeScenarios = false;
+  private static int lastTestScenario = 0;
 
   // Runtime State for Magnet Scenario
   private bool isMagnetScenarioActive = false;
@@ -224,6 +226,7 @@ public class SlotManager : MonoBehaviour
   private bool isNearMissActive = false;
   private int nearMissCol = -1;
   private int nearMissType = -1; // 0 for top near miss, 1 for bottom near miss
+  [SerializeField] private float nearMissExtraSpinDuration = 1.5f; // extra spin duration for anticipation
 
   int tweenHeight = 0;  //calculate the height at which tweening is done
   private int numberOfSlots = 5;          //number of columns
@@ -757,7 +760,7 @@ public class SlotManager : MonoBehaviour
     }
 
     uiManager.SetButtonsInteractable(false);
-    uiManager.SetTotalWinText("0.000");
+    uiManager.SetTotalWinText("00.00");
 
     StopGameAnimation(); 
 
@@ -829,6 +832,25 @@ public class SlotManager : MonoBehaviour
 
     if (SocketManager.resultData == null || SocketManager.resultData.matrix == null) return;
 
+    if (testFakeScenarios)
+    {
+      isNearMissActive = true;
+      if (lastTestScenario == 0)
+      {
+        nearMissCol = 4;
+        nearMissType = 0;
+        lastTestScenario = 1;
+      }
+      else
+      {
+        nearMissCol = 4;
+        nearMissType = 1;
+        lastTestScenario = 0;
+      }
+      Debug.Log($"[FakeScenario TEST] Cash Collect Near-Miss FORCED! Reel {nearMissCol}, Type {(nearMissType == 0 ? "Top" : "Bottom")}");
+      return;
+    }
+
     var matrix = SocketManager.resultData.matrix;
     var payload = SocketManager.resultData.payload;
 
@@ -892,13 +914,38 @@ public class SlotManager : MonoBehaviour
 
     if (!hasCCInMatrix)
     {
-      float roll = UnityEngine.Random.value;
-      if (roll < nearMissChance)
+      bool hasSpecialInCol0 = false;
+      for (int r = 0; r < matrix.Count; r++)
       {
-        isNearMissActive = true;
-        nearMissCol = (UnityEngine.Random.value < 0.5f) ? 0 : 4;
-        nearMissType = (UnityEngine.Random.value < 0.5f) ? 0 : 1;
-        Debug.Log($"[FakeScenario] Cash Collect Near-Miss Selected! Reel {nearMissCol}, Type {(nearMissType == 0 ? "Top" : "Bottom")}");
+        if (matrix[r] != null && matrix[r].Count > 0)
+        {
+          string symId = matrix[r][0];
+          if (symId == "11" || symId == "12" || symId == "13" || symId == "14" || symId == "15" || symId == "16" || symId == "17")
+          {
+            hasSpecialInCol0 = true;
+            break;
+          }
+          if (int.TryParse(symId, out int symbolId))
+          {
+            if (IsSpecialSymbol(symbolId))
+            {
+              hasSpecialInCol0 = true;
+              break;
+            }
+          }
+        }
+      }
+
+      if (hasSpecialInCol0)
+      {
+        float roll = UnityEngine.Random.value;
+        if (roll < nearMissChance)
+        {
+          isNearMissActive = true;
+          nearMissCol = 4;
+          nearMissType = (UnityEngine.Random.value < 0.5f) ? 0 : 1;
+          Debug.Log($"[FakeScenario] Cash Collect Near-Miss Selected! Reel {nearMissCol}, Type {(nearMissType == 0 ? "Top" : "Bottom")} (due to special icon in column 0)");
+        }
       }
     }
   }
@@ -1043,7 +1090,12 @@ public class SlotManager : MonoBehaviour
         */
         currentDelay += currentStagger;
       }
-      StartCoroutine(TriggerReelStopAfterDelay(i, currentDelay));
+      float finalDelay = currentDelay;
+      if (isNearMissActive && i == nearMissCol)
+      {
+        finalDelay += nearMissExtraSpinDuration;
+      }
+      StartCoroutine(TriggerReelStopAfterDelay(i, finalDelay));
     }
 
     if (SocketManager.resultData.payload.winAmount > 0)
@@ -1061,6 +1113,13 @@ public class SlotManager : MonoBehaviour
     float longestStopTime = (IsTurboOn || wasStopPressed)
         ? (currentDelay + 5f * cycleDuration + quickStopDuration)
         : (currentDelay + 5f * cycleDuration + stopOvershootDuration + stopSettleDuration);
+
+    if (isNearMissActive)
+    {
+      longestStopTime += nearMissExtraSpinDuration;
+      if (nearMissType == 0) longestStopTime += 4.5f;
+      else if (nearMissType == 1) longestStopTime += 2.5f;
+    }
 
     yield return new WaitForSeconds(longestStopTime + 0.05f);
 
@@ -1392,7 +1451,7 @@ public class SlotManager : MonoBehaviour
             prizeSprite = JackpotSlotSymbols[item.prizeTypeIndex ?? 0];
           }
           double jackpotAmount = item.coinValue * TotalBet;
-          yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, jackpotAmount.ToString("F2"), prizeSprite);
+          yield return jackpotManager.PlayJackpotSequence(view, item.prizeType, item.prizeTypeIndex ?? 0, jackpotAmount.ToString("0.###"), prizeSprite);
         }
       }
     }
@@ -1530,7 +1589,7 @@ public class SlotManager : MonoBehaviour
 
   private IEnumerator ResetUI()
   {
-    uiManager.SetTotalWinText("0.000");
+    uiManager.SetTotalWinText("00.00");
     if (IsAutoSpin)
     {
       WasAutoSpinOn = !AutoplayUntilFeature;
@@ -1909,12 +1968,33 @@ public class SlotManager : MonoBehaviour
     // Calculate duration from speed: time = distance / speed
     float speed = IsTurboOn ? 3500f : spinSpeed;
     float cycleDuration = symbolHeight / speed;
+    Ease cycleEase = Ease.Linear;
+
+    if (isNearMissActive && col == nearMissCol)
+    {
+      if (stopStatus[col] == 0) speed = spinSpeed * 0.8f;
+      else if (stopStatus[col] == 1) speed = spinSpeed * 0.65f;
+      else if (stopStatus[col] == 2) speed = spinSpeed * 0.5f;
+      else if (stopStatus[col] == 3) speed = spinSpeed * 0.35f;
+      else if (stopStatus[col] == 4) speed = spinSpeed * 0.25f;
+
+      bool isSlowCycle = (nearMissType == 1 && stopStatus[col] == 4);
+      if (isSlowCycle)
+      {
+        cycleDuration = 2.2f;
+        cycleEase = Ease.OutCubic;
+      }
+      else
+      {
+        cycleDuration = symbolHeight / speed;
+      }
+    }
 
     float targetY = isSpinReverse ? (restY + symbolHeight) : (restY - symbolHeight);
 
     Tween cycle = slotTransform
         .DOLocalMoveY(targetY, cycleDuration)
-        .SetEase(Ease.Linear)
+        .SetEase(cycleEase)
         .OnComplete(() =>
         {
           if (!IsSpinning) return;
@@ -2029,6 +2109,17 @@ public class SlotManager : MonoBehaviour
         {
           symbolToFeed = GetResultSymbolId(col, 2);
           targetRowIndex = 2;
+
+          if (isNearMissActive && col == nearMissCol && nearMissType == 1)
+          {
+            imgs[1].sprite = SlotSymbols[14];
+            SlotSymbolView view = imgs[1].GetComponent<SlotSymbolView>();
+            if (view != null)
+            {
+              view.ClearValues();
+              ConfigureSymbolView(view, 14);
+            }
+          }
         }
         else if (stopStatus[col] == 1)
         {
@@ -2039,6 +2130,10 @@ public class SlotManager : MonoBehaviour
         {
           symbolToFeed = GetResultSymbolId(col, 0);
           targetRowIndex = 0;
+        }
+        else if (stopStatus[col] == 3 && isNearMissActive && col == nearMissCol && nearMissType == 0)
+        {
+          symbolToFeed = 14;
         }
         stopStatus[col]++;
       }
@@ -2235,6 +2330,28 @@ public class SlotManager : MonoBehaviour
   {
     if (alltweens[col] != null) { alltweens[col].Kill(); alltweens[col] = null; }
 
+    // For bottom near-miss: snap to restY immediately since the slow glide of cycle 4 already completed the stop
+    if (isNearMissActive && col == nearMissCol && nearMissType == 1)
+    {
+      slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
+      OnReelStopped(col);
+      return;
+    }
+
+    // For top near-miss: slowly glide down from restY to restY - 0.65f * symbolHeight,
+    // then smoothly reverse/glide UP back to restY when it reaches 65% of the symbol height.
+    if (isNearMissActive && col == nearMissCol && nearMissType == 0)
+    {
+      slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
+      Sequence glideSeq = DOTween.Sequence();
+      glideSeq.Append(slotTransform.DOLocalMoveY(restY - 0.65f * symbolHeight, 1.3f).SetEase(Ease.OutQuad));
+      glideSeq.Append(slotTransform.DOLocalMoveY(restY, 1.8f).SetEase(Ease.InOutQuad));
+      glideSeq.OnComplete(() => OnReelStopped(col));
+      alltweens[col] = glideSeq;
+      glideSeq.Play();
+      return;
+    }
+
     slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
 
     Sequence stopSeq = DOTween.Sequence();
@@ -2249,9 +2366,13 @@ public class SlotManager : MonoBehaviour
     else
     {
       // Classic casino stop: overshoot then smooth settle back to rest
-      float targetOvershoot = isSpinReverse ? (restY + stopOvershootDistance) : (restY - stopOvershootDistance);
-      stopSeq.Append(slotTransform.DOLocalMoveY(targetOvershoot, stopOvershootDuration).SetEase(Ease.OutQuad));
-      stopSeq.Append(slotTransform.DOLocalMoveY(restY,                         stopSettleDuration   ).SetEase(Ease.InOutQuad));
+      float overshootDistance = stopOvershootDistance;
+      float overshootDuration = stopOvershootDuration;
+      float settleDuration = stopSettleDuration;
+
+      float targetOvershoot = isSpinReverse ? (restY + overshootDistance) : (restY - overshootDistance);
+      stopSeq.Append(slotTransform.DOLocalMoveY(targetOvershoot, overshootDuration).SetEase(Ease.OutQuad));
+      stopSeq.Append(slotTransform.DOLocalMoveY(restY,                         settleDuration   ).SetEase(Ease.InOutQuad));
     }
 
     stopSeq.OnComplete(() => OnReelStopped(col));
