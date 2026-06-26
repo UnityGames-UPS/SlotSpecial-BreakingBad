@@ -2035,6 +2035,7 @@ public class SlotManager : MonoBehaviour
         }
       }
 
+      int lastIdx = imgs.Count - 1;
       int symbolToFeed = -1;
       int targetRowIndex = -1;
       if (stopStatus[col] >= 0)
@@ -2043,6 +2044,21 @@ public class SlotManager : MonoBehaviour
         {
           symbolToFeed = GetResultSymbolId(col, 0);
           targetRowIndex = 0;
+
+          if (isNearMissActive && col == nearMissCol && nearMissType == 1)
+          {
+            int ccIdx = lastIdx - 1;
+            if (ccIdx >= 0 && ccIdx < imgs.Count)
+            {
+              imgs[ccIdx].sprite = SlotSymbols[14];
+              SlotSymbolView view = imgs[ccIdx].GetComponent<SlotSymbolView>();
+              if (view != null)
+              {
+                view.ClearValues();
+                ConfigureSymbolView(view, 14);
+              }
+            }
+          }
         }
         else if (stopStatus[col] == 1)
         {
@@ -2054,10 +2070,12 @@ public class SlotManager : MonoBehaviour
           symbolToFeed = GetResultSymbolId(col, 2);
           targetRowIndex = 2;
         }
+        else if (stopStatus[col] == 3 && isNearMissActive && col == nearMissCol && nearMissType == 0)
+        {
+          symbolToFeed = 14;
+        }
         stopStatus[col]++;
       }
-
-      int lastIdx = imgs.Count - 1;
       if (symbolToFeed != -1)
       {
         imgs[lastIdx].sprite = SlotSymbols[symbolToFeed];
@@ -2170,8 +2188,9 @@ public class SlotManager : MonoBehaviour
     if (stopStatus[col] == 5)
     {
       // 1. Top Near Miss / Magnet Pull Down (stops at top buffer, i.e., index 1)
-      bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) ||
-                             (isNearMissActive && col == nearMissCol && nearMissType == 0);
+      bool isNearMissTopActive = isNearMissActive && col == nearMissCol && 
+                                 (isSpinReverse ? (nearMissType == 1) : (nearMissType == 0));
+      bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) || isNearMissTopActive;
       if (shouldShowAtTop)
       {
         imgs[1].sprite = SlotSymbols[14];
@@ -2184,8 +2203,9 @@ public class SlotManager : MonoBehaviour
       }
 
       // 2. Bottom Near Miss / Magnet Pull Up (stops at bottom buffer, i.e., index 5)
-      bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) ||
-                                (isNearMissActive && col == nearMissCol && nearMissType == 1);
+      bool isNearMissBottomActive = isNearMissActive && col == nearMissCol && 
+                                    (isSpinReverse ? (nearMissType == 0) : (nearMissType == 1));
+      bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) || isNearMissBottomActive;
       if (shouldShowAtBottom && imgs.Count > 5)
       {
         imgs[5].sprite = SlotSymbols[14];
@@ -2344,8 +2364,9 @@ public class SlotManager : MonoBehaviour
     {
       slotTransform.localPosition = new Vector3(slotTransform.localPosition.x, restY, 0f);
       Sequence glideSeq = DOTween.Sequence();
-      glideSeq.Append(slotTransform.DOLocalMoveY(restY - 0.65f * symbolHeight, 1.3f).SetEase(Ease.OutQuad));
-      glideSeq.Append(slotTransform.DOLocalMoveY(restY, 1.8f).SetEase(Ease.InOutQuad));
+      float targetBounceY = isSpinReverse ? (restY + 0.65f * symbolHeight) : (restY - 0.65f * symbolHeight);
+      glideSeq.Append(slotTransform.DOLocalMoveY(targetBounceY, 1.1f).SetEase(Ease.OutQuad));
+      glideSeq.Append(slotTransform.DOLocalMoveY(restY, 1.3f).SetEase(Ease.InOutQuad));
       glideSeq.OnComplete(() => OnReelStopped(col));
       alltweens[col] = glideSeq;
       glideSeq.Play();
