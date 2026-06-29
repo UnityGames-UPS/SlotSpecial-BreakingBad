@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class SlotSymbolView : MonoBehaviour
 {
@@ -250,6 +252,68 @@ public class SlotSymbolView : MonoBehaviour
 
         multiplierValueText.text = "X" + multiplierValue.ToString();
         multiplierValueText.gameObject.SetActive(true);
+    }
+
+    public IEnumerator PlayMultiplierConversion(double multiplierValue, double totalBet)
+    {
+        // Step 1: Show multiplier text "X25"
+        if (multiplierValueText != null)
+        {
+            multiplierValueText.text = "X" + multiplierValue.ToString();
+            multiplierValueText.gameObject.SetActive(true);
+            multiplierValueText.transform.localScale = Vector3.one;
+        }
+
+        // Hide gold coin text initially
+        if (goldCoinValueText != null)
+        {
+            goldCoinValueText.gameObject.SetActive(false);
+        }
+
+        // Wait for player to see the multiplier
+        yield return new WaitForSeconds(0.5f);
+
+        // Step 2: Scale multiplier text to 0
+        if (multiplierValueText != null)
+        {
+            bool scaleDownDone = false;
+            multiplierValueText.transform.DOScale(Vector3.zero, 0.25f)
+                .SetEase(Ease.InBack)
+                .OnComplete(() => scaleDownDone = true);
+            yield return new WaitUntil(() => scaleDownDone);
+
+            multiplierValueText.gameObject.SetActive(false);
+            multiplierValueText.transform.localScale = Vector3.one;
+        }
+
+        // Step 3: Set gold coin value text with the calculated value
+        double finalValue = multiplierValue * totalBet;
+        if (goldCoinValueText != null)
+        {
+            string valStr = finalValue.ToString("0.###");
+            string formattedText = "";
+            foreach (char c in valStr)
+            {
+                if (char.IsDigit(c))
+                {
+                    formattedText += $"<sprite={c - '0'}>";
+                }
+                else if (c == '.')
+                {
+                    formattedText += "<sprite=10>";
+                }
+            }
+            goldCoinValueText.text = formattedText;
+            goldCoinValueText.transform.localScale = Vector3.zero;
+            goldCoinValueText.gameObject.SetActive(true);
+
+            // Step 4: Scale gold coin text from 0 to 1
+            bool scaleUpDone = false;
+            goldCoinValueText.transform.DOScale(Vector3.one, 0.3f)
+                .SetEase(Ease.OutBack)
+                .OnComplete(() => scaleUpDone = true);
+            yield return new WaitUntil(() => scaleUpDone);
+        }
     }
 
     public void SetBackTintActive(bool active, float alpha = 0.85f)

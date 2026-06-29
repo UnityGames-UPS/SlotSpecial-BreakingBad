@@ -1,6 +1,25 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Video;
+
+public enum VideoScenario
+{
+    EarlyReveal = 0,
+    MagnetHit = 1,
+    FreeSpinStart = 2,
+    FreeSpinEnd = 3,
+    LinkFeatureStart = 4,
+    LinkFeatureEnd = 5
+}
+
+[System.Serializable]
+public struct VideoScenarioData
+{
+    [SerializeField] internal string name;
+    [SerializeField] internal VideoClip videoClip;
+    [SerializeField] internal AudioClip audioClip;
+}
 
 public enum DialogueType
 {
@@ -45,6 +64,11 @@ public class DialoguePopupManager : MonoBehaviour
     [Header("Dialogue Lists")]
     [SerializeField] private DialogueData[] dialogueList;
 
+    [Header("Video Configurations")]
+    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private GameObject videoDisplayPanel;
+    [SerializeField] private VideoScenarioData[] videoScenarios;
+
     [Header("Chances (%)")]
     [Range(0f, 100f)] [SerializeField] private float chanceGameStart = 100f;
     [Range(0f, 100f)] [SerializeField] private float chanceFreeSpinHit = 90f;
@@ -70,6 +94,9 @@ public class DialoguePopupManager : MonoBehaviour
     [SerializeField] private float smallWinMaxMultiplier = 5f;
     [SerializeField] private float averageWinMaxMultiplier = 25f;
 
+    private bool isDialogueSkipped = false;
+    private GameObject currentActiveDialogue = null;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -91,6 +118,21 @@ public class DialoguePopupManager : MonoBehaviour
         if (dialogueParent != null)
         {
             dialogueParent.SetActive(false);
+            UnityEngine.UI.Button button = dialogueParent.GetComponent<UnityEngine.UI.Button>();
+            if (button == null)
+            {
+                button = dialogueParent.AddComponent<UnityEngine.UI.Button>();
+            }
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(SkipDialogue);
+        }
+    }
+
+    private void SkipDialogue()
+    {
+        if (currentActiveDialogue != null)
+        {
+            isDialogueSkipped = true;
         }
     }
 
@@ -106,6 +148,17 @@ public class DialoguePopupManager : MonoBehaviour
         for (int i = 0; i < numTypes; i++)
         {
             dialogueList[i].name = ((DialogueType)i).ToString();
+        }
+
+        int numVideoTypes = System.Enum.GetNames(typeof(VideoScenario)).Length;
+        if (videoScenarios == null || videoScenarios.Length != numVideoTypes)
+        {
+            System.Array.Resize(ref videoScenarios, numVideoTypes);
+        }
+
+        for (int i = 0; i < numVideoTypes; i++)
+        {
+            videoScenarios[i].name = ((VideoScenario)i).ToString();
         }
     }
 #endif
@@ -155,7 +208,15 @@ public class DialoguePopupManager : MonoBehaviour
 
         
         float duration = (data.audioClip != null) ? data.audioClip.length : UnityEngine.Random.Range(minDuration, maxDuration);
-        yield return new WaitForSeconds(duration);
+        float elapsed = 0f;
+        isDialogueSkipped = false;
+        currentActiveDialogue = data.popupObject;
+        while (elapsed < duration && !isDialogueSkipped)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        currentActiveDialogue = null;
 
         
         data.popupObject.SetActive(false);
@@ -324,6 +385,56 @@ public class DialoguePopupManager : MonoBehaviour
         if (RollDice(chanceMegaLinkFeatureTrigger))
         {
             yield return PlayDialogue(DialogueType.MegaLinkFeatureTrigger);
+        }
+    }
+
+    public IEnumerator PlayVideoScenario(VideoScenario scenario)
+    {
+        int index = (int)scenario;
+        if (videoScenarios == null || index < 0 || index >= videoScenarios.Length) yield break;
+
+        VideoScenarioData data = videoScenarios[index];
+        if (data.videoClip == null)
+        {
+            Debug.LogWarning($"[DialoguePopupManager] Video clip for scenario {scenario} is not assigned.");
+            yield break;
+        }
+
+        if (videoDisplayPanel != null)
+        {
+            videoDisplayPanel.SetActive(true);
+        }
+
+        if (videoPlayer != null)
+        {
+            videoPlayer.clip = data.videoClip;
+            videoPlayer.Play();
+        }
+
+        if (data.audioClip != null && dialogueAudioSource != null)
+        {
+            ApplySFXVolume();
+            dialogueAudioSource.Stop();
+            dialogueAudioSource.clip = data.audioClip;
+            dialogueAudioSource.Play();
+        }
+
+        float duration = (float)data.videoClip.length;
+        yield return new WaitForSeconds(duration);
+
+        if (videoPlayer != null)
+        {
+            videoPlayer.Stop();
+        }
+
+        if (dialogueAudioSource != null)
+        {
+            dialogueAudioSource.Stop();
+        }
+
+        if (videoDisplayPanel != null)
+        {
+            videoDisplayPanel.SetActive(false);
         }
     }
 }

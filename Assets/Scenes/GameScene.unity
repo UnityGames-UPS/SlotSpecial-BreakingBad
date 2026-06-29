@@ -5306,8 +5306,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 569543736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7209,7 +7209,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7964,8 +7964,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8393,10 +8393,6 @@ PrefabInstance:
     - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Name
       value: SlotIconanim
-      objectReference: {fileID: 0}
-    - target: {fileID: 420225803711731266, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1662582739725013048, guid: c05eae826c8c24383955ed1b3f77b134, type: 3}
       propertyPath: m_Pivot.x
@@ -10711,7 +10707,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 648289877}
   m_HandleRect: {fileID: 648289876}
   m_Direction: 2
-  m_Value: 0.572
+  m_Value: 1
   m_Size: 0.104683384
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -17729,8 +17725,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1294587356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.51212114}
-  m_AnchorMax: {x: 1, y: 0.61680454}
+  m_AnchorMin: {x: 0, y: 0.8953166}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22664,7 +22660,7 @@ RectTransform:
   m_Father: {fileID: 705758036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22693,7 +22689,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0.142
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -26617,7 +26613,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 1
+  m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -27247,7 +27243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1150974519902385054, guid: db64d876fb5314b91bea459abda3d781, type: 3}
+  m_Sprite: {fileID: 2589903827893814565, guid: d498fe5862320408a91fa7d76d47493f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -31867,7 +31863,8 @@ MonoBehaviour:
   clipBonusBg: {fileID: 8300000, guid: f82d231ace9c640c19a9ca6f8e5f9790, type: 3}
   clipSpinBtn: {fileID: 8300000, guid: c2b619ff219c447fcb15f128155b33f6, type: 3}
   clipNormalBtn: {fileID: 8300000, guid: 89c8889083d8b411893b3ef80bd50c73, type: 3}
-  clipTurboToggle: {fileID: 8300000, guid: 6d309b0a5aeef4b42919f33c4a1dfca7, type: 3}
+  clipTurboOn: {fileID: 8300000, guid: 6d309b0a5aeef4b42919f33c4a1dfca7, type: 3}
+  clipTurboOff: {fileID: 8300000, guid: 68c3782ce43a34c6f8aea516b42adbaf, type: 3}
   clipCashCoinLand: {fileID: 8300000, guid: 3f9c82cc3551241cebb7fe5fa2d919bc, type: 3}
   clipLinkLand: {fileID: 8300000, guid: 1a1b043fd60d4462bb65436ac957ee33, type: 3}
   clipCashCollectLand: {fileID: 8300000, guid: 02225b3c88c0c462fbfcee8de65e301c, type: 3}
@@ -31878,6 +31875,9 @@ MonoBehaviour:
   clipTrailStart: {fileID: 8300000, guid: df7642ec1f9cb4e82954c2a861cb312d, type: 3}
   clipWinTypeLoop: {fileID: 8300000, guid: 44f26bed2fa10470caa5066a380878da, type: 3}
   clipWinLine: {fileID: 8300000, guid: 74b85069fe9c8471bbc4ec2a5e45aa34, type: 3}
+  clipSmokeReveal: {fileID: 8300000, guid: 31dbafef1fe65460790bd1f65400eee7, type: 3}
+  clipIceBreakingReveal: {fileID: 8300000, guid: cebac146a89da4743b3e4b7c2e3702f6, type: 3}
+  clipLinkToCoinTransition: {fileID: 8300000, guid: c22ed6637c4bd4c7688bb3632e20e6b0, type: 3}
 --- !u!4 &1125026306
 Transform:
   m_ObjectHideFlags: 0
@@ -33861,6 +33861,7 @@ MonoBehaviour:
   totalBetMinusButton: {fileID: 234200730}
   turboButton: {fileID: 509995697}
   turboOnObject: {fileID: 1170262159}
+  turboFlashCanvasGroup: {fileID: 1614295407}
   stopSpinButton: {fileID: 1297612259}
   gameExitButton: {fileID: 1517817712}
   balanceText: {fileID: 1205646254}
@@ -36011,7 +36012,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: fff9c5da833d94f33a364dde1b5daaa0, type: 3}
   - name: FreeSpinEnd_HugeWin
     popupObject: {fileID: 2064352478}
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 157a71df7e3aa4ff08c2aba9cabba6f3, type: 3}
   - name: CashCollectTrigger
     popupObject: {fileID: 2087173812}
     audioClip: {fileID: 8300000, guid: f701f4d96b32f4b2c86164dd58d6bee9, type: 3}
@@ -36036,8 +36037,29 @@ MonoBehaviour:
   - name: MegaLinkFeatureTrigger
     popupObject: {fileID: 544951730}
     audioClip: {fileID: 8300000, guid: 00ec44e3e19d04dffb97cc35630ce34b, type: 3}
+  videoPlayer: {fileID: 976589886}
+  videoDisplayPanel: {fileID: 368326611}
+  videoScenarios:
+  - name: EarlyReveal
+    videoClip: {fileID: 32900000, guid: 12cc78548b1884d57b7f5cf5ded6f6a8, type: 3}
+    audioClip: {fileID: 8300000, guid: f24dfecf0c4c74373a6fe7c2d5f8f76b, type: 3}
+  - name: MagnetHit
+    videoClip: {fileID: 32900000, guid: 20c4d335999b44f979c3cae3d1c8e9c7, type: 3}
+    audioClip: {fileID: 8300000, guid: 73ccabe7bf70c4695a4c026311dbec14, type: 3}
+  - name: FreeSpinStart
+    videoClip: {fileID: 32900000, guid: 7cebe6a15b3924ba2ad14f75dd8c60f3, type: 3}
+    audioClip: {fileID: 8300000, guid: 8565e67b076614a81bb2cfb75c3500db, type: 3}
+  - name: FreeSpinEnd
+    videoClip: {fileID: 32900000, guid: 386bb6a60aff24fca886910d720f1d69, type: 3}
+    audioClip: {fileID: 8300000, guid: 7a3ee9a83773f4250ac9ae9312e7494b, type: 3}
+  - name: LinkFeatureStart
+    videoClip: {fileID: 32900000, guid: 44d3a39f13e114c3282259fe21dc4a82, type: 3}
+    audioClip: {fileID: 8300000, guid: 0200f3012e5fe4a78874ff99910f5972, type: 3}
+  - name: LinkFeatureEnd
+    videoClip: {fileID: 32900000, guid: b012b10094b024b6083a5c17f83b86e7, type: 3}
+    audioClip: {fileID: 8300000, guid: 86bb10155bf854714bf8d66cd4b367e1, type: 3}
   chanceGameStart: 100
-  chanceFreeSpinHit: 90
+  chanceFreeSpinHit: 80
   chanceMiniJackpot: 80
   chanceFreeSpinEndNoWin: 100
   chanceFreeSpinEndSmallWin: 90
@@ -36047,7 +36069,7 @@ MonoBehaviour:
   chanceCashCollectTrigger: 90
   chanceNearMiss: 90
   chanceMagnetAppearance: 90
-  chanceSpecialSymbolNoTrigger: 70.3
+  chanceSpecialSymbolNoTrigger: 70
   chanceTooManySymbolsAndCashCollect: 100
   chanceLinkFeatureTrigger: 90
   chanceMegaLinkFeatureTrigger: 90
@@ -45846,6 +45868,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614198463}
   m_CullTransparentMesh: 1
+--- !u!1 &1614295403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1614295404}
+  - component: {fileID: 1614295406}
+  - component: {fileID: 1614295405}
+  - component: {fileID: 1614295407}
+  m_Layer: 5
+  m_Name: TurboFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1614295404
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614295403}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2146390924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2340, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1614295405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614295403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.764151, g: 0.7400009, b: 0.5226504, a: 0.12156863}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1614295406
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614295403}
+  m_CullTransparentMesh: 1
+--- !u!225 &1614295407
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614295403}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1619650386
 GameObject:
   m_ObjectHideFlags: 0
@@ -45932,7 +46042,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -49555,7 +49665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -1028, y: 3731.8257}
+  m_AnchoredPosition: {x: -1028, y: 0}
   m_SizeDelta: {x: 2056, y: 9738.699}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1718524644
@@ -50365,9 +50475,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2074588542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -44.809998, y: -2.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 110.08, y: -2.8}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1756891264
@@ -53243,7 +53353,8 @@ MonoBehaviour:
   col0CCSlowDownDuration: 1
   col0CCTriggerChance: 0.4
   earlyRevealExtraSpinDuration: 3
-  testEarlyRevealScenario: 1
+  testEarlyRevealScenario: 0
+  specialEarlyRevealChance: 0.45
   smokeEffectSprites:
   - {fileID: 21300000, guid: d9f5731e206ca4f1fbbbdf0b6111bea6, type: 3}
   - {fileID: 21300000, guid: a79d16bff53df4bc7a9e427f3e48b3a1, type: 3}
@@ -61178,6 +61289,7 @@ RectTransform:
   - {fileID: 2032981809}
   - {fileID: 121914063}
   - {fileID: 530414140}
+  - {fileID: 1614295404}
   - {fileID: 359081666}
   - {fileID: 465288307}
   m_Father: {fileID: 1383722771}

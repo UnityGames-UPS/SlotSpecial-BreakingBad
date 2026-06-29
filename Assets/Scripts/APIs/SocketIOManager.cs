@@ -437,13 +437,11 @@ public class SocketIOManager : MonoBehaviour
         if (gameSocket != null && isConnected)
         {
             gameSocket.Emit("ping");
-            Debug.Log("[SocketIO] Ping sent");
         }
     }
 
     private void OnPongReceived(string data)
     {
-        Debug.Log("[SocketIO] Pong received");
         waitingForPong = false;
         lastPongTime = Time.time;
 

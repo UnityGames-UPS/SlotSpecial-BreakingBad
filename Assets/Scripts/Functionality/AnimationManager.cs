@@ -26,6 +26,7 @@ public class AnimationManager : MonoBehaviour
     internal bool AreLandingAnimationsPlaying => activeLandingAnimationsCount > 0;
 
     [SerializeField] internal float winSymbolLoopDuration = 1.5f;
+    [SerializeField] internal Sprite idleSprite;
 
     public void Initialize(SlotManager manager)
     {
@@ -513,6 +514,10 @@ public class AnimationManager : MonoBehaviour
                     {
                         textHelper.revealEffectAnimation.onLoopComplete = null;
                         textHelper.revealEffectAnimation.StopAnimation();
+                        if (textHelper.revealEffectAnimation.rendererDelegate != null)
+                        {
+                            textHelper.revealEffectAnimation.rendererDelegate.sprite = idleSprite;
+                        }
                         textHelper.revealEffectAnimation.gameObject.SetActive(false);
                     }
                 }
@@ -521,6 +526,10 @@ public class AnimationManager : MonoBehaviour
                 {
                     anim.onLoopComplete = null;
                     anim.StopAnimation();
+                    if (anim.rendererDelegate != null)
+                    {
+                        anim.rendererDelegate.sprite = idleSprite;
+                    }
                     anim.gameObject.SetActive(false);
                 }
 

@@ -1160,6 +1160,11 @@ public class SlotManager : MonoBehaviour
     if (isEarlyRevealActive)
     {
       EnableAllBackTints(true, 0.85f);
+      yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 0.8f));
+      if (DialoguePopupManager.Instance != null)
+      {
+        yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.EarlyReveal);
+      }
     }
     bool isCCTriggered = false;
     if (SocketManager.resultData != null && SocketManager.resultData.payload != null)
@@ -1574,6 +1579,11 @@ public class SlotManager : MonoBehaviour
         }
         if (DialoguePopupManager.Instance != null)
         {
+          yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.FreeSpinEnd);
+        }
+
+        if (DialoguePopupManager.Instance != null)
+        {
           yield return DialoguePopupManager.Instance.PlayFreeSpinEndDialogue(totalFeatureWin, TotalBet);
         }
 
@@ -1667,17 +1677,17 @@ public class SlotManager : MonoBehaviour
     IsFeatureTransitioning = false;
     uiManager.UpdateButtonsState();
 
-    
+    bool triggeredFromNormal = !IsFreeSpin;
+
     if (IsFreeSpin)
     {
-      
       WasFreeSpinPaused = true;
       IsFreeSpin = false;
     }
 
     yield return ResetUI();
 
-    _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining);
+    yield return _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining, triggeredFromNormal);
     TriggerSpinState(false);
     
   }
@@ -2602,6 +2612,57 @@ public class SlotManager : MonoBehaviour
         }
       }
     }
+
+    if (SocketManager.resultData != null && SocketManager.resultData.matrix != null)
+    {
+      bool isAboveCC = false;
+      bool isBelowCC = false;
+
+      if (row == 0)
+      {
+        bool isNearMissTopActive = isNearMissActive && col == nearMissCol && 
+                                   (isSpinReverse ? (nearMissType == 1) : (nearMissType == 0));
+        bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) || isNearMissTopActive;
+        if (shouldShowAtTop)
+        {
+          isAboveCC = true;
+        }
+      }
+      else if (row - 1 >= 0 && row - 1 < SocketManager.resultData.matrix.Count)
+      {
+        if (SocketManager.resultData.matrix[row - 1][col] == "14")
+        {
+          isAboveCC = true;
+        }
+      }
+
+      if (row == 2)
+      {
+        bool isNearMissBottomActive = isNearMissActive && col == nearMissCol && 
+                                      (isSpinReverse ? (nearMissType == 0) : (nearMissType == 1));
+        bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) || isNearMissBottomActive;
+        if (shouldShowAtBottom)
+        {
+          isBelowCC = true;
+        }
+      }
+      else if (row + 1 >= 0 && row + 1 < SocketManager.resultData.matrix.Count)
+      {
+        if (SocketManager.resultData.matrix[row + 1][col] == "14")
+        {
+          isBelowCC = true;
+        }
+      }
+
+      if (view.cashCollectAboveObject != null)
+      {
+        view.cashCollectAboveObject.SetActive(isAboveCC);
+      }
+      if (view.cashCollectBelowObject != null)
+      {
+        view.cashCollectBelowObject.SetActive(isBelowCC);
+      }
+    }
   }
 
   private IEnumerator TriggerReelStopAfterDelay(int col, float delay)
@@ -2672,6 +2733,11 @@ public class SlotManager : MonoBehaviour
   private IEnumerator PlayMagnetSequence()
   {
     if (!isMagnetScenarioActive || magnetCol < 0 || magnetCol >= Slot_Transform.Length) yield break;
+
+    if (DialoguePopupManager.Instance != null)
+    {
+      yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.MagnetHit);
+    }
 
     if (DialoguePopupManager.Instance != null)
     {
@@ -3045,7 +3111,7 @@ public class SlotManager : MonoBehaviour
     }
 
     
-    if (specialSymbolCount > 0 && (featureQueue == null || !featureQueue.HasPending))
+    if (specialSymbolCount >= 2 && (featureQueue == null || !featureQueue.HasPending))
     {
       yield return DialoguePopupManager.Instance.PlaySpecialSymbolNoTriggerDialogue();
       yield break;
@@ -3180,6 +3246,18 @@ public class SlotManager : MonoBehaviour
           effectAnim.StopAnimation();
           effectAnim.StartAnimation();
 
+          if (AudioController.Instance != null)
+          {
+              if (useSmoke)
+              {
+                  AudioController.Instance.PlaySmokeReveal();
+              }
+              else
+              {
+                  AudioController.Instance.PlayIceBreakingReveal();
+              }
+          }
+
           bool effectDone = false;
           effectAnim.onLoopComplete = (_) => { effectDone = true; };
 
@@ -3228,6 +3306,10 @@ public class SlotManager : MonoBehaviour
 
           effectAnim.onLoopComplete = null;
           effectAnim.StopAnimation();
+          if (effectAnim.rendererDelegate != null && animationManager != null)
+          {
+              effectAnim.rendererDelegate.sprite = animationManager.idleSprite;
+          }
           effectAnim.gameObject.SetActive(false);
       }
       else
@@ -3284,6 +3366,10 @@ public class SlotManager : MonoBehaviour
 
           animCell.onLoopComplete = null;
           animCell.StopAnimation();
+          if (animCell.rendererDelegate != null && animationManager != null)
+          {
+              animCell.rendererDelegate.sprite = animationManager.idleSprite;
+          }
       }
 
       animCell.gameObject.SetActive(false);

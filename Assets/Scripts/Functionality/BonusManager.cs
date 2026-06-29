@@ -61,11 +61,23 @@ public class BonusManager : MonoBehaviour
 
   }
 
-  internal void StartBonus(int count)
+  internal IEnumerator StartBonus(int count, bool isFromNormalSpin)
   {
+    if (isFromNormalSpin)
+    {
+      if (DialoguePopupManager.Instance != null)
+      {
+        yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.LinkFeatureStart);
+      }
+    }
+
+    bool popupClicked = false;
     uiManager.OpenFeaturePopup(() => {
-        StartBonusGame(count);
+        popupClicked = true;
     });
+    yield return new WaitUntil(() => popupClicked);
+
+    StartBonusGame(count);
   }
 
   internal void StartBonusGame(int count)
@@ -295,6 +307,25 @@ public class BonusManager : MonoBehaviour
     KillAllTweens();
 
     GenerateFreezeMatrix(GenerateFreezedLocations());
+
+    // Play multiplier conversion animation for newly landed symbol 13
+    if (SocketManager.resultData.payload.coinPositions != null)
+    {
+      foreach (var coins in SocketManager.resultData.payload.coinPositions)
+      {
+        if (coins.symbolId == 13)
+        {
+          int row = coins.position[0];
+          int col = coins.position[1];
+          Transform cell = Slot[col].slotTransforms[row];
+          SlotSymbolView view = cell.GetChild(2).GetComponent<SlotSymbolView>();
+          if (view != null)
+          {
+            yield return view.PlayMultiplierConversion(coins.coinValue, slotManager.TotalBet);
+          }
+        }
+      }
+    }
 
     if (SocketManager.resultData.payload.winAmount > 0)
     {
@@ -528,6 +559,15 @@ public class BonusManager : MonoBehaviour
           stashPopupClosed = true;
       });
       yield return new WaitUntil(() => stashPopupClosed);
+    }
+
+    bool wasTriggeredInNormalSpin = !slotManager.WasFreeSpinPaused;
+    if (wasTriggeredInNormalSpin)
+    {
+      if (DialoguePopupManager.Instance != null)
+      {
+        yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.LinkFeatureEnd);
+      }
     }
 
     if (DialoguePopupManager.Instance != null)
@@ -845,8 +885,8 @@ public class BonusManager : MonoBehaviour
             {
               img.sprite = slotManager.SlotSymbols[13];
             }
-            view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
             slotManager.ConfigureSymbolView(view, 13);
+            yield return view.PlayMultiplierConversion(coin.coinValue, slotManager.TotalBet);
           }
           else
           {
@@ -1025,7 +1065,8 @@ public class BonusManager : MonoBehaviour
 
       if (runningAnims.Count > 0)
       {
-          
+          if (AudioController.Instance != null) AudioController.Instance.PlayLinkToCoinTransition();
+
           yield return new WaitUntil(() => {
               foreach (var anim in runningAnims)
               {

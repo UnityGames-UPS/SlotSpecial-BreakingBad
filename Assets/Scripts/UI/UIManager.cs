@@ -103,6 +103,7 @@ public class UIManager : MonoBehaviour
 
   [SerializeField] private Button turboButton;
   [SerializeField] private GameObject turboOnObject;
+  [SerializeField] private CanvasGroup turboFlashCanvasGroup;
   [SerializeField] private Button stopSpinButton;
   [SerializeField] private Button gameExitButton;
 
@@ -131,6 +132,7 @@ public class UIManager : MonoBehaviour
     if (featurePopup != null) featurePopup.SetActive(false);
     if (walterStashPopup != null) walterStashPopup.SetActive(false);
     if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
+    if (turboFlashCanvasGroup != null) turboFlashCanvasGroup.gameObject.SetActive(false);
 
     if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
     if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
@@ -318,7 +320,7 @@ public class UIManager : MonoBehaviour
           settingsButton.onClick.RemoveAllListeners();
           settingsButton.onClick.AddListener(() => {
               if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
-              if (settingsPopupPanel != null) settingsPopupPanel.SetActive(true);
+              OpenSettingsPanel();
               CanCloseMenu();
           });
       }
@@ -326,7 +328,7 @@ public class UIManager : MonoBehaviour
           settingsQuitButton.onClick.RemoveAllListeners();
           settingsQuitButton.onClick.AddListener(() => {
               if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
-              if (settingsPopupPanel != null) settingsPopupPanel.SetActive(false);
+              CloseSettingsPanel();
               CanCloseMenu();
           });
       }
@@ -774,17 +776,33 @@ public class UIManager : MonoBehaviour
 
   private void TurboToggle()
   {
-    if (AudioController.Instance != null) AudioController.Instance.PlayTurboToggle();
     if (slotManager.IsTurboOn)
     {
       slotManager.IsTurboOn = false;
       SetTurboActiveState(false);
+      if (AudioController.Instance != null) AudioController.Instance.PlayTurboOff();
     }
     else
     {
       slotManager.IsTurboOn = true;
       SetTurboActiveState(true);
+      if (AudioController.Instance != null) AudioController.Instance.PlayTurboOn();
     }
+    TriggerTurboFlash();
+  }
+
+  private void TriggerTurboFlash()
+  {
+      if (turboFlashCanvasGroup != null)
+      {
+          turboFlashCanvasGroup.DOKill();
+          turboFlashCanvasGroup.gameObject.SetActive(true);
+          turboFlashCanvasGroup.alpha = 0.8f;
+          
+          turboFlashCanvasGroup.DOFade(0f, 0.25f).OnComplete(() => {
+              turboFlashCanvasGroup.gameObject.SetActive(false);
+          });
+      }
   }
 
   internal void CanCloseMenu()
@@ -1254,6 +1272,34 @@ public class UIManager : MonoBehaviour
       if (infoPanel != null)
       {
           infoPanel.SetActive(false);
+      }
+  }
+
+  private void OpenSettingsPanel()
+  {
+      if (settingsPopupPanel != null)
+      {
+          settingsPopupPanel.SetActive(true);
+          settingsPopupPanel.transform.localScale = Vector3.zero;
+          settingsPopupPanel.transform.DOKill();
+          settingsPopupPanel.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
+      }
+  }
+
+  private void CloseSettingsPanel()
+  {
+      if (settingsPopupPanel != null)
+      {
+          settingsPopupPanel.transform.DOKill();
+          Sequence closeSeq = DOTween.Sequence();
+          closeSeq.Append(settingsPopupPanel.transform.DOScale(1.1f, 0.1f));
+          closeSeq.Append(settingsPopupPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack));
+          closeSeq.OnComplete(() =>
+          {
+              settingsPopupPanel.SetActive(false);
+              settingsPopupPanel.transform.localScale = Vector3.one;
+          });
+          closeSeq.SetUpdate(true);
       }
   }
 
@@ -1891,6 +1937,11 @@ public class UIManager : MonoBehaviour
       if (!isRetrigger)
       {
           yield return new WaitForSeconds(0.5f);
+
+          if (DialoguePopupManager.Instance != null)
+          {
+              yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.FreeSpinStart);
+          }
 
           bool popupClicked = false;
           OpenFeaturePopup(() => {

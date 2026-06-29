@@ -14,7 +14,8 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip clipBonusBg;
     [SerializeField] private AudioClip clipSpinBtn;
     [SerializeField] private AudioClip clipNormalBtn;
-    [SerializeField] private AudioClip clipTurboToggle;
+    [SerializeField] private AudioClip clipTurboOn;
+    [SerializeField] private AudioClip clipTurboOff;
     [SerializeField] private AudioClip clipCashCoinLand;
     [SerializeField] private AudioClip clipLinkLand;
     [SerializeField] private AudioClip clipCashCollectLand;
@@ -25,6 +26,9 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip clipTrailStart;
     [SerializeField] private AudioClip clipWinTypeLoop;
     [SerializeField] private AudioClip clipWinLine;
+    [SerializeField] private AudioClip clipSmokeReveal;
+    [SerializeField] private AudioClip clipIceBreakingReveal;
+    [SerializeField] private AudioClip clipLinkToCoinTransition;
 
     private float musicVolume = 0.7f;
     private float sfxVolume = 0.7f;
@@ -113,9 +117,14 @@ public class AudioController : MonoBehaviour
         PlaySfxOneShot(clipNormalBtn);
     }
 
-    public void PlayTurboToggle()
+    public void PlayTurboOn()
     {
-        PlaySfxOneShot(clipTurboToggle);
+        PlaySfxOneShot(clipTurboOn);
+    }
+
+    public void PlayTurboOff()
+    {
+        PlaySfxOneShot(clipTurboOff);
     }
 
     public void PlayCashCoinLand()
@@ -156,6 +165,21 @@ public class AudioController : MonoBehaviour
     public void PlayWinLine()
     {
         PlaySfxOneShot(clipWinLine);
+    }
+
+    public void PlaySmokeReveal()
+    {
+        PlaySfxOneShot(clipSmokeReveal);
+    }
+
+    public void PlayIceBreakingReveal()
+    {
+        PlaySfxOneShot(clipIceBreakingReveal);
+    }
+
+    public void PlayLinkToCoinTransition()
+    {
+        PlaySfxOneShot(clipLinkToCoinTransition);
     }
 
     

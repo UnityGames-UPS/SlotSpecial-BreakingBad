@@ -141,6 +141,52 @@ public class StickySymbolManager : MonoBehaviour
                         if (view != null)
                         {
                             slotManager.ConfigureSymbolView(view, symbolId);
+
+                            if (socketManager.resultData != null && socketManager.resultData.payload != null &&
+                                socketManager.resultData.payload.coinPositions != null)
+                            {
+                                if (symbolId == 17)
+                                {
+                                    bool found = false;
+                                    foreach (var coin in socketManager.resultData.payload.coinPositions)
+                                    {
+                                        if (coin.symbolId == 17 && coin.position[0] == j && coin.position[1] == i)
+                                        {
+                                            view.SetLosPolosValue((int)coin.coinValue);
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!found)
+                                    {
+                                        int[] tempIndex = { 2, 3, 4, 5, 7 };
+                                        int randomIndex = tempIndex[UnityEngine.Random.Range(0, tempIndex.Length)];
+                                        view.SetLosPolosValue(randomIndex);
+                                    }
+                                }
+                                else if (symbolId == 13)
+                                {
+                                    foreach (var coin in socketManager.resultData.payload.coinPositions)
+                                    {
+                                        if (coin.symbolId == 13 && coin.position[0] == j && coin.position[1] == i)
+                                        {
+                                            view.SetMultiplierCoinValue(coin.coinValue, slotManager.TotalBet);
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (symbolId == 15)
+                                {
+                                    foreach (var coin in socketManager.resultData.payload.coinPositions)
+                                    {
+                                        if (coin.position[0] == j && coin.position[1] == i)
+                                        {
+                                            view.SetGoldCoinValue(coin.coinValue * slotManager.TotalBet);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
