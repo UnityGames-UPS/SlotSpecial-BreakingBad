@@ -67,8 +67,8 @@ public class OrientationChange : MonoBehaviour
     }
     else
     {
-      // In portrait, the canvas is rotated -90 degrees.
-      // So UI reference width (refW) aligns with screen height, and UI reference height (refH) aligns with screen width.
+      
+      
       float portraitWidthScale = (float)height / refW;
       float portraitHeightScale = (float)width / refH;
       targetScale = Mathf.Min(portraitWidthScale, portraitHeightScale);

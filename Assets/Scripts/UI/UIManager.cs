@@ -16,8 +16,8 @@ public class UIManager : MonoBehaviour
   [System.Serializable]
   public struct SymbolTextMap
   {
-      public int symbolId;
-      public TMP_Text textComponent;
+      [SerializeField] internal int symbolId;
+      [SerializeField] internal TMP_Text textComponent;
   }
 
   [Header("Info Panel UI")]
@@ -89,12 +89,11 @@ public class UIManager : MonoBehaviour
 
   private int totalBonusSpins = 3;
 
-  internal Coroutine BonusCoroutine;
   internal bool animationFinish = false;
   internal int multiplierCount = 0;
   private Jackpot currentJackpotData;
 
-  // Registered Slot Buttons & Texts (from SlotManager)
+  
   [Header("HUD Objects")]
   [SerializeField] private Button slotStartButton;
   [SerializeField] private Button autoSpinButton;
@@ -120,7 +119,6 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Slider soundVolumeSlider;
   
 
-
   private Tween BalanceTween;
   private Coroutine autoClickCoroutine;
 
@@ -140,11 +138,10 @@ public class UIManager : MonoBehaviour
     if (normalBgCanvasGroup != null) normalBgCanvasGroup.alpha = 1f;
     if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.alpha = 0f;
 
-    // Bind to Model Events
+    
     slotManager.OnBalanceChanged += UpdateBalanceText;
     slotManager.OnTotalBetChanged += UpdateTotalBetText;
     slotManager.OnFreeSpinsChanged += UpdateFreeSpinsText;
-
 
     slotManager.OnSpinStateChanged += HandleSpinStateChanged;
     slotManager.OnAutoSpinStateChanged += HandleAutoplayStateChanged;
@@ -176,7 +173,7 @@ public class UIManager : MonoBehaviour
           "10 Spins",
           "5 Spins",
           "3 Spins",
-          "" // Extra item at the end for scroll padding
+          "" 
       };
       autoplayOptionsDropdown.AddOptions(options);
 
@@ -229,11 +226,9 @@ public class UIManager : MonoBehaviour
     }
   }
 
-
-
   private void InitializeHUD()
   {
-      // Register HUD Click Handlers
+      
       if (slotStartButton) {
           slotStartButton.onClick.RemoveAllListeners();
           
@@ -353,8 +348,6 @@ public class UIManager : MonoBehaviour
       UpdateButtonsState();
   }
 
-
-
   public void SetNormalSpinButtonActive(bool active)
   {
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
@@ -378,7 +371,7 @@ public class UIManager : MonoBehaviour
       if (featureWinPanel != null) featureWinPanel.SetActive(false);
       if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
       
-      // Hide standard UI elements during bonus game
+      
       if (slotStartButton != null) slotStartButton.gameObject.SetActive(false);
       if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(false);
       if (autoSpinStopButton != null) autoSpinStopButton.gameObject.SetActive(false);
@@ -397,12 +390,12 @@ public class UIManager : MonoBehaviour
       if (featureSpinButton != null) featureSpinButton.gameObject.SetActive(false);
       if (stopSpinButton != null && slotManager.IsBonus) stopSpinButton.gameObject.SetActive(false);
 
-      // Restore standard UI elements when exiting bonus game
+      
       if (slotStartButton != null) slotStartButton.gameObject.SetActive(true);
       if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(true);
       if (turboButton != null) turboButton.gameObject.SetActive(true);
       
-      // Also update buttons state to match current normal/autoplay state
+      
       UpdateButtonsState();
   }
 
@@ -429,7 +422,7 @@ public class UIManager : MonoBehaviour
           return;
       }
 
-      // Hide standard buttons and count UI when feature popup gets active
+      
       if (slotStartButton != null) slotStartButton.gameObject.SetActive(false);
       if (turboButton != null) turboButton.gameObject.SetActive(false);
       if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(false);
@@ -663,7 +656,7 @@ public class UIManager : MonoBehaviour
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(show);
   }
 
-  // Shows spin button in non-interactable state during cooldown after stop press
+  
   public void ShowSpinButtonCooldown(bool cooldown)
   {
       if (cooldown)
@@ -686,7 +679,6 @@ public class UIManager : MonoBehaviour
       if (balanceText) balanceText.text = FormatStaticValue(val);
   }
 
-
   private void UpdateTotalBetText(double val)
   {
       if (totalBetText) totalBetText.text = val.ToString();
@@ -700,13 +692,13 @@ public class UIManager : MonoBehaviour
 
       if (spinCounterText != null)
       {
-          // If a free spin retrigger is triggered, do NOT update the text right now
+          
           if (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.isFreeSpinTriggered)
           {
               return;
           }
 
-          // Otherwise, update totalFreeSpins from the response if available
+          
           if (slotManager.ResultData != null && slotManager.ResultData.payload != null && slotManager.ResultData.payload.totalFreeSpins > 0)
           {
               totalFreeSpins = slotManager.ResultData.payload.totalFreeSpins;
@@ -795,27 +787,23 @@ public class UIManager : MonoBehaviour
     }
   }
 
-
-
   internal void CanCloseMenu()
   {
   }
 
   internal void LowBalPopup()
   {
-    // No-op to remove low balance popup
+    
   }
 
   internal void PopulateWin(int value)
   {
-    // No-op to remove win popups/animations from UI
+    
   }
-
-
 
   internal void ADfunction()
   {
-    // No-op to remove another device popup
+    
   }
 
   internal void InitialiseUIData(PaylineData symbolsText)
@@ -832,7 +820,7 @@ public class UIManager : MonoBehaviour
   {
       if (result == null || !result.triggered) yield break;
 
-      // Check if there are any actual cash coins to display in the Coin Win Display Panel
+      
       bool hasCashCoins = false;
       if (result.collectedCoins != null)
       {
@@ -846,7 +834,7 @@ public class UIManager : MonoBehaviour
           }
       }
 
-      // 1. Hide Jackpot Panel & Show Coin Win Display Panel (only if there are cash coins)
+      
       if (hasCashCoins)
       {
           if (jackpotPanelCanvasGroup != null)
@@ -871,7 +859,7 @@ public class UIManager : MonoBehaviour
           yield return new WaitForSeconds(0.5f);
       }
 
-      // Get CashCollect symbol positions
+      
       List<List<int>> ccPositions = new List<List<int>>();
       if (result.positions != null)
       {
@@ -888,7 +876,7 @@ public class UIManager : MonoBehaviour
 
       double accumulatedVal = 0f;
 
-      // 2. Play flying animations from cash coins to Cash Collect symbols sequentially (one by one pair)
+      
       if (result.collectedCoins != null && result.collectedCoins.Count > 0 && ccPositions.Count > 0)
       {
           List<CollectedCoin> sortedCoins = new List<CollectedCoin>(result.collectedCoins);
@@ -905,7 +893,7 @@ public class UIManager : MonoBehaviour
 
               foreach (var coin in sortedCoins)
               {
-                  // Only for Cash Coin [15], Multiplier Coin [13], and Prize Coin [16]
+                  
                   if (coin.symbolId == 15 || coin.symbolId == 16 || coin.symbolId == 13)
                   {
                       int r = coin.position[0];
@@ -916,34 +904,34 @@ public class UIManager : MonoBehaviour
                           continue;
                       }
 
-                      // Pop animation on cash/prize coin (punch scale)
+                      
                       float animDuration = slotManager.animationManager != null ? slotManager.animationManager.winSymbolLoopDuration / 2f : 0.75f;
                       cashCoinView.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), animDuration, 1, 0.5f);
 
-                      // Play one-loop animation on the active Cash Collect symbol
+                      
                       if (slotManager.animationManager != null)
                       {
                           slotManager.animationManager.PlaySpecialAnimationForCell(ccPos[0], ccPos[1]);
                       }
 
-                      // Spawn trail renderer prefab in the middle of the cash coin
+                      
                       if (trailRendererPrefab != null)
                       {
                           if (AudioController.Instance != null) AudioController.Instance.PlayTrailStart();
                           GameObject trInstance = Instantiate(trailRendererPrefab, flyingTextParent != null ? flyingTextParent : transform);
                           
-                          // Ensure local scale is (1,1,1) to avoid canvas scale distortions
+                          
                           trInstance.transform.localScale = Vector3.one;
                           
-                          // Position at coin's world position
+                          
                           trInstance.transform.position = cashCoinView.transform.position;
                           
-                          // Reset local Z position to 0 to ensure rendering on the UI camera view plane
+                          
                           Vector3 localPos = trInstance.transform.localPosition;
                           localPos.z = 0f;
                           trInstance.transform.localPosition = localPos;
 
-                          // Set text of the spawned object to show the coin's collected value
+                          
                           double coinAmt = coin.coinValue * slotManager.TotalBet;
                           TMP_Text trText = trInstance.GetComponentInChildren<TMP_Text>();
                           if (trText != null)
@@ -951,7 +939,7 @@ public class UIManager : MonoBehaviour
                               trText.text = FormatStaticValue(coinAmt);
                           }
 
-                          // Fly animation using DOTween to the coinWinDisplayPanel position
+                          
                           Vector3 targetPos = coinWinDisplayPanelCanvasGroup != null ? coinWinDisplayPanelCanvasGroup.transform.position : Vector3.zero;
                           
                           double finalTarget = accumulatedVal + coinAmt;
@@ -981,12 +969,12 @@ public class UIManager : MonoBehaviour
                               });
                           });
 
-                          // Wait for this specific trail to complete (reach target + count-up finished)
+                          
                           yield return new WaitUntil(() => trailCompleted);
                       }
                       else
                       {
-                          // Fallback if no prefab is assigned
+                          
                           double startVal = accumulatedVal;
                           accumulatedVal += coin.coinValue * slotManager.TotalBet;
                           double endVal = accumulatedVal;
@@ -994,7 +982,7 @@ public class UIManager : MonoBehaviour
                               coinWinDisplayText.text = FormatStaticValue(endVal);
                       }
 
-                      // Wait between trails
+                      
                       yield return new WaitForSeconds(delayBetweenTrails);
                   }
               }
@@ -1003,7 +991,7 @@ public class UIManager : MonoBehaviour
 
       yield return new WaitForSeconds(1.0f);
 
-      // Stop loop animations on the CashCollect symbols (safety cleanup)
+      
       foreach (var ccPos in ccPositions)
       {
           if (slotManager.animationManager != null)
@@ -1012,7 +1000,7 @@ public class UIManager : MonoBehaviour
           }
       }
 
-      // 3. Hide Coin Win Display Panel & Show Jackpot Panel (only if they were modified)
+      
       if (hasCashCoins)
       {
           if (coinWinDisplayPanelCanvasGroup != null)
@@ -1039,16 +1027,10 @@ public class UIManager : MonoBehaviour
     yield break;
   }
 
-
-
-
-
   private void CallOnExitFunction()
   {
     slotManager.CallCloseSocket();
   }
-
-
 
   internal void SetJackpotText(Jackpot jackpot)
   {
@@ -1076,17 +1058,17 @@ public class UIManager : MonoBehaviour
 
   internal void DisconnectionPopup()
   {
-    // No-op to remove disconnection popup
+    
   }
 
   internal void CheckAndClosePopups()
   {
-    // No-op
+    
   }
 
   internal void ReconnectionPopup()
   {
-    // No-op to remove reconnection popup
+    
   }
 
   internal void OpenFreeSpinsUI()
@@ -1109,7 +1091,7 @@ public class UIManager : MonoBehaviour
     if (spinCounterText != null) spinCounterText.gameObject.SetActive(true);
     if (featureWinText != null) featureWinText.gameObject.SetActive(true);
 
-    // Restore standard UI elements when exiting free spins
+    
     if (slotStartButton != null) slotStartButton.gameObject.SetActive(true);
     if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(true);
     if (turboButton != null) turboButton.gameObject.SetActive(true);
@@ -1161,15 +1143,15 @@ public class UIManager : MonoBehaviour
 
     if (!double.TryParse(balanceText.text, out double currentBal))
     {
-      Debug.Log("Error balance conversion: " + balanceText.text);
+      
     }
     if (!double.TryParse(FormatStaticValue(socketManager.playerdata.balance), out double Balance))
     {
-      Debug.Log("Error: " + socketManager.playerdata.balance);
+      
     }
     if (!double.TryParse(totalWinText.text, out double currentWin))
     {
-      Debug.Log("Error total win: " + totalWinText.text);
+      
     }
 
     int completedTweens = 0;
@@ -1243,10 +1225,10 @@ public class UIManager : MonoBehaviour
   
   public void SwitchTopUI(bool trigger)
   {
-    // No-op for now
+    
   }
 
-  // --- Autoplay & Spin Button Rework Methods ---
+  
 
   private void OpenAutoplayPanel()
   {
@@ -1330,13 +1312,13 @@ public class UIManager : MonoBehaviour
       }
       else
       {
-        spinCount = 100; // default fallback
+        spinCount = 100; 
       }
     }
 
     if (autoplaySelectionPanel) autoplaySelectionPanel.SetActive(false);
 
-    // Call SlotManager to start autoplay
+    
     slotManager.StartAutoplay(spinCount, untilFeature);
   }
 
@@ -1373,7 +1355,7 @@ public class UIManager : MonoBehaviour
   {
     if (slotManager == null) return;
 
-    // Early exit if the feature popup or walter stash popup is active to ensure count UI and standard buttons remain inactive
+    
     if ((featurePopup != null && featurePopup.activeSelf) || (walterStashPopup != null && walterStashPopup.activeSelf))
     {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
@@ -1387,12 +1369,12 @@ public class UIManager : MonoBehaviour
         return;
     }
 
-    // Set interactability for info and close/exit buttons: they should only be disabled if bonus or feature transition is active, or if popup is active (handled above)
+    
     bool isInfoExitInteractable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
     if (infoButton) infoButton.interactable = isInfoExitInteractable;
     if (gameExitButton) gameExitButton.interactable = isInfoExitInteractable;
 
-    // Bet buttons should be disabled while autoplay is on, or when spinning/features are active.
+    
     bool isBetInteractable = !slotManager.IsSpinning && !slotManager.IsAutoSpin && !slotManager.IsFreeSpin && !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
     if (totalBetPlusButton) totalBetPlusButton.interactable = isBetInteractable;
     if (totalBetMinusButton) totalBetMinusButton.interactable = isBetInteractable;
@@ -1460,14 +1442,14 @@ public class UIManager : MonoBehaviour
       {
         if (slotStartButton) {
           slotStartButton.gameObject.SetActive(true);
-          // Disable the normal spin button if the feature is active or transition/trigger is happening
+          
           slotStartButton.interactable = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
         }
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
         if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
 
-        // Also ensure all other buttons are non-interactable during feature transitions/triggers
+        
         if (slotManager.IsBonus || slotManager.IsFeatureTransitioning)
         {
             SetButtonsInteractable(false);
@@ -1485,7 +1467,7 @@ public class UIManager : MonoBehaviour
           if (bonusManager != null && bonusManager.IsSpinning)
           {
               bonusManager.StopSpinToggle = true;
-              // Immediately change stop button to disabled feature spin button during feature
+              
               UpdateFeatureButtonsState(false, slotManager.LinkRespinsRemaining);
               if (featureSpinButton != null) featureSpinButton.interactable = false;
           }
@@ -1495,7 +1477,7 @@ public class UIManager : MonoBehaviour
           if (slotManager.IsSpinning && !slotManager.StopSpinToggle)
           {
               slotManager.StopSpinToggle = true;
-              // Immediately change stop button to disabled spin button for normal game
+              
               ShowSpinButtonCooldown(true);
           }
       }
@@ -1591,7 +1573,7 @@ public class UIManager : MonoBehaviour
           }
           else
           {
-              previousTotal = totalFreeSpins; // fallback
+              previousTotal = totalFreeSpins; 
           }
       }
       else
@@ -1935,8 +1917,8 @@ public class UIManager : MonoBehaviour
 
 public class DropdownItemDisabler : MonoBehaviour, UnityEngine.EventSystems.IPointerClickHandler
 {
-    public List<int> indexesToDisable = new List<int>();
-    public int SelectedIndexOverride = -1;
+    [SerializeField] internal List<int> indexesToDisable = new List<int>();
+    [SerializeField] internal int SelectedIndexOverride = -1;
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {

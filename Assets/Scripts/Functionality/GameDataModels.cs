@@ -34,7 +34,7 @@ public class ServerFeatures
     public int maxWinMultiplier;
     public int minWinMultiplier;
 
-    // Breaking Bad specific features
+    
     public Jackpot jackpot;
     public Bonus bonus;
 }
@@ -60,10 +60,10 @@ public class OverlayScatterFeature
 [Serializable]
 public class ExtraSpinsData
 {
-    [JsonProperty("2")] public int _2; // For 2 scatters
-    [JsonProperty("3")] public int _3; // For 3 scatters
-    [JsonProperty("4")] public int _4; // For 4 scatters
-    [JsonProperty("5")] public int _5; // For 5 scatters
+    [JsonProperty("2")] public int _2; 
+    [JsonProperty("3")] public int _3; 
+    [JsonProperty("4")] public int _4; 
+    [JsonProperty("5")] public int _5; 
 }
 
 [Serializable]
@@ -90,8 +90,8 @@ public class ServerSymbolInfo
 {
     public int id;
     public string name;
-    public List<double> multiplier; // Note: "multiplier" not "multipliers"
-    public string description;      // Breaking Bad symbol description
+    public List<double> multiplier; 
+    public string description;      
 }
 
 [Serializable]
@@ -99,10 +99,6 @@ public class ServerPlayer
 {
     public double balance;
 }
-
-// ============================================================================
-// FIXED: Server Response Models - Must match actual server JSON structure
-// ============================================================================
 
 [Serializable]
 public class ServerSpinResponse
@@ -112,28 +108,28 @@ public class ServerSpinResponse
     public ServerPlayerBalance player;
     public ServerPayload payload;
     public ServerFeaturesResult features;
-    public List<List<string>> matrix; // Added for Breaking Bad backwards compatibility
+    public List<List<string>> matrix; 
 }
 
 [Serializable]
 public class ServerPlayerBalance
 {
-    public double? balance; // Nullable because server sends null
+    public double? balance; 
 }
 
 [Serializable]
 public class ServerPayload
 {
-    public List<List<string>> reels;        // Server sends STRINGS not ints!
-    public List<ServerWinLine> winningLines; // Server uses "winningLines"
-    public double totalWin;                  // Server uses "totalWin"
+    public List<List<string>> reels;        
+    public List<ServerWinLine> winningLines; 
+    public double totalWin;                  
     public int scatterCount;
     public bool scatterTriggered;
-    public ServerFreeSpinState freeSpinState; // Can be null
-    public bool isRoundOver;                 // True when free spin round is over
-    public double totalRoundWin;             // Total round win (at payload level when isRoundOver)
+    public ServerFreeSpinState freeSpinState; 
+    public bool isRoundOver;                 
+    public double totalRoundWin;             
 
-    // Breaking Bad specific fields to maintain compatibility
+    
     public double winAmount;
     public List<LineWin> lineWins;
     public List<CoinPosition> coinPositions;
@@ -150,7 +146,7 @@ public class ServerPayload
     public FreeSpinResult freeSpinResult;
     public bool isLinkTriggered;
     public bool isPrizeCoinTriggered;
-    public bool linkFeatureComplete; // Server indicates link feature just completed
+    public bool linkFeatureComplete; 
 }
 
 [Serializable]
@@ -167,9 +163,9 @@ public class ServerFreeSpinState
 [Serializable]
 public class ServerWinLine
 {
-    public int lineIndex;                    // Server uses "lineIndex"
-    public List<List<int>> positions;        // Server format: [[row,col], [row,col]]
-    public string symbolId;                  // Server sends STRING!
+    public int lineIndex;                    
+    public List<List<int>> positions;        
+    public string symbolId;                  
     public int matchCount;
     public double basePayout;
     public double payout;
@@ -189,8 +185,8 @@ public class WildDetail
 public class ServerFeaturesResult
 {
     public ServerFreeSpinResult freeSpins;
-    public ServerJackpotResult jackpot;  // Jackpot result (triggered during Cash+Link or normal spin)
-    public double featureWin;            // Total feature win amount
+    public ServerJackpotResult jackpot;  
+    public double featureWin;            
 }
 
 [Serializable]
@@ -198,7 +194,7 @@ public class ServerJackpotResult
 {
     public bool triggered;
     public double amount;
-    public string type; // e.g., "WALTER_STASH_GRAND_PRIZE"
+    public string type; 
 }
 
 [Serializable]
@@ -209,7 +205,7 @@ public class ServerFreeSpinResult
     public bool isFreeSpin;
     public bool isRoundOver;
     public int spinsRemaining;
-    public int spinsUsed;  // Added: Server sends this in features.freeSpins
+    public int spinsUsed;  
     public int stickyWildsCount;
     public ServerOverlayScatter overlayScatter;
 }
@@ -222,10 +218,6 @@ public class ServerOverlayScatter
     public int extraSpins;
     public List<List<int>> positions;
 }
-
-// ============================================================================
-// Client-Side Spin Request
-// ============================================================================
 
 [Serializable]
 public class SpinRequest
@@ -254,12 +246,11 @@ public class BuyFeaturePayload
     public int betIndex;
 }
 
-
 [Serializable]
 public class BetHistoryRequest
 {
     public string type = "BET_HISTORY";
-    public string userId; // Will be set from server session
+    public string userId; 
     public BetHistoryPayload payload;
 }
 
@@ -294,7 +285,7 @@ public class BetHistoryItem
     public double bet;
     public double winLoss;
     public double balance;
-    public string date; // ISO format: "2026-04-23T14:29:55.265Z"
+    public string date; 
 }
 
 [Serializable]
@@ -316,24 +307,24 @@ public class PaginationInfo
 public class GameConfig
 {
     public int reelCount = 5;
-    public int rowCount = 3; // Breaking Bad has 3 rows
+    public int rowCount = 3; 
     public int symbolCount = 13;
     public int paylineCount = 40;
     public List<List<int>> paylines;
     public List<double> availableBets;
     public List<SymbolInfo> symbols;
 
-    // Wild configuration
-    public int wildSymbolId = 11;      // Base wild (1x)
-    public int wild2xSymbolId = 13;     // Wild 2x multiplier
-    public int wild3xSymbolId = 14;     // Wild 3x multiplier
-    public int wild5xSymbolId = 15;     // Wild 5x multiplier
+    
+    public int wildSymbolId = 11;      
+    public int wild2xSymbolId = 13;     
+    public int wild3xSymbolId = 14;     
+    public int wild5xSymbolId = 15;     
     public List<int> wildMultipliers = new List<int> { 1, 2, 3, 5 };
 
-    // Scatter configuration
+    
     public int scatterSymbolId = 12;
 
-    // Buy Feature configuration
+    
     public bool buyFeatureEnabled;
     public double buyFeatureCostMultiplier;
 
@@ -369,7 +360,7 @@ public class PlayerData
 [Serializable]
 public class SpinResult
 {
-    public List<List<int>> resultMatrix;  // Client uses int matrix
+    public List<List<int>> resultMatrix;  
     public double winAmount;
     public List<WinLine> winLines;
     public PlayerData playerData;
@@ -378,7 +369,7 @@ public class SpinResult
     public OverlayScatterData overlayScatterData;
     public Dictionary<string, int> stickyWilds;
 
-    // Server-authoritative free spin state
+    
     public int serverSpinsRemaining;
     public int serverSpinsUsed;
     public double serverTotalRoundWin;
@@ -390,7 +381,7 @@ public class WinLine
 {
     public int lineId;
     public int symbolId;
-    public List<int> positions;  // Flat list: [0, 5, 10, 15, 20]
+    public List<int> positions;  
     public double winAmount;
 }
 
@@ -457,9 +448,6 @@ public enum SpinSpeed
 
 #region Helper Classes for Conversion
 
-/// <summary>
-/// Converts server data to client GameConfig
-/// </summary>
 public static class InitDataConverter
 {
     internal static GameConfig ConvertToGameConfig(InitData serverData)
@@ -467,7 +455,7 @@ public static class InitDataConverter
         var config = new GameConfig
         {
             reelCount = 5,
-            rowCount = 3, // Breaking Bad layout has 3 rows
+            rowCount = 3, 
             symbolCount = serverData.uiData.paylines.symbols.Count,
             paylineCount = serverData.gameData.totalLines,
             paylines = serverData.gameData.lines,
@@ -499,7 +487,7 @@ public static class InitDataConverter
             }
         }
 
-        // Buy Feature config
+        
         if (serverData.features?.buyFeature != null)
         {
             config.buyFeatureEnabled = serverData.features.buyFeature.enabled;
@@ -534,17 +522,17 @@ public static class InitDataConverter
         };
     }
 
-    /// <summary>
-    /// CRITICAL: Converts server response to client SpinResult
-    /// Handles string-to-int conversion, matrix transposition, and wild multiplier mapping
-    /// Server sends [row][col] (3 rows x 5 cols), Client needs [col][row] (5 cols x 3 rows)
-    /// </summary>
+    
+    
+    
+    
+    
     internal static SpinResult ConvertServerResponseToSpinResult(ServerSpinResponse serverResponse, double currentBalance, double betAmount, GameConfig gameConfig)
     {
-        // Use server balance directly if available
+        
         double newBalance = serverResponse.player?.balance ?? CalculateNewBalance(currentBalance, betAmount, serverResponse.payload.totalWin);
 
-        // Get server free spin state values
+        
         int spinsRemaining = serverResponse.features?.freeSpins?.spinsRemaining ?? serverResponse.payload.freeSpinState?.spinsRemaining ?? 0;
         int spinsUsed = serverResponse.features?.freeSpins?.spinsUsed ?? serverResponse.payload.freeSpinState?.spinsUsed ?? 0;
         double totalRoundWin = serverResponse.payload.totalRoundWin > 0
@@ -556,23 +544,23 @@ public static class InitDataConverter
 
         var result = new SpinResult
         {
-            // Convert and transpose reels from server format to client format
+            
             resultMatrix = ConvertReelsToMatrix(serverResponse.payload.reels ?? serverResponse.matrix, serverResponse.payload.winningLines, stickyWilds, gameConfig),
 
-            // Map totalWin to winAmount
+            
             winAmount = serverResponse.payload.totalWin,
 
-            // Convert winningLines to winLines
+            
             winLines = ConvertWinningLines(serverResponse.payload.winningLines, gameConfig),
 
-            // Update player data — use server balance directly
+            
             playerData = new PlayerData
             {
                 balance = newBalance,
-                currentBetIndex = 0 // Will be set by GameManager
+                currentBetIndex = 0 
             },
 
-            // Convert free spin data
+            
             freeSpinData = serverResponse.features?.freeSpins != null && serverResponse.features.freeSpins.triggered
                 ? new FreeSpinData
                 {
@@ -583,13 +571,13 @@ public static class InitDataConverter
                 }
                 : null,
 
-            // Convert scatter data
+            
             scatterData = serverResponse.payload.scatterTriggered
                 ? new ScatterData
                 {
                     isTriggered = true,
                     scatterCount = serverResponse.payload.scatterCount,
-                    winAmount = 0 // Calculate if needed
+                    winAmount = 0 
                 }
                 : null,
 
@@ -605,7 +593,7 @@ public static class InitDataConverter
 
             stickyWilds = serverResponse.payload.freeSpinState?.stickyWilds,
 
-            // Server-authoritative free spin state
+            
             serverSpinsRemaining = spinsRemaining,
             serverSpinsUsed = spinsUsed,
             serverTotalRoundWin = totalRoundWin,
@@ -615,11 +603,10 @@ public static class InitDataConverter
         return result;
     }
 
-
     private static List<List<int>> ConvertReelsToMatrix(List<List<string>> serverReels, List<ServerWinLine> winningLines, Dictionary<string, int> stickyWilds, GameConfig gameConfig)
     {
-        // Server sends 3 rows x 5 columns: reels[row][col]
-        // Client needs 5 columns x 3 rows: matrix[col][row]
+        
+        
 
         if (serverReels == null || serverReels.Count != 3)
         {
@@ -627,10 +614,10 @@ public static class InitDataConverter
             return GenerateDefaultMatrix();
         }
 
-        // Build wild multiplier lookup: [col][row] -> multiplier
+        
         var wildMultipliers = new Dictionary<string, int>();
 
-        // 1. Add winning line wild details (format explicit col, row)
+        
         if (winningLines != null)
         {
             foreach (var line in winningLines)
@@ -646,8 +633,8 @@ public static class InitDataConverter
             }
         }
 
-        // 2. Add sticky wilds (format row_col) - these override winningLines if they overlap
-        // to ensure the authoritative sticky multiplier is used (e.g. 3x instead of 1x)
+        
+        
         if (stickyWilds != null)
         {
             foreach (var kvp in stickyWilds)
@@ -657,7 +644,7 @@ public static class InitDataConverter
                     int.TryParse(parts[0], out int row) &&
                     int.TryParse(parts[1], out int col))
                 {
-                    // Convert row_col to col_row for lookup
+                    
                     string key = $"{col}_{row}";
                     wildMultipliers[key] = kvp.Value;
                 }
@@ -666,12 +653,12 @@ public static class InitDataConverter
 
         var matrix = new List<List<int>>();
 
-        // Transpose: iterate by columns
+        
         for (int col = 0; col < 5; col++)
         {
             var column = new List<int>();
 
-            // Each column has 3 rows
+            
             for (int row = 0; row < 3; row++)
             {
                 if (col >= serverReels[row].Count)
@@ -690,13 +677,13 @@ public static class InitDataConverter
                     continue;
                 }
 
-                // Check if this is a wild with multiplier
+                
                 if (symbolId == gameConfig.wildSymbolId)
                 {
                     string key = $"{col}_{row}";
                     if (wildMultipliers.TryGetValue(key, out int multiplier))
                     {
-                        // Map wild multiplier to correct symbol ID
+                        
                         symbolId = GetWildSymbolIdForMultiplier(multiplier, gameConfig);
                     }
                 }
@@ -710,22 +697,21 @@ public static class InitDataConverter
         return matrix;
     }
 
-    /// <summary>
-    /// Maps wild multiplier to correct symbol ID
-    /// 1x → 11 (Wild), 2x → 13 (Wild2x), 3x → 14 (Wild3x), 5x → 15 (Wild5x)
-    /// </summary>
+    
+    
+    
+    
     private static int GetWildSymbolIdForMultiplier(int multiplier, GameConfig gameConfig)
     {
         return multiplier switch
         {
-            1 => 11,  // Wild (normal)
-            2 => 13,  // Wild 2x
-            3 => 14,  // Wild 3x
-            5 => 15,  // Wild 5x
-            _ => 11   // Default to normal wild
+            1 => 11,  
+            2 => 13,  
+            3 => 14,  
+            5 => 15,  
+            _ => 11   
         };
     }
-
 
     private static List<List<int>> GenerateDefaultMatrix()
     {
@@ -742,11 +728,11 @@ public static class InitDataConverter
         return matrix;
     }
 
-    /// <summary>
-    /// Converts server winningLines to client winLines.
-    /// Uses the server-provided positions directly: each position is [row, col].
-    /// Encodes as flat index = col * rowCount + row (rowCount = 3).
-    /// </summary>
+    
+    
+    
+    
+    
     private static List<WinLine> ConvertWinningLines(List<ServerWinLine> serverWinLines, GameConfig gameConfig)
     {
         var winLines = new List<WinLine>();
@@ -755,7 +741,7 @@ public static class InitDataConverter
 
         foreach (var serverLine in serverWinLines)
         {
-            // Parse symbolId from string to int
+            
             if (!int.TryParse(serverLine.symbolId, out int symbolId))
             {
                 UnityEngine.Debug.LogError($"Failed to parse symbolId: {serverLine.symbolId}");
@@ -779,7 +765,7 @@ public static class InitDataConverter
             }
             else
             {
-                // Fallback: derive from payline definition + matchCount if positions missing
+                
                 UnityEngine.Debug.LogWarning($"[ConvertWinningLines] No positions from server for lineIndex {serverLine.lineIndex}, falling back to payline table");
                 if (gameConfig?.paylines != null &&
                     serverLine.lineIndex >= 0 &&
@@ -1003,50 +989,39 @@ public class Column
 
 #region Feature Queue
 
-/// <summary>
-/// Defines the feature types that can be triggered during a spin.
-/// Execution order when multiple trigger simultaneously:
-///   PrizeCoinJackpot → CashCollectAndLink → FreeSpin/FreeSpinRetrigger
-/// </summary>
 public enum FeatureType
 {
     None,
-    PrizeCoinJackpot,     // Mini jackpot slot (PrizeCoin with CashCollect)
-    CashCollect,          // Normal Cash Collect feature
-    CashCollectAndLink,   // Heisenberg Cash Collect & Link feature
-    FreeSpin,             // Free spins trigger (from normal spin)
-    FreeSpinRetrigger     // Free spins re-trigger (during active free spins)
+    PrizeCoinJackpot,     
+    CashCollect,          
+    CashCollectAndLink,   
+    FreeSpin,             
+    FreeSpinRetrigger     
 }
 
-/// <summary>
-/// A simple ordered queue that determines and manages the execution sequence
-/// of triggered features after each spin result. Features can nest (e.g., Free Spin
-/// triggers Cash+Link which triggers Jackpot), and this queue ensures they play
-/// in the correct priority order.
-/// </summary>
 public class FeatureQueue
 {
     private Queue<FeatureType> _queue = new Queue<FeatureType>();
 
-    /// <summary>True if there are still features waiting to be processed.</summary>
+    
     public bool HasPending => _queue.Count > 0;
 
-    /// <summary>The feature currently being processed.</summary>
+    
     public FeatureType Current { get; private set; } = FeatureType.None;
 
-    /// <summary>Number of pending features in the queue.</summary>
+    
     public int Count => _queue.Count;
 
     public void Enqueue(FeatureType type)
     {
         _queue.Enqueue(type);
-        Debug.Log($"[FeatureQueue] Enqueued: {type} (queue size: {_queue.Count})");
+        
     }
 
     public FeatureType Dequeue()
     {
         Current = _queue.Dequeue();
-        Debug.Log($"[FeatureQueue] Dequeued: {Current} (remaining: {_queue.Count})");
+        
         return Current;
     }
 
@@ -1066,17 +1041,17 @@ public class FeatureQueue
         return _queue.Contains(type);
     }
 
-    /// <summary>
-    /// Builds the feature queue from a spin response payload.
-    /// Determines which features triggered and enqueues them in priority order:
-    ///   1. PrizeCoinJackpot   (plays inline — jackpot mini-slot animation)
-    ///   2. CashCollect        (normal Cash Collect sequence)
-    ///   3. CashCollectAndLink (transitions to BonusManager)
-    ///   4. FreeSpin / FreeSpinRetrigger (starts or adds to free spins)
-    ///   5. FreeSpin: plays last (new trigger from normal game, transitions after Link)
-    /// </summary>
-    /// <param name="payload">The server spin response payload.</param>
-    /// <param name="isFreeSpinCurrentlyActive">Whether free spins are already running.</param>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void BuildFromResponse(ServerPayload payload, bool isFreeSpinCurrentlyActive)
     {
         Clear();
@@ -1092,45 +1067,43 @@ public class FeatureQueue
         bool hasLink = payload.isLinkTriggered;
         bool hasFreeSpin = payload.isFreeSpinTriggered;
 
-        // 1. PrizeCoin Jackpot: plays first if PrizeCoin exists AND (CashCollect or Link triggered)
-        //    This is the mini jackpot slot animation that plays inline before other features
+        
+        
         if (hasPrizeCoin && (hasCC || hasLink))
         {
             Enqueue(FeatureType.PrizeCoinJackpot);
         }
 
-        // 2. FreeSpinRetrigger: if already in Free Spins, retrigger animation plays BEFORE transitioning to Link
+        
         if (hasFreeSpin && isFreeSpinCurrentlyActive)
         {
             Enqueue(FeatureType.FreeSpinRetrigger);
         }
 
-        // 3. Normal Cash Collect
+        
         if (hasCC)
         {
             Enqueue(FeatureType.CashCollect);
         }
 
-        // 4. Cash Collect & Link: transitions to BonusManager
+        
         if (hasLink)
         {
             Enqueue(FeatureType.CashCollectAndLink);
         }
 
-        // 5. Free Spin: plays last (new trigger from normal game, transitions after Link)
+        
         if (hasFreeSpin && !isFreeSpinCurrentlyActive)
         {
             Enqueue(FeatureType.FreeSpin);
         }
 
-        Debug.Log($"[FeatureQueue] Built queue with {_queue.Count} feature(s) | " +
-                  $"PrizeCoin={hasPrizeCoin} CC={hasCC} Link={hasLink} FreeSpin={hasFreeSpin} " +
-                  $"FreeSpinActive={isFreeSpinCurrentlyActive}");
+        
     }
 
-    /// <summary>
-    /// Checks if any coin in the payload is a PrizeCoin (symbolId 16).
-    /// </summary>
+    
+    
+    
     private bool HasPrizeCoinInCoins(ServerPayload payload)
     {
         if (payload.coinPositions == null) return false;

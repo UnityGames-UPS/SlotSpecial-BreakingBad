@@ -15,7 +15,6 @@ public class BonusManager : MonoBehaviour
   [SerializeField] internal List<Column> freezedLocations = new();
   [SerializeField] internal List<List<int>> Locations = new();
 
-
   [Header("Sprites References")]
   [SerializeField] private Sprite[] index9Sprites;
   [SerializeField] private Sprite coinFrame;
@@ -29,14 +28,11 @@ public class BonusManager : MonoBehaviour
   [SerializeField] private CanvasGroup NormalSlot_CG;
   [SerializeField] private CanvasGroup BonusSlot_CG;
 
-
-
   [Header("Slot References")]
-  [SerializeField] private List<SlotImage> TotalMiniSlotImages;     //class to store total images
+  [SerializeField] private List<SlotImage> TotalMiniSlotImages;     
   [SerializeField] internal List<SlotTransform> Slot;
 
   private Dictionary<Transform, Tween> activeTweens = new Dictionary<Transform, Tween>();
-  private int IconSizeFactor = 202;
   internal bool IsSpinning;
   internal bool StopSpinToggle;
   private bool BonusEnd = false;
@@ -88,7 +84,6 @@ public class BonusManager : MonoBehaviour
       BonusSlot_CG.blocksRaycasts = false;
     }
 
-
     double initialWin = 0;
     if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.linkFeatureResult != null)
     {
@@ -98,7 +93,7 @@ public class BonusManager : MonoBehaviour
 
     ResetMatrix();
 
-    // Place the initial coins on the board
+    
     var initialCoins = SocketManager.resultData.payload.linkFeatureResult?.initialCoins;
     if (initialCoins == null)
     {
@@ -173,7 +168,7 @@ public class BonusManager : MonoBehaviour
       }
     }
 
-    // Place cashcollect symbol on its position
+    
     for (int row = 0; row < SocketManager.resultData.matrix.Count; row++)
     {
       for (int col = 0; col < SocketManager.resultData.matrix[row].Count; col++)
@@ -187,13 +182,13 @@ public class BonusManager : MonoBehaviour
           if (view != null)
           {
             view.ClearValues();
-            slotManager.ConfigureSymbolView(view, 14); // Configure as Cash Collect
+            slotManager.ConfigureSymbolView(view, 14); 
           }
         }
       }
     }
 
-    // Initialize the sticky symbol manager's frozen locations with initial coins and Cash Collect symbols
+    
     List<List<int>> initialLocations = new List<List<int>>();
     if (initialCoins != null)
     {
@@ -220,7 +215,7 @@ public class BonusManager : MonoBehaviour
         Debug.LogError("Error parsing cashCollectPositions: " + ex.Message);
       }
     }
-    // staticSymbol.TurnOnIndices(initialLocations);
+    
     GenerateFreezeMatrix(initialLocations);
 
     NormalSlot_CG.DOFade(0, 0.5f);
@@ -261,12 +256,12 @@ public class BonusManager : MonoBehaviour
   {
     IsSpinning = true;
 
-    // Initialize tweening for non-frozen slot animations
+    
     for (int col = 0; col < Slot.Count; col++)
     {
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
-        if (freezedLocations[col].index[row] == 0) // Only initialize non-frozen slots
+        if (freezedLocations[col].index[row] == 0) 
         {
           InitializeSingleSlotTweening(Slot[col].slotTransforms[row]);
         }
@@ -284,12 +279,12 @@ public class BonusManager : MonoBehaviour
 
     PopulateSymbols();
 
-    // Stop non-frozen slots in column-major order (col-by-col, top-to-bottom)
+    
     for (int col = 0; col < Slot.Count; col++)
     {
       for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
       {
-        if (freezedLocations[col].index[row] == 0) // Stop only non-frozen slots
+        if (freezedLocations[col].index[row] == 0) 
         {
           int flattenedIndex = col * Slot[col].slotTransforms.Count + row;
           yield return StopSingleSlotTweening(3, Slot[col].slotTransforms[row], flattenedIndex, StopSpinToggle);
@@ -381,7 +376,6 @@ public class BonusManager : MonoBehaviour
           }
       }
 
-
       allcoinPositions.Clear();
       allcoinPositions.TrimExcess();
 
@@ -395,7 +389,6 @@ public class BonusManager : MonoBehaviour
     int remaining = SocketManager.resultData.payload.linkRespinsRemaining;
     slotManager.SetLinkRespinsRemaining(remaining);
     uiManager.SetBonusSpinCounter(remaining);
-
 
     IsSpinning = false;
     if (StopSpinToggle && remaining > 0)
@@ -420,7 +413,7 @@ public class BonusManager : MonoBehaviour
       {
         if (freezedLocations[i].index[j] == 1)
         {
-          continue; // Skip frozen slot positions
+          continue; 
         }
 
         Transform cell = Slot[i].slotTransforms[j];
@@ -523,7 +516,7 @@ public class BonusManager : MonoBehaviour
 
     double winAmt = SocketManager.resultData.payload.winAmount;
 
-    // Show Walter Stash Grand Prize Popup first if triggered
+    
     if (SocketManager.resultData != null && 
         SocketManager.resultData.payload != null && 
         SocketManager.resultData.payload.linkFeatureResult != null && 
@@ -559,23 +552,23 @@ public class BonusManager : MonoBehaviour
     {
       bool isRetrigger = slotManager.WasFreeSpinPaused || slotManager.IsFreeSpin;
 
-      // 1. Build the feature queue so that FreeSpins is enqueued and ready
+      
       slotManager.featureQueue.BuildFromResponse(SocketManager.resultData.payload, isRetrigger);
 
-      // 2. Consume the FreeSpin/FreeSpinRetrigger feature since we are playing it manually now
+      
       if (slotManager.featureQueue.HasPending && 
           (slotManager.featureQueue.Peek() == FeatureType.FreeSpin || slotManager.featureQueue.Peek() == FeatureType.FreeSpinRetrigger))
       {
           slotManager.featureQueue.Dequeue();
       }
 
-      // 3. Play the Free Spin Trigger sequence with the fromBonusSlot = true flag!
+      
       var fsResult = SocketManager.resultData.payload.freeSpinResult;
       yield return uiManager.PlayFreeSpinTriggerSequence(fsResult, isRetrigger, true);
 
       ResetStaticSymbol();
 
-      // 4. Mark Free Spin active on slotManager and update HUD buttons
+      
       slotManager.IsFreeSpin = true;
       slotManager.WasFreeSpinPaused = false;
       slotManager.IsFeatureTransitioning = false;
@@ -590,7 +583,7 @@ public class BonusManager : MonoBehaviour
       yield break;
     }
 
-    // Default flow when Free Spins are NOT triggered:
+    
     if (AudioController.Instance != null) AudioController.Instance.PlayMainBg();
     uiManager.CloseBonusUI();
     yield return null;
@@ -611,11 +604,11 @@ public class BonusManager : MonoBehaviour
       ResetStaticSymbol();
       ResetMatrix();
 
-      // OnLinkFeatureCompleted now handles ALL return paths:
-      // - Processing remaining features in the queue (e.g., FreeSpin after Link)
-      // - Resuming paused free spins
-      // - Restoring auto spin
-      // - Re-enabling buttons
+      
+      
+      
+      
+      
       uiManager.SetNormalSpinButtonActive(true);
       slotManager.OnLinkFeatureCompleted();
     });
@@ -666,7 +659,7 @@ public class BonusManager : MonoBehaviour
     }
   }
 
-  // Bonus slot start: anticipation bounce before entering the spin loop
+  
   private void InitializeSingleSlotTweening(Transform slotTransform, bool bonus = false)
   {
     float startY = 307f;
@@ -681,13 +674,13 @@ public class BonusManager : MonoBehaviour
       activeTweens[slotTransform].Kill();
     }
 
-    // Use a Sequence for wind-up bounce then continuous loop
+    
     Sequence seq = DOTween.Sequence();
     seq.Append(slotTransform.DOLocalMoveY(startY + anticipationUp, anticipationDuration).SetEase(Ease.OutQuad));
     seq.Append(slotTransform.DOLocalMoveY(startY, anticipationDuration * 0.5f).SetEase(Ease.InQuad));
     seq.OnComplete(() =>
     {
-      // After bounce, start continuous loop spin
+      
       Tweener tweener = slotTransform.DOLocalMoveY(endY, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetDelay(0);
       tweener.Play();
       activeTweens[slotTransform] = tweener;
@@ -697,12 +690,12 @@ public class BonusManager : MonoBehaviour
     seq.Play();
   }
 
-  // Bonus slot stop: overshoot + settle bounce for satisfying landing
+  
   private IEnumerator StopSingleSlotTweening(int reqpos, Transform slotTransform, int index, bool quickStop = false)
   {
     if (!activeTweens.ContainsKey(slotTransform) || activeTweens[slotTransform] == null)
     {
-      Debug.Log("Tween not found for the specified slotTransform.");
+      
       yield break;
     }
 
@@ -729,10 +722,10 @@ public class BonusManager : MonoBehaviour
 
     if (AudioController.Instance != null) AudioController.Instance.PlaySlotStop();
 
-    // Phase 1: Snap to slightly past target (overshoot)
+    
     Sequence stopSeq = DOTween.Sequence();
     stopSeq.Append(slotTransform.DOLocalMoveY(targetY - overshootDistance, 0.08f).SetEase(Ease.InQuad));
-    // Phase 2: Bounce settle back to exact target
+    
     stopSeq.Append(slotTransform.DOLocalMoveY(targetY, 0.15f).SetEase(Ease.OutBack, 1.5f));
 
     yield return stopSeq.WaitForCompletion();
@@ -746,15 +739,15 @@ public class BonusManager : MonoBehaviour
         string symbolIdStr = SocketManager.resultData.matrix[row][col];
         if (int.TryParse(symbolIdStr, out int symbolId))
         {
-            if (symbolId == 15 || symbolId == 16) // Gold Coin / Prize Coin
+            if (symbolId == 15 || symbolId == 16) 
             {
                 if (AudioController.Instance != null) AudioController.Instance.PlayCashCoinLand();
             }
-            else if (symbolId == 11 || symbolId == 12) // Link / MegaLink
+            else if (symbolId == 11 || symbolId == 12) 
             {
                 if (AudioController.Instance != null) AudioController.Instance.PlayLinkLand();
             }
-            else if (symbolId == 14 || symbolId == 17) // Cash Collect / Los Pollos
+            else if (symbolId == 14 || symbolId == 17) 
             {
                 if (AudioController.Instance != null) AudioController.Instance.PlayCashCollectLand();
             }
@@ -767,7 +760,7 @@ public class BonusManager : MonoBehaviour
     }
     activeTweens.Remove(slotTransform);
 
-    // Small stagger before next slot stops
+    
     if (!quickStop)
     {
         yield return new WaitForSeconds(0.06f);
@@ -938,7 +931,7 @@ public class BonusManager : MonoBehaviour
           {
               Transform cell = Slot[col].slotTransforms[row];
               
-              // Pre-configure static main cell and disable the image component (keep gameobject active so SlotManager can find view)
+              
               Image mainImg = cell.GetChild(2).GetComponent<Image>();
               SlotSymbolView view = mainImg.GetComponent<SlotSymbolView>();
               if (view != null)
@@ -975,7 +968,7 @@ public class BonusManager : MonoBehaviour
                   }
               }
 
-              // Get the animation cell from animationManager instead of slot icon children
+              
               ImageAnimation anim = slotManager.animationManager.GetAnimationCell(row, col);
 
               if (anim != null)
@@ -1009,7 +1002,7 @@ public class BonusManager : MonoBehaviour
                       }
                   }
 
-                  // 1.5 - 2 sec duration (1.8 seconds is perfect)
+                  
                   anim.useDynamicFramerate = true;
                   anim.dynamicLoopDuration = 1.8f;
                   anim.doLoopAnimation = false;
@@ -1024,7 +1017,7 @@ public class BonusManager : MonoBehaviour
                   anim.StartAnimation();
                   runningAnims.Add(anim);
 
-                  // Keep mainImg GameObject active so GetComponentInChildren does not return null, only disable the Image renderer component
+                  
                   mainImg.enabled = false;
               }
           }
@@ -1032,7 +1025,7 @@ public class BonusManager : MonoBehaviour
 
       if (runningAnims.Count > 0)
       {
-          // Wait until they reach frame 46 (to show the text)
+          
           yield return new WaitUntil(() => {
               foreach (var anim in runningAnims)
               {
@@ -1041,14 +1034,14 @@ public class BonusManager : MonoBehaviour
                       int currentFrame = anim.textureArray.IndexOf(anim.rendererDelegate.sprite);
                       if (currentFrame < 46)
                       {
-                          return false; // Wait until all reach at least frame 46
+                          return false; 
                       }
                   }
               }
               return true;
           });
 
-          // Enable text object with value in AnimationTextHelper on the animation cell
+          
           foreach (var coin in initialCoins)
           {
               int row = coin.position[0];
@@ -1109,7 +1102,7 @@ public class BonusManager : MonoBehaviour
               }
           }
 
-          // Wait until the single loop animation ends
+          
           yield return new WaitUntil(() => {
               foreach (bool completed in animCompleted)
               {
@@ -1118,7 +1111,7 @@ public class BonusManager : MonoBehaviour
               return true;
           });
 
-          // Stop animations, hide animation cells, and clear animation texts
+          
           foreach (var anim in runningAnims)
           {
               if (anim != null)
@@ -1136,7 +1129,7 @@ public class BonusManager : MonoBehaviour
               }
           }
 
-          // Enable main slot cells and configure the sticky symbol overlay
+          
           foreach (var coin in initialCoins)
           {
               int row = coin.position[0];
@@ -1144,14 +1137,13 @@ public class BonusManager : MonoBehaviour
               string matrixVal = SocketManager.resultData.matrix[row][col];
               if (matrixVal == "11" || matrixVal == "12")
               {
-                  // Removed StickySymbolManager activations since we freeze the main slots directly
+                  
                   Transform cell = Slot[col].slotTransforms[row];
                   Image mainImg = cell.GetChild(2).GetComponent<Image>();
                   mainImg.enabled = true;
               }
           }
       }
-
 
       yield return new WaitForSeconds(0.5f);
       OnInitialTransitionComplete();
@@ -1165,7 +1157,7 @@ public class BonusManager : MonoBehaviour
               Locations.Add(loc[i]);
       }
 
-      // Build matrix of zeros
+      
       List<List<int>> freezeMatrix = new List<List<int>>();
       for (int i = 0; i < Slot.Count; i++)
       {
@@ -1173,7 +1165,7 @@ public class BonusManager : MonoBehaviour
           freezeMatrix.Add(row);
       }
 
-      // Mark frozen positions
+      
       foreach (List<int> indexPair in Locations)
       {
           if (indexPair.Count == 2)
@@ -1188,7 +1180,7 @@ public class BonusManager : MonoBehaviour
           }
       }
 
-      // Sync freezedLocations
+      
       freezedLocations.Clear();
       foreach (var row in freezeMatrix)
       {

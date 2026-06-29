@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    public static AudioController Instance { get; private set; }
+    internal static AudioController Instance { get; private set; }
 
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource bgSource;      // Music channel
-    [SerializeField] private AudioSource sfxSource;     // SFX channel
-    [SerializeField] private AudioSource spareSource;   // Spare/looping SFX channel
+    [SerializeField] private AudioSource bgSource;      
+    [SerializeField] private AudioSource sfxSource;     
+    [SerializeField] private AudioSource spareSource;   
 
     [Header("Audio Clips")]
     [SerializeField] private AudioClip clipMainBg;
@@ -29,7 +29,7 @@ public class AudioController : MonoBehaviour
     private float musicVolume = 0.7f;
     private float sfxVolume = 0.7f;
 
-    public float MusicVolume
+    internal float MusicVolume
     {
         get => musicVolume;
         set
@@ -41,7 +41,7 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    public float SfxVolume
+    internal float SfxVolume
     {
         get => sfxVolume;
         set
@@ -63,7 +63,7 @@ public class AudioController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Load volume settings from PlayerPrefs
+        
         musicVolume = PlayerPrefs.GetFloat("music_volume", 0.7f);
         sfxVolume = PlayerPrefs.GetFloat("sfx_volume", 0.7f);
 
@@ -77,7 +77,7 @@ public class AudioController : MonoBehaviour
         if (spareSource != null) spareSource.volume = sfxVolume;
     }
 
-    // --- BG MUSIC ---
+    
     public void PlayMainBg()
     {
         PlayBgClip(clipMainBg);
@@ -102,7 +102,7 @@ public class AudioController : MonoBehaviour
         if (bgSource != null) bgSource.Stop();
     }
 
-    // --- SFX ONE SHOTS ---
+    
     public void PlaySpinBtn()
     {
         PlaySfxOneShot(clipSpinBtn);
@@ -158,7 +158,7 @@ public class AudioController : MonoBehaviour
         PlaySfxOneShot(clipWinLine);
     }
 
-    // --- TENSION BUILDERS & LOOPS ---
+    
     public void PlaySingleTension()
     {
         PlaySpareLoop(clipSingleTension);
@@ -214,7 +214,7 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    // --- APPLICATION FOCUS ---
+    
     private void OnApplicationFocus(bool hasFocus)
     {
         HandleFocus(hasFocus);

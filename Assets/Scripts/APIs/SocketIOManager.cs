@@ -29,9 +29,9 @@ public class SocketIOManager : MonoBehaviour
     internal bool isConnected;
     internal bool isInitialized;
     internal bool initializationFailed;
-    internal bool isExiting;   // True when CloseSocket is called intentionally (exit button)
+    internal bool isExiting;   
 
-    // Game data (kept for backward compat with SlotManager/UIManager references)
+    
     internal InitData initialData = null;
     internal ServerUIData initUIData = null;
     internal ServerSpinResponse resultData = null;
@@ -42,7 +42,7 @@ public class SocketIOManager : MonoBehaviour
     internal bool isLoaded = false;
     internal bool SetInit = false;
 
-    // Ping/Pong health check
+    
     private Coroutine pingCoroutine;
     private float lastPongTime;
     private bool waitingForPong;
@@ -85,7 +85,7 @@ public class SocketIOManager : MonoBehaviour
 
     void ReceiveAuthToken(string jsonData)
     {
-        Debug.Log($"[SocketIO] Auth received");
+        Debug.Log("[SocketIO] Auth received");
 
         try
         {
@@ -143,20 +143,20 @@ public class SocketIOManager : MonoBehaviour
             ? socketManager.Socket
             : socketManager.GetSocket("/" + nameSpace);
 
-        // Core socket events
+        
         gameSocket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnSocketConnected);
         gameSocket.On(SocketIOEventTypes.Disconnect, OnSocketDisconnected);
         gameSocket.On<Error>(SocketIOEventTypes.Error, OnSocketError);
 
-        // Game events
+        
         gameSocket.On<string>("game:init", OnInitReceived);
         gameSocket.On<string>("result", OnResultReceived);
         gameSocket.On<string>("pong", OnPongReceived);
         gameSocket.On<string>("AnotherDevice", OnAnotherDevice);
 
-        // Informational events (logged only)
+        
         gameSocket.On<string>("internalError", (data) => Debug.LogWarning($"[SocketIO] Internal error: {data}"));
-        gameSocket.On<string>("alert", (data) => Debug.Log($"[SocketIO] Alert: {data}"));
+        gameSocket.On<string>("alert", (data) => {});
 
         socketManager.Open();
     }
@@ -191,16 +191,16 @@ public class SocketIOManager : MonoBehaviour
 
         if (isExiting)
         {
-            // Intentional exit — show loading popup (animation) instead of disconnect popup
+            
             if (popupManager != null && !popupManager.IsLoadingPopupActive())
             {
-                popupManager.ShowLoadingPopup(0f); // 0 = indefinite, JS will reload the page
+                popupManager.ShowLoadingPopup(0f); 
             }
-            // Do NOT call OnDisconnected state cleanup for an intentional exit
+            
         }
         else
         {
-            // Unexpected disconnection — show the regular disconnection popup
+            
             if (popupManager != null)
             {
                 popupManager.ShowDisconnectionPopup();
@@ -254,13 +254,13 @@ public class SocketIOManager : MonoBehaviour
         {
             InitData myData = JsonConvert.DeserializeObject<InitData>(jsonData);
 
-            // Store data for backward compatibility
+            
             initialData = myData;
             initUIData = myData.uiData;
             playerdata = myData.player;
             LineData = myData.gameData.lines;
 
-            // Initialize the slot manager
+            
             slotManager.Initialize(myData);
 
             isInitialized = true;
@@ -299,7 +299,7 @@ public class SocketIOManager : MonoBehaviour
     {
         if (!jsonData.Contains("\"id\":\"ResultData\""))
         {
-            // Not a spin result — could be ExitUser or other
+            
             HandleNonResultData(jsonData);
             return;
         }
@@ -437,11 +437,13 @@ public class SocketIOManager : MonoBehaviour
         if (gameSocket != null && isConnected)
         {
             gameSocket.Emit("ping");
+            Debug.Log("[SocketIO] Ping sent");
         }
     }
 
     private void OnPongReceived(string data)
     {
+        Debug.Log("[SocketIO] Pong received");
         waitingForPong = false;
         lastPongTime = Time.time;
 
@@ -504,8 +506,8 @@ public class SocketIOManager : MonoBehaviour
 
     internal IEnumerator CloseSocket()
     {
-        // Mark as intentional exit BEFORE closing so OnSocketDisconnected shows
-        // the loading popup (with its animation) instead of the disconnect popup.
+        
+        
         isExiting = true;
 
         if (RaycastBlocker) RaycastBlocker.SetActive(true);
@@ -522,8 +524,8 @@ public class SocketIOManager : MonoBehaviour
 
         isConnected = false;
 
-        // If the socket close does not fire OnSocketDisconnected (e.g. already disconnected),
-        // still show the loading popup so the exit transition always looks clean.
+        
+        
         if (popupManager != null && !popupManager.IsLoadingPopupActive())
         {
             popupManager.ShowLoadingPopup(0f);

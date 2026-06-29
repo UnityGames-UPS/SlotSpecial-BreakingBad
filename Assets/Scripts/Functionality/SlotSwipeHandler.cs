@@ -25,7 +25,7 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     {
         if (slotManager == null || !slotManager.IsSpinning) return;
 
-        // Verify we didn't click on an interactive button/toggle
+        
         if (EventSystem.current != null)
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
@@ -39,7 +39,7 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
                     res.gameObject.GetComponentInParent<UnityEngine.UI.Toggle>() != null ||
                     res.gameObject.name.ToLower().Contains("button"))
                 {
-                    return; // Ignore click if on a button/toggle
+                    return; 
                 }
             }
         }
@@ -51,7 +51,7 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     {
         if (slotManager == null || slotManager.IsSpinning || slotManager.IsFeatureTransitioning) return;
 
-        // Verify we didn't click on an interactive button/toggle
+        
         if (EventSystem.current != null)
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
@@ -65,7 +65,7 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
                     res.gameObject.GetComponentInParent<UnityEngine.UI.Toggle>() != null ||
                     res.gameObject.name.ToLower().Contains("button"))
                 {
-                    return; // Ignore drag if started on a button/toggle
+                    return; 
                 }
             }
         }
@@ -79,8 +79,8 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (swipeDetected || slotManager == null || slotManager.IsSpinning || slotManager.IsFeatureTransitioning) return;
 
         Vector2 screenDelta = eventData.position - startPosition;
-        // Transform the screen-space delta vector by the inverse of the object's rotation
-        // to get the delta vector aligned with the local axes of the UI wrapper/slots.
+        
+        
         Vector3 localDelta = Quaternion.Inverse(transform.rotation) * (Vector3)screenDelta;
 
         float diffY = localDelta.y;
@@ -93,12 +93,12 @@ public class SlotSwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             swipeDetected = true;
             if (diffY < 0)
             {
-                // Top to bottom swipe -> Spin normal
+                
                 slotManager.StartSlots(false, false);
             }
             else
             {
-                // Bottom to top swipe -> Spin reverse
+                
                 slotManager.StartSlots(false, true);
             }
         }

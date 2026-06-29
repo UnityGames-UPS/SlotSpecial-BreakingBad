@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HoldButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [SerializeField] private float holdTimeThreshold = 1.0f;
-    public UnityEvent onClick = new UnityEvent();
-    public UnityEvent onLongPress = new UnityEvent();
+    [SerializeField] internal UnityEvent onClick = new UnityEvent();
+    [SerializeField] internal UnityEvent onLongPress = new UnityEvent();
 
     private bool isPointerDown = false;
     private bool longPressTriggered = false;

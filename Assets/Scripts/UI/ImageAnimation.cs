@@ -12,54 +12,54 @@ public class ImageAnimation : MonoBehaviour
         PAUSED
     }
 
-    // ─── Singleton (legacy compatibility) ───────────────────────────
-    public static ImageAnimation Instance;
+    
+    internal static ImageAnimation Instance;
 
-    // ─── Inspector fields ───────────────────────────────────────────
-    public List<Sprite> textureArray = new List<Sprite>();
-    public Image rendererDelegate;
-    public bool useSharedMaterial = true;
-    public bool doLoopAnimation = true;
+    
+    [SerializeField] internal List<Sprite> textureArray = new List<Sprite>();
+    [SerializeField] internal Image rendererDelegate;
+    [SerializeField] internal bool useSharedMaterial = true;
+    [SerializeField] internal bool doLoopAnimation = true;
 
     [Header("Dynamic Timing")]
-    public bool useDynamicFramerate = false;
-    public float dynamicLoopDuration = 2.0f;
+    [SerializeField] internal bool useDynamicFramerate = false;
+    [SerializeField] internal float dynamicLoopDuration = 2.0f;
 
     [Header("Startup")]
     [SerializeField] private bool StartOnAwake = false;
     [SerializeField] private bool StartonEnable = false;
 
     [Header("Speed / Timing")]
-    public float AnimationSpeed = 5f;
-    public float delayBetweenLoop = 0f;
+    [SerializeField] internal float AnimationSpeed = 5f;
+    [SerializeField] internal float delayBetweenLoop = 0f;
 
-    // ─── State ──────────────────────────────────────────────────────
-    [HideInInspector] public ImageState currentAnimationState;
+    
+    [HideInInspector] [SerializeField] internal ImageState currentAnimationState;
 
     [Header("Loop Range Settings")]
-    public bool useLoopRange = false;
-    public int loopRangeStart = 0;
-    public int loopRangeEnd = 0;
-    public bool exitLoopRange = false;
-    public bool stopAtLastFrameOnEnd = false;
+    [SerializeField] internal bool useLoopRange = false;
+    [SerializeField] internal int loopRangeStart = 0;
+    [SerializeField] internal int loopRangeEnd = 0;
+    [SerializeField] internal bool exitLoopRange = false;
+    [SerializeField] internal bool stopAtLastFrameOnEnd = false;
 
-    /// <summary>True when this slot has win-animation sprites loaded (set by SlotBehaviour).</summary>
+    
     internal bool isAnim = false;
 
-    /// <summary>Fires every time a full loop completes. Passes the running loop count.</summary>
-    public System.Action<int> onLoopComplete;
+    
+    internal System.Action<int> onLoopComplete;
 
-    /// <summary>Fires every time the frame index changes. Passes the current frame index.</summary>
-    public System.Action<int> onFrameChanged;
+    
+    internal System.Action<int> onFrameChanged;
 
-    // ─── Private runtime ────────────────────────────────────────────
+    
     internal int indexOfTexture;
     private float delayBetweenAnimation;
     private int currentLoopCount;
 
     private const float IdealFrameRate = 0.0416666679f;
 
-    // ─── Unity lifecycle ────────────────────────────────────────────
+    
     private void OnValidate()
     {
         if (rendererDelegate == null)
@@ -89,7 +89,7 @@ public class ImageAnimation : MonoBehaviour
         StopAnimation();
     }
 
-    // ─── Core loop ──────────────────────────────────────────────────
+    
     private void AnimationProcess()
     {
         SetTextureOfIndex();
@@ -130,12 +130,12 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    // ─── Public API ─────────────────────────────────────────────────
+    
 
-    /// <summary>
-    /// Start (or restart) the animation from frame 0.
-    /// Safe to call even if already playing — cancels and restarts cleanly.
-    /// </summary>
+    
+    
+    
+    
     public void StartAnimation()
     {
         if (textureArray == null || textureArray.Count == 0) return;
@@ -163,9 +163,9 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Start (or restart) the animation from a specific frame index.
-    /// </summary>
+    
+    
+    
     public void StartAnimationFromFrame(int frameIndex)
     {
         if (textureArray == null || textureArray.Count == 0) return;
@@ -193,7 +193,7 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>Pause mid-sequence. Resume with ResumeAnimation().</summary>
+    
     public void PauseAnimation()
     {
         if (currentAnimationState == ImageState.PLAYING)
@@ -203,7 +203,7 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>Resume from where it was paused.</summary>
+    
     public void ResumeAnimation()
     {
         if (currentAnimationState == ImageState.PAUSED && !IsInvoking(nameof(AnimationProcess)))
@@ -213,7 +213,7 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>Stop the animation and reset sprite to frame 0.</summary>
+    
     public void StopAnimation()
     {
         if (currentAnimationState != ImageState.NONE)
@@ -227,14 +227,14 @@ public class ImageAnimation : MonoBehaviour
         }
     }
 
-    /// <summary>Reset displayed sprite to frame 0 without changing playback state.</summary>
+    
     public void RevertToInitialState()
     {
         indexOfTexture = 0;
         SetTextureOfIndex();
     }
 
-    // ─── Private helpers ────────────────────────────────────────────
+    
     private void SetTextureOfIndex()
     {
         if (textureArray == null || textureArray.Count == 0) return;

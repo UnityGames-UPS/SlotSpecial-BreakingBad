@@ -27,14 +27,14 @@ public enum DialogueType
 [System.Serializable]
 public struct DialogueData
 {
-    public string name;
-    public GameObject popupObject;
-    public AudioClip audioClip;
+    [SerializeField] internal string name;
+    [SerializeField] internal GameObject popupObject;
+    [SerializeField] internal AudioClip audioClip;
 }
 
 public class DialoguePopupManager : MonoBehaviour
 {
-    public static DialoguePopupManager Instance { get; private set; }
+    internal static DialoguePopupManager Instance { get; private set; }
 
     [Header("UI Parent Configurations")]
     [SerializeField] private GameObject dialogueParent;
@@ -135,16 +135,16 @@ public class DialoguePopupManager : MonoBehaviour
             yield break;
         }
 
-        Debug.Log($"[DialoguePopupManager] Playing Dialogue popup: {type}");
+        
 
-        // Enable parent and popup
+        
         if (dialogueParent != null)
         {
             dialogueParent.SetActive(true);
         }
         data.popupObject.SetActive(true);
 
-        // Play audio if present
+        
         if (data.audioClip != null && dialogueAudioSource != null)
         {
             ApplySFXVolume();
@@ -153,11 +153,11 @@ public class DialoguePopupManager : MonoBehaviour
             dialogueAudioSource.Play();
         }
 
-        // Wait for configured duration (1 - 1.5 seconds)
-        float duration = UnityEngine.Random.Range(minDuration, maxDuration);
+        
+        float duration = (data.audioClip != null) ? data.audioClip.length : UnityEngine.Random.Range(minDuration, maxDuration);
         yield return new WaitForSeconds(duration);
 
-        // Disable popup and parent
+        
         data.popupObject.SetActive(false);
         if (dialogueParent != null)
         {
@@ -170,7 +170,7 @@ public class DialoguePopupManager : MonoBehaviour
         }
     }
 
-    // --- Specific Trigger Interfaces ---
+    
 
     public IEnumerator PlayGameStartDialogue()
     {

@@ -9,23 +9,23 @@ using DG.Tweening;
 public class JackpotManager : MonoBehaviour
 {
     [Header("Jackpot Main View Components")]
-    [SerializeField] private GameObject jackpotSlotMain;         // Single object for Jackpot
-    [SerializeField] private RectTransform jackpotSlotMainRT;     // RectTransform of the main jackpot slot
-    [SerializeField] private CanvasGroup jackpotSlotMainCG;       // CanvasGroup for fade control
-    [SerializeField] private GameObject shineObject;              // Shine effect object on result image
+    [SerializeField] private GameObject jackpotSlotMain;         
+    [SerializeField] private RectTransform jackpotSlotMainRT;     
+    [SerializeField] private CanvasGroup jackpotSlotMainCG;       
+    [SerializeField] private GameObject shineObject;              
 
     [Header("Diamond Layer Visuals")]
-    [SerializeField] private GameObject baseLayer;                // Diamond base layer
-    [SerializeField] private GameObject secondaryLayer;           // Diamond secondary layer
+    [SerializeField] private GameObject baseLayer;                
+    [SerializeField] private GameObject secondaryLayer;           
 
     [Header("Mini Slot Spinning Config")]
-    [SerializeField] private GameObject slotParent;               // The scrolling mini-slot container
-    [SerializeField] private Image[] jackpotImages;               // The 4 images inside the jackpot parent
+    [SerializeField] private GameObject slotParent;               
+    [SerializeField] private Image[] jackpotImages;               
     [Header("Jackpot Sprites (0: Mini, 1: Minor, 2: Major, 3: Grand)")]
     [SerializeField] private Sprite[] jackpotBackgroundSprites;
     [SerializeField] private Sprite[] jackpotTextSprites;
-    [SerializeField] private TMP_Text resultText;                 // Text component inside the jackpot main overlay
-    [SerializeField] private GameObject winBlur;                  // Win blur overlay inside the jackpot main overlay
+    [SerializeField] private TMP_Text resultText;                 
+    [SerializeField] private GameObject winBlur;                  
 
     private int currentCycleIndex = 0;
     private List<int> currentPermutation = new List<int>();
@@ -125,7 +125,7 @@ public class JackpotManager : MonoBehaviour
 
         cellView.jackpotObject.SetActive(true);
 
-        // Disable secondary layer in the cell's jackpot object
+        
         if (cellView.specialSymbolLayer != null)
         {
             cellView.specialSymbolLayer.gameObject.SetActive(false);
@@ -194,7 +194,7 @@ public class JackpotManager : MonoBehaviour
         int resolvedPrizeIndex = getPrizeIndex(prizeType, prizeTypeIndex);
         Vector3 triggerWorldPos = triggeringSymbolView.transform.position;
 
-        // 1. Diamond appears at triggering symbol position
+        
         jackpotSlotMainRT.position = triggerWorldPos;
         jackpotSlotMainRT.localScale = Vector3.one;
         jackpotSlotMainCG.alpha = 0f;
@@ -203,22 +203,22 @@ public class JackpotManager : MonoBehaviour
         if (winBlur != null) winBlur.SetActive(false);
         if (resultText != null) resultText.text = "";
 
-        // Ensure visuals are enabled
+        
         if (baseLayer != null) baseLayer.SetActive(true);
         
-        // Ensure secondaryLayer (2nd layer) is enabled at start
+        
         if (secondaryLayer != null)
         {
             secondaryLayer.SetActive(true);
         }
 
-        // Deactivate slotParent (jackpot slot) at start
+        
         if (slotParent != null)
         {
             slotParent.SetActive(false);
         }
 
-        // Fade out triggering symbol's whole object (via CanvasGroup) or main image and fade in the jackpot overlay
+        
         if (triggeringSymbolView.canvasGroup != null)
         {
             triggeringSymbolView.canvasGroup.DOFade(0f, 0.3f);
@@ -229,28 +229,28 @@ public class JackpotManager : MonoBehaviour
         }
         yield return jackpotSlotMainCG.DOFade(1f, 0.3f).WaitForCompletion();
 
-        // 2. Moves smoothly to Position = (0,0,0) (center of screen/parent) - slightly slower transition for premium feel
-        // 3. Scales smoothly to (3.03, 3.03, 3.03)
+        
+        
         Sequence moveScaleSeq = DOTween.Sequence();
         moveScaleSeq.Append(jackpotSlotMainRT.DOLocalMove(Vector3.zero, 1.0f).SetEase(Ease.OutQuad));
         moveScaleSeq.Join(jackpotSlotMainRT.DOScale(new Vector3(3.03f, 3.03f, 3.03f), 1.0f).SetEase(Ease.OutBack));
 
         yield return moveScaleSeq.WaitForCompletion();
 
-        // Pause for visual pacing once the diamond is in the center scaled up
+        
         yield return new WaitForSeconds(0.5f);
 
         int k = 0;
         int startIdx = 0;
 
-        // Initialize / set up the sprites for the mini-slot spin BEFORE enabling the slotParent object
+        
         Sprite[] bgSprites = (jackpotBackgroundSprites != null && jackpotBackgroundSprites.Length > 0)
             ? jackpotBackgroundSprites
             : FindFirstObjectByType<SlotManager>()?.JackpotSlotSymbols;
 
         if (jackpotImages != null && jackpotImages.Length > 0 && bgSprites != null && bgSprites.Length > 0)
         {
-            // Generate/shuffle permutation of 0, 1, 2, 3 to enforce no duplicates and repeating after 4 images
+            
             currentPermutation = new List<int> { 0, 1, 2, 3 };
             for (int i = 0; i < currentPermutation.Count; i++)
             {
@@ -270,7 +270,7 @@ public class JackpotManager : MonoBehaviour
 
             currentCycleIndex = startIdx;
 
-            // Initialize all items cyclicly
+            
             for (int i = 0; i < jackpotImages.Length; i++)
             {
                 int prizeIdx = currentPermutation[(startIdx + i) % currentPermutation.Count];
@@ -279,7 +279,7 @@ public class JackpotManager : MonoBehaviour
             }
         }
 
-        // Disable secondaryLayer (2nd layer) and enable slotParent (jackpot slot)
+        
         if (secondaryLayer != null)
         {
             secondaryLayer.SetActive(false);
@@ -289,10 +289,10 @@ public class JackpotManager : MonoBehaviour
             slotParent.SetActive(true);
         }
 
-        // Another brief pause with the slot Parent enabled before it actually starts to spin
+        
         yield return new WaitForSeconds(0.5f);
 
-        // 4. Spin the mini slot!
+        
         if (jackpotImages != null && jackpotImages.Length > 0 && bgSprites != null && bgSprites.Length > 0 && slotParent != null)
         {
             Vector3 initialPos = slotParent.transform.localPosition;
@@ -303,14 +303,14 @@ public class JackpotManager : MonoBehaviour
                 if (cellHeight == 0) cellHeight = 100f;
             }
 
-            // A. Start Wind-up (Anticipation)
+            
             slotParent.transform.localPosition = initialPos;
             Sequence startSeq = DOTween.Sequence();
             startSeq.Append(slotParent.transform.DOLocalMoveY(initialPos.y + 20f, 0.15f).SetEase(Ease.OutQuad));
             startSeq.Append(slotParent.transform.DOLocalMoveY(initialPos.y, 0.08f).SetEase(Ease.InQuad));
             yield return startSeq.WaitForCompletion();
 
-            // B. Calculate exact number of spin cycles to land on resolvedPrizeIndex at index 2
+            
             int minCycles = 12;
             int extra = (startIdx - 1 - k) % currentPermutation.Count;
             if (extra < 0) extra += currentPermutation.Count;
@@ -324,22 +324,22 @@ public class JackpotManager : MonoBehaviour
                 ShiftJackpotImagesDownCyclic();
             }
 
-            // C. Stop phase: Feed winning prize to top buffer
+            
             slotParent.transform.localPosition = initialPos;
             yield return slotParent.transform.DOLocalMoveY(initialPos.y - cellHeight, stepDuration).SetEase(Ease.Linear).WaitForCompletion();
             ShiftJackpotImagesDownCyclic();
 
-            // D. Shift final winning prize to display slot (index 1)
+            
             slotParent.transform.localPosition = initialPos;
             yield return slotParent.transform.DOLocalMoveY(initialPos.y - cellHeight, stepDuration).SetEase(Ease.Linear).WaitForCompletion();
             ShiftJackpotImagesDownCyclic();
 
-            // E. Shift final winning prize to display slot (index 2 - display window)
+            
             slotParent.transform.localPosition = initialPos;
             yield return slotParent.transform.DOLocalMoveY(initialPos.y - cellHeight, stepDuration).SetEase(Ease.Linear).WaitForCompletion();
             ShiftJackpotImagesDownCyclic();
 
-            // F. Settle with classic casino overshoot and bounce animation
+            
             slotParent.transform.localPosition = initialPos;
             Sequence stopSeq = DOTween.Sequence();
             stopSeq.Append(slotParent.transform.DOLocalMoveY(initialPos.y - 25f, 0.20f).SetEase(Ease.OutQuad));
@@ -362,17 +362,17 @@ public class JackpotManager : MonoBehaviour
             shineObject.SetActive(false);
         }
 
-        // Return to start position and scale down
+        
         Sequence returnSeq = DOTween.Sequence();
         returnSeq.Append(jackpotSlotMainRT.DOMove(triggerWorldPos, 0.5f).SetEase(Ease.InOutQuad));
         returnSeq.Join(jackpotSlotMainRT.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad));
 
         yield return returnSeq.WaitForCompletion();
 
-        // 5. Copy the final sprites and display result on the main slot icon jackpot object
+        
         CopyJackpotLayoutToCell(triggeringSymbolView, prizeValue);
 
-        // 6. Both get fade transition (fade out the overlay and fade in the cell view)
+        
         Sequence fadeSeq = DOTween.Sequence();
         fadeSeq.Append(jackpotSlotMainCG.DOFade(0f, 0.3f));
         if (triggeringSymbolView.canvasGroup != null)

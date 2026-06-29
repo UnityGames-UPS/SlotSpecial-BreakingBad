@@ -8,7 +8,7 @@ using DG.Tweening;
 [System.Serializable]
 public class SlotAnimation
 {
-    public List<ImageAnimation> slotAnimations = new List<ImageAnimation>();
+    [SerializeField] internal List<ImageAnimation> slotAnimations = new List<ImageAnimation>();
 }
 
 public class AnimationManager : MonoBehaviour
@@ -23,10 +23,8 @@ public class AnimationManager : MonoBehaviour
     private SlotManager slotManager;
     private List<Coroutine> activeLandingCoroutines = new();
     private int activeLandingAnimationsCount = 0;
-    public bool AreLandingAnimationsPlaying => activeLandingAnimationsCount > 0;
+    internal bool AreLandingAnimationsPlaying => activeLandingAnimationsCount > 0;
 
-    [Header("Dynamic Timing settings")]
-    [SerializeField] private bool useDynamicFramerate = true;
     [SerializeField] internal float winSymbolLoopDuration = 1.5f;
 
     public void Initialize(SlotManager manager)
@@ -61,7 +59,7 @@ public class AnimationManager : MonoBehaviour
 
         if (inspectorAnimationGrid != null && inspectorAnimationGrid.Count == 5)
         {
-            // Map 5x3 (col x row) from inspector to 3x5 (row x col) in animationGrid
+            
             for (int row = 0; row < 3; row++)
             {
                 List<ImageAnimation> rowAnims = new();
@@ -95,7 +93,7 @@ public class AnimationManager : MonoBehaviour
     {
         if (lineWins == null || lineWins.Count == 0) yield break;
 
-        // Determine if it is free spin, autospin, or bonus/link feature flow
+        
         bool isAutoOrFree = slotManager.IsFreeSpin || slotManager.IsAutoSpin || slotManager.IsBonus ||
             (slotManager.ResultData != null && slotManager.ResultData.payload != null && 
              (slotManager.ResultData.payload.isFreeSpinActive || 
@@ -104,10 +102,10 @@ public class AnimationManager : MonoBehaviour
               slotManager.ResultData.payload.linkFeatureActive ||
               slotManager.ResultData.payload.isLinkTriggered));
 
-        // Apply back tint on all main display cells initially
+        
         slotManager.EnableAllBackTints(true, 0.85f);
 
-        // 1. Play all winning lines together for 1 loop (skip if normal flow and only 1 win line)
+        
         bool skipFirstPhase = !isAutoOrFree && lineWins.Count == 1;
         if (!skipFirstPhase)
         {
@@ -122,7 +120,7 @@ public class AnimationManager : MonoBehaviour
                     SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
                     if (symbolView == null) continue;
 
-                    // Disable the corresponding main display symbol immediately
+                    
                     symbolView.DOKill();
                     if (symbolView.canvasGroup != null)
                     {
@@ -135,10 +133,10 @@ public class AnimationManager : MonoBehaviour
                         symbolView.mainImage.color = new Color(symbolView.mainImage.color.r, symbolView.mainImage.color.g, symbolView.mainImage.color.b, 0f);
                     }
                     
-                    // Hide its back tint since this cell is winning/highlighted
+                    
                     symbolView.SetBackTintActive(false);
 
-                    // Enable matching animation object in the Animation Slot immediately
+                    
                     ImageAnimation animCell = animationGrid[row][col];
                     animCell.transform.position = symbolView.transform.position;
                     
@@ -156,7 +154,7 @@ public class AnimationManager : MonoBehaviour
                     }
                     animCell.gameObject.SetActive(true);
 
-                    // Get the symbol ID
+                    
                     int symbolId = int.Parse(win.symbolId);
                     if (slotManager.ResultData != null && slotManager.ResultData.matrix != null &&
                         row < slotManager.ResultData.matrix.Count && col < slotManager.ResultData.matrix[row].Count)
@@ -170,14 +168,14 @@ public class AnimationManager : MonoBehaviour
                         symbolId = 14;
                     }
 
-                    // Populate sprites for the animCell
+                    
                     slotManager.ConfigureAnimationSprites(animCell, symbolId);
 
-                    // Configure dynamic timing properties
+                    
                     animCell.useDynamicFramerate = true;
                     animCell.dynamicLoopDuration = winSymbolLoopDuration;
 
-                    // Sync and animate overlay text
+                    
                     AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
                     if (textHelper == null)
                     {
@@ -216,7 +214,7 @@ public class AnimationManager : MonoBehaviour
                         }
                     }
 
-                    // Play the animation
+                    
                     animCell.doLoopAnimation = true;
                     animCell.onLoopComplete = null;
                     animCell.StopAnimation();
@@ -229,7 +227,7 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
-            // Wait for one loop to complete
+            
             int completedCount = 0;
             bool allDone = false;
 
@@ -251,13 +249,13 @@ public class AnimationManager : MonoBehaviour
                 yield return null;
             }
 
-            // Clean up loop complete events
+            
             foreach (var anim in activeAnims)
             {
                 anim.onLoopComplete = null;
             }
 
-            // If it is free spin or autospin, stop here
+            
             if (isAutoOrFree)
             {
                 StopAllAnimations();
@@ -265,7 +263,7 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        // 2. Play individual winning lines one by one (for normal flow)
+        
         int currentLineIndex = 0;
         while (true)
         {
@@ -273,7 +271,7 @@ public class AnimationManager : MonoBehaviour
             if (AudioController.Instance != null) AudioController.Instance.PlayWinLine();
             string payoutString = win.payout.ToString("0.###");
 
-            // Reset all board symbols to dimmed state initially
+            
             for (int r = 0; r < 3; r++)
             {
                 for (int c = 0; c < 5; c++)
@@ -324,7 +322,7 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
-            // Play animations only for the current line's symbols
+            
             List<ImageAnimation> lineAnims = new();
             for (int pIdx = 0; pIdx < win.positions.Count; pIdx++)
             {
@@ -333,7 +331,7 @@ public class AnimationManager : MonoBehaviour
                 SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
                 if (symbolView == null) continue;
 
-                // Disable the main symbol view immediately
+                
                 symbolView.DOKill();
                 if (symbolView.canvasGroup != null)
                 {
@@ -346,10 +344,10 @@ public class AnimationManager : MonoBehaviour
                     symbolView.mainImage.color = new Color(symbolView.mainImage.color.r, symbolView.mainImage.color.g, symbolView.mainImage.color.b, 0f);
                 }
 
-                // Hide back tint for this cell
+                
                 symbolView.SetBackTintActive(false);
 
-                // Enable and position the animation cell immediately
+                
                 ImageAnimation animCell = animationGrid[row][col];
                 animCell.transform.position = symbolView.transform.position;
 
@@ -367,7 +365,7 @@ public class AnimationManager : MonoBehaviour
                 }
                 animCell.gameObject.SetActive(true);
 
-                // Get symbol ID
+                
                 int symbolId = int.Parse(win.symbolId);
                 if (slotManager.ResultData != null && slotManager.ResultData.matrix != null &&
                     row < slotManager.ResultData.matrix.Count && col < slotManager.ResultData.matrix[row].Count)
@@ -385,7 +383,7 @@ public class AnimationManager : MonoBehaviour
                 animCell.useDynamicFramerate = true;
                 animCell.dynamicLoopDuration = winSymbolLoopDuration;
 
-                // Text animation setup
+                
                 AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
                 if (textHelper == null)
                 {
@@ -425,7 +423,7 @@ public class AnimationManager : MonoBehaviour
                     }
                 }
 
-                // Show payout text ONLY on the last icon of that win line with a pop-up animation
+                
                 if (pIdx == win.positions.Count - 1)
                 {
                     if (textHelper.payoutText != null)
@@ -445,7 +443,7 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
-            // Wait for one loop of this win line to complete
+            
             int lineCompletedCount = 0;
             bool lineAllDone = false;
 
@@ -467,13 +465,13 @@ public class AnimationManager : MonoBehaviour
                 yield return null;
             }
 
-            // Clean up loop complete events for this line
+            
             foreach (var anim in lineAnims)
             {
                 anim.onLoopComplete = null;
             }
 
-            // Move to next win line
+            
             currentLineIndex = (currentLineIndex + 1) % lineWins.Count;
         }
     }
@@ -487,7 +485,7 @@ public class AnimationManager : MonoBehaviour
         activeLandingCoroutines.Clear();
         activeLandingAnimationsCount = 0;
 
-        // Stop and disable all overlay animation cells
+        
         for (int row = 0; row < animationGrid.Count; row++)
         {
             for (int col = 0; col < animationGrid[row].Count; col++)
@@ -511,6 +509,12 @@ public class AnimationManager : MonoBehaviour
                 if (textHelper != null)
                 {
                     textHelper.Clear();
+                    if (textHelper.revealEffectAnimation != null)
+                    {
+                        textHelper.revealEffectAnimation.onLoopComplete = null;
+                        textHelper.revealEffectAnimation.StopAnimation();
+                        textHelper.revealEffectAnimation.gameObject.SetActive(false);
+                    }
                 }
 
                 if (anim.gameObject.activeSelf)
@@ -520,7 +524,7 @@ public class AnimationManager : MonoBehaviour
                     anim.gameObject.SetActive(false);
                 }
 
-                // Restore main display symbols
+                
                 SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
                 if (symbolView != null)
                 {
@@ -558,7 +562,7 @@ public class AnimationManager : MonoBehaviour
                 SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
                 if (symbolView == null) continue;
 
-                // 1. Fade out the corresponding main display symbol
+                
                 symbolView.DOKill();
                 if (symbolView.canvasGroup != null)
                 {
@@ -573,7 +577,7 @@ public class AnimationManager : MonoBehaviour
                 symbolView.SetBackTintActive(false);
                 fadedViews.Add(symbolView);
 
-                // 2. Enable matching animation object on the Animation Slot
+                
                 ImageAnimation animCell = animationGrid[row][col];
                 animCell.transform.position = symbolView.transform.position;
                 
@@ -598,7 +602,7 @@ public class AnimationManager : MonoBehaviour
                     animCell.gameObject.SetActive(true);
                 }
 
-                // Configure and run
+                
                 int symbolId = int.Parse(symbolStr);
                 
                 int spinsRemaining = 0;
@@ -607,7 +611,7 @@ public class AnimationManager : MonoBehaviour
                     symbolId = 14;
                 }
 
-                // Get coin text if applicable
+                
                 int lpVal = 0;
                 string coinTxt = null;
                 var coinPos = slotManager.GetCoinPosition(row, col);
@@ -621,11 +625,11 @@ public class AnimationManager : MonoBehaviour
 
                 slotManager.ConfigureAnimationSprites(animCell, symbolId, lpVal, coinTxt);
 
-                // Configure dynamic timing properties
-                animCell.useDynamicFramerate = true; // Force true for synchronization
+                
+                animCell.useDynamicFramerate = true; 
                 animCell.dynamicLoopDuration = winSymbolLoopDuration;
 
-                // Sync and animate overlay text
+                
                 AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
                 if (textHelper == null)
                 {
@@ -679,7 +683,7 @@ public class AnimationManager : MonoBehaviour
             yield break;
         }
 
-        // Wait for loop complete
+        
         int completedCount = 0;
         bool allDone = false;
 
@@ -701,7 +705,7 @@ public class AnimationManager : MonoBehaviour
             yield return null;
         }
 
-        // Clean up: stop animations, restore faded views, disable tint
+        
         Sequence cleanupSeq = DOTween.Sequence();
 
         foreach (var anim in activeAnims)
@@ -781,7 +785,7 @@ public class AnimationManager : MonoBehaviour
         activeLandingAnimationsCount++;
         try
         {
-            // 1. Fade out the corresponding main display symbol
+            
             symbolView.DOKill();
             if (symbolView.canvasGroup != null)
             {
@@ -809,7 +813,7 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
-            // 2. Enable matching animation object on the Animation Slot
+            
             ImageAnimation animCell = animationGrid[row][col];
             animCell.transform.position = symbolView.transform.position;
             
@@ -834,7 +838,7 @@ public class AnimationManager : MonoBehaviour
                 animCell.gameObject.SetActive(true);
             }
 
-            // Configure and run
+            
             int lpVal = 0;
             string coinTxt = null;
             var coinPos = slotManager.GetCoinPosition(row, col);
@@ -851,7 +855,7 @@ public class AnimationManager : MonoBehaviour
             animCell.useDynamicFramerate = true;
             animCell.dynamicLoopDuration = winSymbolLoopDuration / 2f;
 
-            // Sync and animate overlay text
+            
             AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
             if (textHelper == null)
             {
@@ -895,7 +899,7 @@ public class AnimationManager : MonoBehaviour
             animCell.StopAnimation();
             animCell.StartAnimation();
 
-            // Wait for loop complete
+            
             bool done = false;
             animCell.onLoopComplete = (_) => { done = true; };
 
@@ -907,7 +911,7 @@ public class AnimationManager : MonoBehaviour
                 yield return null;
             }
 
-            // Clean up
+            
             animCell.onLoopComplete = null;
             animCell.StopAnimation();
             if (textHelper != null)
@@ -975,7 +979,7 @@ public class AnimationManager : MonoBehaviour
         SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
         if (symbolView == null) return;
 
-        // 1. Fade out the corresponding main display symbol
+        
         symbolView.DOKill();
         if (symbolView.canvasGroup != null)
         {
@@ -989,7 +993,7 @@ public class AnimationManager : MonoBehaviour
         }
         symbolView.SetBackTintActive(false);
 
-        // 2. Enable matching animation object on the Animation Slot
+        
         ImageAnimation animCell = animationGrid[row][col];
         animCell.transform.position = symbolView.transform.position;
         
@@ -1007,7 +1011,7 @@ public class AnimationManager : MonoBehaviour
         }
         animCell.gameObject.SetActive(true);
 
-        // Configure and run
+        
         int lpVal = 0;
         string coinTxt = null;
         var coinPos = slotManager.GetCoinPosition(row, col);
@@ -1024,7 +1028,7 @@ public class AnimationManager : MonoBehaviour
         animCell.useDynamicFramerate = true;
         animCell.dynamicLoopDuration = winSymbolLoopDuration / 2f;
 
-        // Sync and animate overlay text
+        
         AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
         if (textHelper == null)
         {

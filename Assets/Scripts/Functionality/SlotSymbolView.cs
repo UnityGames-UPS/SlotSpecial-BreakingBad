@@ -6,25 +6,25 @@ using TMPro;
 public class SlotSymbolView : MonoBehaviour
 {
     [Header("Symbol Layers")]
-    [SerializeField] public Image mainImage;
-    [SerializeField] public CanvasGroup canvasGroup;
-    [SerializeField] public Image backTint;
-    [SerializeField] public Image specialSymbolLayer;
-    [SerializeField] public GameObject hatObject;
-    [SerializeField] public TMP_Text losPolosValueText;
-    [SerializeField] public TMP_Text goldCoinValueText;
-    [SerializeField] public TMP_Text multiplierValueText;
-    [SerializeField] public GameObject jackpotObject;
-    [SerializeField] public Transform jackpotStripParent;
-    [SerializeField] public TMP_Text jackpotResultText;
+    [SerializeField] internal Image mainImage;
+    [SerializeField] internal CanvasGroup canvasGroup;
+    [SerializeField] internal Image backTint;
+    [SerializeField] internal Image specialSymbolLayer;
+    [SerializeField] internal GameObject hatObject;
+    [SerializeField] internal TMP_Text losPolosValueText;
+    [SerializeField] internal TMP_Text goldCoinValueText;
+    [SerializeField] internal TMP_Text multiplierValueText;
+    [SerializeField] internal GameObject jackpotObject;
+    [SerializeField] internal Transform jackpotStripParent;
+    [SerializeField] internal TMP_Text jackpotResultText;
 
     [Header("Locked Cash Collect")]
-    [SerializeField] public Image countImage;
-    [SerializeField] public Sprite[] countSprites;
+    [SerializeField] internal Image countImage;
+    [SerializeField] internal Sprite[] countSprites;
 
     [Header("Cash Collect Indicators")]
-    [SerializeField] public GameObject cashCollectAboveObject;
-    [SerializeField] public GameObject cashCollectBelowObject;
+    [SerializeField] internal GameObject cashCollectAboveObject;
+    [SerializeField] internal GameObject cashCollectBelowObject;
 
     public void SetCountValue(int count)
     {
@@ -42,11 +42,11 @@ public class SlotSymbolView : MonoBehaviour
 
     public void SetupFromHierarchy()
     {
-        // Try to set references dynamically if not assigned in the inspector
+        
         if (mainImage == null) mainImage = GetComponent<Image>();
         if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
 
-        // We map based on standard child index mapping to remain compatible with the scene structure
+        
         if (transform.childCount > 0 && specialSymbolLayer == null)
         {
             specialSymbolLayer = transform.GetChild(0).GetComponent<Image>();
@@ -70,7 +70,7 @@ public class SlotSymbolView : MonoBehaviour
             if (losPolosValueText == null)
             {
                 losPolosValueText = child4.gameObject.AddComponent<TMP_Text>();
-                // Disable any legacy Image component on this object to prevent overlap
+                
                 var oldImg = child4.GetComponent<Image>();
                 if (oldImg != null) oldImg.enabled = false;
             }
@@ -82,7 +82,7 @@ public class SlotSymbolView : MonoBehaviour
             if (multiplierValueText == null)
             {
                 multiplierValueText = child5.gameObject.AddComponent<TMP_Text>();
-                // Disable any legacy Image component on this object to prevent overlap
+                
                 var oldImg = child5.GetComponent<Image>();
                 if (oldImg != null) oldImg.enabled = false;
             }
@@ -146,7 +146,7 @@ public class SlotSymbolView : MonoBehaviour
         }
         if (mainImage != null)
         {
-            // mainImage.gameObject.SetActive(true);
+            
             mainImage.enabled = true;
             mainImage.color = new Color(mainImage.color.r, mainImage.color.g, mainImage.color.b, 1f);
         }
@@ -205,9 +205,9 @@ public class SlotSymbolView : MonoBehaviour
     {
         if (losPolosValueText == null) return;
         
-        // Sprite Asset Mapping: Index 0-9 -> Digits 0-9, Index 10 -> "+" sign
+        
         string valStr = value.ToString();
-        string formattedText = "<sprite=10>"; // "+" sign
+        string formattedText = "<sprite=10>"; 
         foreach (char c in valStr)
         {
             if (char.IsDigit(c))
@@ -224,8 +224,8 @@ public class SlotSymbolView : MonoBehaviour
     {
         if (goldCoinValueText == null) return;
 
-        // Sprite Asset Mapping: Index 0-9 -> Digits 0-9, Index 10 -> decimal point "."
-        // Rule: Show decimals only when provided by the data
+        
+        
         string valStr = value.ToString("0.###");
         string formattedText = "";
         foreach (char c in valStr)

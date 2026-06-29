@@ -34,7 +34,7 @@ public class WinTypePopup : MonoBehaviour
     [SerializeField] private double hugeWinThreshold = 25.0;
     [SerializeField] private double megaWinThreshold = 50.0;
 
-    public double EnableWinThreshold => enableWinThreshold;
+    internal double EnableWinThreshold => enableWinThreshold;
 
     private double finalWinAmount;
     private double currentWinCount;
@@ -45,7 +45,7 @@ public class WinTypePopup : MonoBehaviour
     private Coroutine countCoroutine;
     private Coroutine autoCloseCoroutine;
 
-    private int activePhase = 0; // 0: Normal, 1: Big, 2: Huge, 3: Mega
+    private int activePhase = 0; 
     private ImageAnimation dollarImageAnimation;
 
     private void Awake()
@@ -91,7 +91,7 @@ public class WinTypePopup : MonoBehaviour
         currentWinCount = 0;
         activePhase = 0;
 
-        // Reset UI elements
+        
         if (winText != null) winText.text = "0.00";
         if (winDisplayObject != null)
         {
@@ -110,7 +110,7 @@ public class WinTypePopup : MonoBehaviour
             winTypeImageAnimation.StopAnimation();
         }
 
-        // Cancel any running coroutines
+        
         if (countCoroutine != null) StopCoroutine(countCoroutine);
         if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
 
@@ -124,9 +124,9 @@ public class WinTypePopup : MonoBehaviour
         float t = Mathf.InverseLerp((float)enableWinThreshold, (float)megaWinThreshold, (float)maxMultiplier);
         float duration = Mathf.Lerp(minCountDuration, maxCountDuration, t);
 
-        // Smooth decimal formatting:
-        // Detect how many decimals the final amount has.
-        // We will default to 2, or use 3 if final amount has 3 decimals.
+        
+        
+        
         int decimals = 2;
         string sVal = finalWinAmount.ToString(System.Globalization.CultureInfo.InvariantCulture);
         int dot = sVal.IndexOf('.');
@@ -180,36 +180,31 @@ public class WinTypePopup : MonoBehaviour
     {
         double multiplier = currentAmount / totalBet;
 
-        // Phase 1: Big Win (>= bigWinThreshold)
+        
         if (multiplier >= bigWinThreshold && activePhase < 1)
         {
             activePhase = 1;
             EnableWinType(bigWinSprites);
         }
  
-        // Dollar object enable (>= dollarThreshold)
+        
         if (multiplier >= dollarThreshold && dollarObject != null && !dollarObject.activeSelf)
         {
             dollarObject.SetActive(true);
             if (dollarImageAnimation != null)
             {
-                dollarImageAnimation.useLoopRange = true;
-                dollarImageAnimation.loopRangeStart = 4; // 5th element (index 4)
-                dollarImageAnimation.loopRangeEnd = 12;  // 13th element (index 12)
-                dollarImageAnimation.exitLoopRange = false;
-                dollarImageAnimation.stopAtLastFrameOnEnd = true;
                 dollarImageAnimation.StartAnimation();
             }
         }
  
-        // Phase 2: Huge Win (>= hugeWinThreshold)
+        
         if (multiplier >= hugeWinThreshold && activePhase < 2)
         {
             activePhase = 2;
             EnableWinType(hugeWinSprites);
         }
  
-        // Phase 3: Mega Win (>= megaWinThreshold)
+        
         if (multiplier >= megaWinThreshold && activePhase < 3)
         {
             activePhase = 3;
@@ -255,11 +250,6 @@ public class WinTypePopup : MonoBehaviour
             textT.localScale = new Vector3(1.2f, 1.2f, 1.2f);
         }
         UpdatePhases(finalWinAmount);
-
-        if (dollarImageAnimation != null)
-        {
-            dollarImageAnimation.exitLoopRange = true;
-        }
     }
 
     private IEnumerator AutoCloseSequence()
