@@ -266,6 +266,46 @@ public class StickySymbolManager : MonoBehaviour
         }
     }
 
+    internal void UpdateLockedCashCollectsStart(List<LockedCashCollect> lockedList)
+    {
+        Dictionary<string, int> newSpins = new Dictionary<string, int>();
+        if (lockedList != null)
+        {
+            foreach (var item in lockedList)
+            {
+                if (item.position != null && item.position.Count == 2)
+                {
+                    int row = item.position[0];
+                    int col = item.position[1];
+                    string key = col + "," + row;
+                    newSpins[key] = item.spinsRemaining;
+                }
+            }
+        }
+
+        for (int i = 0; i < Slot.Count; i++)
+        {
+            for (int j = 0; j < Slot[i].slotImages.Count; j++)
+            {
+                if (IsPositionLocked(i, j))
+                {
+                    string key = i + "," + j;
+                    int spinsRemaining = 0;
+                    if (newSpins.ContainsKey(key))
+                    {
+                        spinsRemaining = newSpins[key];
+                    }
+                    
+                    SlotSymbolView view = symbolViews[i][j];
+                    if (view != null)
+                    {
+                        view.SetCountValue(spinsRemaining);
+                    }
+                }
+            }
+        }
+    }
+
     internal void UpdateLockedCashCollects(List<LockedCashCollect> lockedList)
     {
         

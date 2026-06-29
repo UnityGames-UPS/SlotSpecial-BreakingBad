@@ -68,6 +68,8 @@ public class DialoguePopupManager : MonoBehaviour
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private GameObject videoDisplayPanel;
     [SerializeField] private VideoScenarioData[] videoScenarios;
+    [SerializeField] private UIManager uiManager;
+    [SerializeField] private SlotManager slotManager;
 
     [Header("Chances (%)")]
     [Range(0f, 100f)] [SerializeField] private float chanceGameStart = 100f;
@@ -126,6 +128,12 @@ public class DialoguePopupManager : MonoBehaviour
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(SkipDialogue);
         }
+    }
+
+    private void Start()
+    {
+        if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
+        if (slotManager == null) slotManager = FindFirstObjectByType<SlotManager>();
     }
 
     private void SkipDialogue()
@@ -400,6 +408,11 @@ public class DialoguePopupManager : MonoBehaviour
             yield break;
         }
 
+        if (uiManager != null)
+        {
+            uiManager.SetVideoPlaybackState(true, scenario);
+        }
+
         if (videoDisplayPanel != null)
         {
             videoDisplayPanel.SetActive(true);
@@ -435,6 +448,11 @@ public class DialoguePopupManager : MonoBehaviour
         if (videoDisplayPanel != null)
         {
             videoDisplayPanel.SetActive(false);
+        }
+
+        if (uiManager != null)
+        {
+            uiManager.SetVideoPlaybackState(false, scenario);
         }
     }
 }

@@ -1155,6 +1155,10 @@ public class SlotManager : MonoBehaviour
     SocketManager.AccumulateResult(BetCounter);
     yield return new WaitUntil(() => SocketManager.isResultdone);
     UpdateFromSpinResult(SocketManager.resultData);
+    if (IsFreeSpin && stickySymbolManager != null && SocketManager.resultData != null && SocketManager.resultData.payload != null)
+    {
+      stickySymbolManager.UpdateLockedCashCollectsStart(SocketManager.resultData.payload.lockedCashCollects);
+    }
     OriginalFeatureTriggerResult = SocketManager.resultData;
     DetermineFakeScenarios();
     if (isEarlyRevealActive)
@@ -1734,6 +1738,10 @@ public class SlotManager : MonoBehaviour
 
     if (!isRetrigger && !IsFreeSpin)
     {
+      if (stickySymbolManager != null)
+      {
+        stickySymbolManager.Reset();
+      }
       yield return ResetUI();
     }
 
@@ -2035,6 +2043,14 @@ public class SlotManager : MonoBehaviour
     }
   }
 
+  private bool IsBlockedFlameSprite(Sprite sprite)
+  {
+    if (sprite == null || SlotSymbols == null) return false;
+    int index = System.Array.IndexOf(SlotSymbols, sprite);
+    if (index == -1) return false;
+    return index == 11 || index == 12 || index == 13 || index == 14 || index == 15 || index == 16 || index == 17;
+  }
+
   private void UpdateCashCollectIndicators(int col)
   {
     if (col < 0 || col >= images.Count) return;
@@ -2061,6 +2077,12 @@ public class SlotManager : MonoBehaviour
       if (fullIndex + 1 < imgs.Count && imgs[fullIndex + 1] != null)
       {
         isBelow = (imgs[fullIndex + 1].sprite == SlotSymbols[14]);
+      }
+
+      if (IsBlockedFlameSprite(imgs[fullIndex].sprite))
+      {
+        isAbove = false;
+        isBelow = false;
       }
 
       if (view.cashCollectAboveObject != null)
@@ -2618,39 +2640,43 @@ public class SlotManager : MonoBehaviour
       bool isAboveCC = false;
       bool isBelowCC = false;
 
-      if (row == 0)
+      bool isBlocked = (symbolId == 11 || symbolId == 12 || symbolId == 13 || symbolId == 14 || symbolId == 15 || symbolId == 16 || symbolId == 17);
+      if (!isBlocked)
       {
-        bool isNearMissTopActive = isNearMissActive && col == nearMissCol && 
-                                   (isSpinReverse ? (nearMissType == 1) : (nearMissType == 0));
-        bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) || isNearMissTopActive;
-        if (shouldShowAtTop)
+        if (row == 0)
         {
-          isAboveCC = true;
+          bool isNearMissTopActive = isNearMissActive && col == nearMissCol && 
+                                     (isSpinReverse ? (nearMissType == 1) : (nearMissType == 0));
+          bool shouldShowAtTop = (isMagnetScenarioActive && col == magnetCol && magnetRow == 0) || isNearMissTopActive;
+          if (shouldShowAtTop)
+          {
+            isAboveCC = true;
+          }
         }
-      }
-      else if (row - 1 >= 0 && row - 1 < SocketManager.resultData.matrix.Count)
-      {
-        if (SocketManager.resultData.matrix[row - 1][col] == "14")
+        else if (row - 1 >= 0 && row - 1 < SocketManager.resultData.matrix.Count)
         {
-          isAboveCC = true;
+          if (SocketManager.resultData.matrix[row - 1][col] == "14")
+          {
+            isAboveCC = true;
+          }
         }
-      }
 
-      if (row == 2)
-      {
-        bool isNearMissBottomActive = isNearMissActive && col == nearMissCol && 
-                                      (isSpinReverse ? (nearMissType == 0) : (nearMissType == 1));
-        bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) || isNearMissBottomActive;
-        if (shouldShowAtBottom)
+        if (row == 2)
         {
-          isBelowCC = true;
+          bool isNearMissBottomActive = isNearMissActive && col == nearMissCol && 
+                                        (isSpinReverse ? (nearMissType == 0) : (nearMissType == 1));
+          bool shouldShowAtBottom = (isMagnetScenarioActive && col == magnetCol && magnetRow == 2) || isNearMissBottomActive;
+          if (shouldShowAtBottom)
+          {
+            isBelowCC = true;
+          }
         }
-      }
-      else if (row + 1 >= 0 && row + 1 < SocketManager.resultData.matrix.Count)
-      {
-        if (SocketManager.resultData.matrix[row + 1][col] == "14")
+        else if (row + 1 >= 0 && row + 1 < SocketManager.resultData.matrix.Count)
         {
-          isBelowCC = true;
+          if (SocketManager.resultData.matrix[row + 1][col] == "14")
+          {
+            isBelowCC = true;
+          }
         }
       }
 
@@ -2739,11 +2765,6 @@ public class SlotManager : MonoBehaviour
       yield return DialoguePopupManager.Instance.PlayVideoScenario(VideoScenario.MagnetHit);
     }
 
-    if (DialoguePopupManager.Instance != null)
-    {
-      yield return DialoguePopupManager.Instance.PlayMagnetAppearanceDialogue();
-    }
-
     GameObject activeMagnet = null;
     if (magnetCol == 0) 
     {
@@ -2821,6 +2842,11 @@ public class SlotManager : MonoBehaviour
     }
 
     yield return new WaitForSeconds(0.2f);
+
+    if (DialoguePopupManager.Instance != null)
+    {
+      yield return DialoguePopupManager.Instance.PlayMagnetAppearanceDialogue();
+    }
   }
 
   private void OnReelStopped(int col)
@@ -3222,11 +3248,36 @@ public class SlotManager : MonoBehaviour
       }
 
       AnimationTextHelper textHelper = animCell.GetComponent<AnimationTextHelper>();
-      ImageAnimation effectAnim = null;
-      if (textHelper != null)
+      if (textHelper == null)
       {
-          effectAnim = textHelper.revealEffectAnimation;
+          textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
+          textHelper.SetupFromHierarchy();
       }
+      if (textHelper.revealEffectAnimation == null)
+      {
+          foreach (Transform child in animCell.transform)
+          {
+              ImageAnimation childAnim = child.GetComponent<ImageAnimation>();
+              if (childAnim != null && child.name.ToLower().Contains("reveal"))
+              {
+                  textHelper.revealEffectAnimation = childAnim;
+                  break;
+              }
+          }
+          if (textHelper.revealEffectAnimation == null)
+          {
+              foreach (Transform child in animCell.transform)
+              {
+                  ImageAnimation childAnim = child.GetComponent<ImageAnimation>();
+                  if (childAnim != null && childAnim != animCell)
+                  {
+                      textHelper.revealEffectAnimation = childAnim;
+                      break;
+                  }
+              }
+          }
+      }
+      ImageAnimation effectAnim = textHelper.revealEffectAnimation;
       if (effectAnim != null)
       {
           effectAnim.textureArray.Clear();
@@ -3335,13 +3386,6 @@ public class SlotManager : MonoBehaviour
       if (int.TryParse(symbolIdStr, out symbolId))
       {
           ConfigureAnimationSprites(animCell, symbolId);
-          animCell.doLoopAnimation = false;
-          animCell.onLoopComplete = null;
-          animCell.StopAnimation();
-          animCell.StartAnimation();
-
-          bool mainDone = false;
-          animCell.onLoopComplete = (_) => { mainDone = true; };
 
           float expectedDuration = 1.5f;
           if (animCell.textureArray != null && animCell.textureArray.Count > 0)
@@ -3356,6 +3400,66 @@ public class SlotManager : MonoBehaviour
               }
           }
 
+          AnimationTextHelper mainTextHelper = animCell.GetComponent<AnimationTextHelper>();
+          if (mainTextHelper == null)
+          {
+              mainTextHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
+              mainTextHelper.SetupFromHierarchy();
+          }
+
+          CoinPosition coinPos = GetCoinPosition(row, col);
+          string textContent = "";
+          if (symbolId == 17)
+          {
+              int lpVal = 0;
+              if (coinPos != null)
+              {
+                  lpVal = (int)coinPos.coinValue;
+              }
+              else
+              {
+                  int[] tempIndex = { 2, 3, 4, 5, 7 };
+                  lpVal = tempIndex[UnityEngine.Random.Range(0, tempIndex.Length)];
+              }
+              string valStr = lpVal.ToString();
+              textContent = "<sprite=10>"; 
+              foreach (char c in valStr)
+              {
+                  if (char.IsDigit(c)) textContent += $"<sprite={c - '0'}>";
+              }
+          }
+          else if (symbolId == 15 && coinPos != null)
+          {
+              string valStr = (coinPos.coinValue * TotalBet).ToString("0.###");
+              textContent = "";
+              foreach (char c in valStr)
+              {
+                  if (char.IsDigit(c)) textContent += $"<sprite={c - '0'}>";
+                  else if (c == '.') textContent += "<sprite=10>";
+              }
+          }
+          else if (symbolId == 13 && coinPos != null)
+          {
+              textContent = "X" + coinPos.coinValue.ToString();
+          }
+
+          if (!string.IsNullOrEmpty(textContent))
+          {
+              mainTextHelper.PlayTextAnimation(symbolId, textContent, expectedDuration, false);
+          }
+          else
+          {
+              mainTextHelper.Clear();
+          }
+
+          animCell.doLoopAnimation = false;
+          animCell.onLoopComplete = null;
+          animCell.StopAnimation();
+          animCell.StartAnimation();
+
+          bool mainDone = false;
+          animCell.onLoopComplete = (_) => { mainDone = true; };
+
           float elapsed = 0f;
           float timeout = expectedDuration + 0.5f;
           while (!mainDone && elapsed < timeout)
@@ -3366,6 +3470,10 @@ public class SlotManager : MonoBehaviour
 
           animCell.onLoopComplete = null;
           animCell.StopAnimation();
+          if (mainTextHelper != null)
+          {
+              mainTextHelper.Clear();
+          }
           if (animCell.rendererDelegate != null && animationManager != null)
           {
               animCell.rendererDelegate.sprite = animationManager.idleSprite;

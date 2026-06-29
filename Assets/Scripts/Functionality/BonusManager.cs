@@ -311,6 +311,7 @@ public class BonusManager : MonoBehaviour
     // Play multiplier conversion animation for newly landed symbol 13
     if (SocketManager.resultData.payload.coinPositions != null)
     {
+      List<Coroutine> activeCoroutines = new List<Coroutine>();
       foreach (var coins in SocketManager.resultData.payload.coinPositions)
       {
         if (coins.symbolId == 13)
@@ -321,9 +322,13 @@ public class BonusManager : MonoBehaviour
           SlotSymbolView view = cell.GetChild(2).GetComponent<SlotSymbolView>();
           if (view != null)
           {
-            yield return view.PlayMultiplierConversion(coins.coinValue, slotManager.TotalBet);
+            activeCoroutines.Add(StartCoroutine(view.PlayMultiplierConversion(coins.coinValue, slotManager.TotalBet)));
           }
         }
+      }
+      foreach (var coroutine in activeCoroutines)
+      {
+        yield return coroutine;
       }
     }
 
@@ -584,7 +589,11 @@ public class BonusManager : MonoBehaviour
 
     if (winAmt > 0)
     {
-      uiManager.WinningsTextAnimation(null, winAmt);
+      bool winningsAnimClosed = false;
+      uiManager.WinningsTextAnimation(() => {
+          winningsAnimClosed = true;
+      }, winAmt);
+      yield return new WaitUntil(() => winningsAnimClosed);
     }
 
     bool freeSpinTriggered = SocketManager.resultData.payload.isFreeSpinTriggered;
@@ -851,6 +860,7 @@ public class BonusManager : MonoBehaviour
         }
       }
 
+      List<Coroutine> activeCoroutines = new List<Coroutine>();
       foreach (var coin in initialCoins)
       {
         int row = coin.position[0];
@@ -886,7 +896,7 @@ public class BonusManager : MonoBehaviour
               img.sprite = slotManager.SlotSymbols[13];
             }
             slotManager.ConfigureSymbolView(view, 13);
-            yield return view.PlayMultiplierConversion(coin.coinValue, slotManager.TotalBet);
+            activeCoroutines.Add(StartCoroutine(view.PlayMultiplierConversion(coin.coinValue, slotManager.TotalBet)));
           }
           else
           {
@@ -895,6 +905,11 @@ public class BonusManager : MonoBehaviour
             slotManager.ConfigureSymbolView(view, 15);
           }
         }
+      }
+
+      foreach (var coroutine in activeCoroutines)
+      {
+        yield return coroutine;
       }
 
       yield return new WaitForSeconds(0.2f);

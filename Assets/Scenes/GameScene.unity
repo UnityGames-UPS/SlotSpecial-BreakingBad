@@ -36059,6 +36059,8 @@ MonoBehaviour:
   - name: LinkFeatureEnd
     videoClip: {fileID: 32900000, guid: b012b10094b024b6083a5c17f83b86e7, type: 3}
     audioClip: {fileID: 8300000, guid: 86bb10155bf854714bf8d66cd4b367e1, type: 3}
+  uiManager: {fileID: 0}
+  slotManager: {fileID: 0}
   chanceGameStart: 100
   chanceFreeSpinHit: 80
   chanceMiniJackpot: 80
@@ -51246,7 +51248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6dee67c9fb64b7bbed44da112a7af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketIOManager
-  testToken: f443efdb64684b13a18a5dccf4f4f443
+  testToken: 6494d65b2c3340deaef920b667b5cedc
   slotManager: {fileID: 1840228116}
   uiManager: {fileID: 1198241101}
   popupManager: {fileID: 1134263423}
@@ -53356,7 +53358,7 @@ MonoBehaviour:
   col0CCTriggerChance: 0.4
   earlyRevealExtraSpinDuration: 3
   testEarlyRevealScenario: 0
-  specialEarlyRevealChance: 0.45
+  specialEarlyRevealChance: 0.2
   smokeEffectSprites:
   - {fileID: 21300000, guid: d9f5731e206ca4f1fbbbdf0b6111bea6, type: 3}
   - {fileID: 21300000, guid: a79d16bff53df4bc7a9e427f3e48b3a1, type: 3}

@@ -120,6 +120,9 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Slider soundVolumeSlider;
   
 
+  private bool isVideoPlaying = false;
+  private VideoScenario activeVideoScenario;
+
   private Tween BalanceTween;
   private Coroutine autoClickCoroutine;
 
@@ -352,6 +355,7 @@ public class UIManager : MonoBehaviour
 
   public void SetNormalSpinButtonActive(bool active)
   {
+      if (isVideoPlaying) return;
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
   }
 
@@ -572,6 +576,16 @@ public class UIManager : MonoBehaviour
           DOTween.Kill(walterStashAmountText);
       }
 
+      bool isCompleted = false;
+      Action safeOnComplete = () =>
+      {
+          if (isCompleted) return;
+          isCompleted = true;
+          onComplete?.Invoke();
+      };
+
+      bool textAnimStarted = false;
+
       ImageAnimation imgAnim = walterStashPopup.GetComponentInChildren<ImageAnimation>(true);
       if (imgAnim != null)
       {
@@ -579,6 +593,7 @@ public class UIManager : MonoBehaviour
           {
               if (frameIndex == 34)
               {
+                  textAnimStarted = true;
                   if (walterStashAmountText != null)
                   {
                       walterStashAmountText.gameObject.SetActive(true);
@@ -596,7 +611,12 @@ public class UIManager : MonoBehaviour
                           {
                               walterStashAmountText.text = FormatStaticValue(amount);
                           }
+                          StartCoroutine(CloseWalterStashAfterDelay(2f, safeOnComplete));
                       });
+                  }
+                  else
+                  {
+                      StartCoroutine(CloseWalterStashAfterDelay(2f, safeOnComplete));
                   }
               }
           };
@@ -604,7 +624,8 @@ public class UIManager : MonoBehaviour
 
       walterStashPopup.SetActive(true);
 
-      StartCoroutine(CloseWalterStashAfterDelay(2f, onComplete));
+      // Fallback: in case image animation does not exist or doesn't trigger frame 34
+      StartCoroutine(WalterStashFallbackTimeout(4f, () => textAnimStarted, safeOnComplete));
   }
 
   private IEnumerator CloseWalterStashAfterDelay(float delay, Action onComplete)
@@ -623,11 +644,26 @@ public class UIManager : MonoBehaviour
           }
           walterStashPopup.SetActive(false);
       }
+      if (featurePopup != null)
+      {
+          featurePopup.SetActive(false);
+      }
       onComplete?.Invoke();
+  }
+
+  private IEnumerator WalterStashFallbackTimeout(float timeout, Func<bool> checkStarted, Action onComplete)
+  {
+      yield return new WaitForSeconds(timeout);
+      if (!checkStarted())
+      {
+          Debug.LogWarning("[UIManager] Walter Stash text animation did not start in time. Triggering fallback close.");
+          StartCoroutine(CloseWalterStashAfterDelay(0f, onComplete));
+      }
   }
 
   public void UpdateFeatureButtonsState(bool isSpinning, int remaining)
   {
+      if (isVideoPlaying) return;
       if (featureSpinButton != null)
       {
           featureSpinButton.gameObject.SetActive(!isSpinning);
@@ -655,12 +691,14 @@ public class UIManager : MonoBehaviour
 
   public void ShowStopButton(bool show)
   {
+      if (isVideoPlaying) return;
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(show);
   }
 
   
   public void ShowSpinButtonCooldown(bool cooldown)
   {
+      if (isVideoPlaying) return;
       if (cooldown)
       {
           if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
@@ -713,6 +751,7 @@ public class UIManager : MonoBehaviour
 
   public void SetFreeSpinsActive(bool active)
   {
+      if (isVideoPlaying) return;
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
       if (slotStartButton) slotStartButton.interactable = !active;
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
@@ -723,6 +762,7 @@ public class UIManager : MonoBehaviour
 
   public void SetButtonsInteractable(bool toggle)
   {
+      if (isVideoPlaying) return;
       if (toggle && slotManager != null && (slotManager.IsBonus || slotManager.IsFeatureTransitioning || slotManager.IsFreeSpin))
       {
           toggle = false;
@@ -740,8 +780,106 @@ public class UIManager : MonoBehaviour
 
   public void SetAutoSpinActive(bool active)
   {
+      if (isVideoPlaying) return;
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(active);
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
+  }
+
+  public void SetVideoPlaybackState(bool isPlaying, VideoScenario scenario)
+  {
+      isVideoPlaying = isPlaying;
+      activeVideoScenario = scenario;
+      if (isPlaying)
+      {
+          ApplyVideoPlaybackButtonStates(scenario);
+      }
+      else
+      {
+          bool isInBonusOrFreeSpin = (slotManager != null && (slotManager.IsFreeSpin || slotManager.IsBonus));
+          if (turboButton != null)
+          {
+              turboButton.gameObject.SetActive(!isInBonusOrFreeSpin);
+          }
+          UpdateButtonsState();
+      }
+  }
+
+  private void ApplyVideoPlaybackButtonStates(VideoScenario scenario)
+  {
+      if (slotStartButton != null) slotStartButton.interactable = false;
+      if (stopSpinButton != null) stopSpinButton.interactable = false;
+      if (featureSpinButton != null) featureSpinButton.interactable = false;
+      if (autoSpinButton != null) autoSpinButton.interactable = false;
+      if (autoSpinStopButton != null) autoSpinStopButton.interactable = false;
+
+      bool isInBonusOrFreeSpin = (slotManager != null && (slotManager.IsFreeSpin || slotManager.IsBonus))
+          || scenario == VideoScenario.FreeSpinStart 
+          || scenario == VideoScenario.FreeSpinEnd 
+          || scenario == VideoScenario.LinkFeatureStart 
+          || scenario == VideoScenario.LinkFeatureEnd;
+
+      if (!isInBonusOrFreeSpin)
+      {
+          if (slotStartButton != null)
+          {
+              slotStartButton.gameObject.SetActive(true);
+              slotStartButton.interactable = false;
+          }
+          if (stopSpinButton != null)
+          {
+              stopSpinButton.gameObject.SetActive(false);
+          }
+          if (featureSpinButton != null)
+          {
+              featureSpinButton.gameObject.SetActive(false);
+          }
+          if (autoplayCounterObject != null)
+          {
+              autoplayCounterObject.SetActive(false);
+          }
+          if (autoSpinButton != null)
+          {
+              autoSpinButton.gameObject.SetActive(false);
+          }
+          if (autoSpinStopButton != null)
+          {
+              autoSpinStopButton.gameObject.SetActive(false);
+          }
+      }
+      else
+      {
+          if (stopSpinButton != null)
+          {
+              stopSpinButton.gameObject.SetActive(true);
+              stopSpinButton.interactable = false;
+          }
+          if (slotStartButton != null)
+          {
+              slotStartButton.gameObject.SetActive(false);
+          }
+          if (featureSpinButton != null)
+          {
+              featureSpinButton.gameObject.SetActive(false);
+          }
+          if (autoplayCounterObject != null)
+          {
+              autoplayCounterObject.SetActive(false);
+          }
+          if (autoSpinButton != null)
+          {
+              autoSpinButton.gameObject.SetActive(false);
+          }
+          if (autoSpinStopButton != null)
+          {
+              autoSpinStopButton.gameObject.SetActive(false);
+          }
+      }
+
+      if (infoButton != null) infoButton.interactable = false;
+      if (gameExitButton != null) gameExitButton.interactable = false;
+      if (totalBetPlusButton != null) totalBetPlusButton.interactable = false;
+      if (totalBetMinusButton != null) totalBetMinusButton.interactable = false;
+      if (turboButton != null) turboButton.gameObject.SetActive(false);
   }
 
   private void SetTurboActiveState(bool active)
@@ -1401,6 +1539,12 @@ public class UIManager : MonoBehaviour
   {
     if (slotManager == null) return;
 
+    if (isVideoPlaying)
+    {
+        ApplyVideoPlaybackButtonStates(activeVideoScenario);
+        return;
+    }
+
     
     if ((featurePopup != null && featurePopup.activeSelf) || (walterStashPopup != null && walterStashPopup.activeSelf))
     {
@@ -1412,6 +1556,34 @@ public class UIManager : MonoBehaviour
         if (featureSpinButton) featureSpinButton.gameObject.SetActive(false);
         if (infoButton) infoButton.interactable = false;
         if (gameExitButton) gameExitButton.interactable = false;
+        return;
+    }
+
+    if (slotManager.IsBonus)
+    {
+        if (slotStartButton) slotStartButton.gameObject.SetActive(false);
+        if (autoSpinButton) autoSpinButton.gameObject.SetActive(false);
+        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
+        if (autoplayCounterObject) autoplayCounterObject.SetActive(true);
+
+        bool isBonusSpinning = bonusManager != null && bonusManager.IsSpinning;
+        int remaining = slotManager.LinkRespinsRemaining;
+        if (featureSpinButton)
+        {
+            featureSpinButton.gameObject.SetActive(!isBonusSpinning);
+            featureSpinButton.interactable = !isBonusSpinning && (remaining > 0);
+        }
+        if (stopSpinButton)
+        {
+            stopSpinButton.gameObject.SetActive(isBonusSpinning);
+            stopSpinButton.interactable = isBonusSpinning;
+        }
+
+        if (infoButton) infoButton.interactable = false;
+        if (gameExitButton) gameExitButton.interactable = false;
+        if (totalBetPlusButton) totalBetPlusButton.interactable = false;
+        if (totalBetMinusButton) totalBetMinusButton.interactable = false;
+        if (turboButton) turboButton.gameObject.SetActive(false);
         return;
     }
 

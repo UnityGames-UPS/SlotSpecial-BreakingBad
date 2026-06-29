@@ -282,34 +282,12 @@ public class SlotSymbolView : MonoBehaviour
                 .OnComplete(() => scaleDownDone = true);
             yield return new WaitUntil(() => scaleDownDone);
 
-            multiplierValueText.gameObject.SetActive(false);
-            multiplierValueText.transform.localScale = Vector3.one;
-        }
-
-        // Step 3: Set gold coin value text with the calculated value
-        double finalValue = multiplierValue * totalBet;
-        if (goldCoinValueText != null)
-        {
-            string valStr = finalValue.ToString("0.###");
-            string formattedText = "";
-            foreach (char c in valStr)
-            {
-                if (char.IsDigit(c))
-                {
-                    formattedText += $"<sprite={c - '0'}>";
-                }
-                else if (c == '.')
-                {
-                    formattedText += "<sprite=10>";
-                }
-            }
-            goldCoinValueText.text = formattedText;
-            goldCoinValueText.transform.localScale = Vector3.zero;
-            goldCoinValueText.gameObject.SetActive(true);
-
-            // Step 4: Scale gold coin text from 0 to 1
+            // Step 3: Set multiplier text with the calculated value and scale back up from 0 to 1
+            double finalValue = multiplierValue * totalBet;
+            multiplierValueText.text = finalValue.ToString("0.###");
+            
             bool scaleUpDone = false;
-            goldCoinValueText.transform.DOScale(Vector3.one, 0.3f)
+            multiplierValueText.transform.DOScale(Vector3.one, 0.3f)
                 .SetEase(Ease.OutBack)
                 .OnComplete(() => scaleUpDone = true);
             yield return new WaitUntil(() => scaleUpDone);
