@@ -31878,6 +31878,7 @@ MonoBehaviour:
   clipSmokeReveal: {fileID: 8300000, guid: 31dbafef1fe65460790bd1f65400eee7, type: 3}
   clipIceBreakingReveal: {fileID: 8300000, guid: cebac146a89da4743b3e4b7c2e3702f6, type: 3}
   clipLinkToCoinTransition: {fileID: 8300000, guid: c22ed6637c4bd4c7688bb3632e20e6b0, type: 3}
+  clipFlyingTextSpark: {fileID: 8300000, guid: 00cda4909d20d44f4ba62e94f90ef48d, type: 3}
 --- !u!4 &1125026306
 Transform:
   m_ObjectHideFlags: 0
@@ -42780,6 +42781,7 @@ MonoBehaviour:
     - {fileID: 804178371}
     - {fileID: 701789426}
   winSymbolLoopDuration: 1.7
+  idleSprite: {fileID: 21300000, guid: c1a841099964e481e8386bbf1ce5aeec, type: 3}
 --- !u!4 &1508946217
 Transform:
   m_ObjectHideFlags: 0

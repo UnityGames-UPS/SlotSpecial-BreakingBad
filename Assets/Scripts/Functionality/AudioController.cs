@@ -29,6 +29,7 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip clipSmokeReveal;
     [SerializeField] private AudioClip clipIceBreakingReveal;
     [SerializeField] private AudioClip clipLinkToCoinTransition;
+    [SerializeField] private AudioClip clipFlyingTextSpark;
 
     private float musicVolume = 0.7f;
     private float sfxVolume = 0.7f;
@@ -180,6 +181,11 @@ public class AudioController : MonoBehaviour
     public void PlayLinkToCoinTransition()
     {
         PlaySfxOneShot(clipLinkToCoinTransition);
+    }
+
+    public void PlayFlyingTextSpark()
+    {
+        PlaySfxOneShot(clipFlyingTextSpark);
     }
 
     

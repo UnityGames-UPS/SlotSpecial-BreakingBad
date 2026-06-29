@@ -1859,6 +1859,7 @@ public class UIManager : MonoBehaviour
       yield return new WaitForSeconds(moveDuration);
 
       if (midSumAnimObj != null) midSumAnimObj.SetActive(true);
+      if (AudioController.Instance != null) AudioController.Instance.PlayFlyingTextSpark();
 
       TMP_Text sumTextPrefab = null;
       Vector3 sumInitialScale = Vector3.one;
@@ -1905,6 +1906,7 @@ public class UIManager : MonoBehaviour
           yield return new WaitForSeconds(moveDuration);
 
           if (dissolveAnimObj != null) dissolveAnimObj.SetActive(true);
+          if (AudioController.Instance != null) AudioController.Instance.PlayFlyingTextSpark();
 
           if (spinCounterText != null)
           {
