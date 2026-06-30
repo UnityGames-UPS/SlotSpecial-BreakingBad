@@ -12,6 +12,7 @@ public class StickySymbolManager : MonoBehaviour
     [SerializeField] private SocketIOManager socketManager;
     [SerializeField] private SlotManager slotManager;
     [SerializeField] private BonusManager bonusManager;
+    [SerializeField] internal RectTransform parentRect;
 
     [Header("Slots Reference")]
     [SerializeField] internal List<SlotImage> Slot;
@@ -221,6 +222,8 @@ public class StickySymbolManager : MonoBehaviour
                     anim.StopAnimation();
                     anim.isAnim = false;
                     anim.onLoopComplete = null;
+                    anim.textureArray.Clear();
+                    anim.textureArray.TrimExcess();
                 }
             }
         }
@@ -299,7 +302,7 @@ public class StickySymbolManager : MonoBehaviour
                     SlotSymbolView view = symbolViews[i][j];
                     if (view != null)
                     {
-                        view.SetCountValue(spinsRemaining);
+                        view.SetCountValue(spinsRemaining, parentRect);
                     }
                 }
             }
@@ -353,7 +356,7 @@ public class StickySymbolManager : MonoBehaviour
                     if (view != null)
                     {
                         slotManager.ConfigureSymbolView(view, 14);
-                        view.SetCountValue(remainingSpinsMatrix[i, j]);
+                        view.SetCountValue(remainingSpinsMatrix[i, j], parentRect);
                     }
                 }
                 else

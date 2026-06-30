@@ -24,21 +24,83 @@ public class SlotSymbolView : MonoBehaviour
     [SerializeField] internal Image countImage;
     [SerializeField] internal Sprite[] countSprites;
 
+    private Transform originalCountImageParent;
+    private Vector3 originalLocalPosition;
+    private Vector3 originalLocalScale;
+    private Quaternion originalLocalRotation;
+    private Vector2 originalAnchorMin;
+    private Vector2 originalAnchorMax;
+    private Vector2 originalPivot;
+    private Vector2 originalSizeDelta;
+
     [Header("Cash Collect Indicators")]
     [SerializeField] internal GameObject cashCollectAboveObject;
     [SerializeField] internal GameObject cashCollectBelowObject;
 
-    public void SetCountValue(int count)
+    public void SetCountValue(int count, RectTransform parentRect = null)
     {
         if (countImage == null) return;
+
+        if (originalCountImageParent == null)
+        {
+            originalCountImageParent = countImage.transform.parent;
+            RectTransform countRect = countImage.rectTransform;
+            if (countRect != null)
+            {
+                originalLocalPosition = countRect.localPosition;
+                originalLocalScale = countRect.localScale;
+                originalLocalRotation = countRect.localRotation;
+                originalAnchorMin = countRect.anchorMin;
+                originalAnchorMax = countRect.anchorMax;
+                originalPivot = countRect.pivot;
+                originalSizeDelta = countRect.sizeDelta;
+            }
+        }
+
         if (countSprites != null && count >= 1 && count <= countSprites.Length)
         {
             countImage.sprite = countSprites[count - 1];
             countImage.gameObject.SetActive(true);
+
+            if (parentRect != null)
+            {
+                Vector3 worldPos = countImage.transform.position;
+                countImage.transform.SetParent(parentRect, true);
+                countImage.transform.position = worldPos;
+                countImage.transform.SetAsLastSibling();
+            }
         }
         else
         {
+            RestoreCountImageParent();
             countImage.gameObject.SetActive(false);
+        }
+    }
+
+    public void RestoreCountImageParent()
+    {
+        if (countImage != null && originalCountImageParent != null && countImage.transform.parent != originalCountImageParent)
+        {
+            countImage.transform.SetParent(originalCountImageParent, false);
+            RectTransform countRect = countImage.rectTransform;
+            if (countRect != null)
+            {
+                countRect.localPosition = originalLocalPosition;
+                countRect.localScale = originalLocalScale;
+                countRect.localRotation = originalLocalRotation;
+                countRect.anchorMin = originalAnchorMin;
+                countRect.anchorMax = originalAnchorMax;
+                countRect.pivot = originalPivot;
+                countRect.sizeDelta = originalSizeDelta;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (countImage != null && originalCountImageParent != null && countImage.transform.parent != originalCountImageParent)
+        {
+            Destroy(countImage.gameObject);
         }
     }
 
@@ -158,6 +220,7 @@ public class SlotSymbolView : MonoBehaviour
         }
         if (countImage != null)
         {
+            RestoreCountImageParent();
             countImage.gameObject.SetActive(false);
         }
         if (cashCollectAboveObject != null)

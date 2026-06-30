@@ -87,6 +87,11 @@ public class UIManager : MonoBehaviour
   private double accumulatedFreeSpinWin = 0f;
   internal double AccumulatedFreeSpinWin => accumulatedFreeSpinWin;
 
+  internal void AddToAccumulatedFreeSpinWin(double amount)
+  {
+      accumulatedFreeSpinWin += amount;
+  }
+
   private int totalBonusSpins = 3;
 
   internal bool animationFinish = false;
@@ -353,13 +358,13 @@ public class UIManager : MonoBehaviour
       UpdateButtonsState();
   }
 
-  public void SetNormalSpinButtonActive(bool active)
+  internal void SetNormalSpinButtonActive(bool active)
   {
       if (isVideoPlaying) return;
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
   }
 
-  public void SetBonusSpinCounter(int count)
+  internal void SetBonusSpinCounter(int count)
   {
       if (spinCounterText != null)
       {
@@ -371,7 +376,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void OpenBonusUI(int totalSpins, double initialWin)
+  internal void OpenBonusUI(int totalSpins, double initialWin)
   {
       totalBonusSpins = totalSpins;
       if (featureWinPanel != null) featureWinPanel.SetActive(false);
@@ -389,7 +394,7 @@ public class UIManager : MonoBehaviour
       UpdateFeatureButtonsState(false, totalSpins);
   }
 
-  public void CloseBonusUI()
+  internal void CloseBonusUI()
   {
       if (featureWinPanel != null) featureWinPanel.SetActive(false);
       if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
@@ -405,7 +410,7 @@ public class UIManager : MonoBehaviour
       UpdateButtonsState();
   }
 
-  public void SetFeatureWinText(double value)
+  internal void SetFeatureWinText(double value)
   {
       if (featureWinText != null)
           featureWinText.text = FormatSpriteText(FormatStaticValue(value));
@@ -420,7 +425,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void OpenFeaturePopup(Action onStartClicked)
+  internal void OpenFeaturePopup(Action onStartClicked)
   {
       if (featurePopup == null || featureStartButton == null)
       {
@@ -485,7 +490,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void OpenFeatureWinPopup(double winAmount, Action onCloseClicked)
+  internal void OpenFeatureWinPopup(double winAmount, Action onCloseClicked)
   {
       if (featurePopup == null || featureStartButton == null)
       {
@@ -540,7 +545,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void OpenWalterStashPopup(double amount, Action onComplete)
+  internal void OpenWalterStashPopup(double amount, Action onComplete)
   {
       if (featurePopup == null || walterStashPopup == null)
       {
@@ -661,7 +666,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void UpdateFeatureButtonsState(bool isSpinning, int remaining)
+  internal void UpdateFeatureButtonsState(bool isSpinning, int remaining)
   {
       if (isVideoPlaying) return;
       if (featureSpinButton != null)
@@ -676,7 +681,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void AddFreeSpinsText(int count)
+  internal void AddFreeSpinsText(int count)
   {
       if (fsNumText != null && int.TryParse(fsNumText.text, out int currentVal))
       {
@@ -684,19 +689,19 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void SetTotalWinText(string text)
+  internal void SetTotalWinText(string text)
   {
       if (totalWinText) totalWinText.text = text;
   }
 
-  public void ShowStopButton(bool show)
+  internal void ShowStopButton(bool show)
   {
       if (isVideoPlaying) return;
       if (stopSpinButton) stopSpinButton.gameObject.SetActive(show);
   }
 
   
-  public void ShowSpinButtonCooldown(bool cooldown)
+  internal void ShowSpinButtonCooldown(bool cooldown)
   {
       if (isVideoPlaying) return;
       if (cooldown)
@@ -749,7 +754,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public void SetFreeSpinsActive(bool active)
+  internal void SetFreeSpinsActive(bool active)
   {
       if (isVideoPlaying) return;
       if (slotStartButton) slotStartButton.gameObject.SetActive(active);
@@ -760,7 +765,7 @@ public class UIManager : MonoBehaviour
       if (totalBetMinusButton) totalBetMinusButton.interactable = false;
   }
 
-  public void SetButtonsInteractable(bool toggle)
+  internal void SetButtonsInteractable(bool toggle)
   {
       if (isVideoPlaying) return;
       if (toggle && slotManager != null && (slotManager.IsBonus || slotManager.IsFeatureTransitioning || slotManager.IsFreeSpin))
@@ -778,14 +783,14 @@ public class UIManager : MonoBehaviour
       if (gameExitButton) gameExitButton.interactable = isInfoExitInteractable;
   }
 
-  public void SetAutoSpinActive(bool active)
+  internal void SetAutoSpinActive(bool active)
   {
       if (isVideoPlaying) return;
       if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(active);
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
   }
 
-  public void SetVideoPlaybackState(bool isPlaying, VideoScenario scenario)
+  internal void SetVideoPlaybackState(bool isPlaying, VideoScenario scenario)
   {
       isVideoPlaying = isPlaying;
       activeVideoScenario = scenario;
@@ -1229,7 +1234,27 @@ public class UIManager : MonoBehaviour
 
   internal void OpenFreeSpinsUI()
   {
-    if (fsNumText) fsNumText.text = slotManager.FreeSpinsCount.ToString();
+      if (fsNumText) fsNumText.text = slotManager.FreeSpinsCount.ToString();
+
+      if (spinCounterPanel != null) spinCounterPanel.SetActive(true);
+      if (featureWinPanel != null) featureWinPanel.SetActive(true);
+
+      if (spinCounterText != null)
+      {
+          spinCounterText.gameObject.SetActive(true);
+          if (totalFreeSpins <= 0 && slotManager.ResultData != null && slotManager.ResultData.payload != null)
+          {
+              totalFreeSpins = slotManager.ResultData.payload.totalFreeSpins;
+          }
+          int spinsUsed = totalFreeSpins - slotManager.FreeSpinsCount;
+          spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+      }
+
+      if (featureWinText != null)
+      {
+          featureWinText.gameObject.SetActive(true);
+          featureWinText.text = FormatSpriteText(FormatStaticValue(accumulatedFreeSpinWin));
+      }
   }
 
   internal void CloseFreeSpinsUI()
@@ -1239,8 +1264,8 @@ public class UIManager : MonoBehaviour
     if (fsNumText) fsNumText.text = "0";
     totalFreeSpins = 0;
 
-    if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(1f, 1f);
-    if (freeSpinBgCanvasGroup != null) freeSpinBgCanvasGroup.DOFade(0f, 1f);
+    slotManager.IsFeatureTransitioning = true;
+    UpdateButtonsState();
 
     if (spinCounterPanel != null) spinCounterPanel.SetActive(false);
     if (featureWinPanel != null) featureWinPanel.SetActive(false);
@@ -1252,7 +1277,21 @@ public class UIManager : MonoBehaviour
     if (autoSpinButton != null) autoSpinButton.gameObject.SetActive(true);
     if (turboButton != null) turboButton.gameObject.SetActive(true);
 
-    UpdateButtonsState();
+    float fadeDuration = 1f;
+    if (normalBgCanvasGroup != null) normalBgCanvasGroup.DOFade(1f, fadeDuration);
+    if (freeSpinBgCanvasGroup != null)
+    {
+        freeSpinBgCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() =>
+        {
+            slotManager.IsFeatureTransitioning = false;
+            UpdateButtonsState();
+        });
+    }
+    else
+    {
+        slotManager.IsFeatureTransitioning = false;
+        UpdateButtonsState();
+    }
   }
 
   internal void WinningsTextAnimation(Action onComplete = null, double? customWinAmt = null)
@@ -1379,7 +1418,7 @@ public class UIManager : MonoBehaviour
     if (balanceText) balanceText.text = FormatStaticValue(balance);
   }
   
-  public void SwitchTopUI(bool trigger)
+  internal void SwitchTopUI(bool trigger)
   {
     
   }
@@ -1535,7 +1574,7 @@ public class UIManager : MonoBehaviour
     UpdateButtonsState();
   }
 
-  public void UpdateButtonsState()
+  internal void UpdateButtonsState()
   {
     if (slotManager == null) return;
 
@@ -1674,9 +1713,19 @@ public class UIManager : MonoBehaviour
         }
       }
     }
+
+    if (slotManager.IsFeatureTransitioning && !slotManager.IsSpinning)
+    {
+        if (slotStartButton) slotStartButton.interactable = false;
+        if (autoSpinButton) autoSpinButton.interactable = false;
+        if (stopSpinButton) stopSpinButton.interactable = false;
+        if (featureSpinButton) featureSpinButton.interactable = false;
+        if (turboButton) turboButton.interactable = false;
+        SetButtonsInteractable(false);
+    }
   }
 
-  public void PerformStop()
+  internal void PerformStop()
   {
       if (slotManager == null) return;
 
@@ -1701,7 +1750,7 @@ public class UIManager : MonoBehaviour
       }
   }
 
-  public static int GetDecimalPlaces(double value)
+  internal static int GetDecimalPlaces(double value)
   {
       double rounded = Math.Round(value, 3);
       string s = rounded.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -1710,7 +1759,7 @@ public class UIManager : MonoBehaviour
       return s.Length - dotIndex - 1;
   }
 
-  public static string FormatStaticValue(double value)
+  internal static string FormatStaticValue(double value)
   {
       if (value <= 0)
       {
@@ -1719,7 +1768,7 @@ public class UIManager : MonoBehaviour
       return value.ToString("0.###");
   }
 
-  public static string GetAnimationFormat(double resultAmount)
+  internal static string GetAnimationFormat(double resultAmount)
   {
       int decimals = GetDecimalPlaces(resultAmount);
       if (decimals <= 1)
@@ -1761,10 +1810,34 @@ public class UIManager : MonoBehaviour
       return result;
   }
 
-  public IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false, bool fromBonusSlot = false)
+  internal IEnumerator PlayFreeSpinTriggerSequence(FreeSpinResult fsResult, bool isRetrigger = false, bool fromBonusSlot = false)
   {
+      if (slotManager != null)
+      {
+          slotManager.IsFeatureTransitioning = true;
+      }
+      UpdateButtonsState();
+
       if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
       if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
+
+      bool isConflict = fromBonusSlot && slotManager != null && slotManager.OriginalFeatureTriggerResult != null && slotManager.OriginalFeatureTriggerResult.payload != null && slotManager.OriginalFeatureTriggerResult.payload.isLinkTriggered && slotManager.OriginalFeatureTriggerResult.payload.isFreeSpinTriggered;
+      int originalFreeSpins = 0;
+      if (isConflict)
+      {
+          var originalFsResult = slotManager.OriginalFeatureTriggerResult.payload.freeSpinResult;
+          if (originalFsResult != null && originalFsResult.triggerCoins != null && originalFsResult.triggerCoins.Count > 0)
+          {
+              foreach (var coin in originalFsResult.triggerCoins)
+              {
+                  originalFreeSpins += (int)coin.coinValue;
+              }
+          }
+          else
+          {
+              originalFreeSpins = originalFsResult != null ? originalFsResult.freeSpinCount : 0;
+          }
+      }
 
       int totalSpins = 0;
       if (fsResult != null && fsResult.triggerCoins != null && fsResult.triggerCoins.Count > 0)
@@ -1901,8 +1974,8 @@ public class UIManager : MonoBehaviour
                       for (int row = 0; row < rowTransforms.Count; row++)
                       {
                           var triggerResult = (slotManager != null && slotManager.OriginalFeatureTriggerResult != null)
-                              ? slotManager.OriginalFeatureTriggerResult
-                              : (socketManager != null ? socketManager.resultData : null);
+                                ? slotManager.OriginalFeatureTriggerResult
+                                : (socketManager != null ? socketManager.resultData : null);
 
                           if (triggerResult != null && triggerResult.matrix != null)
                           {
@@ -2083,8 +2156,12 @@ public class UIManager : MonoBehaviour
           if (spinCounterText != null)
           {
               int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
-              int spinsUsed = totalFreeSpins - remaining;
-              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+              if (isConflict)
+              {
+                  remaining -= originalFreeSpins;
+              }
+              int spinsUsed = (totalFreeSpins - (isConflict ? originalFreeSpins : 0)) - remaining;
+              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins - (isConflict ? originalFreeSpins : 0)}";
               spinCounterText.gameObject.SetActive(true);
           }
           Destroy(sumTextPrefab.gameObject);
@@ -2097,8 +2174,12 @@ public class UIManager : MonoBehaviour
           if (spinCounterText != null)
           {
               int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
-              int spinsUsed = totalFreeSpins - remaining;
-              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+              if (isConflict)
+              {
+                  remaining -= originalFreeSpins;
+              }
+              int spinsUsed = (totalFreeSpins - (isConflict ? originalFreeSpins : 0)) - remaining;
+              spinCounterText.text = $"{spinsUsed}/{totalFreeSpins - (isConflict ? originalFreeSpins : 0)}";
               spinCounterText.gameObject.SetActive(true);
           }
       }
@@ -2106,6 +2187,188 @@ public class UIManager : MonoBehaviour
       if (fromBonusSlot)
       {
           yield return bonusManager.TransitionFromBonusToNormalSlot();
+      }
+
+      if (isConflict)
+      {
+          List<Vector3> originalCoinWorldPositions = new List<Vector3>();
+          List<string> originalCoinTexts = new List<string>();
+          List<TMP_Text> originalSourceTexts = new List<TMP_Text>();
+
+          var originalFsResult = slotManager.OriginalFeatureTriggerResult.payload.freeSpinResult;
+          if (originalFsResult != null && originalFsResult.triggerCoins != null && originalFsResult.triggerCoins.Count > 0)
+          {
+              foreach (var coin in originalFsResult.triggerCoins)
+              {
+                  int row = coin.position[0];
+                  int col = coin.position[1];
+                  if (slotManager != null && slotManager.ResultMatrix != null && row < slotManager.ResultMatrix.Count)
+                  {
+                      var rowImages = slotManager.ResultMatrix[row].slotImages;
+                      if (col < rowImages.Count)
+                      {
+                          var view = rowImages[col].GetComponent<SlotSymbolView>();
+                          if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                          {
+                              originalCoinWorldPositions.Add(view.losPolosValueText.transform.position);
+                              originalCoinTexts.Add(view.losPolosValueText.text);
+                              originalSourceTexts.Add(view.losPolosValueText);
+                          }
+                      }
+                  }
+              }
+          }
+          else
+          {
+              if (slotManager != null && slotManager.ResultMatrix != null)
+              {
+                  for (int r = 0; r < slotManager.ResultMatrix.Count; r++)
+                  {
+                      var rowImages = slotManager.ResultMatrix[r].slotImages;
+                      for (int c = 0; c < rowImages.Count; c++)
+                      {
+                            var triggerResult = slotManager.OriginalFeatureTriggerResult;
+                            if (triggerResult != null && triggerResult.matrix != null)
+                            {
+                                if (r < triggerResult.matrix.Count && c < triggerResult.matrix[r].Count)
+                                {
+                                    if (triggerResult.matrix[r][c] == "17")
+                                    {
+                                        var view = rowImages[c].GetComponent<SlotSymbolView>();
+                                        if (view != null && view.losPolosValueText != null && view.losPolosValueText.gameObject.activeSelf)
+                                        {
+                                            originalCoinWorldPositions.Add(view.losPolosValueText.transform.position);
+                                            originalCoinTexts.Add(view.losPolosValueText.text);
+                                            originalSourceTexts.Add(view.losPolosValueText);
+                                        }
+                                    }
+                                }
+                            }
+                      }
+                  }
+              }
+          }
+
+          List<TMP_Text> origTempTexts = new List<TMP_Text>();
+          List<Vector3> origInitialLocalScales = new List<Vector3>();
+
+          for (int i = 0; i < originalCoinWorldPositions.Count; i++)
+          {
+              TMP_Text tempText = Instantiate(losPolosTextPrefab, spawnParent);
+              tempText.transform.position = originalCoinWorldPositions[i];
+              tempText.text = originalCoinTexts[i];
+
+              if (i < originalSourceTexts.Count && originalSourceTexts[i] != null)
+              {
+                  Vector3 sourceLossyScale = originalSourceTexts[i].transform.lossyScale;
+                  Vector3 parentLossyScale = spawnParent.lossyScale;
+                  Vector3 matchedLocalScale = new Vector3(
+                      parentLossyScale.x != 0 ? sourceLossyScale.x / parentLossyScale.x : 1f,
+                      parentLossyScale.y != 0 ? sourceLossyScale.y / parentLossyScale.y : 1f,
+                      parentLossyScale.z != 0 ? sourceLossyScale.z / parentLossyScale.z : 1f
+                  );
+                  tempText.transform.localScale = matchedLocalScale;
+                  origInitialLocalScales.Add(matchedLocalScale);
+
+                  RectTransform rectTrans = tempText.GetComponent<RectTransform>();
+                  RectTransform sourceRectTrans = originalSourceTexts[i].GetComponent<RectTransform>();
+                  if (rectTrans != null && sourceRectTrans != null)
+                  {
+                      rectTrans.sizeDelta = sourceRectTrans.sizeDelta;
+                  }
+
+                  originalSourceTexts[i].gameObject.SetActive(false);
+              }
+              else
+              {
+                  origInitialLocalScales.Add(Vector3.one);
+              }
+
+              tempText.gameObject.SetActive(true);
+              origTempTexts.Add(tempText);
+          }
+
+          yield return new WaitForSeconds(0.2f);
+
+          foreach (var txt in origTempTexts)
+          {
+              txt.transform.DOMove(centerWorldPos, moveDuration).SetEase(Ease.OutQuad);
+          }
+
+          yield return new WaitForSeconds(moveDuration);
+
+          if (midSumAnimObj != null) midSumAnimObj.SetActive(true);
+          if (AudioController.Instance != null) AudioController.Instance.PlayFlyingTextSpark();
+
+          TMP_Text origSumTextPrefab = null;
+          Vector3 origSumInitialScale = Vector3.one;
+          if (origTempTexts.Count > 0)
+          {
+              origSumTextPrefab = origTempTexts[0];
+              origSumInitialScale = origInitialLocalScales[0];
+              string sumSpriteText = "<sprite=10>";
+              string originalSpinsStr = originalFreeSpins.ToString();
+              foreach (char c in originalSpinsStr)
+              {
+                  if (char.IsDigit(c))
+                  {
+                      sumSpriteText += $"<sprite={c - '0'}>";
+                  }
+              }
+              origSumTextPrefab.text = sumSpriteText;
+
+              for (int i = 1; i < origTempTexts.Count; i++)
+              {
+                  if (origTempTexts[i] != null) Destroy(origTempTexts[i].gameObject);
+              }
+              origTempTexts.Clear();
+          }
+
+          if (origSumTextPrefab != null)
+          {
+              origSumTextPrefab.transform.DOScale(origSumInitialScale * 1.8f, 0.4f).SetEase(Ease.OutBack);
+              yield return new WaitForSeconds(0.4f);
+              origSumTextPrefab.transform.DOScale(origSumInitialScale * 1.4f, 0.3f).SetEase(Ease.InQuad);
+              yield return new WaitForSeconds(0.3f);
+
+              yield return new WaitForSeconds(0.5f);
+
+              Vector3 targetPos = spinCounterPanel != null ? spinCounterPanel.transform.position : centerWorldPos;
+              if (spinCountSnapParent != null)
+              {
+                  targetPos = spinCountSnapParent.position;
+              }
+
+              if (midSumAnimObj != null) midSumAnimObj.SetActive(false);
+
+              origSumTextPrefab.transform.DOMove(targetPos, moveDuration).SetEase(Ease.InOutQuad);
+              yield return new WaitForSeconds(moveDuration);
+
+              if (dissolveAnimObj != null) dissolveAnimObj.SetActive(true);
+              if (AudioController.Instance != null) AudioController.Instance.PlayFlyingTextSpark();
+
+              if (spinCounterText != null)
+              {
+                  int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
+                  int spinsUsed = totalFreeSpins - remaining;
+                  spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+                  spinCounterText.gameObject.SetActive(true);
+              }
+              Destroy(origSumTextPrefab.gameObject);
+
+              yield return new WaitForSeconds(1.0f);
+              if (dissolveAnimObj != null) dissolveAnimObj.SetActive(false);
+          }
+          else
+          {
+              if (spinCounterText != null)
+              {
+                  int remaining = fsResult != null ? fsResult.freeSpinsRemaining : slotManager.FreeSpinsCount;
+                  int spinsUsed = totalFreeSpins - remaining;
+                  spinCounterText.text = $"{spinsUsed}/{totalFreeSpins}";
+                  spinCounterText.gameObject.SetActive(true);
+              }
+          }
       }
 
       if (!isRetrigger)

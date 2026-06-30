@@ -61,7 +61,7 @@ public class SlotManager : MonoBehaviour
   internal event Action<int, bool> OnAutoplayCountChanged;
   internal event Action OnAutoplayStopped;
 
-  public void Initialize(InitData data)
+  internal void Initialize(InitData data)
   {
       InitialData = data;
       PlayerData = data.player;
@@ -69,14 +69,14 @@ public class SlotManager : MonoBehaviour
       SetBetIndex(0);
   }
 
-  public void UpdateBalance(double newBalance)
+  internal void UpdateBalance(double newBalance)
   {
       if (PlayerData == null) PlayerData = new ServerPlayer();
       PlayerData.balance = newBalance;
       OnBalanceChanged?.Invoke(Balance);
   }
 
-  public void SetBetIndex(int index)
+  internal void SetBetIndex(int index)
   {
       if (InitialData == null || InitialData.gameData == null || InitialData.gameData.bets == null) return;
       
@@ -90,7 +90,7 @@ public class SlotManager : MonoBehaviour
       OnBetChanged?.Invoke();
   }
 
-  public void SetFreeSpinsCount(int count)
+  internal void SetFreeSpinsCount(int count)
   {
       if (ResultData != null && ResultData.payload != null)
       {
@@ -99,7 +99,7 @@ public class SlotManager : MonoBehaviour
       OnFreeSpinsChanged?.Invoke(FreeSpinsCount);
   }
 
-  public void SetLinkRespinsRemaining(int count)
+  internal void SetLinkRespinsRemaining(int count)
   {
       if (ResultData != null && ResultData.payload != null)
       {
@@ -108,7 +108,7 @@ public class SlotManager : MonoBehaviour
       OnLinkRespinsChanged?.Invoke(LinkRespinsRemaining);
   }
 
-  public void UpdateFromSpinResult(ServerSpinResponse result)
+  internal void UpdateFromSpinResult(ServerSpinResponse result)
   {
       ResultData = result;
       if (result.player != null)
@@ -129,13 +129,13 @@ public class SlotManager : MonoBehaviour
       }
   }
 
-  public void TriggerSpinState(bool isSpinning)
+  internal void TriggerSpinState(bool isSpinning)
   {
       IsSpinning = isSpinning;
       OnSpinStateChanged?.Invoke(IsSpinning);
   }
 
-  public void TriggerAutoSpinState(bool isAutoSpin)
+  internal void TriggerAutoSpinState(bool isAutoSpin)
   {
       IsAutoSpin = isAutoSpin;
       OnAutoSpinStateChanged?.Invoke(IsAutoSpin);
@@ -278,7 +278,7 @@ public class SlotManager : MonoBehaviour
       }
   }
 
-  public SlotSymbolView GetSymbolView(int row, int col)
+  internal SlotSymbolView GetSymbolView(int row, int col)
   {
       if (IsBonus && _bonusManager != null)
       {
@@ -303,12 +303,12 @@ public class SlotManager : MonoBehaviour
       return null;
   }
 
-  public Image GetResultMatrixImage(int row, int col)
+  internal Image GetResultMatrixImage(int row, int col)
   {
       return ResultMatrix[row].slotImages[col];
   }
 
-  public CoinPosition GetCoinPosition(int row, int col)
+  internal CoinPosition GetCoinPosition(int row, int col)
   {
       if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.coinPositions != null)
       {
@@ -323,7 +323,7 @@ public class SlotManager : MonoBehaviour
       return null;
   }
 
-  public void EnableAllBackTints(bool active, float alpha = 0.85f)
+  internal void EnableAllBackTints(bool active, float alpha = 0.85f)
   {
       for (int col = 0; col < images.Count; col++)
       {
@@ -343,7 +343,7 @@ public class SlotManager : MonoBehaviour
       }
   }
 
-  public void SetColumnBackTintActive(int col, bool active, float alpha = 0.85f)
+  internal void SetColumnBackTintActive(int col, bool active, float alpha = 0.85f)
   {
       if (col < 0 || col >= images.Count) return;
       var imgs = images[col].slotImages;
@@ -429,7 +429,7 @@ public class SlotManager : MonoBehaviour
   }
 
   #region Autospin
-  public void StartAutoplay(int count, bool untilFeature)
+  internal void StartAutoplay(int count, bool untilFeature)
   {
     if (!IsAutoSpin)
     {
@@ -450,7 +450,7 @@ public class SlotManager : MonoBehaviour
     }
   }
 
-  public void StopAutoSpin()
+  internal void StopAutoSpin()
   {
     if (IsAutoSpin)
     {
@@ -536,7 +536,7 @@ public class SlotManager : MonoBehaviour
     }
   }
 
-  public void ChangeBet(bool IncDec)
+  internal void ChangeBet(bool IncDec)
   {
     int counter = BetCounter;
     if (IncDec)
@@ -774,7 +774,7 @@ public class SlotManager : MonoBehaviour
 
   #region SlotSpin
   
-  public void StartSlots(bool autoSpin = false, bool reverse = false)
+  internal void StartSlots(bool autoSpin = false, bool reverse = false)
   {
     isSpinReverse = reverse;
     IsFeatureTransitioning = false;
@@ -884,7 +884,7 @@ public class SlotManager : MonoBehaviour
     var matrix = SocketManager.resultData.matrix;
     var payload = SocketManager.resultData.payload;
 
-    if (testEarlyRevealScenario)
+    if (testEarlyRevealScenario && !IsFreeSpin && !IsBonus)
     {
       isEarlyRevealActive = true;
       earlyRevealPositions.Add(new List<int> { 0, 1 });
@@ -985,7 +985,7 @@ public class SlotManager : MonoBehaviour
       }
     }
 
-    if (hasCCInCol0)
+    if (hasCCInCol0 && !IsFreeSpin)
     {
       float roll = UnityEngine.Random.value;
       if (roll < col0CCTriggerChance)
@@ -999,13 +999,13 @@ public class SlotManager : MonoBehaviour
       }
     }
 
-    if (testCol0CashCollect)
+    if (testCol0CashCollect && !IsFreeSpin)
     {
       col0HasCC = true;
       
     }
 
-    if (testFakeScenarios)
+    if (testFakeScenarios && !IsFreeSpin && !IsBonus)
     {
       isNearMissActive = true;
       if (lastTestScenario == 0)
@@ -1028,7 +1028,7 @@ public class SlotManager : MonoBehaviour
     bool isLinkTriggered = payload != null && payload.isLinkTriggered;
     bool featureTriggered = isCCTriggered || isLinkTriggered;
 
-    if (featureTriggered)
+    if (!IsFreeSpin && !IsBonus && featureTriggered)
     {
       int[] checkCols = { 0, 4 };
       int[] checkRows = { 0, 2 };
@@ -1082,7 +1082,7 @@ public class SlotManager : MonoBehaviour
       if (hasCCInMatrix) break;
     }
 
-    if (!hasCCInMatrix)
+    if (!IsFreeSpin && !IsBonus && !hasCCInMatrix)
     {
       bool hasSpecialInCol0 = false;
       for (int r = 0; r < matrix.Count; r++)
@@ -1389,7 +1389,7 @@ public class SlotManager : MonoBehaviour
   
   
   
-  public void OnLinkFeatureCompleted()
+  internal void OnLinkFeatureCompleted()
   {
     
     if (featureQueue.HasPending)
@@ -1405,6 +1405,11 @@ public class SlotManager : MonoBehaviour
       
       WasFreeSpinPaused = false;
       IsFreeSpin = true;
+
+      if (SocketManager.resultData != null && SocketManager.resultData.payload != null)
+      {
+          savedLockedCashCollects = SocketManager.resultData.payload.lockedCashCollects;
+      }
 
       uiManager.OpenFreeSpinsUI();
       FreeSpin(FreeSpinsCount);
@@ -1441,7 +1446,7 @@ public class SlotManager : MonoBehaviour
         case FeatureType.FreeSpinRetrigger:
           yield return HandleFreeSpinRetrigger();
           
-          if (IsFreeSpin && FreeSpinsCount > 0)
+          if (!featureQueue.HasPending && IsFreeSpin && FreeSpinsCount > 0)
           {
             FreeSpin(FreeSpinsCount);
             yield break;
@@ -1539,9 +1544,13 @@ public class SlotManager : MonoBehaviour
           }
           yield return HandleFreeSpinRetrigger();
           
-          TriggerSpinState(false);
-          FreeSpin(FreeSpinsCount);
-          yield break;
+          if (!featureQueue.HasPending)
+          {
+            TriggerSpinState(false);
+            FreeSpin(FreeSpinsCount);
+            yield break;
+          }
+          break;
       }
     }
 
@@ -1675,10 +1684,14 @@ public class SlotManager : MonoBehaviour
   
   private IEnumerator HandleCashCollectAndLink()
   {
-    
+    bool isShiftFromFreeSpin = IsFreeSpin;
+    if (!isShiftFromFreeSpin && stickySymbolManager != null)
+    {
+      stickySymbolManager.Reset();
+    }
 
     IsBonus = true;
-    IsFeatureTransitioning = false;
+    IsFeatureTransitioning = true;
     uiManager.UpdateButtonsState();
 
     bool triggeredFromNormal = !IsFreeSpin;
@@ -1692,8 +1705,9 @@ public class SlotManager : MonoBehaviour
     yield return ResetUI();
 
     yield return _bonusManager.StartBonus(SocketManager.resultData.payload.linkRespinsRemaining, triggeredFromNormal);
+    IsFeatureTransitioning = false;
+    uiManager.UpdateButtonsState();
     TriggerSpinState(false);
-    
   }
 
   private IEnumerator HandleCashCollectSequence()
@@ -2079,7 +2093,7 @@ public class SlotManager : MonoBehaviour
         isBelow = (imgs[fullIndex + 1].sprite == SlotSymbols[14]);
       }
 
-      if (IsBlockedFlameSprite(imgs[fullIndex].sprite))
+      if (IsBlockedFlameSprite(imgs[fullIndex].sprite) || IsFreeSpin)
       {
         isAbove = false;
         isBelow = false;
@@ -2170,7 +2184,7 @@ public class SlotManager : MonoBehaviour
     EnableAllBackTints(false);
   }
 
-  public void PerformStop()
+  internal void PerformStop()
   {
     if (uiManager != null)
     {
@@ -2641,7 +2655,7 @@ public class SlotManager : MonoBehaviour
       bool isBelowCC = false;
 
       bool isBlocked = (symbolId == 11 || symbolId == 12 || symbolId == 13 || symbolId == 14 || symbolId == 15 || symbolId == 16 || symbolId == 17);
-      if (!isBlocked)
+      if (!isBlocked && !IsFreeSpin)
       {
         if (row == 0)
         {
@@ -2901,23 +2915,32 @@ public class SlotManager : MonoBehaviour
               row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
           {
               string symbolIdStr = SocketManager.resultData.matrix[row][col];
+              bool isLockedCC = false;
+              if (IsFreeSpin && stickySymbolManager != null)
+              {
+                  isLockedCC = stickySymbolManager.IsPositionLocked(col, row);
+              }
+
               if (int.TryParse(symbolIdStr, out int symbolId))
               {
-                  if (symbolId == 15 || symbolId == 16) 
+                  if (!isLockedCC)
                   {
-                      if (AudioController.Instance != null) AudioController.Instance.PlayCashCoinLand();
-                  }
-                  else if (symbolId == 11 || symbolId == 12) 
-                  {
-                      if (AudioController.Instance != null) AudioController.Instance.PlayLinkLand();
-                  }
-                  else if (symbolId == 14 || symbolId == 17) 
-                  {
-                      if (AudioController.Instance != null) AudioController.Instance.PlayCashCollectLand();
+                      if (symbolId == 15 || symbolId == 16) 
+                      {
+                          if (AudioController.Instance != null) AudioController.Instance.PlayCashCoinLand();
+                      }
+                      else if (symbolId == 11 || symbolId == 12) 
+                      {
+                          if (AudioController.Instance != null) AudioController.Instance.PlayLinkLand();
+                      }
+                      else if (symbolId == 14 || symbolId == 17) 
+                      {
+                          if (AudioController.Instance != null) AudioController.Instance.PlayCashCollectLand();
+                      }
                   }
               }
 
-              if (isSpecial(symbolIdStr))
+              if (isSpecial(symbolIdStr) && !isLockedCC)
               {
                   animationManager.PlaySpecialAnimationForCell(row, col);
               }
@@ -3232,6 +3255,47 @@ public class SlotManager : MonoBehaviour
 
       ImageAnimation animCell = animationManager.GetAnimationCell(row, col);
       if (animCell == null) yield break;
+
+      // Reset animCell animation state and clear its textureArray to prevent previous symbols from showing
+      animCell.StopAnimation();
+      animCell.isAnim = false;
+      animCell.onLoopComplete = null;
+      animCell.textureArray.Clear();
+      animCell.textureArray.TrimExcess();
+      if (animCell.rendererDelegate != null && animationManager != null)
+      {
+          animCell.rendererDelegate.sprite = animationManager.idleSprite;
+      }
+
+      // Reset the sticky symbol slot object (slot image and animation) at the same position
+      if (stickySymbolManager != null)
+      {
+          if (col >= 0 && col < stickySymbolManager.Slot.Count && row >= 0 && row < stickySymbolManager.Slot[col].slotImages.Count)
+          {
+              var stickyImage = stickySymbolManager.Slot[col].slotImages[row];
+              if (stickyImage != null)
+              {
+                  stickyImage.sprite = null;
+                  stickyImage.gameObject.SetActive(false);
+
+                  var stickyAnim = stickyImage.GetComponent<ImageAnimation>();
+                  if (stickyAnim != null)
+                  {
+                      stickyAnim.StopAnimation();
+                      stickyAnim.isAnim = false;
+                      stickyAnim.onLoopComplete = null;
+                      stickyAnim.textureArray.Clear();
+                      stickyAnim.textureArray.TrimExcess();
+                  }
+              }
+
+              var stickyView = stickySymbolManager.GetLockedSymbolView(col, row);
+              if (stickyView != null)
+              {
+                  stickyView.ClearValues();
+              }
+          }
+      }
 
       animCell.gameObject.SetActive(true);
       animCell.DOKill();

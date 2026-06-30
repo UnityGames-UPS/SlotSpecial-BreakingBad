@@ -9786,7 +9786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &359081666
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51248,7 +51248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6dee67c9fb64b7bbed44da112a7af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketIOManager
-  testToken: 6494d65b2c3340deaef920b667b5cedc
+  testToken: 2ba064ec5f70462ebefcd3fa225ccb96
   slotManager: {fileID: 1840228116}
   uiManager: {fileID: 1198241101}
   popupManager: {fileID: 1134263423}
@@ -52189,6 +52189,7 @@ MonoBehaviour:
   socketManager: {fileID: 1787183090}
   slotManager: {fileID: 1840228116}
   bonusManager: {fileID: 1213781016}
+  parentRect: {fileID: 952472658}
   Slot:
   - slotImages:
     - {fileID: 25803808}
@@ -53345,7 +53346,7 @@ MonoBehaviour:
   rightBottomMagnet: {fileID: 1368396213}
   magnetNudgeDuration: 2
   magnetAnimDuration: 2.5
-  magnetTriggerChance: 0.5
+  magnetTriggerChance: 0.25
   nearMissChance: 0.4
   testFakeScenarios: 0
   testCol0CashCollect: 0

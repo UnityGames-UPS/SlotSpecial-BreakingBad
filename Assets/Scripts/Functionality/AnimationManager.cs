@@ -183,10 +183,6 @@ public class AnimationManager : MonoBehaviour
                         textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
                     }
                     textHelper.SetupFromHierarchy();
-                    if (symbolId == 14)
-                    {
-                        textHelper.SetCountValue(spinsRemaining);
-                    }
                     if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
                     {
                         textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, true);
@@ -392,10 +388,6 @@ public class AnimationManager : MonoBehaviour
                 }
                 textHelper.SetupFromHierarchy();
 
-                if (symbolId == 14)
-                {
-                    textHelper.SetCountValue(spinsRemaining);
-                }
                 if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
                 {
                     textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, true);
@@ -645,10 +637,6 @@ public class AnimationManager : MonoBehaviour
                     textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
                 }
                 textHelper.SetupFromHierarchy();
-                if (symbolId == 14)
-                {
-                    textHelper.SetCountValue(spinsRemaining);
-                }
                 if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
                 {
                     textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration, false);
@@ -871,10 +859,6 @@ public class AnimationManager : MonoBehaviour
                 textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
             }
             textHelper.SetupFromHierarchy();
-            if (symbolId == 14)
-            {
-                textHelper.SetCountValue(spinsRemaining);
-            }
             if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
             {
                 textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration / 2f, false);
@@ -1044,10 +1028,6 @@ public class AnimationManager : MonoBehaviour
             textHelper = animCell.gameObject.AddComponent<AnimationTextHelper>();
         }
         textHelper.SetupFromHierarchy();
-        if (symbolId == 14)
-        {
-            textHelper.SetCountValue(spinsRemaining);
-        }
         if (symbolId == 17 && symbolView.losPolosValueText != null && symbolView.losPolosValueText.gameObject.activeSelf)
         {
             textHelper.PlayTextAnimation(17, symbolView.losPolosValueText.text, winSymbolLoopDuration / 2f, false);

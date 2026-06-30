@@ -195,6 +195,25 @@ public class BonusManager : MonoBehaviour
           {
             view.ClearValues();
             slotManager.ConfigureSymbolView(view, 14); 
+
+            int spinsRemaining = 0;
+            bool isLocked = false;
+            if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.lockedCashCollects != null)
+            {
+                foreach (var locked in SocketManager.resultData.payload.lockedCashCollects)
+                {
+                    if (locked.position != null && locked.position.Count == 2 && locked.position[0] == row && locked.position[1] == col)
+                    {
+                        spinsRemaining = locked.spinsRemaining;
+                        isLocked = true;
+                        break;
+                    }
+                }
+            }
+            if (isLocked)
+            {
+                view.SetCountValue(spinsRemaining);
+            }
           }
         }
       }
@@ -307,6 +326,44 @@ public class BonusManager : MonoBehaviour
     KillAllTweens();
 
     GenerateFreezeMatrix(GenerateFreezedLocations());
+
+    for (int col = 0; col < Slot.Count; col++)
+    {
+      for (int row = 0; row < Slot[col].slotTransforms.Count; row++)
+      {
+        if (SocketManager.resultData.matrix[row][col] == "14")
+        {
+          Transform cell = Slot[col].slotTransforms[row];
+          Image img = cell.GetChild(2).GetComponent<Image>();
+          SlotSymbolView view = img.GetComponent<SlotSymbolView>();
+          if (view != null)
+          {
+            int spinsRemaining = 0;
+            bool isLocked = false;
+            if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.lockedCashCollects != null)
+            {
+                foreach (var locked in SocketManager.resultData.payload.lockedCashCollects)
+                {
+                    if (locked.position != null && locked.position.Count == 2 && locked.position[0] == row && locked.position[1] == col)
+                    {
+                        spinsRemaining = locked.spinsRemaining;
+                        isLocked = true;
+                        break;
+                    }
+                }
+            }
+            if (isLocked)
+            {
+                view.SetCountValue(spinsRemaining);
+            }
+            else
+            {
+                view.SetCountValue(0);
+            }
+          }
+        }
+      }
+    }
 
     // Play multiplier conversion animation for newly landed symbol 13
     if (SocketManager.resultData.payload.coinPositions != null)
@@ -516,6 +573,31 @@ public class BonusManager : MonoBehaviour
         else if (SocketManager.resultData.matrix[j][i] == "14")
         {
           img.sprite = CC_Sprite;
+          int spinsRemaining = 0;
+          bool isLocked = false;
+          if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.lockedCashCollects != null)
+          {
+              foreach (var locked in SocketManager.resultData.payload.lockedCashCollects)
+              {
+                  if (locked.position != null && locked.position.Count == 2 && locked.position[0] == j && locked.position[1] == i)
+                  {
+                      spinsRemaining = locked.spinsRemaining;
+                      isLocked = true;
+                      break;
+                  }
+              }
+          }
+          if (view != null)
+          {
+              if (isLocked)
+              {
+                  view.SetCountValue(spinsRemaining);
+              }
+              else
+              {
+                  view.SetCountValue(0);
+              }
+          }
         }
         else if (SocketManager.resultData.matrix[j][i] == "16")
         {
@@ -551,6 +633,11 @@ public class BonusManager : MonoBehaviour
     slotManager.IsBonus = false;
 
     double winAmt = SocketManager.resultData.payload.winAmount;
+
+    if (slotManager.WasFreeSpinPaused)
+    {
+      uiManager.AddToAccumulatedFreeSpinWin(winAmt);
+    }
 
     
     if (SocketManager.resultData != null && 
@@ -637,6 +724,9 @@ public class BonusManager : MonoBehaviour
     uiManager.CloseBonusUI();
     yield return null;
 
+    slotManager.IsFeatureTransitioning = true;
+    uiManager.UpdateButtonsState();
+
     BonusSlot_CG.DOFade(0, 0.5f);
     NormalSlot_CG.DOFade(1, 0.5f).OnComplete(() =>
     {
@@ -653,11 +743,9 @@ public class BonusManager : MonoBehaviour
       ResetStaticSymbol();
       ResetMatrix();
 
-      
-      
-      
-      
-      
+      slotManager.IsFeatureTransitioning = false;
+      uiManager.UpdateButtonsState();
+
       uiManager.SetNormalSpinButtonActive(true);
       slotManager.OnLinkFeatureCompleted();
     });
@@ -764,23 +852,50 @@ public class BonusManager : MonoBehaviour
       activeTween.Pause();
     }
 
+    int rowCount = 3;
+    if (Slot != null && Slot.Count > 0 && Slot[0].slotTransforms != null)
+    {
+        rowCount = Slot[0].slotTransforms.Count;
+    }
+    int col = index / rowCount;
+    int row = index % rowCount;
+
+    bool isJammedStop = false;
+    if (SocketManager.resultData != null && SocketManager.resultData.matrix != null &&
+        row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
+    {
+        string symbolIdStr = SocketManager.resultData.matrix[row][col];
+        if (symbolIdStr != "9")
+        {
+            isJammedStop = true;
+        }
+    }
+
     float finalY = 307f;
-    slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, finalY);
+    float originalX = slotTransform.localPosition.x;
+    slotTransform.localPosition = new Vector2(originalX, finalY);
     float targetY = 0f;
-    float overshootDistance = 15f;
 
     if (AudioController.Instance != null) AudioController.Instance.PlaySlotStop();
 
-    
     Sequence stopSeq = DOTween.Sequence();
-    stopSeq.Append(slotTransform.DOLocalMoveY(targetY - overshootDistance, 0.08f).SetEase(Ease.InQuad));
-    
-    stopSeq.Append(slotTransform.DOLocalMoveY(targetY, 0.15f).SetEase(Ease.OutBack, 1.5f));
-
-    yield return stopSeq.WaitForCompletion();
-
-    int col = index / 3;
-    int row = index % 3;
+    if (isJammedStop)
+    {
+        float slowDuration = 0.8f;
+        
+        // Slow move down to target Y
+        stopSeq.Append(slotTransform.DOLocalMoveY(targetY, slowDuration).SetEase(Ease.OutQuad));
+        
+        yield return stopSeq.WaitForCompletion();
+        slotTransform.localPosition = new Vector2(originalX, targetY);
+    }
+    else
+    {
+        float overshootDistance = 15f;
+        stopSeq.Append(slotTransform.DOLocalMoveY(targetY - overshootDistance, 0.08f).SetEase(Ease.InQuad));
+        stopSeq.Append(slotTransform.DOLocalMoveY(targetY, 0.15f).SetEase(Ease.OutBack, 1.5f));
+        yield return stopSeq.WaitForCompletion();
+    }
 
     if (SocketManager.resultData != null && SocketManager.resultData.matrix != null &&
         row < SocketManager.resultData.matrix.Count && col < SocketManager.resultData.matrix[row].Count)
