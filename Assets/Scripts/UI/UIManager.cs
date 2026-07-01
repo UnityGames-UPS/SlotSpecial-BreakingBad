@@ -1506,6 +1506,14 @@ public class UIManager : MonoBehaviour
       }
   }
 
+  internal void CloseAllPanels()
+  {
+      CloseAutoplayPanel();
+      CloseInfoPanel();
+      if (settingsPopupPanel != null) settingsPopupPanel.SetActive(false);
+      if (settingsPopupPanelBG != null) settingsPopupPanelBG.SetActive(false);
+  }
+
   private void UpdateInfoMultiplierTexts()
   {
       if (slotManager == null || symbolTextMaps == null) return;

@@ -301,7 +301,7 @@ public class BonusManager : MonoBehaviour
 
     SocketManager.AccumulateResult(slotManager.BetCounter);
     yield return new WaitUntil(() => SocketManager.isResultdone);
-    slotManager.UpdateFromSpinResult(SocketManager.resultData);
+    slotManager.UpdateFromSpinResult(SocketManager.resultData, true);
 
     if (SocketManager.resultData != null && SocketManager.resultData.payload != null && SocketManager.resultData.payload.linkFeatureResult != null)
     {
@@ -941,6 +941,22 @@ public class BonusManager : MonoBehaviour
       }
     }
     activeTweens.Clear();
+  }
+
+  internal void StopAllGameplay()
+  {
+    IsSpinning = false;
+    StopSpinToggle = false;
+    BonusEnd = false;
+
+    if (BonusRoutine != null)
+    {
+      StopCoroutine(BonusRoutine);
+      BonusRoutine = null;
+    }
+
+    StopAllCoroutines();
+    KillAllTweens();
   }
 
   internal void OnInitialTransitionComplete()

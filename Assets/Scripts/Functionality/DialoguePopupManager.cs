@@ -498,4 +498,18 @@ public class DialoguePopupManager : MonoBehaviour
             uiManager.SetVideoPlaybackState(false, scenario);
         }
     }
+
+    public void StopAllDialogues()
+    {
+        StopAllCoroutines();
+        if (dialogueAudioSource != null) dialogueAudioSource.Stop();
+        if (videoPlayer != null) videoPlayer.Stop();
+        if (videoDisplayPanel != null) videoDisplayPanel.SetActive(false);
+        if (currentActiveDialogue != null)
+        {
+            currentActiveDialogue.SetActive(false);
+            currentActiveDialogue = null;
+        }
+        if (dialogueParent != null) dialogueParent.SetActive(false);
+    }
 }

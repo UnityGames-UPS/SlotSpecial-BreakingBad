@@ -116,19 +116,27 @@ public class PopupManager : MonoBehaviour
     
     
     
+    internal bool IsDisconnectionPopupActive()
+    {
+        return disconnectionPopup != null && disconnectionPopup.activeSelf;
+    }
+
     internal void ShowDisconnectionPopup()
     {
         ShowDisconnectionPopup("Game disconnected due to network error. Please relaunch the game.");
     }
 
-    
-    
-    
     internal void ShowDisconnectionPopup(string message)
     {
         if (disconnectionPopup == null) return;
 
         CloseCurrentPopup();
+
+        if (socketManager != null)
+        {
+            socketManager.StopAllGameplay();
+            StartCoroutine(socketManager.CloseSocket(false));
+        }
 
         if (popupParent != null) popupParent.SetActive(true);
 
@@ -209,6 +217,12 @@ public class PopupManager : MonoBehaviour
         if (errorPopup == null) return;
 
         CloseCurrentPopup();
+
+        if (isCritical && socketManager != null)
+        {
+            socketManager.StopAllGameplay();
+            StartCoroutine(socketManager.CloseSocket(false));
+        }
 
         if (popupParent != null) popupParent.SetActive(true);
 
@@ -680,7 +694,17 @@ public class PopupManager : MonoBehaviour
     {
         if (socketManager != null)
         {
-            StartCoroutine(socketManager.CloseSocket());
+            socketManager.CloseGame();
+        }
+        else
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            // WebGL exit fallback
+#elif UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 

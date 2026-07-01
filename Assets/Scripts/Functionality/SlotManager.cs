@@ -108,7 +108,7 @@ public class SlotManager : MonoBehaviour
       OnLinkRespinsChanged?.Invoke(LinkRespinsRemaining);
   }
 
-  internal void UpdateFromSpinResult(ServerSpinResponse result)
+  internal void UpdateFromSpinResult(ServerSpinResponse result, bool skipBalanceUIUpdate = false)
   {
       ResultData = result;
       if (result.player != null)
@@ -117,7 +117,10 @@ public class SlotManager : MonoBehaviour
           PlayerData.balance = result.player.balance ?? PlayerData.balance;
       }
       
-      OnBalanceChanged?.Invoke(Balance);
+      if (!skipBalanceUIUpdate)
+      {
+          OnBalanceChanged?.Invoke(Balance);
+      }
       
       if (result.payload.isFreeSpinActive || result.payload.isFreeSpinTriggered)
       {
@@ -1154,7 +1157,7 @@ public class SlotManager : MonoBehaviour
 
     SocketManager.AccumulateResult(BetCounter);
     yield return new WaitUntil(() => SocketManager.isResultdone);
-    UpdateFromSpinResult(SocketManager.resultData);
+    UpdateFromSpinResult(SocketManager.resultData, true);
     if (IsFreeSpin && stickySymbolManager != null && SocketManager.resultData != null && SocketManager.resultData.payload != null)
     {
       stickySymbolManager.UpdateLockedCashCollectsStart(SocketManager.resultData.payload.lockedCashCollects);
@@ -1391,6 +1394,7 @@ public class SlotManager : MonoBehaviour
   
   internal void OnLinkFeatureCompleted()
   {
+    OnBalanceChanged?.Invoke(Balance);
     
     if (featureQueue.HasPending)
     {
@@ -1569,6 +1573,7 @@ public class SlotManager : MonoBehaviour
     
     IsAutoplayStoppedMidSpin = false;
     TriggerSpinState(false);
+    OnBalanceChanged?.Invoke(Balance);
 
     if (IsFreeSpin)
     {
@@ -1621,6 +1626,7 @@ public class SlotManager : MonoBehaviour
         {
           stickySymbolManager.Reset();
         }
+        OnBalanceChanged?.Invoke(Balance);
         if (WasAutoSpinOn)
         {
           WasAutoSpinOn = false;
@@ -2165,8 +2171,43 @@ public class SlotManager : MonoBehaviour
 
   internal void CallCloseSocket()
   {
-    SocketManager.isExiting = true;
-    StartCoroutine(SocketManager.CloseSocket());
+    SocketManager.CloseGame();
+  }
+
+  internal void StopAllGameplay()
+  {
+      IsAutoSpin = false;
+      IsFreeSpin = false;
+      IsBonus = false;
+      IsSpinning = false;
+      WasAutoSpinOn = false;
+      IsAutoplayStoppedMidSpin = false;
+
+      if (autoplayRoutine != null)
+      {
+          StopCoroutine(autoplayRoutine);
+          autoplayRoutine = null;
+      }
+
+      StopAllCoroutines();
+      KillAllTweens();
+      StopGameAnimation();
+
+      if (_bonusManager != null)
+      {
+          _bonusManager.StopAllGameplay();
+      }
+
+      if (DialoguePopupManager.Instance != null)
+      {
+          DialoguePopupManager.Instance.StopAllDialogues();
+      }
+
+      if (uiManager != null)
+      {
+          uiManager.CloseAllPanels();
+          uiManager.UpdateButtonsState();
+      }
   }
 
   internal void StopGameAnimation()

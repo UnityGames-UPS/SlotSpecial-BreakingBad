@@ -67,11 +67,6 @@ public class SocketIOManager : MonoBehaviour
     {
         RequestAuthToken();
     }
-      void CloseGame()
-  {
-    Debug.Log("Unity: Closing Game");
-    StartCoroutine(CloseSocket());
-  }
 
     private void RequestAuthToken()
     {
@@ -196,17 +191,13 @@ public class SocketIOManager : MonoBehaviour
 
         if (isExiting)
         {
-            
-            if (popupManager != null && !popupManager.IsLoadingPopupActive())
-            {
-                popupManager.ShowLoadingPopup(0f); 
-            }
-            
+            // Intentional exit, GameExit() will handle showing the loading popup and closing the application
         }
         else
         {
+            StopAllGameplay();
             
-            if (popupManager != null)
+            if (popupManager != null && !popupManager.IsDisconnectionPopupActive())
             {
                 popupManager.ShowDisconnectionPopup();
             }
@@ -322,7 +313,7 @@ public class SocketIOManager : MonoBehaviour
                 playerdata.balance = myData.player.balance ?? playerdata.balance;
             }
 
-            slotManager.UpdateFromSpinResult(myData);
+            slotManager.UpdateFromSpinResult(myData, true);
             isResultdone = true;
         }
         catch (Exception e)
@@ -507,13 +498,9 @@ public class SocketIOManager : MonoBehaviour
 
     #region Cleanup
 
-    internal IEnumerator CloseSocket()
+    internal IEnumerator CloseSocket(bool showLoading = true)
     {
-        
-        
         isExiting = true;
-
-        if (RaycastBlocker) RaycastBlocker.SetActive(true);
 
         StopPingRoutine();
 
@@ -521,28 +508,99 @@ public class SocketIOManager : MonoBehaviour
 
         if (socketManager != null)
         {
-            socketManager.Close();
+            try
+            {
+                socketManager.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SocketIO] Error closing socketManager: {ex.Message}");
+            }
             socketManager = null;
         }
 
         isConnected = false;
 
-        
-        
-        if (popupManager != null && !popupManager.IsLoadingPopupActive())
-        {
-            popupManager.ShowLoadingPopup(0f);
-        }
+        // Loading popup will be shown inside GameExit() when exit signal is triggered
 
         yield return new WaitForSeconds(0.5f);
 
         Debug.Log("[SocketIO] Socket closed");
+    }
 
+    internal void StopAllGameplay()
+    {
+        if (slotManager != null)
+        {
+            slotManager.StopAllGameplay();
+        }
+    }
+
+    internal void DisconnectSocketOnly()
+    {
+        StopPingRoutine();
+        isConnected = false;
+        if (gameSocket != null)
+        {
+            try
+            {
+                gameSocket.Disconnect();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SocketIO] Error disconnecting gameSocket: {ex.Message}");
+            }
+        }
+        if (socketManager != null)
+        {
+            try
+            {
+                socketManager.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SocketIO] Error closing socketManager: {ex.Message}");
+            }
+            socketManager = null;
+        }
+    }
+
+    internal void CloseGame()
+    {
+        Debug.Log("Unity: Closing Game");
+        if (!isConnected || socketManager == null)
+        {
+            GameExit();
+        }
+        else
+        {
+            StartCoroutine(CloseSocketAndExitRoutine());
+        }
+    }
+
+    private IEnumerator CloseSocketAndExitRoutine()
+    {
+        yield return CloseSocket(true);
+        GameExit();
+    }
+
+    internal void GameExit()
+    {
+        Debug.Log("[SocketIO] Exiting Game");
+        if (RaycastBlocker) RaycastBlocker.SetActive(true);
+        if (popupManager != null && !popupManager.IsLoadingPopupActive())
+        {
+            popupManager.ShowLoadingPopup(0f);
+        }
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (JSManager != null)
         {
             JSManager.SendCustomMessage("OnExit");
         }
+#elif UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
 #endif
     }
 
