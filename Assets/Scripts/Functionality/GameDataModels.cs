@@ -53,7 +53,7 @@ public class FreeSpinFeature
 public class OverlayScatterFeature
 {
     public bool enabled;
-    public List<int> values;
+    public List<double> values;
     public ExtraSpinsData extraSpins;
 }
 
@@ -830,7 +830,7 @@ public class Bonus
     public string type;
     public bool isEnabled;
     public int noOfItem;
-    public List<int> payOut;
+    public List<double> payOut;
     public List<double> payOutProb;
 }
 
@@ -923,7 +923,7 @@ public class FreeSpinResult
     public bool triggered;
     public int freeSpinCount;
     public List<TriggerCoin> triggerCoins;
-    public List<int> lpValues;
+    public List<double> lpValues;
     public int freeSpinsRemaining;
     public int totalFreeSpins;
 }

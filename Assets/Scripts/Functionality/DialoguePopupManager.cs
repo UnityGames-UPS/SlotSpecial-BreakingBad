@@ -55,6 +55,8 @@ public class DialoguePopupManager : MonoBehaviour
 {
     internal static DialoguePopupManager Instance { get; private set; }
 
+    internal bool IsDialogueActive => currentActiveDialogue != null || (dialogueParent != null && dialogueParent.activeSelf);
+
     [Header("UI Parent Configurations")]
     [SerializeField] private GameObject dialogueParent;
 
@@ -70,6 +72,8 @@ public class DialoguePopupManager : MonoBehaviour
     [SerializeField] private VideoScenarioData[] videoScenarios;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private SlotManager slotManager;
+    [SerializeField] private bool forceUrlPlayback = false;
+    [SerializeField] private string videoUrlPrefix = "https://d1lerod2freygq.cloudfront.net/SL-BB/StreamingAssets/";
 
     [Header("Chances (%)")]
     [Range(0f, 100f)] [SerializeField] private float chanceGameStart = 100f;
@@ -134,6 +138,7 @@ public class DialoguePopupManager : MonoBehaviour
     {
         if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
         if (slotManager == null) slotManager = FindFirstObjectByType<SlotManager>();
+        ApplySFXVolume();
     }
 
     private void SkipDialogue()
@@ -178,9 +183,24 @@ public class DialoguePopupManager : MonoBehaviour
 
     private void ApplySFXVolume()
     {
-        if (dialogueAudioSource != null && AudioController.Instance != null)
+        if (AudioController.Instance != null)
         {
-            dialogueAudioSource.volume = AudioController.Instance.SfxVolume;
+            UpdateVolume(AudioController.Instance.SfxVolume);
+        }
+    }
+
+    internal void UpdateVolume(float val)
+    {
+        if (dialogueAudioSource != null)
+        {
+            dialogueAudioSource.volume = val;
+        }
+        if (videoPlayer != null)
+        {
+            for (ushort i = 0; i < videoPlayer.audioTrackCount; i++)
+            {
+                videoPlayer.SetDirectAudioVolume(i, val);
+            }
         }
     }
 
@@ -194,6 +214,11 @@ public class DialoguePopupManager : MonoBehaviour
         {
             Debug.LogWarning($"[DialoguePopupManager] Dialogue {type} popupObject is not assigned.");
             yield break;
+        }
+
+        if (uiManager != null && uiManager.AutoSpinStopButton != null)
+        {
+            uiManager.AutoSpinStopButton.interactable = false;
         }
 
         
@@ -236,6 +261,11 @@ public class DialoguePopupManager : MonoBehaviour
         if (dialogueAudioSource != null)
         {
             dialogueAudioSource.Stop();
+        }
+
+        if (uiManager != null)
+        {
+            uiManager.UpdateButtonsState();
         }
     }
 
@@ -420,7 +450,20 @@ public class DialoguePopupManager : MonoBehaviour
 
         if (videoPlayer != null)
         {
-            videoPlayer.clip = data.videoClip;
+            bool playFromUrl = forceUrlPlayback;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            playFromUrl = true;
+#endif
+            if (playFromUrl)
+            {
+                videoPlayer.source = VideoSource.Url;
+                videoPlayer.url = videoUrlPrefix + data.videoClip.name + ".mp4";
+            }
+            else
+            {
+                videoPlayer.source = VideoSource.VideoClip;
+                videoPlayer.clip = data.videoClip;
+            }
             videoPlayer.Play();
         }
 

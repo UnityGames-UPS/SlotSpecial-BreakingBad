@@ -103,6 +103,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button slotStartButton;
   [SerializeField] private Button autoSpinButton;
   [SerializeField] private Button autoSpinStopButton;
+  public Button AutoSpinStopButton => autoSpinStopButton;
   [SerializeField] private Button totalBetPlusButton;
   [SerializeField] private Button totalBetMinusButton;
 
@@ -118,6 +119,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text fsNumText;
 
   [Header("Settings Panel UI")]
+[SerializeField] private GameObject settingsPopupPanelBG;
   [SerializeField] private GameObject settingsPopupPanel;
   [SerializeField] private Button settingsButton;
   [SerializeField] private Button settingsQuitButton;
@@ -215,6 +217,10 @@ public class UIManager : MonoBehaviour
     if (infoPanel != null)
     {
         infoPanel.SetActive(false);
+    }
+    if (settingsPopupPanelBG != null)
+    {
+        settingsPopupPanelBG.SetActive(false);
     }
     if (settingsPopupPanel != null)
     {
@@ -352,6 +358,7 @@ public class UIManager : MonoBehaviour
           soundVolumeSlider.onValueChanged.RemoveAllListeners();
           soundVolumeSlider.onValueChanged.AddListener((val) => {
               if (AudioController.Instance != null) AudioController.Instance.SfxVolume = val;
+              if (DialoguePopupManager.Instance != null) DialoguePopupManager.Instance.UpdateVolume(val);
           });
       }
 
@@ -786,7 +793,11 @@ public class UIManager : MonoBehaviour
   internal void SetAutoSpinActive(bool active)
   {
       if (isVideoPlaying) return;
-      if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(active);
+      if (autoSpinStopButton)
+      {
+          autoSpinStopButton.gameObject.SetActive(active);
+          if (active) autoSpinStopButton.interactable = true;
+      }
       if (autoSpinButton) autoSpinButton.gameObject.SetActive(!active);
   }
 
@@ -1298,10 +1309,10 @@ public class UIManager : MonoBehaviour
   {
     double winAmt = customWinAmt ?? slotManager.WinAmount;
     double threshold = winTypePopup != null ? winTypePopup.EnableWinThreshold : 3.0;
-    if (winAmt >= slotManager.LineBet * threshold && winTypePopup != null)
+    if (winAmt >= slotManager.TotalBet * threshold && winTypePopup != null)
     {
       bool isAutoMode = slotManager.IsFreeSpin || slotManager.IsAutoSpin;
-      winTypePopup.StartPopup(winAmt, slotManager.LineBet, isAutoMode, () =>
+      winTypePopup.StartPopup(winAmt, slotManager.TotalBet, isAutoMode, () =>
       {
           if (totalWinText) totalWinText.text = FormatStaticValue(winAmt);
 
@@ -1454,6 +1465,10 @@ public class UIManager : MonoBehaviour
 
   private void OpenSettingsPanel()
   {
+      if (settingsPopupPanelBG != null)
+      {
+          settingsPopupPanelBG.SetActive(true);
+      }
       if (settingsPopupPanel != null)
       {
           settingsPopupPanel.SetActive(true);
@@ -1475,8 +1490,19 @@ public class UIManager : MonoBehaviour
           {
               settingsPopupPanel.SetActive(false);
               settingsPopupPanel.transform.localScale = Vector3.one;
+              if (settingsPopupPanelBG != null)
+              {
+                  settingsPopupPanelBG.SetActive(false);
+              }
           });
           closeSeq.SetUpdate(true);
+      }
+      else
+      {
+          if (settingsPopupPanelBG != null)
+          {
+              settingsPopupPanelBG.SetActive(false);
+          }
       }
   }
 
@@ -1584,6 +1610,16 @@ public class UIManager : MonoBehaviour
         return;
     }
 
+    if (DialoguePopupManager.Instance != null && DialoguePopupManager.Instance.IsDialogueActive)
+    {
+        if (slotStartButton) slotStartButton.interactable = false;
+        if (stopSpinButton) stopSpinButton.interactable = false;
+        if (featureSpinButton) featureSpinButton.interactable = false;
+        if (autoSpinButton) autoSpinButton.interactable = false;
+        if (autoSpinStopButton) autoSpinStopButton.interactable = false;
+        return;
+    }
+
     
     if ((featurePopup != null && featurePopup.activeSelf) || (walterStashPopup != null && walterStashPopup.activeSelf))
     {
@@ -1642,7 +1678,11 @@ public class UIManager : MonoBehaviour
       {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
-        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
+        if (autoSpinStopButton)
+        {
+          autoSpinStopButton.gameObject.SetActive(true);
+          autoSpinStopButton.interactable = true;
+        }
         if (autoplayCounterObject) autoplayCounterObject.SetActive(!slotManager.AutoplayUntilFeature);
       }
       else
@@ -1677,7 +1717,11 @@ public class UIManager : MonoBehaviour
       {
         if (slotStartButton) slotStartButton.gameObject.SetActive(false);
         if (stopSpinButton) stopSpinButton.gameObject.SetActive(false);
-        if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(true);
+        if (autoSpinStopButton)
+        {
+          autoSpinStopButton.gameObject.SetActive(true);
+          autoSpinStopButton.interactable = true;
+        }
         if (autoplayCounterObject) autoplayCounterObject.SetActive(!slotManager.AutoplayUntilFeature);
       }
       else if (slotManager.IsFreeSpin)
