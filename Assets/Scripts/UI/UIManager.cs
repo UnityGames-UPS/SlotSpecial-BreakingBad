@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Button slotStartButton;
   [SerializeField] private Button autoSpinButton;
   [SerializeField] private Button autoSpinStopButton;
-  public Button AutoSpinStopButton => autoSpinStopButton;
+  internal Button AutoSpinStopButton => autoSpinStopButton;
   [SerializeField] private Button totalBetPlusButton;
   [SerializeField] private Button totalBetMinusButton;
 

@@ -67,6 +67,11 @@ public class SocketIOManager : MonoBehaviour
     {
         RequestAuthToken();
     }
+      void CloseGame()
+  {
+    Debug.Log("Unity: Closing Game");
+    StartCoroutine(CloseSocket());
+  }
 
     private void RequestAuthToken()
     {
@@ -250,6 +255,13 @@ public class SocketIOManager : MonoBehaviour
     {
         Debug.Log($"[SocketIO] Init received: {jsonData}");
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (JSManager != null)
+        {
+            JSManager.SendCustomMessage("OnEnter");
+        }
+#endif
+
         try
         {
             InitData myData = JsonConvert.DeserializeObject<InitData>(jsonData);
@@ -276,13 +288,6 @@ public class SocketIOManager : MonoBehaviour
             }
 
             if (RaycastBlocker) RaycastBlocker.SetActive(false);
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (JSManager != null)
-            {
-                JSManager.SendCustomMessage("OnEnter");
-            }
-#endif
         }
         catch (Exception e)
         {
@@ -343,7 +348,7 @@ public class SocketIOManager : MonoBehaviour
                         socketManager.Close();
                     }
 #if UNITY_WEBGL && !UNITY_EDITOR
-                    if (JSManager != null) JSManager.SendCustomMessage("onExit");
+                    if (JSManager != null) JSManager.SendCustomMessage("OnExit");
 #endif
                     break;
             }
