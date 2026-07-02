@@ -240,6 +240,9 @@ public class SlotManager : MonoBehaviour
   private bool col0Stopped = false;
   private float col0StopTime = 0f;
 
+  [Header("5 Of A Kind UI References")]
+  [SerializeField] private GameObject fiveOfAKindObject;
+
   [Header("Early Reveal Scenario References")]
   [SerializeField] private float earlyRevealExtraSpinDuration = 3.0f;
   [SerializeField] private bool testEarlyRevealScenario = false;
@@ -367,6 +370,7 @@ public class SlotManager : MonoBehaviour
     if (leftBottomMagnet != null) leftBottomMagnet.SetActive(false);
     if (rightTopMagnet != null) rightTopMagnet.SetActive(false);
     if (rightBottomMagnet != null) rightBottomMagnet.SetActive(false);
+    if (fiveOfAKindObject != null) fiveOfAKindObject.SetActive(false);
 
     tweenHeight = (13 * IconSizeFactor) - 280;
     initialYPositions = new float[numberOfSlots];
@@ -936,7 +940,7 @@ public class SlotManager : MonoBehaviour
           }
         }
 
-        if (wildCols.Count >= 1)
+        if (wildCols.Count >= 2)
         {
           isEarlyRevealActive = true;
           foreach (int col in wildCols)
@@ -1354,7 +1358,7 @@ public class SlotManager : MonoBehaviour
       {
         winLine.Add(item);
       }
-      CheckPayoutLineBackend(winLine);
+      yield return StartCoroutine(CheckPayoutLineBackend(winLine));
     }
 
     if (!hasPrizeOrCashFlow && (IsAutoSpin || SocketManager.resultData.payload.isFreeSpinActive || SocketManager.resultData.payload.linkFeatureActive))
@@ -1741,7 +1745,7 @@ public class SlotManager : MonoBehaviour
       {
         winLine.Add(item);
       }
-      CheckPayoutLineBackend(winLine);
+      yield return StartCoroutine(CheckPayoutLineBackend(winLine));
     }
 
     IsFeatureTransitioning = false;
@@ -2142,11 +2146,11 @@ public class SlotManager : MonoBehaviour
     }
   }
 
-  private void CheckPayoutLineBackend(List<LineWin> lineWins, double jackpot = 0)
+  private IEnumerator CheckPayoutLineBackend(List<LineWin> lineWins, double jackpot = 0)
   {
     if (lineWins == null || lineWins.Count == 0)
     {
-      return;
+      yield break;
     }
 
     if (jackpot > 0)
@@ -2161,7 +2165,23 @@ public class SlotManager : MonoBehaviour
     }
     else
     {
-      
+      bool hasFiveOfAKind = false;
+      foreach (var win in lineWins)
+      {
+        if (win.matchCount == 5)
+        {
+          hasFiveOfAKind = true;
+          break;
+        }
+      }
+
+      if (hasFiveOfAKind && fiveOfAKindObject != null)
+      {
+        fiveOfAKindObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        fiveOfAKindObject.SetActive(false);
+      }
+
       if (LineAnimRoutine != null)
          StopCoroutine(LineAnimRoutine);
 
@@ -2219,6 +2239,11 @@ public class SlotManager : MonoBehaviour
     {
       StopCoroutine(LineAnimRoutine);
       LineAnimRoutine = null;
+    }
+
+    if (fiveOfAKindObject != null)
+    {
+      fiveOfAKindObject.SetActive(false);
     }
 
     animationManager.StopAllAnimations();

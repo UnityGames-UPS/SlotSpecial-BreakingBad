@@ -506,6 +506,8 @@ public class AnimationManager : MonoBehaviour
                     {
                         textHelper.revealEffectAnimation.onLoopComplete = null;
                         textHelper.revealEffectAnimation.StopAnimation();
+                        textHelper.revealEffectAnimation.textureArray.Clear();
+                        textHelper.revealEffectAnimation.textureArray.TrimExcess();
                         if (textHelper.revealEffectAnimation.rendererDelegate != null)
                         {
                             textHelper.revealEffectAnimation.rendererDelegate.sprite = idleSprite;
@@ -514,16 +516,15 @@ public class AnimationManager : MonoBehaviour
                     }
                 }
 
-                if (anim.gameObject.activeSelf)
+                anim.onLoopComplete = null;
+                anim.StopAnimation();
+                anim.textureArray.Clear();
+                anim.textureArray.TrimExcess();
+                if (anim.rendererDelegate != null)
                 {
-                    anim.onLoopComplete = null;
-                    anim.StopAnimation();
-                    if (anim.rendererDelegate != null)
-                    {
-                        anim.rendererDelegate.sprite = idleSprite;
-                    }
-                    anim.gameObject.SetActive(false);
+                    anim.rendererDelegate.sprite = idleSprite;
                 }
+                anim.gameObject.SetActive(false);
 
                 
                 SlotSymbolView symbolView = slotManager.GetSymbolView(row, col);
