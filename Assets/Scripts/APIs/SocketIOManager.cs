@@ -51,6 +51,11 @@ public class SocketIOManager : MonoBehaviour
     private const float PING_INTERVAL = 2f;
     private const float PONG_TIMEOUT = 5f;
 
+    private bool hasFocus = true;
+    private float focusLostTime = 0f;
+    private Coroutine focusCheckRoutine;
+    private float maxBackgroundTime = 60f;
+
     #region Initialization
 
     private void Awake()
@@ -73,6 +78,7 @@ public class SocketIOManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (JSManager != null)
         {
+            JSManager.RegisterAuthTokenListener(gameObject.name);
             JSManager.SendCustomMessage("authToken");
         }
         StartCoroutine(WaitForAuthToken());
@@ -153,6 +159,7 @@ public class SocketIOManager : MonoBehaviour
         gameSocket.On<string>("result", OnResultReceived);
         gameSocket.On<string>("pong", OnPongReceived);
         gameSocket.On<string>("AnotherDevice", OnAnotherDevice);
+        gameSocket.On<string>("balance:sync", OnBalanceSync);
 
         
         gameSocket.On<string>("internalError", (data) => Debug.LogWarning($"[SocketIO] Internal error: {data}"));
@@ -358,6 +365,74 @@ public class SocketIOManager : MonoBehaviour
         {
             popupManager.ShowAnotherDeviceError();
         }
+    }
+
+    private void OnBalanceSync(string data)
+    {
+        try
+        {
+            BalanceSyncPayload syncPayload = JsonConvert.DeserializeObject<BalanceSyncPayload>(data);
+            if (syncPayload == null) return;
+
+            if (playerdata == null) playerdata = new ServerPlayer();
+            playerdata.balance = syncPayload.balance;
+
+            if (slotManager != null) slotManager.UpdateBalanceDisplay(syncPayload.balance);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SocketIO] Balance sync parse failed: {e.Message}");
+        }
+    }
+
+    internal void HandleFocusChange(bool focus)
+    {
+        hasFocus = focus;
+
+        if (!focus)
+        {
+            focusLostTime = Time.time;
+            if (focusCheckRoutine == null && !isExiting)
+                focusCheckRoutine = StartCoroutine(FocusTimeoutCheck());
+        }
+        else
+        {
+            if (focusCheckRoutine != null)
+            {
+                StopCoroutine(focusCheckRoutine);
+                focusCheckRoutine = null;
+            }
+        }
+    }
+
+    private IEnumerator FocusTimeoutCheck()
+    {
+        while (!hasFocus && !isExiting)
+        {
+            if (Time.time - focusLostTime >= maxBackgroundTime)
+            {
+                Debug.LogWarning("[SocketIO] Background timeout — closing connection");
+                isConnected = false;
+                StopPingRoutine();
+
+                if (socketManager != null)
+                {
+                    try { socketManager.Close(); }
+                    catch (Exception e) { Debug.LogWarning($"[SocketIO] Focus close error: {e.Message}"); }
+                }
+
+                if (popupManager != null && !popupManager.IsDisconnectionPopupActive())
+                {
+                    popupManager.ShowDisconnectionPopup();
+                }
+                focusCheckRoutine = null;
+                yield break;
+            }
+
+            yield return new WaitForSecondsRealtime(1f);
+        }
+
+        focusCheckRoutine = null;
     }
 
     #endregion
@@ -621,4 +696,10 @@ public class SocketIOManager : MonoBehaviour
     }
 
     #endregion
+}
+
+[Serializable]
+public class BalanceSyncPayload
+{
+    public double balance;
 }

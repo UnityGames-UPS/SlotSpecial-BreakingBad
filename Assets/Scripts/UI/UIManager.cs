@@ -142,8 +142,24 @@ public class UIManager : MonoBehaviour
   private bool isVideoPlaying = false;
   private VideoScenario activeVideoScenario;
 
+  [SerializeField] internal JSFunctCalls jsFunctCalls;
   private Tween BalanceTween;
   private Coroutine autoClickCoroutine;
+
+  private void Awake()
+  {
+      if (jsFunctCalls == null) jsFunctCalls = FindObjectOfType<JSFunctCalls>();
+      if (jsFunctCalls != null)
+          jsFunctCalls.RegisterVisibilityListener(gameObject.name);
+  }
+
+  public void OnFocusChanged(string value)
+  {
+      bool focused = value == "1";
+      Debug.Log("UNITY FOCUS CHANGED: " + value + " (focused: " + focused + ")");
+      if (AudioController.Instance != null) AudioController.Instance.SetMuteAll(!focused);
+      if (socketManager != null) socketManager.HandleFocusChange(focused);
+  }
 
   private void Start()
   {
