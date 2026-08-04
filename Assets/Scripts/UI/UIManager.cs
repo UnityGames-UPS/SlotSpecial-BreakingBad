@@ -119,13 +119,25 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text fsNumText;
 
   [Header("Settings Panel UI")]
-[SerializeField] private GameObject settingsPopupPanelBG;
+  [SerializeField] private GameObject settingsPopupPanelBG;
   [SerializeField] private GameObject settingsPopupPanel;
   [SerializeField] private Button settingsButton;
   [SerializeField] private Button settingsQuitButton;
   [SerializeField] private Slider musicVolumeSlider;
   [SerializeField] private Slider soundVolumeSlider;
   
+  [Header("Idle & Alert UI")]
+  [SerializeField] private GameObject winObject;
+  [SerializeField] private TMP_Text alertText;
+  [SerializeField] private float initialIdleTimeout = 30f;
+  [SerializeField] private float subsequentIdleTimeout = 60f;
+  [SerializeField] private string startSpinAlertMessage = "PRESS SPIN BUTTON OR SWIPE UP OR DOWN ON SLOT AREA TO START SPIN";
+  [SerializeField] private string stopSpinAlertMessage = "PRESS STOP BUTTON OR TOUCH ON SLOT AREA TO QUICK STOP SPIN";
+
+  private Coroutine idleCheckCoroutine;
+  private float currentIdleTimeout = 30f;
+  private bool isIdleAlertActive = false;
+  private bool wasIdleAlertActiveForSpin = false;
 
   private bool isVideoPlaying = false;
   private VideoScenario activeVideoScenario;
@@ -240,6 +252,23 @@ public class UIManager : MonoBehaviour
             }
         });
     }
+
+    if (alertText == null)
+    {
+        GameObject foundObj = GameObject.Find("alerttext");
+        if (foundObj == null) foundObj = GameObject.Find("AlertText");
+        if (foundObj != null) alertText = foundObj.GetComponent<TMP_Text>();
+    }
+
+    if (winObject == null && totalWinText != null)
+    {
+        winObject = totalWinText.transform.parent != null ? totalWinText.transform.parent.gameObject : totalWinText.gameObject;
+    }
+
+    if (alertText != null) alertText.gameObject.SetActive(false);
+    if (winObject != null) winObject.SetActive(true);
+
+    StartIdleTimer(initialIdleTimeout);
   }
 
   private void InitializeHUD()
@@ -292,6 +321,7 @@ public class UIManager : MonoBehaviour
           totalBetPlusButton.onClick.AddListener(() => { 
               if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
               if (slotManager) slotManager.ChangeBet(true); 
+              ResetIdleTimer();
               CanCloseMenu(); 
           });
       }
@@ -300,6 +330,7 @@ public class UIManager : MonoBehaviour
           totalBetMinusButton.onClick.AddListener(() => { 
               if (AudioController.Instance != null) AudioController.Instance.PlayNormalBtn();
               if (slotManager) slotManager.ChangeBet(false); 
+              ResetIdleTimer();
               CanCloseMenu(); 
           });
       }
@@ -788,6 +819,7 @@ public class UIManager : MonoBehaviour
       bool isInfoExitInteractable = slotManager == null || (!slotManager.IsBonus && !slotManager.IsFeatureTransitioning);
       if (infoButton) infoButton.interactable = isInfoExitInteractable;
       if (gameExitButton) gameExitButton.interactable = isInfoExitInteractable;
+      if (turboButton) turboButton.interactable = isInfoExitInteractable && toggle;
   }
 
   internal void SetAutoSpinActive(bool active)
@@ -1582,7 +1614,111 @@ public class UIManager : MonoBehaviour
   private void HandleSpinStateChanged(bool isSpinning)
   {
     UpdateButtonsState();
+
+    if (isSpinning)
+    {
+        if (idleCheckCoroutine != null)
+        {
+            StopCoroutine(idleCheckCoroutine);
+            idleCheckCoroutine = null;
+        }
+
+        if (isIdleAlertActive || wasIdleAlertActiveForSpin)
+        {
+            wasIdleAlertActiveForSpin = true;
+            isIdleAlertActive = false;
+
+            if (winObject != null) winObject.SetActive(false);
+
+            if (alertText != null)
+            {
+                alertText.text = stopSpinAlertMessage;
+                alertText.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (alertText != null)
+            {
+                alertText.gameObject.SetActive(false);
+            }
+
+            if (winObject != null)
+            {
+                winObject.SetActive(true);
+            }
+        }
+    }
+    else
+    {
+        if (wasIdleAlertActiveForSpin)
+        {
+            wasIdleAlertActiveForSpin = false;
+
+            if (alertText != null)
+            {
+                alertText.gameObject.SetActive(false);
+            }
+
+            if (winObject != null)
+            {
+                winObject.SetActive(true);
+            }
+
+            StartIdleTimer(subsequentIdleTimeout);
+        }
+        else if (!isIdleAlertActive)
+        {
+            if (alertText != null)
+            {
+                alertText.gameObject.SetActive(false);
+            }
+
+            if (winObject != null)
+            {
+                winObject.SetActive(true);
+            }
+
+            StartIdleTimer(subsequentIdleTimeout);
+        }
+    }
   }
+
+  #region Idle & Alert Handler
+  internal void StartIdleTimer(float timeout)
+  {
+      if (idleCheckCoroutine != null)
+      {
+          StopCoroutine(idleCheckCoroutine);
+      }
+      currentIdleTimeout = timeout;
+      idleCheckCoroutine = StartCoroutine(IdleCheckTimerCoroutine());
+  }
+
+  internal void ResetIdleTimer()
+  {
+      if (slotManager != null && slotManager.IsSpinning) return;
+      StartIdleTimer(currentIdleTimeout);
+  }
+
+  private IEnumerator IdleCheckTimerCoroutine()
+  {
+      yield return new WaitForSeconds(currentIdleTimeout);
+
+      if (slotManager != null && (slotManager.IsSpinning || slotManager.IsAutoSpin || slotManager.IsBonus))
+      {
+          yield break;
+      }
+
+      isIdleAlertActive = true;
+      if (winObject != null) winObject.SetActive(false);
+      if (alertText != null)
+      {
+          alertText.text = startSpinAlertMessage;
+          alertText.gameObject.SetActive(true);
+      }
+  }
+  #endregion
 
   private void HandleAutoplayStateChanged(bool isAutoSpin)
   {
@@ -1758,7 +1894,9 @@ public class UIManager : MonoBehaviour
         if (autoSpinStopButton) autoSpinStopButton.gameObject.SetActive(false);
         if (autoplayCounterObject) autoplayCounterObject.SetActive(slotManager.IsBonus);
 
-        
+        bool isNormalState = !slotManager.IsBonus && !slotManager.IsFeatureTransitioning;
+        if (turboButton) turboButton.interactable = isNormalState;
+
         if (slotManager.IsBonus || slotManager.IsFeatureTransitioning)
         {
             SetButtonsInteractable(false);
