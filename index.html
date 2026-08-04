@@ -24,11 +24,15 @@
       width: 100%;
     }
 
-    #loading-screen {
+      #loading-screen {
       position: absolute;
       width: 100%;
       height: 100%;
-    }
+  }
+
+
+
+
   </style>
 </head>
 
@@ -37,19 +41,9 @@
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <script>
     const canvas = document.querySelector("#unity-canvas");
-    var unityInstance = null;
-    var lastProgressSent = -1;
-
-    function sendProgressToPlatform(progressValue) {
-      var percentage = Math.round(progressValue * 100);
-      if (percentage === lastProgressSent) return;
-      lastProgressSent = percentage;
-      if (window.parent) {
-        window.parent.postMessage({ type: "UnityLoaderProgress", progress: percentage }, "*");
-      }
-    }
 
     function resizeCanvas() {
+      // visualViewport is the accurate visible area on iOS; fall back to innerWidth/Height.
       var vv = window.visualViewport;
       var w = Math.round(vv ? vv.width : window.innerWidth);
       var h = Math.round(vv ? vv.height : window.innerHeight);
@@ -68,7 +62,8 @@
       window.visualViewport.addEventListener('resize', resizeCanvas);
       window.visualViewport.addEventListener('scroll', function () { window.scrollTo(0, 0); });
     }
-
+    // Scroll-lock: CSS touch-action alone won't stop iOS pinch-pan; non-passive touchmove does.
+    // Unity still receives the touch events (preventDefault only cancels browser scroll/zoom).
     window.addEventListener('scroll', function () { window.scrollTo(0, 0); }, { passive: true });
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
@@ -86,19 +81,19 @@
       productVersion: "1.0",
     };
 
+
     var script = document.createElement("script");
     script.src = loaderUrl;
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
-        sendProgressToPlatform(progress);
-      }).then((instance) => {
-        unityInstance = instance;
-        resizeCanvas();
+      }).then((unityInstance) => {
       }).catch((message) => {
         alert(message);
       });
     };
+
     document.body.appendChild(script);
+    window.addEventListener('load', resizeCanvas);
   </script>
   <script>
     window.focus();
