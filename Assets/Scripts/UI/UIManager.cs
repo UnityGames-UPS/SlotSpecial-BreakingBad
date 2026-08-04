@@ -12,6 +12,22 @@ public class UIManager : MonoBehaviour
   [SerializeField] private SocketIOManager socketManager;
   [SerializeField] private BonusManager bonusManager;
   [SerializeField] private PopupManager popupManager;
+  [SerializeField] private JSFunctCalls jsFunctCalls;
+
+  private void Awake()
+  {
+      if (jsFunctCalls == null) jsFunctCalls = GetComponent<JSFunctCalls>();
+      if (jsFunctCalls == null) jsFunctCalls = FindObjectOfType<JSFunctCalls>();
+      if (jsFunctCalls != null) jsFunctCalls.RegisterVisibilityListener(gameObject.name);
+  }
+
+  public void OnFocusChanged(string value)
+  {
+      bool focused = value == "1";
+      Debug.Log("UNITY FOCUS CHANGED: " + value + " (focused: " + focused + ")");
+      if (AudioController.Instance != null) AudioController.Instance.SetMuteAll(!focused);
+      if (socketManager != null) socketManager.HandleFocusChange(focused);
+  }
 
   [System.Serializable]
   public struct SymbolTextMap

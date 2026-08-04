@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class AudioController : MonoBehaviour
 {
@@ -245,29 +246,37 @@ public class AudioController : MonoBehaviour
     }
 
     
-    private void OnApplicationFocus(bool hasFocus)
+    private bool isForceMuted = false;
+    private readonly Dictionary<AudioSource, bool> preFocusMuteState = new Dictionary<AudioSource, bool>();
+
+    internal void SetMuteAll(bool forceMute)
     {
-        HandleFocus(hasFocus);
+        if (forceMute == isForceMuted) return;
+        isForceMuted = forceMute;
+
+        AudioSource[] sources = { bgSource, sfxSource, spareSource };
+        foreach (var source in sources)
+        {
+            if (source == null) continue;
+            if (forceMute)
+            {
+                preFocusMuteState[source] = source.mute;
+                source.mute = true;
+            }
+            else
+            {
+                source.mute = preFocusMuteState.TryGetValue(source, out bool prevMuted) ? prevMuted : source.mute;
+            }
+        }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        SetMuteAll(!focus);
     }
 
     private void OnApplicationPause(bool isPaused)
     {
-        HandleFocus(!isPaused);
-    }
-
-    private void HandleFocus(bool hasFocus)
-    {
-        if (!hasFocus)
-        {
-            if (bgSource != null) bgSource.Pause();
-            if (spareSource != null) spareSource.Pause();
-            AudioListener.volume = 0f;
-        }
-        else
-        {
-            if (bgSource != null) bgSource.UnPause();
-            if (spareSource != null) spareSource.UnPause();
-            AudioListener.volume = 1f;
-        }
+        SetMuteAll(isPaused);
     }
 }

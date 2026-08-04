@@ -356,6 +356,11 @@ public class PlayerData
     public double balance;
     public int currentBetIndex;
 }
+[Serializable]
+public class BalanceSyncPayload
+{
+    public double balance;
+}
 
 [Serializable]
 public class SpinResult
