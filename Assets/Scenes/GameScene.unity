@@ -34897,6 +34897,7 @@ MonoBehaviour:
   socketManager: {fileID: 1787183090}
   bonusManager: {fileID: 1213781016}
   popupManager: {fileID: 1134263423}
+  jsFunctCalls: {fileID: 1590662758}
   infoPanel: {fileID: 465288306}
   infoButton: {fileID: 2092930092}
   infoBackButton: {fileID: 1225842049}
@@ -34986,7 +34987,6 @@ MonoBehaviour:
   startSpinAlertMessage: PRESS SPIN BUTTON OR SWIPE UP OR DOWN ON SLOT AREA TO START
     SPIN
   stopSpinAlertMessage: PRESS STOP BUTTON OR TOUCH ON SLOT AREA TO QUICK STOP SPIN
-  jsFunctCalls: {fileID: 1590662758}
 --- !u!4 &1198241102
 Transform:
   m_ObjectHideFlags: 0
@@ -46810,7 +46810,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1590662755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43595a237b3b4796b9a4590b10d594f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ee218631a8cd480aa8e04140ce50297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JSFunctCalls
 --- !u!1 &1598093829
