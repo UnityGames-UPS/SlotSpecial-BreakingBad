@@ -245,20 +245,29 @@ public class AudioController : MonoBehaviour
     }
 
     
-    private bool isForceMuted = false;
-
-    internal void SetMuteAll(bool forceMute)
+    private void OnApplicationFocus(bool hasFocus)
     {
-        if (forceMute == isForceMuted) return;
-        isForceMuted = forceMute;
-
-        if (bgSource != null) bgSource.mute = forceMute;
-        if (sfxSource != null) sfxSource.mute = forceMute;
-        if (spareSource != null) spareSource.mute = forceMute;
+        HandleFocus(hasFocus);
     }
 
-    private void OnApplicationFocus(bool focus)
+    private void OnApplicationPause(bool isPaused)
     {
-        SetMuteAll(!focus);
+        HandleFocus(!isPaused);
+    }
+
+    private void HandleFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            if (bgSource != null) bgSource.Pause();
+            if (spareSource != null) spareSource.Pause();
+            AudioListener.volume = 0f;
+        }
+        else
+        {
+            if (bgSource != null) bgSource.UnPause();
+            if (spareSource != null) spareSource.UnPause();
+            AudioListener.volume = 1f;
+        }
     }
 }

@@ -76,11 +76,6 @@ public class SlotManager : MonoBehaviour
       OnBalanceChanged?.Invoke(Balance);
   }
 
-  internal void UpdateBalanceDisplay(double newBalance)
-  {
-      UpdateBalance(newBalance);
-  }
-
   internal void SetBetIndex(int index)
   {
       if (InitialData == null || InitialData.gameData == null || InitialData.gameData.bets == null) return;
