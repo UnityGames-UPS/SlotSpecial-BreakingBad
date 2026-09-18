@@ -123,7 +123,7 @@ public class PopupManager : MonoBehaviour
 
     internal void ShowDisconnectionPopup()
     {
-        ShowDisconnectionPopup("Game disconnected due to network error. Please relaunch the game.");
+        ShowDisconnectionPopup("Please restart the game.");
     }
 
     internal void ShowDisconnectionPopup(string message)
