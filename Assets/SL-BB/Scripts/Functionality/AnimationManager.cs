@@ -90,7 +90,7 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayWinningLineAnimations(List<LineWin> lineWins)
+    internal IEnumerator PlayWinningLineAnimations(List<LineWin> lineWins)
     {
         if (lineWins == null || lineWins.Count == 0) yield break;
 
@@ -547,7 +547,7 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlaySpecialSymbolAnimations(System.Func<string, bool> isSpecialCondition, List<List<string>> matrix)
+    private IEnumerator PlaySpecialSymbolAnimations(System.Func<string, bool> isSpecialCondition, List<List<string>> matrix)
     {
         List<ImageAnimation> activeAnims = new();
         List<SlotSymbolView> fadedViews = new();
@@ -749,7 +749,7 @@ public class AnimationManager : MonoBehaviour
         slotManager.EnableAllBackTints(false);
     }
 
-    public void PlaySpecialAnimationForCell(int row, int col)
+    internal void PlaySpecialAnimationForCell(int row, int col)
     {
         Coroutine c = StartCoroutine(PlaySpecialAnimationForCellRoutine(row, col));
         activeLandingCoroutines.Add(c);
@@ -956,7 +956,7 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void StartSymbolAnimationLoop(int row, int col)
+    private void StartSymbolAnimationLoop(int row, int col)
     {
         if (slotManager == null || slotManager.ResultData == null || slotManager.ResultData.matrix == null) return;
         if (row < 0 || row >= 3 || col < 0 || col >= 5) return;
@@ -1063,7 +1063,7 @@ public class AnimationManager : MonoBehaviour
         animCell.StartAnimation();
     }
 
-    public void StopSymbolAnimationLoop(int row, int col)
+    internal void StopSymbolAnimationLoop(int row, int col)
     {
         if (row < 0 || row >= 3 || col < 0 || col >= 5) return;
         ImageAnimation animCell = animationGrid[row][col];

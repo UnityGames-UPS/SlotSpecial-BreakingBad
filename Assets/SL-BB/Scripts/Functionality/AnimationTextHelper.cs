@@ -96,7 +96,7 @@ public class AnimationTextHelper : MonoBehaviour
         }
     }
 
-    public void PlayTextAnimation(int symbolId, string textContent, float duration, bool loopIndefinitely = true)
+    internal void PlayTextAnimation(int symbolId, string textContent, float duration, bool loopIndefinitely = true)
     {
         Clear();
 
@@ -151,7 +151,7 @@ public class AnimationTextHelper : MonoBehaviour
         }
     }
 
-    public void PlayPayoutTextAnimation(string textContent, float duration)
+    internal void PlayPayoutTextAnimation(string textContent, float duration)
     {
         if (payoutText != null)
         {

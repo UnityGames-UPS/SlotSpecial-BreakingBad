@@ -80,7 +80,7 @@ public class WinTypePopup : MonoBehaviour
         return null;
     }
 
-    public void StartPopup(double winAmount, double totalBetAmount, bool isAuto, Action onComplete)
+    internal void StartPopup(double winAmount, double totalBetAmount, bool isAuto, Action onComplete)
     {
         if (AudioController.Instance != null) AudioController.Instance.PlayWinTypeLoop();
         finalWinAmount = winAmount;

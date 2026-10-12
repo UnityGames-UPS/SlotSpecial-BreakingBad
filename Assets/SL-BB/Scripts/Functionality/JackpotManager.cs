@@ -178,7 +178,7 @@ public class JackpotManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayJackpotSequence(SlotSymbolView triggeringSymbolView, string prizeType, int prizeTypeIndex, string prizeValue, Sprite prizeSprite)
+    internal IEnumerator PlayJackpotSequence(SlotSymbolView triggeringSymbolView, string prizeType, int prizeTypeIndex, string prizeValue, Sprite prizeSprite)
     {
         if (triggeringSymbolView == null)
         {

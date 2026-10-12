@@ -37,7 +37,7 @@ public class SlotSymbolView : MonoBehaviour
     [SerializeField] internal GameObject cashCollectAboveObject;
     [SerializeField] internal GameObject cashCollectBelowObject;
 
-    public void SetCountValue(int count, RectTransform parentRect = null)
+    internal void SetCountValue(int count, RectTransform parentRect = null)
     {
         if (countImage == null) return;
 
@@ -233,7 +233,7 @@ public class SlotSymbolView : MonoBehaviour
         }
     }
 
-    public void ShowJackpotResult(Sprite[] finalSprites, string resultValue)
+    private void ShowJackpotResult(Sprite[] finalSprites, string resultValue)
     {
         if (jackpotObject != null)
         {
@@ -285,7 +285,7 @@ public class SlotSymbolView : MonoBehaviour
         losPolosValueText.gameObject.SetActive(true);
     }
 
-    public void SetGoldCoinValue(double value)
+    internal void SetGoldCoinValue(double value)
     {
         if (goldCoinValueText == null) return;
 
@@ -309,7 +309,7 @@ public class SlotSymbolView : MonoBehaviour
         goldCoinValueText.gameObject.SetActive(true);
     }
 
-    public void SetMultiplierCoinValue(double multiplierValue, double totalBet)
+    internal void SetMultiplierCoinValue(double multiplierValue, double totalBet)
     {
         if (multiplierValueText == null) return;
 
@@ -317,7 +317,7 @@ public class SlotSymbolView : MonoBehaviour
         multiplierValueText.gameObject.SetActive(true);
     }
 
-    public IEnumerator PlayMultiplierConversion(double multiplierValue, double totalBet)
+    internal IEnumerator PlayMultiplierConversion(double multiplierValue, double totalBet)
     {
         // Step 1: Show multiplier text "X25"
         if (multiplierValueText != null)
@@ -357,7 +357,7 @@ public class SlotSymbolView : MonoBehaviour
         }
     }
 
-    public void SetBackTintActive(bool active, float alpha = 0.85f)
+    internal void SetBackTintActive(bool active, float alpha = 0.85f)
     {
         if (backTint == null) return;
         backTint.gameObject.SetActive(active);

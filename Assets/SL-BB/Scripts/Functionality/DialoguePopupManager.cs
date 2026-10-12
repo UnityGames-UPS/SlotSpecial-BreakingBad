@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 
-public enum VideoScenario
+internal enum VideoScenario
 {
     EarlyReveal = 0,
     MagnetHit = 1,
@@ -21,7 +21,7 @@ public struct VideoScenarioData
     [SerializeField] internal AudioClip audioClip;
 }
 
-public enum DialogueType
+internal enum DialogueType
 {
     GameStart = 0,
     FreeSpinHit_1_5 = 1,
@@ -204,7 +204,7 @@ public class DialoguePopupManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayDialogue(DialogueType type)
+    private IEnumerator PlayDialogue(DialogueType type)
     {
         int index = (int)type;
         if (index < 0 || index >= dialogueList.Length) yield break;
@@ -315,7 +315,7 @@ public class DialoguePopupManager : MonoBehaviour
         yield return PlayDialogue(chosen);
     }
 
-    public IEnumerator PlayFreeSpinEndDialogue(double winAmt, double totalBet)
+    internal IEnumerator PlayFreeSpinEndDialogue(double winAmt, double totalBet)
     {
         if (winAmt == 0)
         {
@@ -353,7 +353,7 @@ public class DialoguePopupManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayDiamondSlotEndDialogue(double winAmt, double totalBet)
+    internal IEnumerator PlayDiamondSlotEndDialogue(double winAmt, double totalBet)
     {
         if (!RollDice(chanceDiamondSlotEnd)) yield break;
 
@@ -426,7 +426,7 @@ public class DialoguePopupManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayVideoScenario(VideoScenario scenario)
+    internal IEnumerator PlayVideoScenario(VideoScenario scenario)
     {
         int index = (int)scenario;
         if (videoScenarios == null || index < 0 || index >= videoScenarios.Length) yield break;

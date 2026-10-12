@@ -432,7 +432,7 @@ public class AuthData
 
 #region Enums
 
-public enum GameState
+internal enum GameState
 {
     Initializing,
     Idle,
@@ -442,7 +442,7 @@ public enum GameState
     FreeSpinMode
 }
 
-public enum SpinSpeed
+internal enum SpinSpeed
 {
     Normal,
     Turbo,
@@ -453,7 +453,7 @@ public enum SpinSpeed
 
 #region Helper Classes for Conversion
 
-public static class InitDataConverter
+internal static class InitDataConverter
 {
     internal static GameConfig ConvertToGameConfig(InitData serverData)
     {
@@ -994,7 +994,7 @@ public class Column
 
 #region Feature Queue
 
-public enum FeatureType
+internal enum FeatureType
 {
     None,
     PrizeCoinJackpot,     
@@ -1004,44 +1004,44 @@ public enum FeatureType
     FreeSpinRetrigger     
 }
 
-public class FeatureQueue
+internal class FeatureQueue
 {
     private Queue<FeatureType> _queue = new Queue<FeatureType>();
 
     
-    public bool HasPending => _queue.Count > 0;
+    internal bool HasPending => _queue.Count > 0;
 
     
-    public FeatureType Current { get; private set; } = FeatureType.None;
+    private FeatureType Current { get; set; } = FeatureType.None;
 
     
-    public int Count => _queue.Count;
+    private int Count => _queue.Count;
 
-    public void Enqueue(FeatureType type)
+    private void Enqueue(FeatureType type)
     {
         _queue.Enqueue(type);
         
     }
 
-    public FeatureType Dequeue()
+    internal FeatureType Dequeue()
     {
         Current = _queue.Dequeue();
         
         return Current;
     }
 
-    public FeatureType Peek()
+    internal FeatureType Peek()
     {
         return _queue.Count > 0 ? _queue.Peek() : FeatureType.None;
     }
 
-    public void Clear()
+    private void Clear()
     {
         _queue.Clear();
         Current = FeatureType.None;
     }
 
-    public bool Contains(FeatureType type)
+    internal bool Contains(FeatureType type)
     {
         return _queue.Contains(type);
     }
@@ -1057,7 +1057,7 @@ public class FeatureQueue
     
     
     
-    public void BuildFromResponse(ServerPayload payload, bool isFreeSpinCurrentlyActive)
+    internal void BuildFromResponse(ServerPayload payload, bool isFreeSpinCurrentlyActive)
     {
         Clear();
 
